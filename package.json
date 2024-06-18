@@ -1,0 +1,57 @@
+{
+  "name": "sakai-nuxt",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "pinia": "^2.1.7"
+  },
+  "devDependencies": {
+    "@nuxtjs/google-fonts": "^3.0.1",
+    "@pinia/nuxt": "^0.5.1",
+    "@types/node": "^20.10.0",
+    "@types/serialize-javascript": "^5.0.2",
+    "@vite-pwa/nuxt": "^0.3.0",
+    "@vueuse/components": "^10.6.1",
+    "@vueuse/core": "^10.6.1",
+    "@vueuse/nuxt": "^10.6.1",
+    "@whoj/eslint-config": "^1.5.0",
+    "@whoj/utils": "^1.8.0",
+    "chart.js": "^4.4.0",
+    "core-js": "^3.31.0",
+    "eslint": "^8.54.0",
+    "nuxt": "^3.8.2",
+    "nuxt-icon": "^0.6.6",
+    "primeflex": "^3.3.1",
+    "primeicons": "^6.0.1",
+    "primevue": "^3.41.1",
+    "prismjs": "^1.29.0",
+    "sass": "^1.69.5",
+    "typescript": "^5.3.2"
+  },
+  "pnpm": {
+    "allowedDeprecatedVersions": {
+      "stable": "*",
+      "rollup-plugin-terser": "*"
+    },
+    "overrides": {
+      "core-js": "$core-js",
+      "sourcemap-codec": "npm:@jridgewell/sourcemap-codec@latest"
+    },
+    "peerDependencyRules": {
+      "allowAny": [
+        "rollup",
+        "vitest",
+        "primeicons"
+      ]
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
