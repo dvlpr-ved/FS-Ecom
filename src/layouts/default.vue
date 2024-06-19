@@ -15,8 +15,10 @@ export default defineComponent({
 
 <template>
   <AppHeader />
-  <AppBanner />
-  <CateGories />
+  <div class="container">
+    <slot />
+    <AppFooter />
+  </div>
 </template>
 
 <style lang="scss">
