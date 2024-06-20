@@ -72,7 +72,8 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@vite-pwa/nuxt',
     '@nuxtjs/google-fonts',
-    '~/modules/primevue'
+    '~/modules/primevue',
+    '@nuxtjs/tailwindcss'
   ],
 
   nitro: {
