@@ -3,8 +3,8 @@
 
 <template>
   <!-- <OfferLine /> -->
-  <SearchAutoComplete />
   <AppBanner />
+  <SearchAutoComplete />
   <CateGories />
   <Highlights />
   <Highlights />
