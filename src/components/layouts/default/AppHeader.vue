@@ -1,5 +1,14 @@
+<script setup>
+
+const CartItems = ref(12)
+const WishlistItems = ref(2)
+const NotiFication = ref(10)
+
+</script>
+
 <template>
     <header class="AppHeader border-bottom">
+     
         <div class="container flex items-center justify-between">
             <a href="/" class="logo">Logo Here</a>
             <div class="searchField">
@@ -14,26 +23,23 @@
                 <li class="icons cart">
                     <i class="pi pi-shopping-cart"></i>
                     <span class="text">cart</span>
-                    <span class="counter">02</span>
+                    <span class="counter">{{ CartItems }}</span>
                 </li>
                 <li class="icons watchlist">
                     <i class="pi pi-bookmark"></i>
                     <span class="text">Wishlist</span>
-                    <span class="counter">02</span>
+                    <span class="counter">{{ WishlistItems }}</span>
                 </li>
                 <li class="icons notification">
                     <i class="pi pi-bell"></i>
                     <span class="text">Notification</span>
-                    <span class="counter">02</span>
+                    <span class="counter">{{ NotiFication }}</span>
                 </li>
             </ul>
         </div>
     </header>
 </template>
 
-<script setup>
-
-</script>
 
 <style lang="scss" scoped>
 .AppHeader {
