@@ -2,6 +2,7 @@
 import { defineComponent } from 'vue';
 import AppHeader from '~/components/layouts/default/AppHeader.vue';
 import AppFooter from '~/components/layouts/default/AppFooter.vue';
+import SearchAutoComplete from '~/components/layouts/default/SearchAutoComplete.vue';
 import AppBanner from '~/components/common/AppBanner.vue';
 import CateGories from '~/components/common/CateGories.vue';
 import OfferLine from '~/components/common/OfferLine.vue';
@@ -13,12 +14,13 @@ export default defineComponent({
   components: {
     AppHeader,
     AppFooter,
+    SearchAutoComplete,
     AppBanner,
     CateGories,
     OfferLine,
     CommonCard,
     Highlights,
-    OfferBanner
+    OfferBanner,
   },
 });
 </script>

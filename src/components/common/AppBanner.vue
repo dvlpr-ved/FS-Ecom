@@ -56,14 +56,13 @@ const getPrevIndex = () => {
 <style lang="scss" scoped>
 .BannerWrapper {
     position: relative;
+    overflow: hidden;
 }
 
 .sliderItem {
     position: relative;
     width: 100%;
     height: 550px;
-    overflow: hidden;
-    border-radius: 0 0 15px 15px;
 }
 
 .slider-image {

@@ -4,6 +4,7 @@
 <template>
   <!-- <OfferLine /> -->
   <AppBanner />
+  <SearchAutoComplete />
   <CateGories />
   <Highlights />
   <Highlights />
