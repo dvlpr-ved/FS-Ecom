@@ -1,5 +1,5 @@
 <template>
-    <header class="AppHeader">
+    <header class="AppHeader border-bottom">
         <div class="container flex items-center justify-between">
             <a href="/" class="logo">Logo Here</a>
             <div class="searchField">
@@ -38,9 +38,9 @@
 <style lang="scss" scoped>
 .AppHeader {
     padding: 8px 0;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+    /*box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);*/
+    border-bottom: 1px solid var(--gray);
 
-    .container {}
 
     .logo {
         font-size: 25px;

@@ -1,24 +1,34 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import AppHeader from '~/components/layouts/default/AppHeader.vue';
+import AppFooter from '~/components/layouts/default/AppFooter.vue';
 import AppBanner from '~/components/common/AppBanner.vue';
 import CateGories from '~/components/common/CateGories.vue';
+import OfferLine from '~/components/common/OfferLine.vue';
+import CommonCard from '~/components/common/CommonCard.vue';
+import Highlights from '~/components/common/Highlights.vue';
+import OfferBanner from '~/components/common/OfferBanner.vue';
 
 export default defineComponent({
   components: {
     AppHeader,
+    AppFooter,
     AppBanner,
     CateGories,
+    OfferLine,
+    CommonCard,
+    Highlights,
+    OfferBanner
   },
 });
 </script>
 
 <template>
   <AppHeader />
-  <div class="container">
+  <div class="main_div_for_slots">
     <slot />
-    <AppFooter />
   </div>
+  <AppFooter />
 </template>
 
 <style lang="scss">

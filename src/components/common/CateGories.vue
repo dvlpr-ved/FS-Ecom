@@ -86,7 +86,7 @@ onMounted(() => {
 
 </script>
 <template>
-    <div class="categories-main-div">
+    <div class="categories-main-div container">
         <h1 class="heading">Explore Popular Categories</h1>
         <div class="Categories-wrapper flex justify-center">
             <div class="slider">
