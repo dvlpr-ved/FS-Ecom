@@ -2,10 +2,9 @@
 import { ref } from 'vue';
 
 const images = [
-    'https://blogs.rmkv.com/wp-content/uploads/2023/11/models-with-sarees-rmkv-blog-banner-1024x576.jpg',
-    'https://i.pinimg.com/originals/9e/c5/cd/9ec5cdfe4d18f004394209d1fb0ddebb.jpg',
+    'https://anyaonline.in/cdn/shop/collections/IMG_0552.png?v=1645617984',
+    'https://img.freepik.com/free-vector/happy-diwali-sale-banner-with-diya-marigold-flower_1017-21234.jpg?t=st=1718820636~exp=1718824236~hmac=b4ff16559985950523c5909b9fc9e5da003080464b0b8408741fdedcf8e3cf59&w=1380',
     'https://blogs.rmkv.com/wp-content/uploads/2023/11/rmkv-silk-sarees-model-blog-banner.jpg',
-    'https://i.pinimg.com/originals/44/c8/09/44c8091ede64503d6a16d3f3fd96438a.jpg',
 ];
 
 const activeIndex = ref(0);
@@ -41,7 +40,7 @@ const getPrevIndex = () => {
 </script>
 
 <template>
-    <div class="BannerWrapper">
+    <div class="BannerWrapper py-4">
         <div class="sliderItem">
             <img v-for="(img, index) in images" :key="index" :src="img" :class="getImageClasses(index)" :alt="img" />
         </div>
@@ -61,7 +60,7 @@ const getPrevIndex = () => {
 .sliderItem {
     position: relative;
     width: 100%;
-    height: 550px;
+    height: 490px;
     overflow: hidden;
     border-radius: 0 0 15px 15px;
 }
