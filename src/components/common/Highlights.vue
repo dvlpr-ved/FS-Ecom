@@ -31,7 +31,7 @@ const cards = [
                 <a href="#" class="commonbtn">View All</a>
             </div>
             <div class="flex justify-center gap-3 relative">
-                <CommonCard v-for="card in cards" :key="card.id" :ImgURL="card.ImgURL" :title="card.title" />
+                <HomePageCard v-for="card in cards" :key="card.id" :ImgURL="card.ImgURL" :title="card.title" />
             </div>
         </div>
     </div>
