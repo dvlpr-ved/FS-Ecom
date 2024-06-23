@@ -123,7 +123,7 @@ onMounted(() => {
     .slider {
         display: flex;
     }
-    
+
     .slide {
         display: flex;
         transition: transform 0.4s ease;
@@ -142,6 +142,12 @@ onMounted(() => {
         width: 120px;
         object-fit: cover;
         border-radius: 50%;
+        margin: 0 auto;
+        transition: all 0.4s ease;
+
+        &:hover {
+            transform: scale(1.1);
+        }
     }
 
     .categories-title {

@@ -6,9 +6,11 @@ import SearchAutoComplete from '~/components/layouts/default/SearchAutoComplete.
 import AppBanner from '~/components/common/AppBanner.vue';
 import CateGories from '~/components/common/CateGories.vue';
 import OfferLine from '~/components/common/OfferLine.vue';
-import CommonCard from '~/components/common/CommonCard.vue';
+import HomePageCard from '~/components/common/HomePageCard.vue';
 import Highlights from '~/components/common/Highlights.vue';
 import OfferBanner from '~/components/common/OfferBanner.vue';
+import CommonCard from '~/components/common/CommonCard.vue';
+import PagesBanner from '~/components/common/pagesBanner.vue';
 
 export default defineComponent({
   components: {
@@ -18,9 +20,11 @@ export default defineComponent({
     AppBanner,
     CateGories,
     OfferLine,
-    CommonCard,
+    HomePageCard,
     Highlights,
     OfferBanner,
+    CommonCard,
+    PagesBanner,
   },
 });
 </script>
