@@ -4,6 +4,15 @@ const CartItems = ref(12)
 const WishlistItems = ref(2)
 const NotiFication = ref(10)
 
+const showAutoComplete = ref(false)
+const handleChange = (e) => {
+    // showAutoComplete.value = !showAutoComplete.value;
+    showAutoComplete.value = true;
+};
+const handleBlur = () => {
+    showAutoComplete.value = false;
+};
+
 </script>
 
 <template>
@@ -15,15 +24,18 @@ const NotiFication = ref(10)
                     <span class="text-3xl uppercase">fashtsaly</span>
                 </a>
                 <button class="subscribe commonbtn lg:hidden block">subscribe</button>
-                <div class="humbergIcon lg:hidden block">
+                <!-- <div class="humbergIcon lg:hidden block">
                     <i class="pi pi-bars text-5xl"></i>
+                </div> -->
+                <div class="SearchIcon lg:hidden block">
+                    <i class="pi pi-search text-3xl"></i>
                 </div>
             </div>
 
-            <div class="searchField lg:flex hidden">
-                <input placeholder="Search Here..." />
+            <div class="searchField lg:flex hidden relative">
+                <input placeholder="Search Here..." @click="handleChange" @blur="handleBlur" />
+                <SearchAutoComplete v-if="showAutoComplete" />
             </div>
-            <!-- <SearchAutoComplete /> -->
             <ul class="navList flex items-center justify-center">
                 <li class="icons user">
                     <i class="pi pi-user"></i>
@@ -56,8 +68,7 @@ const NotiFication = ref(10)
     padding: 8px 0;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
     border-bottom: 1px solid var(--gray);
-    position: sticky;
-    top: 0;
+    position: relative;
     z-index: 9;
     background-color: #fff;
 
@@ -129,8 +140,6 @@ const NotiFication = ref(10)
     }
 
     .AppHeader {
-        top: -15px;
-
         .navList {
             // padding: 0 15px;
             gap: 0 17px;

@@ -10,6 +10,7 @@ import HomePageCard from '~/components/common/HomePageCard.vue';
 import Highlights from '~/components/common/Highlights.vue';
 import OfferBanner from '~/components/common/OfferBanner.vue';
 import CommonCard from '~/components/common/CommonCard.vue';
+import PagesBanner from '~/components/common/pagesBanner.vue';
 
 export default defineComponent({
   components: {
@@ -23,6 +24,7 @@ export default defineComponent({
     Highlights,
     OfferBanner,
     CommonCard,
+    PagesBanner,
   },
 });
 </script>
