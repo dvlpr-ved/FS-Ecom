@@ -8,8 +8,10 @@ const props = defineProps<{
 
 <template>
   <div class="commonCard shadow">
-    <img class="w-full carimg" :src="props.ImgURL" alt="highlight img">
-    <p class="text-2xl text-center py-4">{{ props.title }}</p>
+    <a href="searchresult/">
+      <img class="w-full carimg" :src="props.ImgURL" alt="highlight img">
+      <p class="text-2xl text-center py-4">{{ props.title }}</p>
+    </a>
   </div>
 </template>
 

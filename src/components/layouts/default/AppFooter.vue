@@ -15,7 +15,7 @@
           </li>
           <li class="lg:w-[15%] w-[48%] lg:mb-0 mb-4">
             <div class="title font-bold text-2xl capitalize mb-4">information</div>
-            <a href="#">about us</a>
+            <a href="about">about us</a>
             <a href="#">privacy policy</a>
             <a href="#">return policy</a>
             <a href="#">shipping policy</a>
