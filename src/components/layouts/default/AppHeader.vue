@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 
 const CartItems = ref(12)
 const WishlistItems = ref(2)
@@ -11,6 +11,11 @@ const handleChange = (e) => {
 };
 const handleBlur = () => {
     showAutoComplete.value = false;
+};
+const visible = ref(false);
+
+const closeModal = () => {
+    visible.value = false;
 };
 
 </script>
@@ -37,7 +42,7 @@ const handleBlur = () => {
                 <SearchAutoComplete v-if="showAutoComplete" />
             </div>
             <ul class="navList flex items-center justify-center">
-                <li class="icons user">
+                <li class="icons user" label="Show" @click="visible = true">
                     <i class="pi pi-user"></i>
                     <span class="text lg:inline block">Login</span>
                 </li>
@@ -60,6 +65,9 @@ const handleBlur = () => {
             </ul>
         </div>
     </header>
+
+    <LoginModal :visible="visible" :close="closeModal" />
+
 </template>
 
 

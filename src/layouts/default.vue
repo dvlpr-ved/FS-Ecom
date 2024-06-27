@@ -2,6 +2,8 @@
 import { defineComponent } from 'vue';
 import AppHeader from '~/components/layouts/default/AppHeader.vue';
 import AppFooter from '~/components/layouts/default/AppFooter.vue';
+import LoginModal from '~/components/layouts/default/loginModal.vue';
+import SignUp from '~/components/layouts/default/signUp.vue';
 import SearchAutoComplete from '~/components/layouts/default/SearchAutoComplete.vue';
 import AppBanner from '~/components/common/AppBanner.vue';
 import CateGories from '~/components/common/CateGories.vue';
@@ -16,6 +18,8 @@ export default defineComponent({
   components: {
     AppHeader,
     AppFooter,
+    LoginModal,
+    SignUp,
     SearchAutoComplete,
     AppBanner,
     CateGories,
