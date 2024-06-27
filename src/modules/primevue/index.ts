@@ -23,7 +23,6 @@ const primevueComponents = [
   'Button',
   'Calendar',
   'Card',
-  'Carousel',
   'CascadeSelect',
   'Chart',
   'Checkbox',

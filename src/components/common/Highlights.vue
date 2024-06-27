@@ -31,7 +31,15 @@ const cards = [
                 <a href="#" class="commonbtn">View All</a>
             </div>
             <div class="flex justify-center gap-3 relative">
-                <HomePageCard v-for="card in cards" :key="card.id" :ImgURL="card.ImgURL" :title="card.title" />
+                <carousel :items-to-show="1" >
+                    <slide v-for="card in cards" :key="card.id">
+                        <HomePageCard :ImgURL="card.ImgURL" :title="card.title" />
+                    </slide>
+                    <template #addons>
+                    <navigation />
+                    <pagination />
+                    </template>
+                </carousel>
             </div>
         </div>
     </div>

@@ -73,9 +73,9 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     '@nuxtjs/google-fonts',
     '~/modules/primevue',
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    'vue3-carousel-nuxt',
   ],
-
   nitro: {
     experimental: {
       asyncContext: true
