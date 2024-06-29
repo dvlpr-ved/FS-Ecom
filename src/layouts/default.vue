@@ -15,6 +15,7 @@ import CommonCard from '~/components/common/CommonCard.vue';
 import PagesBanner from '~/components/common/pagesBanner.vue';
 import ProductDetail from '~/components/common/productDetail.vue';
 import AddtoCartModal from '~/components/common/AddtoCartModal.vue';
+import CheckOut from '~/components/common/CheckOut.vue';
 
 export default defineComponent({
   components: {
@@ -32,7 +33,8 @@ export default defineComponent({
     CommonCard,
     PagesBanner,
     ProductDetail,
-    AddtoCartModal
+    AddtoCartModal,
+    CheckOut
   },
 });
 </script>

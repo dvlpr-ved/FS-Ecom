@@ -20,7 +20,8 @@ const props = defineProps({
             </p>
             <p class="title text-2xl mb-4">Banarasi Blue Saree</p>
             <h6 class="font-bold text-3xl mb-4"> <span class="text-3xl">Total : </span> RS.799 </h6>
-            <button class="py-3 w-[48%] bg-black text-white capitalize rounded">Proceed To Bag</button>
+            <!-- <button class="py-3 w-[48%] bg-black text-white capitalize rounded">Proceed To Bag</button> -->
+            <a href="../checkout" class="py-3 w-[48%] bg-black text-white capitalize rounded px-3">Proceed To Bag</a>
         </div>
     </div>
 </template>
