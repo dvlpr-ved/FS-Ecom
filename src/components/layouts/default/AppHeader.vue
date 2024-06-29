@@ -139,7 +139,7 @@ const closeModal = () => {
     }
 }
 
-@media (max-width:767px) {
+@media (max-width:992px) {
     .headerLeft {
         border-bottom: 1px solid #ddd;
         width: 100%;

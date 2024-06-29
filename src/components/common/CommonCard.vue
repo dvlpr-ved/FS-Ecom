@@ -73,13 +73,25 @@ const data = [
       'https://rukminim2.flixcart.com/image/612/612/xif0q/sari/f/d/6/free-women-s-banarasi-silk-saree-avdom-unstitched-original-imagzqhrbzhkpbyd.jpeg?q=70',
     ],
   },
+  {
+    id: 7,
+    title: 'fashion Day',
+    price: 500,
+    desc: 'AIR STRIKE Football Shoes For Men',
+    thumbnail: 'https://rukminim2.flixcart.com/image/612/612/xif0q/sari/r/m/k/free-2774s191-samah-unstitched-original-imagzbggmcxzyerm.jpeg?q=70',
+    images: [
+      'https://rukminim2.flixcart.com/image/612/612/xif0q/sari/r/m/k/free-2774s191-samah-unstitched-original-imagzbggmcxzyerm.jpeg?q=70',
+      'https://rukminim2.flixcart.com/image/612/612/xif0q/sari/r/m/k/free-2774s191-samah-unstitched-original-imagzbggmcxzyerm.jpeg?q=70',
+      'https://rukminim2.flixcart.com/image/612/612/xif0q/sari/r/m/k/free-2774s191-samah-unstitched-original-imagzbggmcxzyerm.jpeg?q=70',
+    ],
+  },
 ]
 
 </script>
 
 <template>
-  <div class="commonCard transition" v-for="(item, index) in data">
-    <a href="#" :key="index">
+  <div class="commonCard shadow transition" v-for="(item, index) in data">
+    <a href="../productdetail/" :key="index">
       <figure class="relative">
         <img class="w-full cardimg" :src="item.thumbnail" alt="highlight img">
         <div class="watchListIcons absolute top-[15px] right-[15px]">
@@ -89,8 +101,7 @@ const data = [
       </figure>
       <div class="cardContent p-2">
         <p class="cardtitle text-gray-500 font-bold">{{ item.title }}</p>
-        <p class="cardtitle text-gray-700 text-2xl font-bold">₹{{ item.price }} <span class="line-through">700</span>
-        </p>
+        <p class="cardtitle text-gray-700 text-2xl font-bold">₹{{ item.price }} <span class="line-through">₹700</span></p>
         <p class="card_desc">{{ item.desc.slice(1, 30) }}...</p>
       </div>
     </a>
@@ -128,6 +139,12 @@ const data = [
         display: block;
       }
     }
+  }
+}
+
+@media (min-width:768px) {
+  .commonCard{
+    max-width: 31%;
   }
 }
 </style>

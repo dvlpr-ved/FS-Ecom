@@ -13,6 +13,8 @@ import Highlights from '~/components/common/Highlights.vue';
 import OfferBanner from '~/components/common/OfferBanner.vue';
 import CommonCard from '~/components/common/CommonCard.vue';
 import PagesBanner from '~/components/common/pagesBanner.vue';
+import ProductDetail from '~/components/common/productDetail.vue';
+import AddtoCartModal from '~/components/common/AddtoCartModal.vue';
 
 export default defineComponent({
   components: {
@@ -29,6 +31,8 @@ export default defineComponent({
     OfferBanner,
     CommonCard,
     PagesBanner,
+    ProductDetail,
+    AddtoCartModal
   },
 });
 </script>

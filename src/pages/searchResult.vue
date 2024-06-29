@@ -5,10 +5,10 @@ const first = ref(0);
 </script>
 <template>
     <div class="SearchResultPage py-4">
-        <div class="container flex justify-between">
-            <aside class="LeftFilters lg:block hidden w-[20%] bg-gray-100"></aside>
-            <div class="rightSideCards lg:block hidden w-[79%]">
-                <div class="CardsFlexdiv flex fwrap gap-x-3 gap-y-5">
+        <div class="container flex flex-wrap justify-between">
+            <aside class="LeftFilters lg:w-[20%] md:w-[100%] bg-gray-100 p-5"></aside>
+            <div class="rightSideCards lg:w-[79%] md:w-[100%]">
+                <div class="CardsFlexdiv flex fwrap gap-x-3 gap-y-5 justify-center">
                     <CommonCard />
                 </div>
                 <div class="card">
@@ -21,7 +21,17 @@ const first = ref(0);
 </template>
 
 <style scoped>
+.CardsFlexdiv {
+    justify-content: flex-start;
+}
+
 .p-paginator .p-paginator-current {
     height: 1rem !important;
+}
+
+@media (max-width:992px) {
+    .CardsFlexdiv {
+        justify-content: center;
+    }
 }
 </style>
