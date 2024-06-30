@@ -7,6 +7,8 @@
   <Highlights />
   <OfferBanner />
   <Highlights />
+  <Faq />
+  <SiteContentForLinks />
 </template>
 
 <style scoped>

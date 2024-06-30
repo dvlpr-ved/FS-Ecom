@@ -26,6 +26,31 @@ const cards = [
         title: 'Highlight 5 Title'
     }
 ]
+
+const itemsToShow = ref(4);
+
+const updateItemsToShow = () => {
+    const screenWidth = window.innerWidth;
+    if (screenWidth < 768) {
+        itemsToShow.value = 1;
+    } else if (screenWidth < 1024) {
+        itemsToShow.value = 2;
+    } else if (screenWidth < 1440) {
+        itemsToShow.value = 3;
+    } else {
+        itemsToShow.value = 4;
+    }
+};
+
+onMounted(() => {
+    window.addEventListener('resize', updateItemsToShow);
+    updateItemsToShow();
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener('resize', updateItemsToShow);
+});
+
 </script>
 
 <template>
@@ -36,12 +61,12 @@ const cards = [
                 <a href="#" class="commonbtn">View All</a>
             </div>
             <div class="flex justify-center gap-3 relative">
-                <carousel :items-to-show="4">
+                <carousel :items-to-show="itemsToShow">
                     <slide v-for="card in cards" :key="card.id">
                         <HomePageCard :ImgURL="card.ImgURL" :title="card.title" />
                     </slide>
                     <template #addons>
-                    <navigation />
+                        <navigation />
                     </template>
                 </carousel>
             </div>
@@ -53,8 +78,41 @@ const cards = [
 .cardWrapper {
     background: #f5f5f5ab;
 }
-.carousel__icon {filter: invert(1);}
-.carousel__prev, .carousel__next {height: 46px; width: 46px; border-radius: 50%; background: var(--primary);
-        &:hover{filter: brightness(1.2);}
+
+.carousel__icon {
+    filter: invert(1);
+}
+
+.carousel__prev,
+.carousel__next {
+    height: 46px;
+    width: 46px;
+    border-radius: 50%;
+    background: var(--primary);
+
+    &:hover {
+        filter: brightness(1.2);
     }
+}
+
+@media (max-width:768px) {
+    .cardWrapper {
+        overflow-x: hidden;
+    }
+
+    .carousel__prev,
+    .carousel__next {
+        height: 35px;
+        width: 35px;
+        font-size: 17px;
+    }
+
+    .carousel__prev {
+        left: 25px;
+    }
+
+    .carousel__next {
+        right: 25px;
+    }
+}
 </style>

@@ -147,4 +147,10 @@ const data = [
     max-width: 31%;
   }
 }
+@media (max-width:576px) {
+  .commonCard{
+    width: 100%;
+    max-width: 100%;
+  }
+}
 </style>

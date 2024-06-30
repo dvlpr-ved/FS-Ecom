@@ -16,6 +16,8 @@ import PagesBanner from '~/components/common/pagesBanner.vue';
 import ProductDetail from '~/components/common/productDetail.vue';
 import AddtoCartModal from '~/components/common/AddtoCartModal.vue';
 import CheckOut from '~/components/common/CheckOut.vue';
+import Faq from '~/components/common/Faq.vue';
+import SeoContentSection from '~/components/common/SiteContentForLinks.vue';
 
 export default defineComponent({
   components: {
@@ -34,7 +36,9 @@ export default defineComponent({
     PagesBanner,
     ProductDetail,
     AddtoCartModal,
-    CheckOut
+    CheckOut,
+    Faq,
+    SeoContentSection,
   },
 });
 </script>
