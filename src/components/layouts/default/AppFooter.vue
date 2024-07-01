@@ -22,8 +22,8 @@
           </li>
           <li class="lg:w-[15%] w-[48%] lg:mb-0 mb-4">
             <div class="title font-bold text-2xl capitalize mb-4">account</div>
-            <a href="#">my order</a>
-            <a href="#">my wishlist</a>
+            <a href="orders">my order</a>
+            <a href="wishlist">my wishlist</a>
             <a href="#">account details</a>
             <a href="#">shipping policy</a>
           </li>

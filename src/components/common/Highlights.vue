@@ -28,6 +28,7 @@ const cards = [
 ]
 
 const itemsToShow = ref(4);
+const isLoading = ref(true);
 
 const updateItemsToShow = () => {
     const screenWidth = window.innerWidth;
@@ -45,6 +46,9 @@ const updateItemsToShow = () => {
 onMounted(() => {
     window.addEventListener('resize', updateItemsToShow);
     updateItemsToShow();
+    setTimeout(() => {
+        isLoading.value = false;
+    }, 2000);
 });
 
 onBeforeUnmount(() => {
@@ -60,7 +64,15 @@ onBeforeUnmount(() => {
                 <h3 class="text-2xl lg:text-3xl">Highlights</h3>
                 <a href="#" class="commonbtn">View All</a>
             </div>
-            <div class="flex justify-center gap-3 relative">
+            <template v-if="isLoading">
+                <div class="lg:flex hidden justify-between">
+                    <ShimmereCard/>
+                    <ShimmereCard/>
+                    <ShimmereCard/>
+                    <ShimmereCard/>
+                </div>
+            </template>
+            <div v-else class="flex justify-center gap-3 relative">
                 <carousel :items-to-show="itemsToShow">
                     <slide v-for="card in cards" :key="card.id">
                         <HomePageCard :ImgURL="card.ImgURL" :title="card.title" />
@@ -108,11 +120,11 @@ onBeforeUnmount(() => {
     }
 
     .carousel__prev {
-        left: 25px;
+        left: 45px;
     }
 
     .carousel__next {
-        right: 25px;
+        right: 45px;
     }
 }
 </style>

@@ -46,9 +46,10 @@ const getPrevIndex = () => {
             <img v-for="(img, index) in images" :key="index" :src="img" :class="getImageClasses(index)" :alt="img" />
         </div>
         <div class="controls">
-            <button @click="prevImage" :disabled="activeIndex === 0" class="controlBtn">&#x2190;</button>
-            <button @click="nextImage" :disabled="activeIndex === images.length - 1"
-                class="controlBtn controlBtn1">&#8594;</button>
+            <button @click="prevImage" :disabled="activeIndex === 0" class="controlBtn"> <i
+                    class="pi pi-angle-left"></i> </button>
+            <button @click="nextImage" :disabled="activeIndex === images.length - 1" class="controlBtn controlBtn1"><i
+                    class="pi pi-angle-right"></i></button>
         </div>
     </div>
 </template>
@@ -84,6 +85,12 @@ const getPrevIndex = () => {
     display: none;
 }
 
+.controlBtn {
+    i {
+        font-size: 28px;
+    }
+}
+
 .next {
     transform: translateX(100%);
     opacity: 0;
@@ -94,5 +101,22 @@ const getPrevIndex = () => {
     transform: translateX(-100%);
     opacity: 0;
     z-index: 0;
+}
+
+@media (max-width:992px) {
+
+    .sliderItem {
+        height: 270px;
+    }
+
+    .controlBtn {
+        bottom: 40%;
+        height: 35px;
+        width: 35px;
+
+        i {
+            font-size: 14px;
+        }
+    }
 }
 </style>

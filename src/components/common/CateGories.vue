@@ -1,5 +1,6 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { template } from '@whoj/utils';
+
 
 const data = [
     {
@@ -66,6 +67,7 @@ const data = [
 
 const activeIndex = ref(0);
 const slideWidth = ref(0);
+const isLoading = ref(true)
 
 const prevImage = () => {
     if (activeIndex.value > 0) {
@@ -79,28 +81,55 @@ const nextImage = () => {
     }
 };
 
+
 onMounted(() => {
     const sliderWidth = document.querySelector('.slider').clientWidth;
     slideWidth.value = sliderWidth / data.length;
+
+    setTimeout(() => {
+        isLoading.value = false;
+    }, 2000);
 });
+
 
 </script>
 <template>
     <div class="categories-main-div container">
         <h1 class="heading">Explore Popular Categories</h1>
-        <div class="Categories-wrapper flex justify-center">
-            <div class="slider">
-                <div class="slide" :style="{ transform: `translateX(-${activeIndex * slideWidth}px)` }">
-                    <div v-for="(item, index) in data" :key="index" class="categories-card">
-                        <img class="avatar" :src="item.imgUrl" />
-                        <span class="categories-title">{{ item.title }}</span>
+
+            <div class="Categories-wrapper flex justify-center">
+                <div class="slider">
+                    <!-- onloading shimmer animation -->
+                    <div v-if="isLoading">
+                        <!-- for desk -->
+                        <div class="lg:flex justify-between hidden gap-5">
+                            <div class="p-[70px] animate-pulse bg-gray-200" style="border-radius:100%"></div>
+                            <div class="p-[70px] animate-pulse bg-gray-200" style="border-radius:100%"></div>
+                            <div class="p-[70px] animate-pulse bg-gray-200" style="border-radius:100%"></div>
+                            <div class="p-[70px] animate-pulse bg-gray-200" style="border-radius:100%"></div>
+                            <div class="p-[70px] animate-pulse bg-gray-200" style="border-radius:100%"></div>
+                            <div class="p-[70px] animate-pulse bg-gray-200" style="border-radius:100%"></div>
+                        </div>
+                        <!-- for mb -->
+                        <div class="flex lg:hidden justify-between hidden">
+                            <div class="p-[50px] animate-pulse bg-gray-200" style="border-radius:100%"></div>
+                            <div class="p-[50px] animate-pulse bg-gray-200" style="border-radius:100%"></div>
+                            <div class="p-[50px] animate-pulse bg-gray-200" style="border-radius:100%"></div>
+                        </div>
+                    </div>
+                    <div v-else class="slide" :style="{ transform: `translateX(-${activeIndex * slideWidth}px)` }">
+                        <div v-for="(item, index) in data" :key="index" class="categories-card">
+                            <img class="avatar" :src="item.imgUrl" />
+                            <span class="categories-title">{{ item.title }}</span>
+                        </div>
                     </div>
                 </div>
+                <button @click="prevImage" :disabled="activeIndex === 0" class="controlBtn"><i
+                        class="pi pi-angle-left"></i></button>
+                <button @click="nextImage" :disabled="activeIndex === data.length - 1" class="controlBtn controlBtn1"><i
+                        class="pi pi-angle-right"></i></button>
             </div>
-            <button @click="prevImage" :disabled="activeIndex === 0" class="controlBtn">&#x2190;</button>
-            <button @click="nextImage" :disabled="activeIndex === data.length - 1"
-                class="controlBtn controlBtn1">&#8594;</button>
-        </div>
+        
     </div>
 </template>
 
@@ -161,6 +190,19 @@ onMounted(() => {
     .controlBtn1 {
         left: inherit;
         right: 0;
+    }
+}
+
+@media (max-width:992px) {
+
+    .controlBtn {
+        bottom: 40%;
+        height: 35px;
+        width: 35px;
+
+        i {
+            font-size: 14px;
+        }
     }
 }
 </style>

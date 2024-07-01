@@ -18,6 +18,10 @@ import AddtoCartModal from '~/components/common/AddtoCartModal.vue';
 import CheckOut from '~/components/common/CheckOut.vue';
 import Faq from '~/components/common/Faq.vue';
 import SeoContentSection from '~/components/common/SiteContentForLinks.vue';
+import MyOrders from '~/components/common/MyOrders.vue';
+import MyWishlist from '~/components/common/MyWishlist.vue';
+import ShimmereCard from '~/components/common/ShimmereCard.vue';
+
 
 export default defineComponent({
   components: {
@@ -39,6 +43,9 @@ export default defineComponent({
     CheckOut,
     Faq,
     SeoContentSection,
+    MyOrders,
+    MyWishlist,
+    ShimmereCard
   },
 });
 </script>
