@@ -13,6 +13,15 @@ import Highlights from '~/components/common/Highlights.vue';
 import OfferBanner from '~/components/common/OfferBanner.vue';
 import CommonCard from '~/components/common/CommonCard.vue';
 import PagesBanner from '~/components/common/pagesBanner.vue';
+import ProductDetail from '~/components/common/productDetail.vue';
+import AddtoCartModal from '~/components/common/AddtoCartModal.vue';
+import CheckOut from '~/components/common/CheckOut.vue';
+import Faq from '~/components/common/Faq.vue';
+import SeoContentSection from '~/components/common/SiteContentForLinks.vue';
+import MyOrders from '~/components/common/MyOrders.vue';
+import MyWhitelist from '~/components/common/MyWhitelist.vue';
+import ShimmereCard from '~/components/common/ShimmereCard.vue';
+
 
 export default defineComponent({
   components: {
@@ -29,6 +38,14 @@ export default defineComponent({
     OfferBanner,
     CommonCard,
     PagesBanner,
+    ProductDetail,
+    AddtoCartModal,
+    CheckOut,
+    Faq,
+    SeoContentSection,
+    MyOrders,
+    MyWhitelist,
+    ShimmereCard
   },
 });
 </script>

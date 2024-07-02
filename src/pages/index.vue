@@ -1,15 +1,5 @@
-
 <template>
-  <carousel :items-to-show="2">
-    <slide v-for="slide in 10" :key="slide">
-      <div class="carousel__item">{{ slide }}</div>
-    </slide>
 
-    <template #addons>
-      <navigation />
-      <pagination />
-    </template>
-  </carousel>
 
   <AppBanner />
   <CateGories />
@@ -17,10 +7,11 @@
   <Highlights />
   <OfferBanner />
   <Highlights />
+  <Faq />
+  <SiteContentForLinks />
 </template>
 
 <style scoped>
-<style>
 .carousel__item {
   min-height: 200px;
   width: 100%;
@@ -45,52 +36,4 @@
 </style>
 
 <script setup>
-  const products = ref([
-    {
-      name : 'ved',
-      id : 1
-    },
-    {
-      name : 'ved',
-      id : 2
-    },
-    {
-      name : 'ved',
-      id : 3
-    },
-    {
-      name : 'ved',
-      id : 1
-    },
-    {
-      name : 'ved',
-      id : 2
-    },
-    {
-      name : 'ved',
-      id : 3
-    }
-  ]);
-  const responsiveOptions = ref([
-    {
-        breakpoint: '1400px',
-        numVisible: 2,
-        numScroll: 1
-    },
-    {
-        breakpoint: '1199px',
-        numVisible: 3,
-        numScroll: 1
-    },
-    {
-        breakpoint: '767px',
-        numVisible: 2,
-        numScroll: 1
-    },
-    {
-        breakpoint: '575px',
-        numVisible: 1,
-        numScroll: 1
-    }
-]);
 </script>

@@ -95,4 +95,18 @@ const getPrevIndex = () => {
     opacity: 0;
     z-index: 0;
 }
+
+@media (max-width:992px) {
+
+    .sliderItem {
+        height: 270px;
+    }
+
+    .controlBtn {
+        bottom: 40%;
+        height: 35px;
+        width: 35px;
+        font-size: 14px;
+    }
+}
 </style>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 const CartItems = ref(12)
-const WishlistItems = ref(2)
+const whitelistItems = ref(2)
 const NotiFication = ref(10)
 
 const showAutoComplete = ref(false)
@@ -55,7 +55,7 @@ const closeModal = () => {
                 <li class="icons watchlist">
                     <i class="pi pi-bookmark"></i>
                     <span class="text lg:inline block">Wishlist</span>
-                    <span class="counter">{{ WishlistItems }}</span>
+                    <span class="counter">{{ whitelistItems }}</span>
                 </li>
                 <li class="icons notification">
                     <i class="pi pi-bell"></i>
@@ -139,7 +139,7 @@ const closeModal = () => {
     }
 }
 
-@media (max-width:767px) {
+@media (max-width:992px) {
     .headerLeft {
         border-bottom: 1px solid #ddd;
         width: 100%;

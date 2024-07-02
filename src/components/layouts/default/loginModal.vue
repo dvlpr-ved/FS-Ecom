@@ -24,7 +24,7 @@ const value = ref(null);
                 placeholder="Enter Password" />
             <!-- <InputText type="password" id="password" class="flex-auto" autocomplete="off" /> -->
         </div>
-        <p class="text-center mb-4">Don't have an account? <a href="signup" style="color: var(--primary);">Register</a>
+        <p class="text-center mb-4">Don't have an account? <a href="../signup" style="color: var(--primary);">Register</a>
         </p>
         <div class="flex justify-end gap-2">
             <Button type="button" label="Cancel" severity="secondary" @click="close"></Button>
