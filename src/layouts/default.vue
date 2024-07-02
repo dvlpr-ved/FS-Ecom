@@ -19,7 +19,7 @@ import CheckOut from '~/components/common/CheckOut.vue';
 import Faq from '~/components/common/Faq.vue';
 import SeoContentSection from '~/components/common/SiteContentForLinks.vue';
 import MyOrders from '~/components/common/MyOrders.vue';
-import MyWishlist from '~/components/common/MyWishlist.vue';
+import MyWhitelist from '~/components/common/MyWhitelist.vue';
 import ShimmereCard from '~/components/common/ShimmereCard.vue';
 
 
@@ -44,7 +44,7 @@ export default defineComponent({
     Faq,
     SeoContentSection,
     MyOrders,
-    MyWishlist,
+    MyWhitelist,
     ShimmereCard
   },
 });

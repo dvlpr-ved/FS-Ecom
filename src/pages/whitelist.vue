@@ -1,3 +1,3 @@
 <template>
-    <MyWishlist />
+    <MyWhitelist />
 </template>
