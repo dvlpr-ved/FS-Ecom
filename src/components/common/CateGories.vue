@@ -135,7 +135,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .categories-main-div {
-    padding: 40px 0;
+    padding: 20px 0;
     text-align: center;
 
     .heading {
@@ -185,6 +185,9 @@ onMounted(() => {
 
     .controlBtn {
         left: 0;
+        i{
+            font-size: 28px;
+        }
     }
 
     .controlBtn1 {

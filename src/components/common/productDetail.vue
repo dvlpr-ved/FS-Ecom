@@ -43,14 +43,37 @@ const handleAdCartClose = () => {
                         <button @click="addMoreProduct"><i class="pi pi-plus"></i></button>
                     </div>
                     <div class="btnsdiv flex justify-between">
-                        <button @click="handleAddToCart" class="py-3 w-[48%] bg-black text-white capitalize rounded">Add
+                        <button @click="handleAddToCart" class="py-3 w-[48%] bg-black transition text-white capitalize rounded flex items-center gap-2 justify-center  hover:bg-[white] hover:border hover:border-black hover:text-gray-900"><i class="pi pi-cart-plus lg:text-3xl text-2xl"></i> Add
                             to cart</button>
-                        <a href="#" class="py-3 w-[48%] bg-green-400 text-white capitalize rounded text-center">chat on
-                            whatsapp</a>
+                        <a href="#" class="py-3 animate-bounce w-[48%] bg-green-400 text-white capitalize rounded text-2xl text-center flex items-center gap-2 justify-center"><i class="pi pi-whatsapp lg:text-3xl text-2xl"></i> Book Now</a>
                     </div>
+                    <div class="sharediv py-5 flex gap-2 items-end">
+                        <span class="lg:text-2xl mb-1">Share Now : </span>
+                        <a href="JavaScript:void(0)"> <i class="pi pi-instagram text-2xl transition"></i> </a>
+                        <a href="JavaScript:void(0)"> <i class="pi pi-whatsapp text-2xl transition"></i> </a>
+                        <a href="JavaScript:void(0)"> <i class="pi pi-facebook text-2xl transition"></i> </a>
+                        <!-- <a href="JavaScript:void(0)"> <i class="pi pi-pinterest text-2xl transition"></i> </a> -->
+                        <a href="JavaScript:void(0)"> <i class="pi pi-twitter text-2xl transition"></i> </a>
+                    </div>
+
+                    <div class="vendrsDetail">
+                        <div class="flex pb-2 gap-2 items-center lg:text-[18px] text-1xl">Seller Name : <span class="text-gray-600" style="font-size:16px;">Devesh</span> </div>
+                        <div class="flex pb-2 gap-2 items-center lg:text-[18px] text-1xl">Seller Contact : <span class="text-gray-600" style="font-size:16px;">devesh@gmail.com</span> </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>
     </div>
     <AddtoCartModal :Checkvisible="Checkvisible" :handleAdCartClose="handleAdCartClose" />
 </template>
+
+<style lang="scss">
+
+.wtsp{}
+    .sharediv{
+        i{ border: 1px solid var(--primary); padding: 8px; background-color: var(--primary); color: var(--white); border-radius: 50px;
+            &:hover{color: var(--primary); background: transparent}
+        }
+    }
+</style>

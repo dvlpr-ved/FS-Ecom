@@ -2,28 +2,28 @@
 const cards = [
     {
         id: 1,
-        ImgURL: 'https://blogs.rmkv.com/wp-content/uploads/2023/11/models-with-sarees-rmkv-blog-banner-1024x576.jpg',
-        title: 'Highlight 1 Title'
+        title: 'Highlight 1 Title',
+        thumbnail: 'https://blogs.rmkv.com/wp-content/uploads/2023/11/models-with-sarees-rmkv-blog-banner-1024x576.jpg',
     },
     {
         id: 2,
-        ImgURL: 'https://i.pinimg.com/originals/9e/c5/cd/9ec5cdfe4d18f004394209d1fb0ddebb.jpg',
-        title: 'Highlight 2 Title'
+        title: 'Highlight 2 Title',
+        thumbnail: 'https://i.pinimg.com/originals/9e/c5/cd/9ec5cdfe4d18f004394209d1fb0ddebb.jpg',
     },
     {
         id: 3,
-        ImgURL: 'https://blogs.rmkv.com/wp-content/uploads/2023/11/rmkv-silk-sarees-model-blog-banner.jpg',
-        title: 'Highlight 3 Title'
+        title: 'Highlight 3 Title',
+        thumbnail: 'https://blogs.rmkv.com/wp-content/uploads/2023/11/rmkv-silk-sarees-model-blog-banner.jpg',
     },
     {
         id: 4,
-        ImgURL: 'https://i.pinimg.com/originals/44/c8/09/44c8091ede64503d6a16d3f3fd96438a.jpg',
-        title: 'Highlight 4 Title'
+        title: 'Highlight 4 Title',
+        thumbnail: 'https://i.pinimg.com/originals/44/c8/09/44c8091ede64503d6a16d3f3fd96438a.jpg',
     },
     {
         id: 5,
-        ImgURL: 'https://blogs.rmkv.com/wp-content/uploads/2023/11/models-with-sarees-rmkv-blog-banner-1024x576.jpg',
-        title: 'Highlight 5 Title'
+        title: 'Highlight 5 Title',
+        thumbnail: 'https://blogs.rmkv.com/wp-content/uploads/2023/11/models-with-sarees-rmkv-blog-banner-1024x576.jpg',
     }
 ]
 
@@ -32,12 +32,15 @@ const isLoading = ref(true);
 
 const updateItemsToShow = () => {
     const screenWidth = window.innerWidth;
-    if (screenWidth < 768) {
+    
+    if (screenWidth < 576) {
         itemsToShow.value = 1;
-    } else if (screenWidth < 1024) {
+    } else if (screenWidth < 768) {
         itemsToShow.value = 2;
-    } else if (screenWidth < 1440) {
+    } else if (screenWidth < 1024) {
         itemsToShow.value = 3;
+    } else if (screenWidth < 1440) {
+        itemsToShow.value = 4;
     } else {
         itemsToShow.value = 4;
     }
@@ -75,7 +78,7 @@ onBeforeUnmount(() => {
             <div v-else class="flex justify-center gap-3 relative">
                 <carousel :items-to-show="itemsToShow">
                     <slide v-for="card in cards" :key="card.id">
-                        <HomePageCard :ImgURL="card.ImgURL" :title="card.title" />
+                        <HomePageCard :thumbnail="card.thumbnail" :title="card.title" />
                     </slide>
                     <template #addons>
                         <navigation />
@@ -97,9 +100,8 @@ onBeforeUnmount(() => {
 
 .carousel__prev,
 .carousel__next {
-    height: 46px;
-    width: 46px;
-    border-radius: 50%;
+    height: 68px;
+    width: 40px;
     background: var(--primary);
 
     &:hover {
@@ -118,7 +120,8 @@ onBeforeUnmount(() => {
         width: 35px;
         font-size: 17px;
     }
-
+}
+@media (max-width:576px) {
     .carousel__prev {
         left: 45px;
     }

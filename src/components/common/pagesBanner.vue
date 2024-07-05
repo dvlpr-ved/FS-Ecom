@@ -1,26 +1,24 @@
-<script setup>
-
+<script setup lang="ts">
+const props = defineProps<{
+    title?: string;
+    heading?: string;
+    description?: string;
+    imageUrl?: string;
+  }>();
 </script>
 <template>
-    <div class="relative pagesBanner">
+    <div class="relative pagesBanner pb-5">
         <div class="content_div container">
-            <div class="div_inner flex fwrap justify-between items-end">
-                <div class="leftside lg:w-[70%] w-[100%] bg-white lg:p-[40px]">
-                    <span class="mb-3 inline-block" style="color:var(--primary)">About FASHTSALY</span>
-                    <h4 class="heading lg:text-5xl text-3xl font-weight-[600] mb-5">Lorem ipsum dolor, sit amet
-                        consectetur adipisicing elit.</h4>
-                    <p class="mb-5 text-[16px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
-                        possimus eos minima fugit. Numquam, hic a illum unde consectetur aliquam iusto itaque ipsum, vel
-                        fugit reiciendis necessitatibus eos quisquam animi. Lorem ipsum dolor sit amet consectetur
-                        adipisicing elit. Laborum incidunt mollitia modi, adipisci quasi corrupti hic eos voluptates
-                        iste maiores quam nisi officiis dolorum sunt doloribus consequuntur. Quod, tempora ea.</p>
-                    <p class="text-[16px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur possimus eos
-                        minima fugit. Numquam, hic a illum unde consectetur aliquam iusto itaque ipsum, vel fugit
-                        reiciendis necessitatibus eos quisquam animi. Lorem ipsum dolor sit amet consectetur adipisicing
-                        elit. Laborum incidunt mollitia modi, adipisci quasi corrupti hic eos voluptates iste maiores
-                        quam nisi officiis dolorum sunt doloribus consequuntur. Quod, tempora ea.</p>
+            <div class="div_inner flex fwrap justify-center">
+                <div class="leftside lg:w-[70%] w-[100%] bg-white lg:p-[40px] shadow">                    
+                    <span class="mb-3 inline-block" style="color:var(--primary)">{{props.title}}</span>
+                    <h4 class="heading lg:text-5xl text-3xl font-weight-[600] mb-5">{{props.heading}}</h4>
+                    <p class="mb-5 text-[16px]"> {{props.description}}</p> 
+                    <div class="inputFields flex fwrap">
+                        
+                    </div>                   
                 </div>
-                <div class="rightside lg:w-[30%] w-[100%] lg:pl-[35px] lg:pb-[95px]">
+                <!-- <div class="rightside lg:w-[30%] w-[100%] lg:pl-[35px] lg:pb-[95px]">
                     <div class="head flex gap-[8px] items-center mb-3">
                         <i class="pi pi-home text-3xl" style="color: var(--primary);"></i>
                         <span class="uppercase">FASHTSALY Store</span>
@@ -28,7 +26,7 @@
                     <p class="mb-3">Jaipur — 785 15h Street, Office 478/B Green Mall, De 81566</p>
                     <span class="block">Phone: contact@example.com</span>
                     <span>Email: <a href="#" style="color: var(--primary);">contact@example.com</a> </span>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
