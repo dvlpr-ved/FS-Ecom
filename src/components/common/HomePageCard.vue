@@ -1,33 +1,36 @@
 <script setup lang="ts">
-
-const props = defineProps<{
-  ImgURL?: string;
-  title?: string;
-}>();
+  const props = defineProps<{
+    thumbnail?: string;
+    title?: string;
+  }>();
 </script>
 
 <template>
   <div class="commonCard shadow">
     <a href="searchresult/">
-      <img class="w-full carimg" :src="props.ImgURL" alt="highlight img">
+      <div class="imgsdiv">
+        <img class="w-full carimg" :src="props.thumbnail" alt="highlight img">
+      </div>
       <p class="text-2xl text-center py-4">{{ props.title }}</p>
     </a>
   </div>
 </template>
 
-
-
-<script setup>
-
-</script>
-
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .commonCard {
   max-width: 22rem;
+  .imgsdiv{
+    overflow: hidden;
+  }
+}
 
-  .carimg {
-    height: 300px;
-    object-fit: cover;
+.carimg {
+  transform: scale(1);
+  height: 300px;
+  object-fit: cover;
+  transition: all 0.5s ease;
+  &:hover{
+    transform: scale(1.1);
   }
 }
 </style>

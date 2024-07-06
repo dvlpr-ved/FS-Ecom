@@ -39,15 +39,17 @@ const getPrevIndex = () => {
 };
 </script>
 
+
 <template>
-    <div class="BannerWrapper py-4">
+    <div class="BannerWrapper">
         <div class="sliderItem">
             <img v-for="(img, index) in images" :key="index" :src="img" :class="getImageClasses(index)" :alt="img" />
         </div>
         <div class="controls">
-            <button @click="prevImage" :disabled="activeIndex === 0" class="controlBtn">&#x2190;</button>
-            <button @click="nextImage" :disabled="activeIndex === images.length - 1"
-                class="controlBtn controlBtn1">&#8594;</button>
+            <button @click="prevImage" :disabled="activeIndex === 0" class="controlBtn"> <i
+                    class="pi pi-angle-left"></i> </button>
+            <button @click="nextImage" :disabled="activeIndex === images.length - 1" class="controlBtn controlBtn1"><i
+                    class="pi pi-angle-right"></i></button>
         </div>
     </div>
 </template>
@@ -55,14 +57,13 @@ const getPrevIndex = () => {
 <style lang="scss" scoped>
 .BannerWrapper {
     position: relative;
+    overflow: hidden;
 }
 
 .sliderItem {
     position: relative;
     width: 100%;
-    height: 490px;
-    overflow: hidden;
-    border-radius: 0 0 15px 15px;
+    height: 350px;
 }
 
 .slider-image {
@@ -82,6 +83,12 @@ const getPrevIndex = () => {
 
 .hidden {
     display: none;
+}
+
+.controlBtn {
+    i {
+        font-size: 28px;
+    }
 }
 
 .next {
@@ -106,7 +113,10 @@ const getPrevIndex = () => {
         bottom: 40%;
         height: 35px;
         width: 35px;
-        font-size: 14px;
+
+        i {
+            font-size: 14px;
+        }
     }
 }
 </style>

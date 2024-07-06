@@ -54,7 +54,7 @@ const closeModal = () => {
                 </li>
                 <li class="icons watchlist">
                     <i class="pi pi-bookmark"></i>
-                    <span class="text lg:inline block">Wishlist</span>
+                    <span class="text lg:inline block">whitelist</span>
                     <span class="counter">{{ whitelistItems }}</span>
                 </li>
                 <li class="icons notification">
