@@ -45,7 +45,12 @@ const handleAdCartClose = () => {
                     <div class="btnsdiv flex justify-between">
                         <button @click="handleAddToCart" class="py-3 w-[48%] bg-black transition text-white capitalize rounded flex items-center gap-2 justify-center  hover:bg-[white] hover:border hover:border-black hover:text-gray-900"><i class="pi pi-cart-plus lg:text-3xl text-2xl"></i> Add
                             to cart</button>
-                        <a href="#" class="py-3 animate-bounce w-[48%] bg-green-400 text-white capitalize rounded text-2xl text-center flex items-center gap-2 justify-center"><i class="pi pi-whatsapp lg:text-3xl text-2xl"></i> Book Now</a>
+                            <button class="w-[48%]">
+                                <BookNow 
+                                :bounceAni="'animate-bounce'" 
+                                bookingLink="https://api.whatsapp.com/send?phone=+910123456789&text=Hello, Looking for banarasee saree. Get in touch with me my name is"
+                              />    
+                            </button>
                     </div>
                     <div class="sharediv py-5 flex gap-2 items-end">
                         <span class="lg:text-2xl mb-1">Share Now : </span>
