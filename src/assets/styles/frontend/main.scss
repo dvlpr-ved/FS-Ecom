@@ -6,6 +6,7 @@
 input{padding: 5px 10px; border: 1px solid #b1b1b1;}
 
 h1, h2, h3, h4, h5, h6, .heading, .headings .title{font-family: "Roboto", sans-serif;}
+h1, h2, h3, h4, h5, h6, .heading, .headings{text-transform: capitalize; letter-spacing: 2px;}
 .headingsFont{font-family: "Roboto", sans-serif;}
 
 .body{background: var(--white); color: var(--black);}

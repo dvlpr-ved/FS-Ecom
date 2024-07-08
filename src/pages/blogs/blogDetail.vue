@@ -1,4 +1,0 @@
-<template>
-    <BlogDetail/>    
-</template>
-    
