@@ -19,6 +19,7 @@
             :heading="data.heading"
             :description="data.description"
     />
+    
 </template>
 
 <style scoped></style>

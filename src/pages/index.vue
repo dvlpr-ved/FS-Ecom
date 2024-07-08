@@ -1,15 +1,15 @@
+<script setup>
+</script>
+
 <template>
-
-
   <AppBanner />
   <CateGories />
   <Highlights />
   <Highlights />
   <OfferBanner />
   <Highlights />
-  <Faq />
-  <SiteContentForLinks />
 </template>
+
 
 <style scoped>
 .carousel__item {
@@ -34,6 +34,3 @@
   border: 5px solid white;
 }
 </style>
-
-<script setup>
-</script>

@@ -21,6 +21,10 @@ import SeoContentSection from '~/components/common/SiteContentForLinks.vue';
 import MyOrders from '~/components/common/MyOrders.vue';
 import MyWhitelist from '~/components/common/MyWhitelist.vue';
 import ShimmereCard from '~/components/common/ShimmereCard.vue';
+import BlogList from '~/components/common/BlogList.vue';
+import BookNow from '~/components/common/BookNow.vue';
+import BlogDetail from '~/components/common/BlogDetail.vue';
+
 
 
 export default defineComponent({
@@ -45,7 +49,10 @@ export default defineComponent({
     SeoContentSection,
     MyOrders,
     MyWhitelist,
-    ShimmereCard
+    ShimmereCard,
+    BlogList,
+    BookNow,
+    BlogDetail
   },
 });
 </script>
