@@ -23,6 +23,7 @@ import MyWhitelist from '~/components/common/MyWhitelist.vue';
 import ShimmereCard from '~/components/common/ShimmereCard.vue';
 import BlogList from '~/components/common/BlogList.vue';
 import BookNow from '~/components/common/BookNow.vue';
+import BlogDetail from '~/components/common/BlogDetail.vue';
 
 
 
@@ -50,7 +51,8 @@ export default defineComponent({
     MyWhitelist,
     ShimmereCard,
     BlogList,
-    BookNow
+    BookNow,
+    BlogDetail
   },
 });
 </script>

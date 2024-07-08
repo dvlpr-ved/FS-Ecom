@@ -1,5 +1,4 @@
 <script setup>
-import { ref, onMounted } from 'vue';
 
 const blogPosts = ref([]);
 const loading = ref(true);
@@ -47,8 +46,8 @@ onMounted(async () => {
               <img :src="post.imgUrl" alt="Blog Image" class="lg:w-[30%] w-[100%] lg:h-[250px] object-cover rounded-t-lg">
               <div class="p-4">
                 <h2 class="lg:text-3xl text-2xl font-semibold mb-2 capitalize">{{ post.title }}</h2>
-                <p class="mb-2 capitalize text-[15px] lg:text-justify text-left">{{ post.description }}</p>
-                <small class="continuelink hover:pl-2 transition-all mb-2 flex items-end gap-2">Continue Reading <i class="pi pi-arrow-right"></i></small>
+                <p class="mb-2 capitalize text-[15px] lg:text-justify text-left">{{ post.description.slice(0, 300) }}...</p>
+                <small class="continuelink hover:pl-2 transition-all mb-2 flex items-end gap-2 text-orange-600">Continue Reading <i class="pi pi-arrow-right"></i></small>
                 <small class="text-gray-500">{{ post.date }}</small>
               </div>
             </nuxt-link>
@@ -88,9 +87,6 @@ onMounted(async () => {
         place-content: center;
         place-items: center;
     }
-  .continuelink{
-    display: block;
-    color: var(--primary);
-  }
+
   </style>
   
