@@ -1,7 +1,4 @@
 <script setup>
-import { template } from '@whoj/utils';
-
-
 const data = [
     {
         id: 1,

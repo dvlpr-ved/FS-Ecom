@@ -1,4 +1,3 @@
 <template>
-    <BlogDetail/>    
+    <BlogDetail/>   
 </template>
-    
