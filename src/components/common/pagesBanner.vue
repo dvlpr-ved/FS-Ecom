@@ -14,9 +14,6 @@ const props = defineProps<{
                     <span class="mb-3 inline-block" style="color:var(--primary)">{{props.title}}</span>
                     <h4 class="heading lg:text-5xl text-3xl font-weight-[600] mb-5">{{props.heading}}</h4>
                     <p class="mb-5 text-[16px]"> {{props.description}}</p> 
-                    <div class="inputFields flex fwrap">
-                        
-                    </div>                   
                 </div>
                 <!-- <div class="rightside lg:w-[30%] w-[100%] lg:pl-[35px] lg:pb-[95px]">
                     <div class="head flex gap-[8px] items-center mb-3">

@@ -9,7 +9,7 @@
   <div class="commonCard shadow">
     <a href="searchresult/">
       <div class="imgsdiv">
-        <img class="w-full carimg" :src="props.thumbnail" alt="highlight img">
+        <img class="w-full carimg" :src="props.thumbnail" alt="highlight img" loading="lazy">
       </div>
       <p class="text-2xl text-center py-4">{{ props.title }}</p>
     </a>

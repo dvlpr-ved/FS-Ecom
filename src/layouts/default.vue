@@ -24,6 +24,8 @@ import ShimmereCard from '~/components/common/ShimmereCard.vue';
 import BlogList from '~/components/common/BlogList.vue';
 import BookNow from '~/components/common/BookNow.vue';
 import BlogDetail from '~/components/common/BlogDetail.vue';
+import SiteMap from '~/components/common/SiteMap.vue';
+
 
 
 
@@ -52,7 +54,8 @@ export default defineComponent({
     ShimmereCard,
     BlogList,
     BookNow,
-    BlogDetail
+    BlogDetail,
+    SiteMap
   },
 });
 </script>

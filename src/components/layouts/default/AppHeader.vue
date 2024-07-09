@@ -5,7 +5,7 @@ const whitelistItems = ref(2)
 const NotiFication = ref(10)
 
 const showAutoComplete = ref(false)
-const handleChange = (e) => {
+const handleChange = (e:any) => {
     // showAutoComplete.value = !showAutoComplete.value;
     showAutoComplete.value = true;
 };
@@ -48,14 +48,18 @@ const closeModal = () => {
                 </li>
                 <li class="lg:block hidden"> <button class="subscribe commonbtn">subscribe</button> </li>
                 <li class="icons cart">
-                    <i class="pi pi-shopping-cart"></i>
-                    <span class="text lg:inline block">cart</span>
-                    <span class="counter">{{ CartItems }}</span>
+                    <NuxtLink to="../orders">
+                        <i class="pi pi-shopping-cart"></i>
+                        <span class="text lg:inline block">cart</span>
+                        <span class="counter">{{ CartItems }}</span>
+                    </NuxtLink>
                 </li>
                 <li class="icons watchlist">
-                    <i class="pi pi-bookmark"></i>
-                    <span class="text lg:inline block">whitelist</span>
-                    <span class="counter">{{ whitelistItems }}</span>
+                    <NuxtLink to="whitelist">
+                        <i class="pi pi-bookmark"></i>
+                        <span class="text lg:inline block">whitelist</span>
+                        <span class="counter">{{ whitelistItems }}</span>
+                    </NuxtLink>
                 </li>
                 <li class="icons notification">
                     <i class="pi pi-bell"></i>
