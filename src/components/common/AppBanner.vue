@@ -86,7 +86,9 @@ const getPrevIndex = () => {
 }
 
 .controlBtn {
+    background:#fff;
     i {
+        color:#717171;
         font-size: 28px;
     }
 }

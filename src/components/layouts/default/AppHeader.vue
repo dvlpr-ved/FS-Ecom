@@ -5,7 +5,7 @@ const whitelistItems = ref(2)
 const NotiFication = ref(10)
 
 const showAutoComplete = ref(false)
-const handleChange = (e) => {
+const handleChange = (e:any) => {
     // showAutoComplete.value = !showAutoComplete.value;
     showAutoComplete.value = true;
 };
@@ -23,47 +23,66 @@ const closeModal = () => {
 <template>
     <OfferLine />
     <header class="AppHeader border-bottom">
-        <div class="container flex fwrap items-center justify-between">
+        <!-- only for desktop -->
+        <div class="headerDesk container lg:flex hidden justify-between">
             <div class="headerLeft flex justify-between items-center">
                 <a href="/" class="logo">
                     <span class="text-3xl uppercase">fashtsaly</span>
                 </a>
-                <button class="subscribe commonbtn lg:hidden block">subscribe</button>
-                <!-- <div class="humbergIcon lg:hidden block">
-                    <i class="pi pi-bars text-5xl"></i>
-                </div> -->
-                <div class="SearchIcon lg:hidden block">
-                    <i class="pi pi-search text-3xl"></i>
-                </div>
             </div>
 
             <div class="searchField lg:flex hidden relative">
                 <input placeholder="Search Here..." @click="handleChange" @blur="handleBlur" />
                 <SearchAutoComplete v-if="showAutoComplete" />
             </div>
-            <ul class="navList flex items-center justify-center">
-                <li class="icons user" label="Show" @click="visible = true">
-                    <i class="pi pi-user"></i>
-                    <span class="text lg:inline block">Login</span>
+
+            <ul class="navList flex items-center justify-center capitalize gap-5">
+                <li class="icons relative cart" v-tooltip="'View Cart'">
+                    <NuxtLink to="../orders" class="border border-gray-300 rounded-[100%] flex items-center justify-center">
+                        <i class="pi pi-shopping-cart text-2xl"></i>
+                        <span class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl">{{ CartItems }}</span>
+                    </NuxtLink>
                 </li>
-                <li class="lg:block hidden"> <button class="subscribe commonbtn">subscribe</button> </li>
-                <li class="icons cart">
-                    <i class="pi pi-shopping-cart"></i>
-                    <span class="text lg:inline block">cart</span>
-                    <span class="counter">{{ CartItems }}</span>
+                <li class="icons relative cart">
+                    <NuxtLink to="../whitelist" class="border border-gray-300 rounded-[100%] flex items-center justify-center">
+                        <i class="pi pi-heart text-2xl"></i>
+                    </NuxtLink>
                 </li>
-                <li class="icons watchlist">
-                    <i class="pi pi-bookmark"></i>
-                    <span class="text lg:inline block">whitelist</span>
-                    <span class="counter">{{ whitelistItems }}</span>
-                </li>
-                <li class="icons notification">
-                    <i class="pi pi-bell"></i>
-                    <span class="text lg:inline block">Notification</span>
-                    <span class="counter">{{ NotiFication }}</span>
+                <li class="block"> <button class="subscribe commonbtn">subscribe</button> </li>
+                <li class="icons relative user flex items-center gap-2 cursor-pointer" label="Show" @click="visible = true">
+                    <i class="pi pi-user text-4xl"></i>
+                    <span class="text inline">LOGIN / REGISTER</span>
                 </li>
             </ul>
         </div>
+
+        <!-- header for mobile -->
+        <div class="container mx-auto flex items-center justify-between py-1 lg:hidden">
+            <a href="/" class="logo">
+                <span class="text-3xl uppercase font-bold">Fashtsaly</span>
+            </a>
+            <ul class="navList flex items-center justify-center space-x-4">
+                <li class="icons text-center watchlist">
+                <NuxtLink to="whitelist" class="flex flex-col items-center text-gray-700 hover:text-gray-900">
+                    <i class="pi pi-bookmark text-2xl"></i>
+                    <span class="text-xs mt-1">Whitelist</span>
+                </NuxtLink>
+                </li>
+                <li class="icons text-center notification">
+                <div class="flex flex-col items-center text-gray-700 hover:text-gray-900">
+                    <i class="pi pi-bell text-2xl"></i>
+                    <span class="text-xs mt-1">Notification</span>
+                </div>
+                </li>
+                <li class="icons text-center subscribe">
+                <div class="flex flex-col items-center text-gray-700 hover:text-gray-900">
+                    <i class="pi pi-envelope text-2xl"></i>
+                    <span class="text-xs mt-1">Subscribe</span>
+                </div>
+                </li>
+            </ul>
+            </div>
+
     </header>
 
     <LoginModal :visible="visible" :close="closeModal" />
@@ -87,6 +106,7 @@ const closeModal = () => {
 
     .searchField {
         width: 35%;
+        translate:18% 0;
 
         input {
             width: 100%;
@@ -100,44 +120,15 @@ const closeModal = () => {
         }
     }
 
-    .navList {
-        gap: 0 25px;
-        text-transform: capitalize;
+}
 
-        .text {
-            font-size: 16px;
-        }
-
-    }
-
-    .icons {
-        display: flex;
-        align-items: center;
-        position: relative;
-        gap: 0 5px;
-
-        &:hover {
-            color: var(--primary);
-            cursor: pointer;
-        }
-
-        .counter {
-            position: absolute;
-            left: 9px;
-            top: -6px;
-            background: var(--primary);
-            color: var(--white);
-            padding: 0 3px;
-            font-size: 12px;
-            border-radius: 2px;
-        }
-
-        i {
-            font-size: 25px;
-
-        }
+.navList{
+    .cart a{
+        height: 45px;
+        width: 45px;
     }
 }
+
 
 @media (max-width:992px) {
     .headerLeft {
@@ -145,36 +136,6 @@ const closeModal = () => {
         width: 100%;
         margin-bottom: 15px;
         padding-bottom: 8px;
-    }
-
-    .AppHeader {
-        .navList {
-            // padding: 0 15px;
-            gap: 0 17px;
-            justify-content: space-between;
-            width: 100%;
-
-            .text {
-                font-size: 12px;
-            }
-        }
-    }
-
-    .icons {
-        flex-wrap: wrap;
-        flex-direction: column;
-
-        .counter {
-            left: 0;
-            right: -13px;
-            margin: 0 auto;
-            width: fit-content;
-            top: -7px;
-        }
-    }
-
-    .commonbtn {
-        padding: 8px 15px;
     }
 }
 </style>

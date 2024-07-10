@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="text-center text-[14px] bg-blue-800 py-2 text-white">Free Shipping Sitewide on Every Order, Don’t Miss Out!!</div>
+  <div class="text-center lg:text-[14px] text-[12px] bg-blue-800 lg:py-2 py-1 text-white">Free Shipping Sitewide on Every Order, Don’t Miss Out!!</div>
 </template>
 
 <style lang="scss" scoped></style>

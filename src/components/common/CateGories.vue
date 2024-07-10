@@ -111,7 +111,7 @@ onMounted(() => {
                             <div class="p-[70px] animate-pulse bg-gray-200" style="border-radius:100%"></div>
                         </div>
                         <!-- for mb -->
-                        <div class="flex lg:hidden justify-between hidden">
+                        <div class="flex lg:hidden justify-between">
                             <div class="p-[50px] animate-pulse bg-gray-200" style="border-radius:100%"></div>
                             <div class="p-[50px] animate-pulse bg-gray-200" style="border-radius:100%"></div>
                             <div class="p-[50px] animate-pulse bg-gray-200" style="border-radius:100%"></div>
@@ -160,7 +160,7 @@ onMounted(() => {
 
     .categories-card {
         flex: 0 0 auto;
-        width: calc(100% / 7);
+        width: calc(100% / 9);
         max-width: 250px;
         text-align: center;
         padding: 10px;
