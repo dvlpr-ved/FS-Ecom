@@ -24,7 +24,12 @@ const cards = [
         id: 5,
         title: 'Highlight 5 Title',
         thumbnail: 'https://blogs.rmkv.com/wp-content/uploads/2023/11/models-with-sarees-rmkv-blog-banner-1024x576.jpg',
-    }
+    },
+    {
+        id: 6,
+        title: 'Highlight 3 Title',
+        thumbnail: 'https://blogs.rmkv.com/wp-content/uploads/2023/11/rmkv-silk-sarees-model-blog-banner.jpg',
+    },
 ]
 
 const itemsToShow = ref(4);
@@ -42,7 +47,7 @@ const updateItemsToShow = () => {
     } else if (screenWidth < 1440) {
         itemsToShow.value = 4;
     } else {
-        itemsToShow.value = 4;
+        itemsToShow.value = 5;
     }
 };
 
@@ -61,11 +66,11 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div class="cardWrapper py-5">
-        <div class="container">
-            <div class="flexHeading flex justify-between items-center pb-5">
+    <div class="cardWrapper py-5 bg-gray-200">
+        <div class="container bg-white">
+            <div class="flexHeading flex justify-between items-center py-5">
                 <h3 class="text-2xl lg:text-3xl">Highlights</h3>
-                <a href="#" class="commonbtn">View All</a>
+                <a href="searchresult" class="commonbtn">View All</a>
             </div>
             <template v-if="isLoading">
                 <div class="lg:flex hidden justify-between">
@@ -90,9 +95,7 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="scss">
-.cardWrapper {
-    background: #f5f5f5ab;
-}
+
 
 .carousel__icon {
     filter: invert(1);
@@ -102,7 +105,8 @@ onBeforeUnmount(() => {
 .carousel__next {
     height: 68px;
     width: 40px;
-    background: var(--primary);
+    background: #fff;
+    svg{ filter:unset; fill:#717171}
 
     &:hover {
         filter: brightness(1.2);

@@ -11,24 +11,36 @@ const value = ref(null);
 </script>
 
 <template>
-    <Dialog :visible="visible" modal header="Enter Your Details" :style="{ width: '25rem' }">
+    <Dialog :visible="visible" modal class="p-0" :style="{ width: '1024px' }">
 
-        <div class="flex items-center gap-4 mb-4">
-            <label for="email" class="font-semibold w-24">Email</label>
-            <input type="email" class="py-2 px-2 rounded border-gray-400 border w-[80%]" autocomplete="off"
-                placeholder="Enter Email" />
-        </div>
-        <div class="flex items-center gap-4 mb-4">
-            <label for="password" class="font-semibold w-24">Password</label>
-            <input class="py-2 px-2 rounded border-gray-400 border w-[80%]" autocomplete="off" type="password"
-                placeholder="Enter Password" />
-            <!-- <InputText type="password" id="password" class="flex-auto" autocomplete="off" /> -->
-        </div>
-        <p class="text-center mb-4">Don't have an account? <a href="../signup" style="color: var(--primary);">Register</a>
-        </p>
-        <div class="flex justify-end gap-2">
-            <Button type="button" label="Cancel" severity="secondary" @click="close"></Button>
-            <Button type="button" label="Login" @click="visible = false"></Button>
+        <div class="flexDialog flex justify-between relative">
+            <div class="leftCol lg:w-[50%] w-[100%] bg-blue-800 relative">
+                <img class=" brightness-[0.]" src="assets/images/common/signup.png" alt="subscriber" />
+                <a href="#"
+                    class="absolute bottom-[20%] left-0 right-0 w-fit m-auto commonbtn py-3 px-5 animate-bounce text-2xl"
+                >Subscriber</a>
+            </div>
+            <div class="leftCol lg:w-[50%] w-[100%] p-6 bg-gray-100">
+                <div class="heading text-center text-5xl mb-4">Login</div>
+                <div class="flex items-center gap-4 mb-4">
+                    <!-- <label for="email" class="font-semibold w-24">Email</label> -->
+                    <input type="email" class="py-3 text-xl px-2 rounded border-gray-400 border w-[100%]" autocomplete="off"
+                    placeholder="Enter Email" />
+                </div>
+                <div class="flex items-center gap-4 mb-4">
+                    <!-- <label for="password" class="font-semibold w-24">Password</label> -->
+                    <input class="py-3 text-xl px-2 rounded border-gray-400 border w-[100%]" autocomplete="off" type="password"
+                        placeholder="Enter Password" />
+                    <!-- <InputText type="password" id="password" class="flex-auto" autocomplete="off" /> -->
+                </div>
+                
+                <Button type="button" class="text-2xl px-5 flex justify-center w-1/2 m-auto" @click="visible = false">Login</Button>
+                
+                 <span class="text-center block text-4xl py-3">OR</span>
+                  <a href="../signup" class="py-2 px-3 rounded text-white text-2xl commonbtn block w-1/2 text-center m-auto mb-4"
+                        style="background:#204887">Register</a>
+            </div>
+            <Button type="button" class="absolute top-0 right-0 bg-transparent" @click="close"> <i class="pi pi-times text-3xl text-gray-600"></i> </Button>
         </div>
     </Dialog>
 </template>
@@ -38,10 +50,11 @@ input {
     font-size: 16px;
 }
 
-.p-dialog .p-dialog-header .p-dialog-title {
-    font-size: 25px;
-    text-align: center;
-    display: block;
+.p-dialog .p-dialog-header {
+    display:none;
+}
+.p-dialog .p-dialog-content{
+    padding:0;
 }
 
 .p-button {

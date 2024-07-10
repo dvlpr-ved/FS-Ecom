@@ -1,0 +1,3 @@
+<template>
+    <MyWhitelist />
+</template>
