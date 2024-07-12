@@ -22,7 +22,7 @@ const toggleFieldType = () => {
         <div class="innerdiv max-w-[700px] w-full bg-white rounded">
             <div class="flexdiv flex flex-wrap justify-between">
                 <div
-                    class="leftContent lg:w-[45%] w-[100%] bg-blue-800 text-white p-4 flex justify-center items-center text-center">
+                    class="leftContent lg:w-[45%] w-[100%] bgblue80 text-white p-4 flex justify-center items-center text-center">
                     <div>
                         <h5 class="heading text-4xl mb-4">Welcome Back!</h5>
                         <p class="mb-4">To stay connected with us, please log in using your personal information.</p>

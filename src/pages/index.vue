@@ -1,5 +1,4 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
   <AppBanner />
@@ -10,9 +9,8 @@
   <Highlights />
 </template>
 
-
-<style scoped>
-.carousel__item {
+<style lang="scss">
+/*.carousel__item {
   min-height: 200px;
   width: 100%;
   background-color: var(--vc-clr-primary);
@@ -32,5 +30,11 @@
 .carousel__next {
   box-sizing: content-box;
   border: 5px solid white;
+}*/
+
+@media (max-width: 768px) {
+  .hideFromHome {
+    /*display: none;*/
+  }
 }
 </style>
