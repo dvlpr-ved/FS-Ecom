@@ -53,7 +53,7 @@ onMounted(async () => {
             </nuxt-link>
           </li>
         </ul>
-        <div class="lg:w-[25%] w-[100%] rounded shadow sticky top-3 bg-blue-800 h-fit text-white p-3">
+        <div class="lg:w-[25%] w-[100%] rounded shadow sticky top-3 bgblue80 h-fit text-white p-3">
           <h1 class="heading lg:text-3xl text-2xl mb-2 uppercase">NEED any HELP?</h1>
           <p class="text-gray-200 mb-3">Our dedicated support team is here for you 24/7. Reach out to us with any questions or concerns, and we'll provide prompt and friendly assistance.</p>
           <NuxtLink to="tel:91999999999" target="_blank" class="heading lg:text-3xl text-2xl mb-3 flex items-center gap-2 uppercase">

@@ -1,122 +1,50 @@
 <script setup>
-import { ref } from 'vue';
-
-const images = [
-    'https://anyaonline.in/cdn/shop/collections/IMG_0552.png?v=1645617984',
-    'https://img.freepik.com/free-vector/happy-diwali-sale-banner-with-diya-marigold-flower_1017-21234.jpg?t=st=1718820636~exp=1718824236~hmac=b4ff16559985950523c5909b9fc9e5da003080464b0b8408741fdedcf8e3cf59&w=1380',
-    'https://blogs.rmkv.com/wp-content/uploads/2023/11/rmkv-silk-sarees-model-blog-banner.jpg',
+const cards = [
+  {
+    id: 1,
+    thumbnail:
+      "https://assets.myntassets.com/f_webp,w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2022/5/3/3f6d1e2a-5ef6-4921-be5d-443a11b11d801651599573985-Dresses_Desk.jpg",
+  },
+  {
+    id: 2,
+    thumbnail:
+      "https://assets.myntassets.com/f_webp,w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2022/5/3/a20271c6-249f-480b-bcc7-1b150516e54e1651599573998-Dressberry_Desk.jpg",
+  },
+  {
+    id: 3,
+    thumbnail:
+      "https://assets.myntassets.com/f_webp,w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2022/5/3/bc89bda3-e7dc-42fc-91f8-e380f36303c11651599573964-Tops---Tees_Desk.jpg",
+  },
+  {
+    id: 4,
+    thumbnail:
+      "https://assets.myntassets.com/f_webp,w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2022/4/10/7feef02b-0072-4c1b-b83d-4e46a5d93c6b1649530621162-Sangria_Desk_Banner.jpg",
+  },
+  {
+    id: 5,
+    thumbnail:
+      "https://assets.myntassets.com/f_webp,w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2022/5/3/3f6d1e2a-5ef6-4921-be5d-443a11b11d801651599573985-Dresses_Desk.jpg",
+  },
 ];
 
-const activeIndex = ref(0);
-
-const prevImage = () => {
-    if (activeIndex.value > 0) {
-        activeIndex.value--;
-    }
-};
-
-const nextImage = () => {
-    if (activeIndex.value < images.length - 1) {
-        activeIndex.value++;
-    }
-};
-
-const getImageClasses = (index) => {
-    return {
-        'slider-image': true,
-        'active': index === activeIndex.value,
-        'next': index === getNextIndex(),
-        'prev': index === getPrevIndex()
-    };
-};
-
-const getNextIndex = () => {
-    return (activeIndex.value + 1) % images.length;
-};
-
-const getPrevIndex = () => {
-    return (activeIndex.value - 1 + images.length) % images.length;
-};
+const itemsToShow = ref(1);
+const isLoading = ref(true);
 </script>
 
-
 <template>
-    <div class="BannerWrapper">
-        <div class="sliderItem">
-            <img v-for="(img, index) in images" :key="index" :src="img" :class="getImageClasses(index)" :alt="img" />
-        </div>
-        <div class="controls">
-            <button @click="prevImage" :disabled="activeIndex === 0" class="controlBtn"> <i
-                    class="pi pi-angle-left"></i> </button>
-            <button @click="nextImage" :disabled="activeIndex === images.length - 1" class="controlBtn controlBtn1"><i
-                    class="pi pi-angle-right"></i></button>
-        </div>
-    </div>
+  <div class="appBannerSlider">
+    <carousel :items-to-show="itemsToShow"> 
+      <slide v-for="card in cards" :key="card.id">
+        <img class="slideImg" :src="card.thumbnail" />
+      </slide>
+      <template #addons>
+        <navigation />
+      </template>
+    </carousel>
+  </div>
 </template>
 
-<style lang="scss" scoped>
-.BannerWrapper {
-    position: relative;
-    overflow: hidden;
-}
-
-.sliderItem {
-    position: relative;
-    width: 100%;
-    height: 350px;
-}
-
-.slider-image {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    opacity: 0;
-    transition: transform 0.8s ease, opacity 0.8s ease;
-    object-fit: cover;
-}
-
-.active {
-    opacity: 1;
-    z-index: 1;
-}
-
-.hidden {
-    display: none;
-}
-
-.controlBtn {
-    i {
-        font-size: 28px;
-    }
-}
-
-.next {
-    transform: translateX(100%);
-    opacity: 0;
-    z-index: 0;
-}
-
-.prev {
-    transform: translateX(-100%);
-    opacity: 0;
-    z-index: 0;
-}
-
-@media (max-width:992px) {
-
-    .sliderItem {
-        height: 270px;
-    }
-
-    .controlBtn {
-        bottom: 40%;
-        height: 35px;
-        width: 35px;
-
-        i {
-            font-size: 14px;
-        }
-    }
+<style lang="scss">
+.appBannerSlider {
 }
 </style>

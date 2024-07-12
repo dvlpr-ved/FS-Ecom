@@ -14,7 +14,7 @@ const value = ref(null);
     <Dialog :visible="visible" modal class="p-0" :style="{ width: '1024px' }">
 
         <div class="flexDialog flex justify-between relative">
-            <div class="leftCol lg:w-[50%] w-[100%] bg-blue-800 relative">
+            <div class="leftCol lg:w-[50%] w-[100%] bgblue80 relative">
                 <img class=" brightness-[0.]" src="assets/images/common/signup.png" alt="subscriber" />
                 <a href="#"
                     class="absolute bottom-[20%] left-0 right-0 w-fit m-auto commonbtn py-3 px-5 animate-bounce text-2xl"
