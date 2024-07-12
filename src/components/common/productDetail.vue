@@ -1,22 +1,20 @@
 <script setup lang="ts">
-
-const Checkvisible = ref('')
-const productCount = ref(1)
+const Checkvisible = ref("");
+const productCount = ref(1);
 
 const addMoreProduct = () => {
-    productCount.value++
-}
+  productCount.value++;
+};
 const removeMoreProduct = () => {
-    if (productCount.value > 1) productCount.value--
-    // else return;
-}
+  if (productCount.value > 1) productCount.value--;
+};
 
 const handleAddToCart = () => {
-    Checkvisible.value = 'active';
-}
+  Checkvisible.value = "active";
+};
 const handleAdCartClose = () => {
-    Checkvisible.value = '';
-}
+  Checkvisible.value = "";
+};
 </script>
 <template>
   <div class="productdetail_man_div py-5">
@@ -30,9 +28,7 @@ const handleAdCartClose = () => {
         </div>
 
         <div class="productcontent lg:w-[50%] w-[100%]">
-          <h6 class="pro-title lg:text-6xl text-4xl mb-3">
-            Banarasi Blue Saree
-          </h6>
+          <h6 class="pro-title lg:text-6xl text-4xl mb-3">Banarasi Blue Saree</h6>
           <div class="price">
             <p class="cardtitle text-2xl font-[500] text-black mb-3">
               <span class="line-through text-gray-700">₹800</span> ₹700
@@ -40,11 +36,12 @@ const handleAdCartClose = () => {
           </div>
           <div class="price">
             <p class="cardtitle text-2xl font-[500] text-black mb-3">
-               SizeS : M, L, XL, XXL</p>
+              SizeS : M, L, XL, XXL
+            </p>
           </div>
           <article class="productdesc mb-3">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iusto
-            nostrum non nulla obcaecati officiis, repellat molestiae quae animi.
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iusto nostrum non
+            nulla obcaecati officiis, repellat molestiae quae animi.
           </article>
           <div
             class="productCounter mb-3 flex gap-4 border border-gray-400 p-2 px-3 w-[fit-content]"
@@ -93,31 +90,18 @@ const handleAdCartClose = () => {
             </div>
             <div class="flex pb-2 gap-2 items-center lg:text-[18px] text-1xl">
               Seller Address :
-              <span class="text-gray-600" style="font-size: 16px"
-                >Jaipur rajasthan</span
-              >
+              <span class="text-gray-600" style="font-size: 16px">Jaipur rajasthan</span>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Releted Products -->
-      <div class="reletedProducts pt-4 flex flex-wrap lg:gap-[15px] gap-[11px]">
-        <div class="heading w-full lg:text-6xl text-4xl">Releted Products</div>
-        <CommonCard />
-        <CommonCard />
-        <CommonCard />
-        <CommonCard />
-        <CommonCard />
-        <CommonCard />
-      </div>
+      <SimilarProducts />
     </div>
   </div>
 
-  <AddtoCartModal
-    :Checkvisible="Checkvisible"
-    :handleAdCartClose="handleAdCartClose"
-  />
+  <AddtoCartModal :Checkvisible="Checkvisible" :handleAdCartClose="handleAdCartClose" />
 </template>
 
 <style lang="scss">

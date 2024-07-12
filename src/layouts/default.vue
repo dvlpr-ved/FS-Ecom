@@ -27,6 +27,7 @@ import BlogList from "~/components/common/BlogList.vue";
 import BookNow from "~/components/common/BookNow.vue";
 import BlogDetail from "~/components/common/BlogDetail.vue";
 import SiteMap from "~/components/common/SiteMap.vue";
+import SimilarProducts from "~/components/common/SimilarProducts.vue";
 
 export default defineComponent({
   components: {
@@ -56,6 +57,7 @@ export default defineComponent({
     BookNow,
     BlogDetail,
     SiteMap,
+    SimilarProducts,
   },
 });
 </script>

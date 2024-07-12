@@ -44,12 +44,9 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="similarCardWrapper py-5 bg-gray-200">
+  <div class="similarCardWrapper">
     <div class="container bg-white">
-      <div class="flexHeading flex justify-between items-center py-5">
-        <h3 class="text-2xl lg:text-3xl">Highlights</h3>
-        <a href="searchresult" class="commonbtn">View All</a>
-      </div>
+    <div class="heading w-full lg:text-6xl text-4xl py-5">Similar Products</div>
       <template v-if="isLoading">
         <div class="lg:flex hidden justify-between py-4">
           <ShimmereCard />
@@ -80,53 +77,5 @@ onBeforeUnmount(() => {
 
 <style lang="scss">
 .similarCardWrapper {
-  &:hover .carousel__prev,
-  &:hover .carousel__next {
-    opacity: 1;
-  }
-
-  .carousel__icon {
-    filter: invert(1);
-  }
-
-  .carousel__prev,
-  .carousel__next {
-    opacity: 0;
-    height: 68px;
-    width: 40px;
-    background: #fff;
-    transition: all 0.5s ease;
-    svg {
-      filter: unset;
-      fill: #717171;
-    }
-
-    &:hover {
-      filter: brightness(1.2);
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  .similarCardWrapper {
-    overflow-x: hidden;
-
-    .carousel__prev,
-    .carousel__next {
-      height: 35px;
-      width: 35px;
-      font-size: 17px;
-    }
-  }
-}
-@media (max-width: 576px) {
-  .similarCardWrapper {
-    .carousel__prev {
-      left: 0;
-    }
-    .carousel__next {
-      right: 0;
-    }
-  }
 }
 </style>

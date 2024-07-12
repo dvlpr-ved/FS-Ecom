@@ -7,6 +7,10 @@
   <Highlights />
   <OfferBanner />
   <Highlights />
+  <Highlights />
+  <OfferBanner />
+  <Highlights />
+  <Highlights />
 </template>
 
 <style lang="scss">

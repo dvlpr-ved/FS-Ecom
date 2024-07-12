@@ -35,3 +35,9 @@ input{padding: 5px 10px; border: 1px solid #b1b1b1;}
 .controlBtn {position: absolute;left: 0;bottom: 38%;z-index: 1;font-size: 25px;background: var(--primary);height: 68px;width: 40px;display: flex;align-items: center;justify-content: center;color: var(--white);
     &.controlBtn1 {left: inherit;right: 0;}
 }
+
+.tooltipGroup:hover {
+    .tooltip {opacity: 1;visibility: visible;}
+}
+.tooltip {opacity: 0;visibility: hidden; display: block; font-size: 14px;}
+  
