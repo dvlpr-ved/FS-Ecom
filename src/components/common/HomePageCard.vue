@@ -6,17 +6,25 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="commonCard border lg:ml-3 ml-1">
+  <div class="commonCard border lg:ml-3 ml-1 tooltipGroup relative">
     <a href="searchresult/">
       <div class="imgsdiv">
         <img
-          class="w-full cardImg"
+          class="w-full cardImg bg-gray-200"
           :src="props.thumbnail"
           alt="highlight img"
           loading="lazy"
         />
       </div>
-      <p class="lg:text-2xl text-xl text-center pt-3 pb-2">{{ props.title }}</p>
+      <p class="lg:text-xl text-xl text-center pt-3 pb-2"> 
+        {{ props.title.slice(0, 39) }}
+      </p>
+      <span
+        class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
+      >
+        {{ props.title }}
+      </span>
+
       <p class="cardtitle text-gray-700 text-2xl font-bold">
         <span class="line-through">₹1000</span> ₹999
       </p>
@@ -28,7 +36,7 @@ const props = defineProps<{
 .commonCard {
   max-width: 22rem;
   width: 100%;
-  padding: 15px;
+  padding: 8px;
   .imgsdiv {
     overflow: hidden;
   }
