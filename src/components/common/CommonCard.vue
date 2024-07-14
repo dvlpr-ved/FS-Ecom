@@ -28,7 +28,7 @@ const props = defineProps<{
         <!-- <p class="cardtitle text-gray-500 font-bold">{{ title }}</p> -->
         <p class="cardtitle text-gray-500 text-2xl title">Banarasee Sarees</p>
         <p class="cardtitle text-gray-700 text-2xl font-bold">
-          ₹{{ props.price }} <span class="line-through">₹700</span>
+          <span class="line-through">₹700</span> ₹{{ props.price }}
         </p>
         <!-- <p class="card_desc">{{ description.slice(0, 30) }}...</p> -->
       </div>
@@ -66,12 +66,12 @@ const props = defineProps<{
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .max-w-48 {
     max-width: 48%;
   }
   .commonCard {
-    max-width: 31%;
+    max-width: 23%;
   }
 }
 

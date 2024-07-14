@@ -5,28 +5,48 @@
     <div class="container">
       <div class="footerFlex">
         <ul class="flex justify-between fwrap lg:pl-5 pl-0">
-          <li class="lg:w-[20%] w-[100%] lg:py-5 px-3 py-3 lg:mb-0 mb-3 lg:border-0 border-b">
+          <li
+            class="lg:w-[20%] w-[100%] lg:py-5 px-3 py-3 lg:mb-0 mb-3 lg:border-0 border-b"
+          >
             <div class="title font-bold text-2xl capitalize mb-4">information</div>
             <a href="../about">About Us</a>
             <a href="../contactus">Contact Us</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Legal & Policies</a>
-            <a href="#">shipping policy</a>
+            <a href="../privacypolicy">Privacy Policy</a>
+            <a href="../legalpolicy">Legal & Policies</a>
+            <a href="../shippingPolicy">shipping policy</a>
           </li>
-          <li class="lg:w-[20%] w-[100%] lg:py-5 px-3 py-3 lg:mb-0 mb-3 lg:border-0 border-b">
+          <li
+            class="lg:w-[20%] w-[100%] lg:py-5 px-3 py-3 lg:mb-0 mb-3 lg:border-0 border-b"
+          >
             <div class="title font-bold text-2xl capitalize mb-4">Help</div>
-            <a href="../orders">Payment</a>
-            <a href="../whitelist">Cancellation & Return</a>
-            <a href="#">FAQ</a>
+            <a href="../payment">Payment</a>
+            <a href="../cancellation">Cancellation & Return</a>
+            <a href="../faq">FAQ</a>
             <a href="#">Sitemap</a>
           </li>
           <li class="lg:w-[20%] w-[100%] lg:py-5 px-3 py-3 lg:border-0 border-b">
             <div class="title font-bold text-2xl capitalize mb-4">Reach Out to Us</div>
             <div class="flex gap-3 mb-3">
-              <a href="#" class="hover:text-blue-100"> <i class="pi pi-instagram lg:text-3xl text-2xl bg-black p-2 rounded-full"></i> </a>
-              <a href="#" class="hover:text-blue-100"> <i class="pi pi-facebook lg:text-3xl text-2xl bg-blue-800 p-2 rounded-full"></i> </a>
-              <a href="#" class="hover:text-blue-100"> <i class="pi pi-whatsapp lg:text-3xl text-2xl bg-green-600 p-2 rounded-full"></i> </a>
-              <a href="#" class="hover:text-blue-100"> <i class="pi pi-youtube lg:text-3xl text-2xl bg-[#b91c1c] p-2 rounded-full"></i> </a>
+              <a href="#" class="hover:text-blue-100">
+                <i
+                  class="pi pi-instagram lg:text-3xl text-2xl bg-black p-2 rounded-full"
+                ></i>
+              </a>
+              <a href="#" class="hover:text-blue-100">
+                <i
+                  class="pi pi-facebook lg:text-3xl text-2xl bg-blue-800 p-2 rounded-full"
+                ></i>
+              </a>
+              <a href="#" class="hover:text-blue-100">
+                <i
+                  class="pi pi-whatsapp lg:text-3xl text-2xl bg-green-600 p-2 rounded-full"
+                ></i>
+              </a>
+              <a href="#" class="hover:text-blue-100">
+                <i
+                  class="pi pi-youtube lg:text-3xl text-2xl bg-[#b91c1c] p-2 rounded-full"
+                ></i>
+              </a>
             </div>
             <ul>
               <li class="">

@@ -7,6 +7,9 @@
 .bgorange{background-color: var(--primary);}
 .bgblue80{background-color: #113580;}
 .bgblue81{background-color: #112080;}
+.overlay{
+    &.active{position: fixed; left: 0; right: 0; top: 0; bottom: 0; height: 100%; width: 100%; background: rgba(0,0,0,.4); z-index: 11;}
+}
 
 
 // secondary fonts
@@ -36,8 +39,44 @@ input{padding: 5px 10px; border: 1px solid #b1b1b1;}
     &.controlBtn1 {left: inherit;right: 0;}
 }
 
+
+// common tooltip
 .tooltipGroup:hover {
     .tooltip {opacity: 1;visibility: visible;}
 }
 .tooltip {opacity: 0;visibility: hidden; display: block; font-size: 14px;}
-  
+
+// custom checkboxes
+.styled-checkbox {position: absolute; opacity: 0;
+    & + label {position: relative;cursor: pointer;padding: 0;}
+    & + label:before {content: '';margin-right: 10px;display: inline-block;vertical-align: text-top;width: 20px;height: 20px;background: var(--primary);}
+    &:hover + label:before {background: var(--primary); opacity: 0.7;}
+    &:focus + label:before {box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);}
+    &:checked + label:before {background: var(--primary);}
+    &:disabled + label {color: #b8b8b8;cursor: auto;}
+    &:disabled + label:before {box-shadow: none;background: #ddd;}
+    &:checked + label:after {content: '';position: absolute;left: 5px;top: 9px;background: white;width: 2px;height: 2px;box-shadow: 2px 0 0 white,4px 0 0 white,4px -2px 0 white,4px -4px 0 white,4px -6px 0 white,4px -8px 0 white;transform: rotate(45deg);}
+}
+
+.afterBefore {position: relative; z-index: 1;
+    &::after, &::before{content: ''; position: absolute; left: 0; bottom: 0; top: 0; bottom: 0; width: 100%; height: 100%; z-index: -1;}
+}
+
+.staticPages{
+    &::after, &::before{background: url(../../images/common/pattern1.png) no-repeat; background-position: right bottom;}
+    &::before{background: url(../../images/common/pattern.png) no-repeat; background-position: left top;}
+    .imgdiv{padding: 90px 0;  background: url('../../images/pages/pagesBanner.jpg');}
+    .pagesHeading{ width: fit-content; margin: 0 auto;
+        &::after, &::before{top: inherit; bottom: -1rem;}
+        &::after{width: 60%; height: 1px; background: var(--white);}
+        &::before{width: 40%; height: 4px; bottom: -1.1rem; left: 15px; z-index: 1; background-color: var(--primary);}
+        &.subHeading{font-size: 50%;}
+    }
+    .container{max-width: 800px;}
+}
+
+@media (max-width:768px) {  
+    .staticPages{
+        &::after, &::before{background: none;}
+    }  
+}
