@@ -75,7 +75,7 @@ const toggleFieldType = () => {
           class="leftContent lg:w-[45%] w-[100%] bgblue80 text-white p-4 flex justify-center items-center text-center"
         >
           <div>
-            <h5 class="heading lg:text-6xl text-3xl mb-4">Welcome Back!</h5>
+            <h5 class="heading lg:text-5xl text-3xl mb-4">Welcome Back!</h5>
             <p class="mb-4 text-xl">
               To stay connected with us, please log in using your personal information.
             </p>
@@ -85,7 +85,7 @@ const toggleFieldType = () => {
           </div>
         </div>
         <div class="formSide lg:w-[55%] w-[100%] p-5">
-          <h5 class="heading lg:text-6xl text-3xl text-center mb-4">
+          <h5 class="heading lg:text-5xl text-3xl text-center mb-4">
             Create an Account!
           </h5>
 

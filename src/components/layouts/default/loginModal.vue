@@ -6,6 +6,13 @@ const props = defineProps<{
 }>();
 
 const value = ref(null);
+
+const showOtp = ref(false);
+
+const handleOtpVerified = () => {
+  console.log("OTP Send!");
+  showOtp.value = true;
+};
 </script>
 
 <template>
@@ -23,7 +30,7 @@ const value = ref(null);
           >Subscriber</a
         >
       </div>
-      <div class="leftCol lg:w-[50%] w-[100%] p-6 bg-gray-100">
+      <div class="rightCol lg:w-[50%] w-[100%] p-6 bg-gray-100" v-if="!showOtp">
         <div class="heading text-center text-5xl mb-4">Login</div>
         <div class="flex items-center gap-4 mb-4">
           <!-- <label for="email" class="font-semibold w-24">Email</label> -->
@@ -45,21 +52,28 @@ const value = ref(null);
           <!-- <InputText type="password" id="password" class="flex-auto" autocomplete="off" /> -->
         </div>
 
-        <Button
+        <button
           type="button"
-          class="loginbtn text-2xl px-5 flex justify-center w-1/2 m-auto"
-          @click="visible = false"
-          >Login</Button
+          class="loginbtn bgorange py-2 px-3 rounded text-white text-2xl flex justify-center w-1/2 m-auto"
+          @click="handleOtpVerified()"
         >
+          Login
+        </button>
 
         <span class="text-center block text-4xl py-3">OR</span>
         <a
           href="../signup"
           class="py-2 px-3 rounded text-white text-2xl commonbtn block w-1/2 text-center m-auto mb-4"
           style="background: #204887"
-          >Register</a
         >
+          Register
+        </a>
       </div>
+
+      <template v-else>
+        <Otp />
+      </template>
+
       <Button type="button" class="absolute top-0 right-0 bg-transparent" @click="close">
         <i class="pi pi-times text-3xl text-gray-600"></i>
       </Button>
