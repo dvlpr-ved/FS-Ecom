@@ -30,15 +30,55 @@ const handleAdCartClose = () => {
         <div class="productcontent lg:w-[50%] w-[100%]">
           <h6 class="pro-title lg:text-6xl text-4xl mb-3">Banarasi Blue Saree</h6>
           <div class="price">
-            <p class="cardtitle text-2xl font-[500] text-black mb-3">
-              <span class="line-through text-gray-700">₹800</span> ₹700
+            <p class="cardtitle text-3xl font-[500] text-black mb-3">
+              <span class="line-through text-2xl text-gray-700">₹800</span> ₹700
             </p>
           </div>
-          <div class="price">
-            <p class="cardtitle text-2xl font-[500] text-black mb-3">
-              SizeS : M, L, XL, XXL
-            </p>
+          <div class="sizesBox flex items-center gap-x-2 mb-3">
+            <span class=" text-2xl">Sizes :</span>
+            <div class="checkbox border-r px-2 py-1 border-gray-500">
+              <input
+                class="styled-checkbox"
+                id="msize"
+                type="radio"
+                value="M"
+                name="size"
+              />
+              <label for="msize" class="text-xl title">M</label>
+            </div>
+            <div class="checkbox border-r px-2 py-1 border-gray-500">
+              <input
+                class="styled-checkbox"
+                id="lsize"
+                type="radio"
+                value="L"
+                name="size"
+                checked
+              />
+              <label for="lsize" class="text-xl title">L</label>
+            </div>
+            <div class="checkbox border-r px-2 py-1 border-gray-500">
+              <input
+                class="styled-checkbox"
+                id="xlsize"
+                type="radio"
+                value="XL"
+                name="size"
+              />
+              <label for="xlsize" class="text-xl title">XL</label>
+            </div>
+            <div class="checkbox px-2 py-1">
+              <input
+                class="styled-checkbox"
+                id="xxlsize"
+                type="radio"
+                value="XXL"
+                name="size"
+              />
+              <label for="xxlsize" class="text-xl title">XXL</label>
+            </div>
           </div>
+
           <article class="productdesc mb-3">
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iusto nostrum non
             nulla obcaecati officiis, repellat molestiae quae animi.

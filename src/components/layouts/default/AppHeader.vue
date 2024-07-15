@@ -55,7 +55,7 @@ const closeModal = () => {
             <i class="pi pi-heart text-2xl"></i>
           </NuxtLink>
         </li>
-        <li class="block"><button class="subscribe commonbtn">subscribe</button></li>
+        <li class="block"><button class="subscribe commonbtn text-xl">subscribe</button></li>
         <li
           class="icons relative user flex items-center gap-2 cursor-pointer"
           label="Show"

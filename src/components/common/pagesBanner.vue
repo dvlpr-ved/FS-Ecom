@@ -15,15 +15,6 @@ const props = defineProps<{
                     <h4 class="heading lg:text-5xl text-3xl font-weight-[600] mb-5">{{props.heading}}</h4>
                     <p class="mb-5 text-[16px]"> {{props.description}}</p> 
                 </div>
-                <!-- <div class="rightside lg:w-[30%] w-[100%] lg:pl-[35px] lg:pb-[95px]">
-                    <div class="head flex gap-[8px] items-center mb-3">
-                        <i class="pi pi-home text-3xl" style="color: var(--primary);"></i>
-                        <span class="uppercase">FASHTSALY Store</span>
-                    </div>
-                    <p class="mb-3">Jaipur — 785 15h Street, Office 478/B Green Mall, De 81566</p>
-                    <span class="block">Phone: contact@example.com</span>
-                    <span>Email: <a href="#" style="color: var(--primary);">contact@example.com</a> </span>
-                </div> -->
             </div>
         </div>
     </div>
