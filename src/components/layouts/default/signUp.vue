@@ -1,15 +1,64 @@
 <script setup lang="ts">
-const visible = ref(false);
+import { ref } from "vue";
 
-const closeModal = () => {
-  visible.value = false;
+const visible = ref(false);
+const inputType = ref("password");
+
+const formData = {
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+
+const formError = {
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
 };
 
 const handleSubmit = (event) => {
   event.preventDefault();
-};
-const inputType = ref("password");
+  Object.keys(formError).forEach((key) => {
+    formError[key] = "";
+  });
 
+  let isValid = true;
+
+  if (!formData.name) {
+    formError.name = "Please Enter Name";
+    isValid = false;
+  }
+  if (!formData.email) {
+    formError.email = "Please Enter Email";
+    isValid = false;
+  }
+  if (!formData.password) {
+    formError.password = "Please Enter Password";
+    isValid = false;
+  }
+  if (!formData.confirmPassword) {
+    formError.confirmPassword = "Please Confirm Password";
+    isValid = false;
+  }
+  if (formData.password !== formData.confirmPassword) {
+    formError.confirmPassword = "Passwords do not match";
+    isValid = false;
+  }
+
+  if (isValid) {
+    console.log("Form submitted successfully:", formData);
+    formData.name = "";
+    formData.email = "";
+    formData.password = "";
+    formData.confirmPassword = "";
+  }
+};
+
+const closeModal = () => {
+  visible.value = false;
+};
 const toggleFieldType = () => {
   inputType.value = inputType.value === "password" ? "text" : "password";
 };
@@ -30,11 +79,7 @@ const toggleFieldType = () => {
             <p class="mb-4 text-xl">
               To stay connected with us, please log in using your personal information.
             </p>
-            <button
-              class="commonbtn px-6 py-3 text-xl"
-              label="Show"
-              @click="visible = true"
-            >
+            <button class="commonbtn px-6 py-3 text-xl" @click="visible = true">
               SignIn
             </button>
           </div>
@@ -44,29 +89,35 @@ const toggleFieldType = () => {
             Create an Account!
           </h5>
 
-          <div class="inputFields lg:px-5 px-4 border-bottom" @submit="handleSubmit">
+          <form class="inputFields lg:px-5 px-4 border-bottom" @submit="handleSubmit">
             <div class="inputbox mb-3">
               <input
                 type="text"
                 class="py-2 text-xl border-0 border-b w-full border-gray-400"
                 placeholder="Enter Your Name*"
+                v-model="formData.name"
               />
+              <p class="text-red-500">{{ formError.name }}</p>
             </div>
             <div class="inputbox mb-3">
               <input
                 type="email"
                 class="py-2 text-xl border-0 border-b w-full border-gray-400"
                 placeholder="Enter Your Email*"
+                v-model="formData.email"
               />
+              <p class="text-red-500">{{ formError.email }}</p>
             </div>
             <div class="inputbox mb-3 relative">
               <input
                 :type="inputType"
                 class="py-2 text-xl border-0 border-b w-full border-gray-400"
-                placeholder="Enter Your password*"
+                placeholder="Enter Your Password*"
+                v-model="formData.password"
               />
+              <p class="text-red-500">{{ formError.password }}</p>
               <button @click="toggleFieldType" class="absolute right-[15px] top-3">
-                <span v-if="inputType === 'password'" class="pi pi-eye"></span>
+                <span v-if="inputType.value === 'password'" class="pi pi-eye"></span>
                 <span v-else class="pi pi-eye-slash"></span>
               </button>
             </div>
@@ -74,15 +125,19 @@ const toggleFieldType = () => {
               <input
                 :type="inputType"
                 class="py-2 text-xl border-0 border-b w-full border-gray-400"
-                placeholder="Confirm password*"
+                placeholder="Confirm Password*"
+                v-model="formData.confirmPassword"
               />
+              <p class="text-red-500">{{ formError.confirmPassword }}</p>
               <button @click="toggleFieldType" class="absolute right-[15px] top-3">
-                <span v-if="inputType === 'password'" class="pi pi-eye"></span>
+                <span v-if="inputType.value === 'password'" class="pi pi-eye"></span>
                 <span v-else class="pi pi-eye-slash"></span>
               </button>
             </div>
-            <button class="commonbtn px-8 py-3 text-xl block w-fit rounded m-auto">SignUp</button>
-          </div>
+            <button class="commonbtn px-8 py-3 text-xl block w-fit rounded m-auto">
+              SignUp
+            </button>
+          </form>
 
           <span class="text-center block text-2xl py-3">OR</span>
 
