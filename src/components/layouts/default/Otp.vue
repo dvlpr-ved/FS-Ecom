@@ -27,7 +27,7 @@ watch(otpDigits, (newDigits) => {
 </script>
 
 <template>
-  <div class="grid place-items-center place-content-center w-[50%] bg-gray-200 m-0">
+  <div class="grid place-items-center place-content-center w-[50%] bg-gray-200 m-0" style="background-color:rgb(243, 244, 246) !important">
     <div>
       <input
         v-model="otpDigits"
