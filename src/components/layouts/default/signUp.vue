@@ -40,7 +40,9 @@ const handleSubmit = async (event) => {
       console.log("Registration Failed", responseData);
       if (responseData.errors) {
         formError.email = responseData.errors.email ? responseData.errors.email[0] : "";
-        formError.password = responseData.errors.password ? responseData.errors.password[0] : "";
+        formError.password = responseData.errors.password
+          ? responseData.errors.password[0]
+          : "";
         formError.name = responseData.errors.name ? responseData.errors.name[0] : "";
       } else {
         console.error("Unknown error occurred:", responseData);
