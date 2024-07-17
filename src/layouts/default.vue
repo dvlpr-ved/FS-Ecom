@@ -6,6 +6,7 @@ import CopyRightLine from "~/components/layouts/default/CopyRightLine.vue";
 import FixedFooter from "~/components/layouts/default/FixedFooter.vue";
 import LoginModal from "~/components/layouts/default/loginModal.vue";
 import SignUp from "~/components/layouts/default/signUp.vue";
+import Otp from "~/components/layouts/default/Otp.vue";
 import SearchAutoComplete from "~/components/layouts/default/SearchAutoComplete.vue";
 import AppBanner from "~/components/common/AppBanner.vue";
 import CateGories from "~/components/common/CateGories.vue";

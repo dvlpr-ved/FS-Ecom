@@ -3,6 +3,7 @@ import { ref } from "vue";
 
 const visible = ref(false);
 const inputType = ref("password");
+const successMessage = ref("");
 
 const formData = {
   name: "",
@@ -18,43 +19,68 @@ const formError = {
   confirmPassword: "",
 };
 
-const handleSubmit = (event) => {
+const handleSubmit = async (event) => {
   event.preventDefault();
-  Object.keys(formError).forEach((key) => {
-    formError[key] = "";
-  });
+  try {
+    const response = await fetch(`https://fashtsaly.com/API/public/api/signUp`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: formData.email,
+        password: formData.password,
+        name: formData.name,
+        otp: "123",
+      }),
+    });
 
-  let isValid = true;
-
-  if (!formData.name) {
-    formError.name = "Please Enter Name";
-    isValid = false;
-  }
-  if (!formData.email) {
-    formError.email = "Please Enter Email";
-    isValid = false;
-  }
-  if (!formData.password) {
-    formError.password = "Please Enter Password";
-    isValid = false;
-  }
-  if (!formData.confirmPassword) {
-    formError.confirmPassword = "Please Confirm Password";
-    isValid = false;
-  }
-  if (formData.password !== formData.confirmPassword) {
-    formError.confirmPassword = "Passwords do not match";
-    isValid = false;
-  }
-
-  if (isValid) {
-    console.log("Form submitted successfully:", formData);
-    formData.name = "";
-    formData.email = "";
-    formData.password = "";
-    formData.confirmPassword = "";
+    const responseData = await response.json();
+    if (!response.ok) {
+      console.log("Registration Failed", responseData);
+      if (responseData.errors) {
+        formError.email = responseData.errors.email ? responseData.errors.email[0] : "";
+        formError.password = responseData.errors.password
+          ? responseData.errors.password[0]
+          : "";
+        formError.name = responseData.errors.name ? responseData.errors.name[0] : "";
+      } else {
+        console.error("Unknown error occurred:", responseData);
+      }
+    } else {
+      console.log("Registration successful", responseData);
+    }
+  } catch (error) {
+    console.error("Error occurred during registration:", error);
   }
 };
+
+console.log("email", formError.email);
+
+// let isValid = true;
+
+// if (!formData.name) {
+//   formError.name = "Please Enter Name";
+//   isValid = false;
+// }
+// if (!formData.email) {
+//   formError.email = "Please Enter Email";
+//   isValid = false;
+// }
+// if (!formData.password) {
+//   formError.password = "Please Enter Password";
+//   isValid = false;
+// }
+// if (!formData.confirmPassword) {
+//   formError.confirmPassword = "Please Confirm Password";
+//   isValid = false;
+// }
+// if (formData.password !== formData.confirmPassword) {
+//   formError.confirmPassword = "Passwords do not match";
+//   isValid = false;
+// }
+
+// if (isValid) {}
 
 const closeModal = () => {
   visible.value = false;
@@ -75,7 +101,7 @@ const toggleFieldType = () => {
           class="leftContent lg:w-[45%] w-[100%] bgblue80 text-white p-4 flex justify-center items-center text-center"
         >
           <div>
-            <h5 class="heading lg:text-6xl text-3xl mb-4">Welcome Back!</h5>
+            <h5 class="heading lg:text-5xl text-3xl mb-4">Welcome Back!</h5>
             <p class="mb-4 text-xl">
               To stay connected with us, please log in using your personal information.
             </p>
@@ -85,7 +111,7 @@ const toggleFieldType = () => {
           </div>
         </div>
         <div class="formSide lg:w-[55%] w-[100%] p-5">
-          <h5 class="heading lg:text-6xl text-3xl text-center mb-4">
+          <h5 class="heading lg:text-5xl text-3xl text-center mb-4">
             Create an Account!
           </h5>
 

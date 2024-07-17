@@ -1,7 +1,6 @@
-<script lang="ts" setup>
-</script>
+<script lang="ts" setup></script>
 <template>
-    <SignUp />
+  <SignUp />
 </template>
 
 <style scoped></style>
