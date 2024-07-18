@@ -5,6 +5,7 @@ const visible = ref(false);
 const inputType = ref("password");
 const successMessage = ref("");
 
+const isOtpFeildVisible = ref(false);
 const formData = {
   name: "",
   email: "",

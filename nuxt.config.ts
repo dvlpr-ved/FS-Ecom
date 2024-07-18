@@ -85,7 +85,9 @@ export default defineNuxtConfig({
       nativeSWR: true
     }
   },
-
+  pinia: {
+    storesDirs: ['./stores/**'],
+  },
   postcss: {
     plugins: {
       autoprefixer: {}
