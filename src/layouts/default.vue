@@ -17,6 +17,7 @@ import OfferBanner from "~/components/common/OfferBanner.vue";
 import CommonCard from "~/components/common/CommonCard.vue";
 import PagesBanner from "~/components/common/pagesBanner.vue";
 import ProductDetail from "~/components/common/productDetail.vue";
+import ProductZoomImages from "~/components/common/productZoomImages.vue";
 import AddtoCartModal from "~/components/common/AddtoCartModal.vue";
 import CheckOut from "~/components/common/CheckOut.vue";
 import Faq from "~/components/common/Faq.vue";
@@ -47,6 +48,7 @@ export default defineComponent({
     CommonCard,
     PagesBanner,
     ProductDetail,
+    ProductZoomImages,
     AddtoCartModal,
     CheckOut,
     Faq,
