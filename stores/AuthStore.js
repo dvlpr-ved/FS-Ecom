@@ -5,17 +5,28 @@ export const useAuthStore = defineStore('auth', {
     getters : {
         getUser(){
             return this.userData
+        },
+        isUserLoggedin(){
+            return this.isLoggedin
+        },
+        isuserSignedUp(){
+            return this.isSignedUp
         }
     },
     actions : {
-        verifyEmail(){
-            
+        makeUserLoggedIn(){
+            this.isLoggedin = true;
         },
-        signUp(){
-
+        makeUserSignedUp(){
+            this.isSignedUp = true;
         },
-        Login(){
-            
+        Login(payload){
+            this.userData = payload.data;
+            localStorage.removeItem('OAuth-token');
+            localStorage.setItem('OAuth-token' , payload.token);
+            this.makeUserLoggedIn();
+            this.makeUserSignedUp();
+            navigateTo('/');
         }
     }
 });

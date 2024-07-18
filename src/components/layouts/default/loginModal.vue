@@ -12,6 +12,8 @@ const formData = {
   email: "",
   password: "",
 };
+const authStore = useAuthStore();
+const emit = defineEmits(['close']);
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -27,10 +29,17 @@ const handleSubmit = async (e) => {
       }),
     });
     const responseData = await response.json();
-    console.log(responseData);
-    if (response.ok) {
-      showOtp.value = true;
+    const payload = {...responseData , data : responseData.user};
+    if(responseData.success){
+      authStore.Login(payload);
+      emit('close');
     }
+    else{
+      
+    }
+    // if (response.ok) {
+    //   showOtp.value = true;
+    // }
   } catch (error) {
     console.log("error in login", error);
   }

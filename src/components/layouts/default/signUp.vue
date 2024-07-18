@@ -4,6 +4,7 @@ import { ref } from "vue";
 const visible = ref(false);
 const inputType = ref("password");
 const successMessage = ref("");
+const authStore = useAuthStore();
 
 const isOtpFeildVisible = ref(false);
 const formData = {
@@ -11,6 +12,7 @@ const formData = {
   email: "",
   password: "",
   confirmPassword: "",
+  otp : ""
 };
 
 const formError = {
@@ -18,38 +20,53 @@ const formError = {
   email: "",
   password: "",
   confirmPassword: "",
+  otp : ""
 };
 
 const handleSubmit = async (event) => {
   event.preventDefault();
   try {
-    const response = await fetch(`https://fashtsaly.com/API/public/api/signUp`, {
+    const url = isOtpFeildVisible.value ? `https://fashtsaly.com/API/public/api/signUp` : `https://fashtsaly.com/API/public/api/send-otp`;
+    const payload = isOtpFeildVisible.value ? {
+        email : formData.email,
+        password : formData.password,
+        name : formData.name,
+        otp : formData.otp
+    } :
+    {
+      email : formData.email
+    } 
+    const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        email: formData.email,
-        password: formData.password,
-        name: formData.name,
-        otp: "123",
-      }),
+      body: JSON.stringify(payload),
     });
 
     const responseData = await response.json();
     if (!response.ok) {
-      console.log("Registration Failed", responseData);
+      // console.log("Registration Failed", responseData);
       if (responseData.errors) {
         formError.email = responseData.errors.email ? responseData.errors.email[0] : "";
         formError.password = responseData.errors.password
           ? responseData.errors.password[0]
           : "";
         formError.name = responseData.errors.name ? responseData.errors.name[0] : "";
+        formError.otp = responseData.errors.otp ? responseData.errors.otp[0] : "";
       } else {
-        console.error("Unknown error occurred:", responseData);
+        // console.error("Unknown error occurred:", responseData);
       }
     } else {
-      console.log("Registration successful", responseData);
+      if(!isOtpFeildVisible.value){
+        isOtpFeildVisible.value = true;
+      }
+      else{
+        const data = responseData.data;
+        authStore.Login(data);
+        authStore.makeUserSignedUp();
+      }
+      // console.log("Registration successful", responseData);
     }
   } catch (error) {
     console.error("Error occurred during registration:", error);
@@ -117,49 +134,61 @@ const toggleFieldType = () => {
           </h5>
 
           <form class="inputFields lg:px-5 px-4 border-bottom" @submit="handleSubmit">
-            <div class="inputbox mb-3">
+            <div v-if="!isOtpFeildVisible">
+              <div class="inputbox mb-3">
+                <input
+                  type="text"
+                  class="py-2 text-xl border-0 border-b w-full border-gray-400"
+                  placeholder="Enter Your Name*"
+                  v-model="formData.name"
+                />
+                <p class="text-red-500">{{ formError.name }}</p>
+              </div>
+              <div class="inputbox mb-3">
+                <input
+                  type="email"
+                  class="py-2 text-xl border-0 border-b w-full border-gray-400"
+                  placeholder="Enter Your Email*"
+                  v-model="formData.email"
+                />
+                <p class="text-red-500">{{ formError.email }}</p>
+              </div>
+              <div class="inputbox mb-3 relative">
+                <input
+                  :type="inputType"
+                  class="py-2 text-xl border-0 border-b w-full border-gray-400"
+                  placeholder="Enter Your Password*"
+                  v-model="formData.password"
+                />
+                <p class="text-red-500">{{ formError.password }}</p>
+                <button @click="toggleFieldType" class="absolute right-[15px] top-3">
+                  <span v-if="inputType.value === 'password'" class="pi pi-eye"></span>
+                  <span v-else class="pi pi-eye-slash"></span>
+                </button>
+              </div>
+              <div class="inputbox mb-3 relative">
+                <input
+                  :type="inputType"
+                  class="py-2 text-xl border-0 border-b w-full border-gray-400"
+                  placeholder="Confirm Password*"
+                  v-model="formData.confirmPassword"
+                />
+                <p class="text-red-500">{{ formError.confirmPassword }}</p>
+                <button @click="toggleFieldType" class="absolute right-[15px] top-3">
+                  <span v-if="inputType.value === 'password'" class="pi pi-eye"></span>
+                  <span v-else class="pi pi-eye-slash"></span>
+                </button>
+              </div>
+            </div>
+            <div v-if="isOtpFeildVisible" class="inputbox mb-3">
+              <p class="text-center text-lg mb-3">Please enter OTP we have just sent to {{ formData.email }}</p>
               <input
                 type="text"
                 class="py-2 text-xl border-0 border-b w-full border-gray-400"
-                placeholder="Enter Your Name*"
-                v-model="formData.name"
+                placeholder="Enter OTP"
+                v-model="formData.otp"
               />
-              <p class="text-red-500">{{ formError.name }}</p>
-            </div>
-            <div class="inputbox mb-3">
-              <input
-                type="email"
-                class="py-2 text-xl border-0 border-b w-full border-gray-400"
-                placeholder="Enter Your Email*"
-                v-model="formData.email"
-              />
-              <p class="text-red-500">{{ formError.email }}</p>
-            </div>
-            <div class="inputbox mb-3 relative">
-              <input
-                :type="inputType"
-                class="py-2 text-xl border-0 border-b w-full border-gray-400"
-                placeholder="Enter Your Password*"
-                v-model="formData.password"
-              />
-              <p class="text-red-500">{{ formError.password }}</p>
-              <button @click="toggleFieldType" class="absolute right-[15px] top-3">
-                <span v-if="inputType.value === 'password'" class="pi pi-eye"></span>
-                <span v-else class="pi pi-eye-slash"></span>
-              </button>
-            </div>
-            <div class="inputbox mb-3 relative">
-              <input
-                :type="inputType"
-                class="py-2 text-xl border-0 border-b w-full border-gray-400"
-                placeholder="Confirm Password*"
-                v-model="formData.confirmPassword"
-              />
-              <p class="text-red-500">{{ formError.confirmPassword }}</p>
-              <button @click="toggleFieldType" class="absolute right-[15px] top-3">
-                <span v-if="inputType.value === 'password'" class="pi pi-eye"></span>
-                <span v-else class="pi pi-eye-slash"></span>
-              </button>
+              <p class="text-red-500">{{ formError.otp }}</p>
             </div>
             <button class="commonbtn px-8 py-3 text-xl block w-fit rounded m-auto">
               SignUp
