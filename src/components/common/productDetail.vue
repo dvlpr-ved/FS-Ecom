@@ -20,11 +20,8 @@ const handleAdCartClose = () => {
   <div class="productdetail_man_div py-5">
     <div class="container">
       <div class="flexdiv flex flex-wrap justify-between">
-        <div
-          class="detailGallery lg:w-[48%] w-[100%] bg-gray-200 p-10"
-          style="display: grid; place-items: center"
-        >
-          <div class="text-5xl capitalize">product images</div>
+        <div class="detailGallery lg:w-[48%] w-[100%] bg-gray-200 p-2">
+          <ProductZoomImages />
         </div>
 
         <div class="productcontent lg:w-[50%] w-[100%]">
@@ -35,7 +32,7 @@ const handleAdCartClose = () => {
             </p>
           </div>
           <div class="sizesBox flex items-center gap-x-2 mb-3">
-            <span class=" text-2xl">Sizes :</span>
+            <span class="text-2xl">Sizes :</span>
             <div class="checkbox border-r px-2 py-1 border-gray-500">
               <input
                 class="styled-checkbox"
@@ -145,8 +142,6 @@ const handleAdCartClose = () => {
 </template>
 
 <style lang="scss">
-.wtsp {
-}
 .sharediv {
   i {
     border: 1px solid var(--primary);
