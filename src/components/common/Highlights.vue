@@ -1,20 +1,6 @@
 <script setup>
 const itemsToShow = ref(4);
-const isLoading = ref(true);
-const cards = ref([]);
 const NoData = ref("");
-
-const getData = async () => {
-  try {
-    const r = await fetch("https://dummyjson.com/products/category/womens-dresses");
-    const rJson = await r.json();
-    cards.value = rJson.products;
-    isLoading.value = false;
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    NoData.value = "Error fetching products";
-  }
-};
 
 const updateItemsToShow = () => {
   const screenWidth = window.innerWidth;
@@ -32,8 +18,13 @@ const updateItemsToShow = () => {
   }
 };
 
+const apiHighDataStore = useHighCateStore();
+const cards = computed(() => apiHighDataStore.cards);
+const isLoading = computed(() => apiHighDataStore.isLoading);
+const error = computed(() => apiHighDataStore.error);
+
 onMounted(() => {
-  getData();
+  apiHighDataStore.fetchHighCategoryData("category/womens-dresses");
   window.addEventListener("resize", updateItemsToShow);
   updateItemsToShow();
 });

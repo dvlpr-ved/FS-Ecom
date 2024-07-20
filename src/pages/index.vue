@@ -5,10 +5,12 @@
   <CateGories />
   <Highlights />
   <Highlights />
-  <OfferBanner />
+  <!-- <OfferBanner /> -->
+  <AppBanner />
   <Highlights />
   <Highlights />
-  <OfferBanner />
+  <AppBanner />
+  <!-- <OfferBanner /> -->
   <Highlights />
   <Highlights />
 </template>

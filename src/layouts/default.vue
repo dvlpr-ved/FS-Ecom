@@ -31,6 +31,9 @@ import BlogDetail from "~/components/common/BlogDetail.vue";
 import SiteMap from "~/components/common/SiteMap.vue";
 import SimilarProducts from "~/components/common/SimilarProducts.vue";
 
+// myaccounts
+// import AsideBar from "~/components/myAccounts/asideBar.vue";
+
 export default defineComponent({
   components: {
     AppHeader,
