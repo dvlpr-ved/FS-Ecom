@@ -1,9 +1,9 @@
 <template>
   <section class="myAccounts bg-gray-200 py-5">
     <div class="container">
-      <div class="flexdivPanel flex justify-between">
+      <div class="flexdivPanel flex flex-wrap justify-between">
         <AsideBar />
-        <!-- <EditProfile /> -->
+        <RightSideBar />
       </div>
     </div>
   </section>
@@ -11,5 +11,6 @@
 
 <style lang="scss">
 .myAccounts {
+  .container{max-width:1124px;}
 }
 </style>
