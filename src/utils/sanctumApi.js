@@ -6,6 +6,9 @@ export async function fetchFromSanctum({ method, url, headers = {}, body = null 
     if (!url) {
       throw new Error('URL is required.');
     }
+    if(!headers.Authorization){
+      headers.Authorization = localStorage.getItem('OAuth-token') ?  'Bearer ' + localStorage.getItem('OAuth-token') : '';
+    }
   
     try {
       const options = {
@@ -24,6 +27,7 @@ export async function fetchFromSanctum({ method, url, headers = {}, body = null 
       return data;
     } catch (error) {
       console.error('Error fetching data:', error);
-      throw error;
+      const data = {};
+      return false;
     }
   }

@@ -1,5 +1,4 @@
 import { defineNuxtConfig } from 'nuxt/config';
-
 export default defineNuxtConfig({
 
   app: {
@@ -31,9 +30,7 @@ export default defineNuxtConfig({
       }
     ]
   },
-  router: {
-    middleware: ['auth']
-  },
+  middleware: ['auth'],
 
   css: [
     'primevue/resources/primevue.css',
