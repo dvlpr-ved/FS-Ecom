@@ -17,6 +17,11 @@ const visible = ref(false);
 const closeModal = () => {
   visible.value = false;
 };
+const toogleModal = () => {
+  if (!authStore.userData) {
+    visible.value = true;
+  }
+}
 </script>
 
 <template>
@@ -60,7 +65,7 @@ const closeModal = () => {
         <li
           class="icons relative user flex items-center gap-2 cursor-pointer"
           label="Show"
-          @click="visible = true"
+          @click="toogleModal"
         >
           <i  class="pi pi-user text-4xl"></i>
           <span v-if="!authStore.isLoggedin" class="text inline">LOGIN / REGISTER</span>
