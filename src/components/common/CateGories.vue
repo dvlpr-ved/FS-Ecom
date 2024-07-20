@@ -1,69 +1,6 @@
 <script setup>
-const data = [
-  {
-    id: 1,
-    title: "categories 1",
-    imgUrl: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_05.jpg",
-  },
-  {
-    id: 2,
-    title: "categories 2",
-    imgUrl: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_03.jpg",
-  },
-  {
-    id: 3,
-    title: "categories 3",
-    imgUrl: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_02.jpg",
-  },
-  {
-    id: 4,
-    title: "categories 4",
-    imgUrl: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_03.jpg",
-  },
-  {
-    id: 5,
-    title: "categories 5",
-    imgUrl: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_06.jpg",
-  },
-  {
-    id: 6,
-    title: "categories 6",
-    imgUrl: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_07.jpg",
-  },
-  {
-    id: 7,
-    title: "categories 7",
-    imgUrl: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_05.jpg",
-  },
-  {
-    id: 9,
-    title: "categories 9",
-    imgUrl: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_02.jpg",
-  },
-  {
-    id: 10,
-    title: "categories 10",
-    imgUrl: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_04.jpg",
-  },
-  {
-    id: 11,
-    title: "categories 11",
-    imgUrl: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_03.jpg",
-  },
-  {
-    id: 12,
-    title: "categories 12",
-    imgUrl: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_02.jpg",
-  },
-  {
-    id: 13,
-    title: "categories 13",
-    imgUrl: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_05.jpg",
-  },
-];
-
 const itemsToShow = ref(4);
-const isLoading = ref(true);
+// const isLoading = ref(true);
 
 const updateItemsToShow = () => {
   const screenWidth = window.innerWidth;
@@ -81,12 +18,16 @@ const updateItemsToShow = () => {
   }
 };
 
+const apiDataStore = usePopularCateStore();
+
+const cards = computed(() => apiDataStore.cards);
+const error = computed(() => apiDataStore.error);
+const isLoading = computed(() => apiDataStore.isLoading);
+
 onMounted(() => {
+  apiDataStore.fetchPopCataData();
   window.addEventListener("resize", updateItemsToShow);
   updateItemsToShow();
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 2000);
 });
 
 onBeforeUnmount(() => {
@@ -145,11 +86,19 @@ onBeforeUnmount(() => {
 
       <div v-else class="slidesWraper flex justify-center gap-3 relative">
         <carousel :items-to-show="itemsToShow">
-          <slide v-for="(item, index) in data" :key="index" class="categories-card">
+          <slide v-for="(item, index) in cards" :key="index" class="categories-card">
             <div class="avt-wrap">
+              <!-- <img
+                class="avatar"
+                :src="item.thumbnail ? item.thumbnail : 'assets/images/img.jpg'"
+                :alt="item.title"
+                loading="lazy"
+              /> -->
+              <!-- ========================= -->
+              <!-- for now we are using local images -->
               <img
                 class="avatar"
-                :src="item.imgUrl ? item.imgUrl : 'assets/images/img.jpg'"
+                src="https://rukminim2.flixcart.com/image/612/612/l4d2ljk0/fabric/v/k/z/yes-2-m-unstitched-2-2-m-1159d1155j-siril-original-imagfa3p78ey7v9h.jpeg"
                 :alt="item.title"
                 loading="lazy"
               />
