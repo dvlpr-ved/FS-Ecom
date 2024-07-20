@@ -62,9 +62,8 @@ const handleSubmit = async (event) => {
         isOtpFeildVisible.value = true;
       }
       else{
-        const data = responseData.data;
-        authStore.Login(data);
-        authStore.makeUserSignedUp();
+        // const data = responseData.data;
+        authStore.Login(responseData);
       }
       // console.log("Registration successful", responseData);
     }

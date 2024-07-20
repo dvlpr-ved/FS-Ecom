@@ -13,7 +13,6 @@ const formData = {
   password: "",
 };
 const authStore = useAuthStore();
-const emit = defineEmits(['close']);
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -32,7 +31,9 @@ const handleSubmit = async (e) => {
     const payload = {...responseData , data : responseData.user};
     if(responseData.success){
       authStore.Login(payload);
-      emit('close');
+      if(document.getElementById('closebtn')){
+        document.getElementById('closebtn').click();
+      }
     }
     else{
       
@@ -111,7 +112,7 @@ const handleSubmit = async (e) => {
         <Otp />
       </template>
 
-      <Button type="button" class="absolute top-0 right-0 bg-transparent" @click="close">
+      <Button type="button" id="closebtn" class="absolute top-0 right-0 bg-transparent" @click="close">
         <i class="pi pi-times text-3xl text-gray-600"></i>
       </Button>
     </div>

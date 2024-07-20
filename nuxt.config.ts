@@ -31,6 +31,9 @@ export default defineNuxtConfig({
       }
     ]
   },
+  router: {
+    middleware: ['auth']
+  },
 
   css: [
     'primevue/resources/primevue.css',
@@ -65,7 +68,9 @@ export default defineNuxtConfig({
       vueTemplate: true
     }
   },
-
+  plugins: [
+    '~/plugins/vue-product-zoomer.js'
+  ],
   modules: [
     'nuxt-icon',
     '@pinia/nuxt',

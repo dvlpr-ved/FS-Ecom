@@ -3,6 +3,7 @@ const CartItems = ref(12);
 const whitelistItems = ref(2);
 const NotiFication = ref(10);
 
+const authStore = useAuthStore();
 const showAutoComplete = ref(false);
 const handleChange = (e: any) => {
   // showAutoComplete.value = !showAutoComplete.value;
@@ -59,10 +60,11 @@ const closeModal = () => {
         <li
           class="icons relative user flex items-center gap-2 cursor-pointer"
           label="Show"
-          @click="visible = true"
+          @click="!authStore.isLoggedin ? visible = true : () => false"
         >
-          <i class="pi pi-user text-4xl"></i>
-          <span class="text inline">LOGIN / REGISTER</span>
+          <i  class="pi pi-user text-4xl"></i>
+          <span v-if="!authStore.isLoggedin" class="text inline">LOGIN / REGISTER</span>
+          <span v-else class="text inline">{{authStore.getUser ? authStore.getUser.name : ''}}</span>
         </li>
       </ul>
     </div>
