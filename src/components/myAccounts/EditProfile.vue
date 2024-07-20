@@ -48,7 +48,7 @@ function saveChanges() {
       </div>
 
       <!-- if has lname -->
-      <div class="in_box lg:w-[45%] w-[100%]" v-if="editing">
+      <div class="in_box lg:w-[45%] w-[100%]">
         <input
           type="text"
           placeholder="Last Name"
@@ -94,7 +94,7 @@ function saveChanges() {
       <button
         class="py-2 px-5 text-white text-[15px] bgblue80"
         @click="saveChanges"
-        v-if="editing"
+        :disabled="!editing"
       >
         SAVE
       </button>

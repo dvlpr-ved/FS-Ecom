@@ -1,9 +1,4 @@
-<script lang="ts" setup>
-const visibleAddressModal = ref(false);
-const closeAddressModal = () => {
-  visibleAddressModal.value = false;
-};
-</script>
+<script lang="ts" setup></script>
 
 <template>
   <aside class="accountsAsideBar lg:w-[24%] w-[100%]">
@@ -33,10 +28,9 @@ const closeAddressModal = () => {
       <nuxt-link to="#" class="text-[15px] block capitalize mb-2 hover:text-orange-400"
         ><i class="pi pi-arrow-right"></i> Edit Profile
       </nuxt-link>
-      <li label="Show" @click="props.visibleAddressModal = true" class="py-5">
-        open modal
-      </li>
-      <nuxt-link to="#" class="text-[15px] block capitalize mb-1 hover:text-orange-400"
+      <nuxt-link
+        to="manageAddress"
+        class="text-[15px] block capitalize mb-1 hover:text-orange-400"
         ><i class="pi pi-arrow-right"></i> Manage Address
       </nuxt-link>
     </div>
@@ -46,7 +40,6 @@ const closeAddressModal = () => {
       </div>
     </div>
   </aside>
-  <!-- <addressesModal :visible="visibleAddressModal" @close="visibleAddressModal = false" /> -->
 </template>
 <style lang="scss">
 .commonbox {
