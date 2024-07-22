@@ -14,7 +14,7 @@ const props = defineProps<{
       <i class="text-4xl pi pi-heart" style="color: rgb(239 68 68)"></i>
       <i class="text-4xl pi pi-heart-fill" style="color: rgb(239 68 68)"></i>
     </div>
-    <a :href="`../searchresult/${id}`">
+    <NuxtLink :to="`../searchresult/${id}`">
       <figure class="relative">
         <!-- <img class="w-full cardimg" :src="props.images" :alt="props.title" loading="lazy"> -->
         <img
@@ -32,7 +32,7 @@ const props = defineProps<{
         </p>
         <!-- <p class="card_desc">{{ description.slice(0, 30) }}...</p> -->
       </div>
-    </a>
+    </NuxtLink>
   </div>
 </template>
 

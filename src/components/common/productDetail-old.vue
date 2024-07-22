@@ -18,7 +18,7 @@ const rating = 5;
                                 <i class="pi pi-star-fill" style="color: var(--primary);"></i>
                             </template>
                         </div>
-                        <a href="#review">1 review</a>
+                        <NuxtLink to="#review">1 review</NuxtLink>
                     </div>
                     <div class="price">
                         <p class="cardtitle text-2xl font-[500] text-black mb-3"><span class="line-through text-gray-700">₹700</span> ₹700</p>

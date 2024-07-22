@@ -42,7 +42,7 @@ onMounted(async () => {
       <div v-else class="lg:flex flex-wrap gap-3 justify-between">
         <ul class="lg:flex flex-wrap gap-3 justify-center lg:w-[73%] w-[100%]">
           <li v-for="post in blogPosts" :key="post.id" class="p-3 bg-gray-50 border w-full rounded-lg shadow hover:shadow-lg transition">
-            <nuxt-link :to="`/blogs/${post.id}`" class="lg:flex block">
+            <NuxtLink :to="`/blogs/${post.id}`" class="lg:flex block">
               <img :src="post.imgUrl" alt="Blog Image" class="lg:w-[30%] w-[100%] lg:h-[250px] object-cover rounded-t-lg">
               <div class="p-4">
                 <h2 class="lg:text-3xl text-2xl font-semibold mb-2 capitalize">{{ post.title }}</h2>
@@ -50,7 +50,7 @@ onMounted(async () => {
                 <small class="continuelink hover:pl-2 transition-all mb-2 flex items-end gap-2 text-orange-600">Continue Reading <i class="pi pi-arrow-right"></i></small>
                 <small class="text-gray-500">{{ post.date }}</small>
               </div>
-            </nuxt-link>
+            </NuxtLink>
           </li>
         </ul>
         <div class="lg:w-[25%] w-[100%] rounded shadow sticky top-3 bg-blue-800 h-fit text-white p-3">

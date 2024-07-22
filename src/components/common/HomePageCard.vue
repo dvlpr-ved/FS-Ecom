@@ -7,7 +7,7 @@ const props = defineProps<{
 
 <template>
   <div class="commonCard border lg:ml-3 ml-1 tooltipGroup relative">
-    <a href="searchresult/">
+    <NuxtLink to="searchresult/">
       <div class="imgsdiv">
         <img
           class="w-full cardImg bg-gray-200"
@@ -16,7 +16,7 @@ const props = defineProps<{
           loading="lazy"
         />
       </div>
-      <p class="lg:text-xl text-xl text-center pt-3 pb-2"> 
+      <p class="lg:text-xl text-xl text-center pt-3 pb-2">
         {{ props.title.slice(0, 39) }}
       </p>
       <span
@@ -28,7 +28,7 @@ const props = defineProps<{
       <p class="cardtitle text-gray-700 text-2xl font-bold">
         <span class="line-through">₹1000</span> ₹999
       </p>
-    </a>
+    </NuxtLink>
   </div>
 </template>
 
