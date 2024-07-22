@@ -48,9 +48,9 @@ const queryItems = ref([
 
 
 <template>
-  <ul class="autoCompleteDropDwon w-full shadow-lg absolute top-[40px]">
+  <ul class="autoCompleteDropDwon w-full shadow-lg absolute top-[40px] bg-gray-100">
     <li v-for="(items, index) in queryItems"
-      class="bg-white ease-linear duration-300 py-2 cursor-pointer capitalize border-bottom-1 border-gray-300"
+      class="ease-linear duration-300 py-2 cursor-pointer capitalize border-bottom-1 border-gray-300"
       :key="index">{{ items.searchQuery }}
     </li>
   </ul>

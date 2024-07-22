@@ -65,7 +65,7 @@ onBeforeUnmount(() => {
         <div class="container">
             <div class="flexHeading flex justify-between items-center pb-5">
                 <h3 class="text-2xl lg:text-3xl">Highlights</h3>
-                <a href="#" class="commonbtn">View All</a>
+                <NuxtLink to="#" class="commonbtn">View All</NuxtLink>
             </div>
             <template v-if="isLoading">
                 <div class="lg:flex hidden justify-between">

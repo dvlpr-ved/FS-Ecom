@@ -5,26 +5,26 @@
     class="fixedFooter lg:hidden block bg-white py-2 fixed bottom-0 left-0 right-0 w-full z-10"
   >
     <div class="container flex text-center justify-between gap-2">
-      <nuxt-link to="../" class="block">
+      <NuxtLink to="../" class="block">
         <i class="pi pi-home"></i>
         <span class="text-sm block">Home</span>
-      </nuxt-link>
-      <nuxt-link to="#" class="block">
+      </NuxtLink>
+      <NuxtLink to="#" class="block">
         <i class="pi pi-search"></i>
         <span class="text-sm block">Search</span>
-      </nuxt-link>
-      <nuxt-link to="../blogs" class="block">
+      </NuxtLink>
+      <NuxtLink to="../blogs" class="block">
         <i class="pi pi-sync"></i>
         <span class="text-sm block">Update</span>
-      </nuxt-link>
-      <nuxt-link to="../myaccounts" class="block">
+      </NuxtLink>
+      <NuxtLink to="../myaccounts" class="block">
         <i class="pi pi-user"></i>
         <span class="text-sm block">My Account</span>
-      </nuxt-link>
-      <nuxt-link to="#" class="block">
+      </NuxtLink>
+      <NuxtLink to="#" class="block">
         <i class="pi pi-shopping-cart"></i>
         <span class="text-sm block">Cart</span>
-      </nuxt-link>
+      </NuxtLink>
     </div>
   </footer>
 </template>

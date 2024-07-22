@@ -105,19 +105,19 @@ const handleAdCartClose = () => {
           </div>
           <div class="sharediv py-5 flex gap-2 items-end">
             <span class="lg:text-2xl mb-1">Share Now : </span>
-            <a href="JavaScript:void(0)">
+            <NuxtLink to="JavaScript:void(0)">
               <i class="pi pi-instagram text-2xl transition"></i>
-            </a>
-            <a href="JavaScript:void(0)">
+            </NuxtLink>
+            <NuxtLink to="JavaScript:void(0)">
               <i class="pi pi-whatsapp text-2xl transition"></i>
-            </a>
-            <a href="JavaScript:void(0)">
+            </NuxtLink>
+            <NuxtLink to="JavaScript:void(0)">
               <i class="pi pi-facebook text-2xl transition"></i>
-            </a>
-            <!-- <a href="JavaScript:void(0)"> <i class="pi pi-pinterest text-2xl transition"></i> </a> -->
-            <a href="JavaScript:void(0)">
+            </NuxtLink>
+            <!-- <NuxtLink to="JavaScript:void(0)"> <i class="pi pi-pinterest text-2xl transition"></i> </NuxtLink> -->
+            <NuxtLink to="JavaScript:void(0)">
               <i class="pi pi-twitter text-2xl transition"></i>
-            </a>
+            </NuxtLink>
           </div>
 
           <div class="vendrsDetail">

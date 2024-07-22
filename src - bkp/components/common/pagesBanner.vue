@@ -22,7 +22,7 @@ const props = defineProps<{
                     </div>
                     <p class="mb-3">Jaipur — 785 15h Street, Office 478/B Green Mall, De 81566</p>
                     <span class="block">Phone: contact@example.com</span>
-                    <span>Email: <a href="#" style="color: var(--primary);">contact@example.com</a> </span>
+                    <span>Email: <NuxtLink to="#" style="color: var(--primary);">contact@example.com</NuxtLink> </span>
                 </div> -->
             </div>
         </div>

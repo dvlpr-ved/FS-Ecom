@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const CartItems = ref(12);
+const whitelistd = ref(2);
 const whitelistItems = ref(2);
 const NotiFication = ref(10);
 
@@ -21,7 +22,7 @@ const toogleModal = () => {
   if (!authStore.userData) {
     visible.value = true;
   }
-}
+};
 </script>
 
 <template>
@@ -30,13 +31,13 @@ const toogleModal = () => {
     <!-- only for desktop -->
     <div class="headerDesk container lg:flex hidden justify-between">
       <div class="headerLeft flex justify-between items-center">
-        <a href="/" class="logo">
+        <NuxtLink to="/" class="logo">
           <span class="text-3xl uppercase">fashtsaly</span>
-        </a>
+        </NuxtLink>
       </div>
 
       <div class="searchField lg:flex hidden relative">
-        <input placeholder="Search Here..." @click="handleChange" @blur="handleBlur" />
+        <input class="py-2 px-3 w-full border border-gray-300 rounded text-xl bg-gray-100" placeholder="Search Here..." @click="handleChange" @blur="handleBlur" />
         <SearchAutoComplete v-if="showAutoComplete" />
       </div>
 
@@ -60,46 +61,54 @@ const toogleModal = () => {
           >
             <i class="pi pi-heart text-2xl"></i>
           </NuxtLink>
+          <span
+            class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
+            >{{ whitelistd }}</span
+          >
         </li>
-        <li class="block"><button class="subscribe commonbtn text-xl">subscribe</button></li>
+        <li class="block">
+          <button class="subscribe commonbtn text-xl">subscribe</button>
+        </li>
         <li
           class="icons relative user flex items-center gap-2 cursor-pointer"
           label="Show"
           @click="toogleModal"
         >
-          <i  class="pi pi-user text-4xl"></i>
+          <i class="pi pi-user text-4xl"></i>
           <span v-if="!authStore.isLoggedin" class="text inline">LOGIN / REGISTER</span>
-          <span v-else class="text inline">{{authStore.getUser ? authStore.getUser.name : ''}}</span>
+          <NuxtLink to="/myaccounts" v-else class="text inline">
+            <small class="block text-sm">welcome</small>
+            {{ authStore.getUser ? authStore.getUser.name : "" }}
+          </NuxtLink>
         </li>
       </ul>
     </div>
 
     <!-- header for mobile -->
     <div class="container mx-auto flex items-center justify-between py-1 lg:hidden">
-      <a href="/" class="logo">
+      <NuxtLink to="/" class="logo">
         <span class="text-3xl uppercase font-bold">Fashtsaly</span>
-      </a>
+      </NuxtLink>
       <ul class="navList flex items-center justify-center space-x-4">
-        <li class="icons text-center watchlist">
+        <li class="icons text-center cart">
           <NuxtLink
-            to="whitelist"
-            class="flex flex-col items-center text-gray-700 hover:text-gray-900"
+            to="../whitelist"
+            class="border border-gray-300 rounded-[100%] flex items-center justify-center"
           >
-            <i class="pi pi-bookmark text-2xl"></i>
-            <span class="text-xs mt-1">Whitelist</span>
+            <img src="~assets/images/common/messenger.png"/>
           </NuxtLink>
         </li>
-        <li class="icons text-center notification">
-          <div class="flex flex-col items-center text-gray-700 hover:text-gray-900">
-            <i class="pi pi-bell text-2xl"></i>
-            <span class="text-xs mt-1">Notification</span>
-          </div>
-        </li>
-        <li class="icons text-center subscribe">
-          <div class="flex flex-col items-center text-gray-700 hover:text-gray-900">
-            <i class="pi pi-envelope text-2xl"></i>
-            <span class="text-xs mt-1">Subscribe</span>
-          </div>
+        <li class="icons relative cart">
+          <NuxtLink
+            to="../whitelist"
+            class="border border-gray-300 rounded-[100%] flex items-center justify-center"
+          >
+            <i class="pi pi-heart text-2xl"></i>
+          </NuxtLink>
+          <span
+            class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
+            >{{ whitelistd }}</span
+          >
         </li>
       </ul>
     </div>
@@ -128,17 +137,6 @@ const toogleModal = () => {
   .searchField {
     width: 35%;
     translate: 18% 0;
-
-    input {
-      width: 100%;
-      padding: 10px 15px;
-      border-radius: 5px;
-      font-size: 18px;
-      border-color: gainsboro;
-      /*&:focus {
-                box-shadow: 0 0 10px 12000px rgba(0, 0, 0, 0.39);
-            }*/
-    }
   }
 }
 
