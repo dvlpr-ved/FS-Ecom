@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const apiAddToCartStore = useAddToCartStore();
 const props = defineProps<{
   images?: string;
   title?: string;
@@ -8,16 +7,19 @@ const props = defineProps<{
   description?: string;
 }>();
 
+const apiAddToCartStore = useAddToCartStore();
+
 // const cards = computed(() => apiAddToCartStore.cards);
 // const isLoading = computed(() => apiAddToCartStore.isLoading);
 // const error = computed(() => apiAddToCartStore.error);
 
+const showFilledHeart = ref(false);
 const isAdded = ref(false);
+
 const addToCart = async (product_id: number) => {
   try {
     await apiAddToCartStore.fetchAddToCart({ product_id });
     console.log(product_id);
-
     isAdded.value = !true;
   } catch (error) {
     console.error("Error Adding Product In Cart:", error);
@@ -29,17 +31,24 @@ console.log(isAdded);
 
 <template>
   <div class="commonCard shadow transition border relative">
-    <div class="watchListIcons absolute top-[15px] z-10 right-[15px] cursor-pointer">
-      <i
-        class="text-4xl pi pi-heart"
-        style="color: rgb(239 68 68)"
-        @click="addToCart(props.id)"
-      ></i>
-      <i
-        class="text-4xl pi pi-heart-fill"
-        style="color: rgb(239 68 68)"
-        v-if="isAdded"
-      ></i>
+    <div
+      class="watchListIcons absolute top-[15px] z-10 right-[15px] cursor-pointer"
+      @mouseover="showFilledHeart = true"
+      @mouseleave="showFilledHeart = false"
+    >
+      <p class="relative">
+        <i
+          class="text-4xl pi pi-heart"
+          style="color: rgb(239 68 68)"
+          @click="addToCart(props.id)"
+        ></i>
+        <i
+          @click="addToCart(props.id)"
+          class="text-4xl pi pi-heart-fill"
+          style="color: rgb(239 68 68)"
+          v-if="showFilledHeart || isAdded"
+        ></i>
+      </p>
     </div>
     <NuxtLink :to="`../searchresult/${id}`">
       <figure class="relative">
@@ -79,17 +88,9 @@ console.log(isAdded);
   }
 
   .pi-heart-fill {
-    display: none;
-  }
-
-  .pi-heart {
-    &:hover {
-      display: none;
-
-      + .pi-heart-fill {
-        display: block;
-      }
-    }
+    position: absolute;
+    left: 0;
+    top: 0;
   }
 }
 
