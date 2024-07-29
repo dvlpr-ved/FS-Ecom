@@ -10,13 +10,13 @@ export const usePopularCateStore = defineStore('usePopularCateStore', {
         async fetchPopCataData(getCategory) {
             try {
                 // const response = await fetch(`https://dummyjson.com/products/${getCategory}`);
-                const response = await fetch(`https://dummyjson.com/products/`);
-                if (!response.ok) {
+                const response = await fetch(`https://fashtsaly.com/API/public/api/CatgMast`);
+                const res = await response.json();
+                if (!res.success) {
                     throw new Error('Failed to fetch products');
                 }
-                const data = await response.json();
-                this.cards = data.products;
-                // console.log('Fetched cards:', this.cards);
+                this.cards = res.data;
+                console.log('Fetched cards:', this.cards);
                 this.isLoading = false;
             } catch (error) {
                 console.error('Error fetching products:', error);

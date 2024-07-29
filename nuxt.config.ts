@@ -12,7 +12,11 @@ export default defineNuxtConfig({
       ]
     }
   },
-
+  runtimeConfig: {
+    public: {
+      API_BASE_URL: 'https://fashtsaly.com/API/public/',
+    },
+  },
   build: {
     transpile: [
       'chart.js',

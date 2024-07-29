@@ -45,7 +45,7 @@ const handleSubmit = async (event) => {
     });
 
     const responseData = await response.json();
-    if (!response.ok) {
+    if (!responseData.success) {
       // console.log("Registration Failed", responseData);
       if (responseData.errors) {
         formError.email = responseData.errors.email ? responseData.errors.email[0] : "";
@@ -54,6 +54,7 @@ const handleSubmit = async (event) => {
           : "";
         formError.name = responseData.errors.name ? responseData.errors.name[0] : "";
         formError.otp = responseData.errors.otp ? responseData.errors.otp[0] : "";
+        console.log(formError);
       } else {
         // console.error("Unknown error occurred:", responseData);
       }

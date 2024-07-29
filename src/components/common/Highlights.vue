@@ -1,4 +1,10 @@
 <script setup>
+const {data} = defineProps({
+  'data' : {
+    type : Object
+  }
+});
+console.log(data); 
 const itemsToShow = ref(4);
 const NoData = ref("");
 
@@ -18,13 +24,13 @@ const updateItemsToShow = () => {
   }
 };
 
-const apiHighDataStore = useHighCateStore();
-const cards = computed(() => apiHighDataStore.cards);
-const isLoading = computed(() => apiHighDataStore.isLoading);
-const error = computed(() => apiHighDataStore.error);
+// const apiHighDataStore = useHighCateStore();
+// const cards = computed(() => apiHighDataStore.cards);
+// const isLoading = computed(() => apiHighDataStore.isLoading);
+// const error = computed(() => apiHighDataStore.error);
 
 onMounted(() => {
-  apiHighDataStore.fetchHighCategoryData("category/womens-dresses");
+//   apiHighDataStore.fetchHighCategoryData("category/womens-dresses");
   window.addEventListener("resize", updateItemsToShow);
   updateItemsToShow();
 });
@@ -32,13 +38,14 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener("resize", updateItemsToShow);
 });
+
 </script>
 
 <template>
   <div class="similarCardWrapper lg:py-5 py-2 bg-gray-200">
     <div class="container bg-white">
       <div class="flexHeading flex justify-between items-center lg:py-5 py-2">
-        <h3 class="text-2xl lg:text-3xl">Highlights</h3>
+        <h3 class="text-2xl lg:text-3xl">{{ data.name }}</h3>
         <NuxtLink href="searchresult" class="commonbtn">View All</NuxtLink>
       </div>
       <template v-if="isLoading">
@@ -57,8 +64,8 @@ onBeforeUnmount(() => {
       <div v-else class="relative pb-5">
         <h1>{{ NoData }}</h1>
         <carousel :items-to-show="itemsToShow">
-          <slide v-for="card in cards" :key="card.id">
-            <HomePageCard :thumbnail="card.thumbnail" :title="card.title" />
+          <slide v-for="card in data.products" :key="card.id">
+            <HomePageCard :thumbnail="card.images" :title="card.name" />
           </slide>
           <template #addons>
             <navigation />

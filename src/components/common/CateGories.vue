@@ -98,7 +98,7 @@ onBeforeUnmount(() => {
               <!-- for now we are using local images -->
               <img
                 class="avatar"
-                src="https://rukminim2.flixcart.com/image/612/612/l4d2ljk0/fabric/v/k/z/yes-2-m-unstitched-2-2-m-1159d1155j-siril-original-imagfa3p78ey7v9h.jpeg"
+                :src="item.image"
                 :alt="item.title"
                 loading="lazy"
               />

@@ -11,7 +11,7 @@ const props = defineProps<{
       <div class="imgsdiv">
         <img
           class="w-full cardImg bg-gray-200"
-          :src="props.thumbnail"
+          :src="props.thumbnail[0].source"
           alt="highlight img"
           loading="lazy"
         />

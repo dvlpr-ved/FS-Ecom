@@ -1,18 +1,29 @@
-<script setup></script>
+<script setup>
+import {fetchFromSanctum} from '../utils/sanctumApi.js'
+
+const blocks = ref([]);
+const getHomePageData = async () => {
+  const config = useRuntimeConfig();
+  const data = await fetchFromSanctum({method : 'POST' , 'url' : `${config.API_BASE_URL ? config.API_BASE_URL : 'https://fashtsaly.com/API/public/'}api/getHomePageData`});
+  if(data.success){
+    blocks.value = data.data;
+  }
+}
+onMounted(() => {
+  getHomePageData();
+});
+</script>
 
 <template>
-  <AppBanner />
-  <CateGories />
-  <Highlights />
-  <Highlights />
-  <!-- <OfferBanner /> -->
-  <AppBanner />
-  <Highlights />
-  <Highlights />
-  <AppBanner />
-  <!-- <OfferBanner /> -->
-  <Highlights />
-  <Highlights />
+  <div v-for="block in blocks.length">
+    <div v-if="block != 2">
+      <AppBanner :data="blocks[block-1]" v-if="blocks[block-1].type=='Banner'" />      
+      <Highlights :data="blocks[block-1]" v-else/>      
+    </div>
+    <div v-else>
+      <CateGories></CateGories>
+    </div>
+  </div>
 </template>
 
 <style lang="scss">
