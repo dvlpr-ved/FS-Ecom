@@ -22,6 +22,8 @@ onMounted(() => {
     </div>
     <div v-else>
       <CateGories></CateGories>
+      <AppBanner :data="blocks[block-1]" v-if="blocks[block-1].type=='Banner'" />      
+      <Highlights :data="blocks[block-1]" v-else/>
     </div>
   </div>
 </template>
