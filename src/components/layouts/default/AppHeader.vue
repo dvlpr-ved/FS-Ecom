@@ -75,9 +75,9 @@ const toogleModal = () => {
           @click="toogleModal"
         >
           <i class="pi pi-user text-4xl"></i>
-          <span v-if="!authStore.isLoggedin" class="text inline">LOGIN / REGISTER</span>
+          <span v-if="!authStore.getUser" class="text inline">LOGIN / REGISTER</span>
           <NuxtLink to="/myaccounts" v-else class="text inline">
-            <small class="block text-sm">welcome</small>
+            <small v-if="authStore.getUser" class="block text-sm">welcome</small>
             {{ authStore.getUser ? authStore.getUser.name : "" }}
           </NuxtLink>
         </li>
