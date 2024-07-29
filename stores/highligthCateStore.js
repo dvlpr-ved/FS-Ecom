@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-
 export const useHighCateStore = defineStore('useHighCateStore', {
     state: () => ({
         cards: [],
@@ -9,12 +8,18 @@ export const useHighCateStore = defineStore('useHighCateStore', {
     actions: {
         async fetchHighCategoryData(getCategory) {
             try {
-                const response = await fetch(`https://dummyjson.com/products/${getCategory}`);
-                if (!response.ok) {
+                const headers = {};
+                const response = await fetchFromSanctum({
+                    method: 'GET',
+                    url: 'https://dummyjson.com/products/',
+                    // url: 'https://fashtsaly.com/API/public/api/getCategories',
+                });
+
+                if (!response) {
                     throw new Error('Failed to fetch products');
                 }
-                const data = await response.json();
-                this.cards = data.products;
+                // this.cards = response.data;
+                this.cards = response.products;
                 this.isLoading = false;
             } catch (error) {
                 console.error('Error fetching products:', error);

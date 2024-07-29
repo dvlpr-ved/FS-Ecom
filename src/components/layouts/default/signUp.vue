@@ -12,7 +12,7 @@ const formData = {
   email: "",
   password: "",
   confirmPassword: "",
-  otp : ""
+  otp: "",
 };
 
 const formError = {
@@ -20,85 +20,91 @@ const formError = {
   email: "",
   password: "",
   confirmPassword: "",
-  otp : ""
+  otp: "",
 };
 
 const handleSubmit = async (event) => {
   event.preventDefault();
-  try {
-    const url = isOtpFeildVisible.value ? `https://fashtsaly.com/API/public/api/signUp` : `https://fashtsaly.com/API/public/api/send-otp`;
-    const payload = isOtpFeildVisible.value ? {
-        email : formData.email,
-        password : formData.password,
-        name : formData.name,
-        otp : formData.otp
-    } :
-    {
-      email : formData.email
-    } 
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
 
-    const responseData = await response.json();
-    if (!responseData.success) {
-      // console.log("Registration Failed", responseData);
-      if (responseData.errors) {
-        formError.email = responseData.errors.email ? responseData.errors.email[0] : "";
-        formError.password = responseData.errors.password
-          ? responseData.errors.password[0]
-          : "";
-        formError.name = responseData.errors.name ? responseData.errors.name[0] : "";
-        formError.otp = responseData.errors.otp ? responseData.errors.otp[0] : "";
-        console.log(formError);
+  let isValid = true;
+
+  if (!formData.name) {
+    formError.name = "Please Enter Name";
+    alert("Please Enter Name");
+    isValid = false;
+    return;
+  }
+  if (!formData.email) {
+    formError.email = "Please Enter Email";
+    alert("Please Enter Email");
+    isValid = false;
+    return;
+  }
+  if (!formData.password) {
+    formError.password = "Please Enter Password";
+    alert("Please Enter Password");
+    isValid = false;
+    return;
+  }
+  if (!formData.confirmPassword) {
+    formError.confirmPassword = "Please Confirm Password";
+    alert("Please Confirm Password");
+    isValid = false;
+    return;
+  }
+  if (formData.password !== formData.confirmPassword) {
+    formError.confirmPassword = "Passwords do not match";
+    alert("Passwords do not match");
+    isValid = false;
+    return;
+  }
+
+  if (isValid) {
+    try {
+      const url = isOtpFeildVisible.value
+        ? `https://fashtsaly.com/API/public/api/signUp`
+        : `https://fashtsaly.com/API/public/api/send-otp`;
+      const payload = isOtpFeildVisible.value
+        ? {
+            email: formData.email,
+            password: formData.password,
+            name: formData.name,
+            otp: formData.otp,
+          }
+        : {
+            email: formData.email,
+          };
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const responseData = await response.json();
+      if (!response.ok) {
+        if (responseData.errors) {
+          formError.email = responseData.errors.email ? responseData.errors.email[0] : "";
+          formError.password = responseData.errors.password
+            ? responseData.errors.password[0]
+            : "";
+          formError.name = responseData.errors.name ? responseData.errors.name[0] : "";
+          formError.otp = responseData.errors.otp ? responseData.errors.otp[0] : "";
+        } else {
+        }
       } else {
-        // console.error("Unknown error occurred:", responseData);
+        if (!isOtpFeildVisible.value) {
+          isOtpFeildVisible.value = true;
+        } else {
+          authStore.Login(responseData);
+        }
       }
-    } else {
-      if(!isOtpFeildVisible.value){
-        isOtpFeildVisible.value = true;
-      }
-      else{
-        // const data = responseData.data;
-        authStore.Login(responseData);
-      }
-      // console.log("Registration successful", responseData);
+    } catch (error) {
+      console.error("Error occurred during registration:", error);
     }
-  } catch (error) {
-    console.error("Error occurred during registration:", error);
   }
 };
-
-console.log("email", formError.email);
-
-// let isValid = true;
-
-// if (!formData.name) {
-//   formError.name = "Please Enter Name";
-//   isValid = false;
-// }
-// if (!formData.email) {
-//   formError.email = "Please Enter Email";
-//   isValid = false;
-// }
-// if (!formData.password) {
-//   formError.password = "Please Enter Password";
-//   isValid = false;
-// }
-// if (!formData.confirmPassword) {
-//   formError.confirmPassword = "Please Confirm Password";
-//   isValid = false;
-// }
-// if (formData.password !== formData.confirmPassword) {
-//   formError.confirmPassword = "Passwords do not match";
-//   isValid = false;
-// }
-
-// if (isValid) {}
 
 const closeModal = () => {
   visible.value = false;
@@ -110,7 +116,7 @@ const toggleFieldType = () => {
 
 <template>
   <div
-    class="maindiv flex justify-center items-center py-5"
+    class="signupmaindiv flex justify-center items-center py-5"
     style="background: #f1f1f1; border-bottom: 1px solid #ddd"
   >
     <div class="innerdiv max-w-[900px] w-full bg-white rounded">
@@ -142,7 +148,7 @@ const toggleFieldType = () => {
                   placeholder="Enter Your Name*"
                   v-model="formData.name"
                 />
-                <p class="text-red-500">{{ formError.name }}</p>
+                <p class=" text-[red]">{{ formError.name }}</p>
               </div>
               <div class="inputbox mb-3">
                 <input
@@ -151,7 +157,7 @@ const toggleFieldType = () => {
                   placeholder="Enter Your Email*"
                   v-model="formData.email"
                 />
-                <p class="text-red-500">{{ formError.email }}</p>
+                <p class=" text-[red]">{{ formError.email }}</p>
               </div>
               <div class="inputbox mb-3 relative">
                 <input
@@ -160,7 +166,7 @@ const toggleFieldType = () => {
                   placeholder="Enter Your Password*"
                   v-model="formData.password"
                 />
-                <p class="text-red-500">{{ formError.password }}</p>
+                <p class=" text-[red]">{{ formError.password }}</p>
                 <button @click="toggleFieldType" class="absolute right-[15px] top-3">
                   <span v-if="inputType.value === 'password'" class="pi pi-eye"></span>
                   <span v-else class="pi pi-eye-slash"></span>
@@ -173,7 +179,7 @@ const toggleFieldType = () => {
                   placeholder="Confirm Password*"
                   v-model="formData.confirmPassword"
                 />
-                <p class="text-red-500">{{ formError.confirmPassword }}</p>
+                <p class=" text-[red]">{{ formError.confirmPassword }}</p>
                 <button @click="toggleFieldType" class="absolute right-[15px] top-3">
                   <span v-if="inputType.value === 'password'" class="pi pi-eye"></span>
                   <span v-else class="pi pi-eye-slash"></span>
@@ -181,14 +187,16 @@ const toggleFieldType = () => {
               </div>
             </div>
             <div v-if="isOtpFeildVisible" class="inputbox mb-3">
-              <p class="text-center text-lg mb-3">Please enter OTP we have just sent to {{ formData.email }}</p>
+              <p class="text-center text-lg mb-3">
+                Please enter OTP we have just sent to {{ formData.email }}
+              </p>
               <input
                 type="text"
                 class="py-2 text-xl border-0 border-b w-full border-gray-400"
                 placeholder="Enter OTP"
                 v-model="formData.otp"
               />
-              <p class="text-red-500">{{ formError.otp }}</p>
+              <p class=" text-[red]">{{ formError.otp }}</p>
             </div>
             <button class="commonbtn px-8 py-3 text-xl block w-fit rounded m-auto">
               SignUp
@@ -211,7 +219,7 @@ const toggleFieldType = () => {
 </template>
 
 <style lang="scss">
-.maindiv {
+.signupmaindiv {
   height: 100%;
   min-height: 70vh;
   width: 100%;

@@ -41,7 +41,7 @@ function saveChanges() {
         <input
           type="text"
           placeholder="Name"
-          class="w-full py-2 px-3 text-[15px] border rounded text-gray-700 uppercase"
+          class="w-full py-3 px-3 text-[15px] border rounded text-gray-700 uppercase"
           v-model="formData.name"
           :disabled="!editing"
         />
@@ -52,7 +52,7 @@ function saveChanges() {
         <input
           type="text"
           placeholder="Last Name"
-          class="w-full py-2 px-3 text-[15px] border rounded text-gray-700 uppercase"
+          class="w-full py-3 px-3 text-[15px] border rounded text-gray-700 uppercase"
           v-model="formData.lname"
           :disabled="!editing"
         />
@@ -86,7 +86,7 @@ function saveChanges() {
       <div class="in_box lg:w-[45%] w-[100%]">
         <input
           placeholder="Email"
-          class="w-full py-2 px-3 text-[15px] border rounded text-gray-700 uppercase"
+          class="w-full py-3 px-3 text-[15px] border rounded text-gray-700 uppercase"
           v-model="formData.email"
           :disabled="!editing"
         />

@@ -26,9 +26,9 @@ console.log(visible);
     <!-- only for desktop -->
     <div class="headerDesk container lg:flex hidden justify-between">
       <div class="headerLeft flex justify-between items-center">
-        <nuxt-link to="/" class="logo">
+        <NuxtLink to="/" class="logo">
           <span class="text-3xl uppercase">fashtsaly</span>
-        </nuxt-link>
+        </NuxtLink>
       </div>
 
       <div class="searchField lg:flex hidden relative">
@@ -71,9 +71,9 @@ console.log(visible);
 
     <!-- header for mobile -->
     <div class="container mx-auto flex items-center justify-between py-1 lg:hidden">
-      <nuxt-link to="/" class="logo">
+      <NuxtLink to="/" class="logo">
         <span class="text-3xl uppercase font-bold">Fashtsaly</span>
-      </nuxt-link>
+      </NuxtLink>
       <ul class="navList flex items-center justify-center space-x-4">
         <li class="icons text-center watchlist">
           <NuxtLink

@@ -5,7 +5,7 @@
       <h1 class="text-2xl font-bold mb-4">Sitemap</h1>
       <ul class="space-y-2 flex flex-wrap gap-4 items-center">
         <li v-for="(route, index) in routes" :key="index" class="text-blue-500 w-1/3">
-          <nuxt-link :to="route.url" class="hover:underline block p-3 rounded-lg shadow-md bg-white text-gray-800 hover:bg-gray-100 transition duration-300 ease-in-out">{{ route.label }}</nuxt-link>
+          <NuxtLink :to="route.url" class="hover:underline block p-3 rounded-lg shadow-md bg-white text-gray-800 hover:bg-gray-100 transition duration-300 ease-in-out">{{ route.label }}</NuxtLink>
         </li>
       </ul>
     </div>

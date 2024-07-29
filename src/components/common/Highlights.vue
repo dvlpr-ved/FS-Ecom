@@ -43,7 +43,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="similarCardWrapper lg:py-5 py-2 bg-gray-200">
-    <div class="container bg-white">
+    <div class="container lg:bg-gray-50 bg-white">
       <div class="flexHeading flex justify-between items-center lg:py-5 py-2">
         <h3 class="text-2xl lg:text-3xl">{{ data.name }}</h3>
         <NuxtLink href="searchresult" class="commonbtn">View All</NuxtLink>
