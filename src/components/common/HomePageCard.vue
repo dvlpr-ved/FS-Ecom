@@ -16,7 +16,7 @@ const props = defineProps<{
           loading="lazy"
         />
       </div>
-      <p class="lg:text-xl text-xl text-center pt-3 pb-2">
+      <p class="ellipsisText lg:text-xl text-xl text-center pt-3 pb-2">
         {{ props.title.slice(0, 39) }}
       </p>
       <span

@@ -9,10 +9,6 @@ const props = defineProps<{
 
 const apiAddToCartStore = useAddToCartStore();
 
-// const cards = computed(() => apiAddToCartStore.cards);
-// const isLoading = computed(() => apiAddToCartStore.isLoading);
-// const error = computed(() => apiAddToCartStore.error);
-
 const showFilledHeart = ref(false);
 const isAdded = ref(false);
 

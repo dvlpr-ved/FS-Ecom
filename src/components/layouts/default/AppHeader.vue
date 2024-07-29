@@ -6,6 +6,7 @@ const NotiFication = ref(10);
 
 const authStore = useAuthStore();
 const showAutoComplete = ref(false);
+
 const handleChange = (e: any) => {
   // showAutoComplete.value = !showAutoComplete.value;
   showAutoComplete.value = true;
@@ -37,7 +38,12 @@ const toogleModal = () => {
       </div>
 
       <div class="searchField lg:flex hidden relative">
-        <input class="py-2 px-3 w-full border border-gray-300 rounded text-xl bg-gray-100" placeholder="Search Here..." @click="handleChange" @blur="handleBlur" />
+        <input
+          class="py-2 px-3 w-full border border-gray-300 rounded text-xl bg-gray-100"
+          placeholder="Search Here..."
+          @click="handleChange"
+          @blur="handleBlur"
+        />
         <SearchAutoComplete v-if="showAutoComplete" />
       </div>
 
@@ -95,7 +101,7 @@ const toogleModal = () => {
             to="../whitelist"
             class="border border-gray-300 rounded-[100%] flex items-center justify-center"
           >
-            <img src="~assets/images/common/messenger.png"/>
+            <img src="~assets/images/common/messenger.png" />
           </NuxtLink>
         </li>
         <li class="icons relative cart">

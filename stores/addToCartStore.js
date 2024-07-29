@@ -8,21 +8,20 @@ export const useAddToCartStore = defineStore('useAddToCartStore', {
     actions: {
         async fetchAddToCart({ product_id }) {
             try {
-                const headers = {};
                 const body = {
                     product_id: product_id,
-                    is_addedtocart: 0
+                    is_addedtocart: 0,
+                    is_wishlist: 1
                 };
                 const response = fetchFromSanctum({
                     method: 'POST',
                     url: 'https://fashtsaly.com/API/public/api/addToCart',
-                    headers,
                     body,
                 })
                 if (!response) {
                     throw new Error('Error in Add To Cart')
                 }
-                console.log(response);
+                console.log('response', response);
                 console.log(product_id);
                 // this.cards = response;
                 // this.cards = response.products;

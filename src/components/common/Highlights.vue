@@ -1,10 +1,10 @@
 <script setup>
-const {data} = defineProps({
-  'data' : {
-    type : Object
-  }
+const { data } = defineProps({
+  data: {
+    type: Object,
+  },
 });
-console.log(data); 
+console.log("highligths", data);
 const itemsToShow = ref(4);
 const NoData = ref("");
 
@@ -30,7 +30,7 @@ const updateItemsToShow = () => {
 // const error = computed(() => apiHighDataStore.error);
 
 onMounted(() => {
-//   apiHighDataStore.fetchHighCategoryData("category/womens-dresses");
+  //   apiHighDataStore.fetchHighCategoryData("category/womens-dresses");
   window.addEventListener("resize", updateItemsToShow);
   updateItemsToShow();
 });
@@ -38,7 +38,6 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener("resize", updateItemsToShow);
 });
-
 </script>
 
 <template>

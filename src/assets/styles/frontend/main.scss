@@ -39,6 +39,7 @@ input{padding: 5px 10px; border: 1px solid #b1b1b1;}
     &.controlBtn1 {left: inherit;right: 0;}
 }
 
+.ellipsisText{white-space: normal;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 1;}
 
 // common tooltip
 .tooltipGroup:hover {
