@@ -1,4 +1,7 @@
 <script setup>
+import { template } from "@whoj/utils";
+import { ref } from "vue";
+
 const GetItemFromCart = useGetItemFromCart();
 
 const cards = computed(() => GetItemFromCart.items || []);
@@ -11,59 +14,42 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container py-4">
-    <h1 class="text-3xl font-semibold mb-4">My Watchlist</h1>
-
-    <!-- Show shimmer animation if watchlist is empty or loading -->
-    <div v-if="isLoading || watchlist.length === 0">
-      <template v-if="isLoading">
-        <div class="shimmermain space-y-4">
-          <div class="flex justify-between">
-            <div class="p-9 w-[20%] animate-pulse rounded bg-gray-200"></div>
-            <div class="w-[78%]">
-              <span
-                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
-              ></span>
-              <span
-                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
-              ></span>
-              <span
-                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
-              ></span>
-            </div>
-          </div>
-          <div class="flex justify-between">
-            <div class="p-9 w-[20%] animate-pulse rounded bg-gray-200"></div>
-            <div class="w-[78%]">
-              <span
-                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
-              ></span>
-              <span
-                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
-              ></span>
-              <span
-                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
-              ></span>
-            </div>
-          </div>
-          <div class="flex justify-between">
-            <div class="p-9 w-[20%] animate-pulse rounded bg-gray-200"></div>
-            <div class="w-[78%]">
-              <span
-                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
-              ></span>
-              <span
-                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
-              ></span>
-              <span
-                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
-              ></span>
-            </div>
+  <div class="myordersmain container py-5">
+    <h1 class="text-3xl font-semibold mb-4 text-center">My wishlist</h1>
+    <template v-if="cards.length === 0">
+      <div class="text-center">
+        <p class="text-2xl border p-2 px-3 w-fit m-auto mb-2">No Item found.</p>
+        <NuxtLink to="../" class="text-3xl text-blue-600">Explore Product</NuxtLink>
+      </div>
+    </template>
+    <template v-else-if="isLoading">
+      <div class="shimmermain space-y-4">
+        <div class="flex justify-between">
+          <div class="p-9 w-[20%] animate-pulse rounded bg-gray-200"></div>
+          <div class="w-[78%]">
+            <span class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"></span>
+            <span class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"></span>
+            <span class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"></span>
           </div>
         </div>
-      </template>
-      <!-- <p>No items in your watchlist.</p> -->
-    </div>
+        <div class="flex justify-between">
+          <div class="p-9 w-[20%] animate-pulse rounded bg-gray-200"></div>
+          <div class="w-[78%]">
+            <span class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"></span>
+            <span class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"></span>
+            <span class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"></span>
+          </div>
+        </div>
+        <div class="flex justify-between">
+          <div class="p-9 w-[20%] animate-pulse rounded bg-gray-200"></div>
+          <div class="w-[78%]">
+            <span class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"></span>
+            <span class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"></span>
+            <span class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"></span>
+          </div>
+        </div>
+      </div>
+    </template>
 
     <div v-else>
       <div
@@ -94,7 +80,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.container {
+.myordersmain {
   max-width: 650px;
 }
 </style>

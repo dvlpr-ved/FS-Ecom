@@ -36,7 +36,7 @@ const itemsToShow = ref(2);
 .newProductsCard {
   max-width: 576px;
   margin: 0 auto;
-  margin-bottom: 15px;
+  margin-bottom:15px;
 
   .slideImg {
   }

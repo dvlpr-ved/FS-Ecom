@@ -1,4 +1,14 @@
-<script setup></script>
+<script setup>
+const visible = ref(false);
+
+const authStore = useAuthStore();
+
+const toogleModal = () => {
+  if (!authStore.userData) {
+    visible.value = true;
+  }
+};
+</script>
 <template>
   <div class="spacer lg:hidden block py-[35px] bg-gray-200"></div>
   <footer
@@ -17,14 +27,23 @@
         <i class="pi pi-sync"></i>
         <span class="text-sm block">Update</span>
       </NuxtLink>
-      <NuxtLink to="../myaccounts" class="block">
-        <i class="pi pi-user"></i>
-        <span class="text-sm block">My Account</span>
-      </NuxtLink>
+      <template v-if="!authStore.getUser">
+        <span class="block" @click="toogleModal">
+          <i class="pi pi-user"></i>
+          <span class="text-sm block">My Account</span>
+        </span>
+      </template>
+      <template v-else>
+        <NuxtLink to="../myaccounts" class="block">
+          <i class="pi pi-user"></i>
+          <span class="text-sm block">My Account</span>
+        </NuxtLink>
+      </template>
       <NuxtLink to="../mycart" class="block">
         <i class="pi pi-shopping-cart"></i>
         <span class="text-sm block">Cart</span>
       </NuxtLink>
     </div>
   </footer>
+  <LoginModal :visible="visible" />
 </template>

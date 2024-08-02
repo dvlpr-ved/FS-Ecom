@@ -78,8 +78,10 @@ watch(TotalcartItems, (newItems) => {
           </NuxtLink>
           <span
             class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
-            >{{ wishlistd }}</span
           >
+            <!-- {{ wishlistd }} -->
+            {{ CartItems }}
+          </span>
         </li>
         <li class="block">
           <button class="subscribe commonbtn text-xl">subscribe</button>
@@ -92,7 +94,7 @@ watch(TotalcartItems, (newItems) => {
           <i class="pi pi-user text-4xl"></i>
           <span v-if="!authStore.getUser" class="text inline">LOGIN / REGISTER</span>
           <NuxtLink to="/myaccounts" v-else class="text inline">
-            <small v-if="authStore.getUser" class="block text-sm">welcome</small>
+            <small v-if="authStore.getUser" class="block text-sm">Hello</small>
             {{ authStore.getUser ? authStore.getUser.name : "" }}
           </NuxtLink>
         </li>
