@@ -24,13 +24,7 @@ const updateItemsToShow = () => {
   }
 };
 
-// const apiHighDataStore = useHighCateStore();
-// const cards = computed(() => apiHighDataStore.cards);
-// const isLoading = computed(() => apiHighDataStore.isLoading);
-// const error = computed(() => apiHighDataStore.error);
-
 onMounted(() => {
-  //   apiHighDataStore.fetchHighCategoryData("category/womens-dresses");
   window.addEventListener("resize", updateItemsToShow);
   updateItemsToShow();
 });

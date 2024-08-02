@@ -21,7 +21,7 @@
         <i class="pi pi-user"></i>
         <span class="text-sm block">My Account</span>
       </NuxtLink>
-      <NuxtLink to="#" class="block">
+      <NuxtLink to="../mycart" class="block">
         <i class="pi pi-shopping-cart"></i>
         <span class="text-sm block">Cart</span>
       </NuxtLink>

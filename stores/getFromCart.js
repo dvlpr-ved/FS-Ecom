@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+
 export const useGetItemFromCart = defineStore('useGetItemFromCart', {
     state: () => ({
         items: [],
@@ -7,25 +8,28 @@ export const useGetItemFromCart = defineStore('useGetItemFromCart', {
     }),
     actions: {
         async fetchGetItemFromCart() {
+            this.isLoading = true;
             try {
-                // const body = {};
-                const response = fetchFromSanctum({
+                const body = {
+                    wishlist: 1
+                };
+                const response = await fetchFromSanctum({
                     method: 'POST',
                     url: 'https://fashtsaly.com/API/public/api/getCart',
-                    // body,
-                })
+                    body
+                });
                 if (!response) {
-                    throw new Error('Error in Getting Item from Cart')
+                    throw new Error('Error in Getting Item from Cart');
                 }
-                this.items = response.data;
-                console.log('cart ITems',response);
-                this.isLoading = false
+                const data = await response.data;
+                this.items = data;
+                this.isLoading = false;
             }
             catch (error) {
                 console.error('Error in Getting Product From Cart:', error);
                 this.error = 'Error Getting Product From Cart';
-                this.isLoading = false
+                this.isLoading = false;
             }
         }
     }
-})
+});

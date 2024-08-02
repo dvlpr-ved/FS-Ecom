@@ -1,29 +1,9 @@
 <script setup>
-const watchlist = ref([
-  {
-    id: 1,
-    name: "Product A",
-    price: 250.0,
-    image: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_05.jpg",
-    lastUpdated: "2024-07-01",
-  },
-  {
-    id: 2,
-    name: "Product B",
-    price: 180.0,
-    image: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_05.jpg",
-    lastUpdated: "2024-06-30",
-  },
-]);
-
 const GetItemFromCart = useGetItemFromCart();
-const cards = computed(() => GetItemFromCart.cards);
+
+const cards = computed(() => GetItemFromCart.items || []);
 const isLoading = computed(() => GetItemFromCart.isLoading);
 const error = computed(() => GetItemFromCart.error);
-
-// console.log("whissss cards", cards);
-// console.log("whissss loading", isLoading);
-// console.log("whissss errors", error);
 
 onMounted(() => {
   GetItemFromCart.fetchGetItemFromCart();
@@ -87,21 +67,26 @@ onMounted(() => {
 
     <div v-else>
       <div
-        v-for="item in watchlist"
-        :key="item.id"
-        class="border rounded-lg p-4 mb-4 shadow-md flex items-center"
+        v-for="items in cards"
+        :key="items.id"
+        class="bcards rounded-lg p-4 mb-4 shadow-md flex items-center"
       >
         <div class="flex-shrink-0">
           <img
-            :src="item.image"
-            alt="Watchlist Item Image"
+            :src="
+              items.images && items.images.length > 0
+                ? items.images[0].source
+                : 'https://via.placeholder.com/96'
+            "
+            alt="Product Image"
             class="w-24 h-24 object-cover rounded-lg"
+            loading="lazy"
           />
         </div>
         <div class="ml-4">
-          <h2 class="text-lg font-semibold mb-2">{{ item.name }}</h2>
-          <p class="text-gray-600 mb-1">Price: ${{ item.price.toFixed(2) }}</p>
-          <p class="text-gray-600 mb-1">Last Updated: {{ item.lastUpdated }}</p>
+          <h2 class="text-lg font-semibold mb-2">{{ items.name }}</h2>
+          <p class="text-gray-600 mb-1">{{ items.created_at }}</p>
+          <p class="text-gray-600 mb-1">Price: ₹{{ items.mrp }}</p>
         </div>
       </div>
     </div>
