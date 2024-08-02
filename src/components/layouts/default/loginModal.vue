@@ -1,11 +1,11 @@
 <script setup lang="ts">
-// import Password from "primevue/password";
 const props = defineProps<{
   visible: boolean;
   close: () => void;
 }>();
 
 const value = ref(null);
+const ChnagePosition = ref("");
 const showMessage = ref("");
 
 const formData = {
@@ -41,12 +41,26 @@ const handleSubmit = async (e) => {
     console.log("error in login", error);
   }
 };
+
+const toggelForm = () => {
+  ChnagePosition.value = "active";
+};
 </script>
 
 <template>
   <Dialog :visible="visible" modal class="p-0" :style="{ width: '1024px' }">
     <div class="flexDialog flex flex-wrap justify-between relative">
-      <div class="leftCol lg:w-[50%] w-[100%] bgblue80 relative">
+      <div
+        :class="[
+          'fixedBanner',
+          'absolute',
+          'lg:w-[50%]',
+          'w-[100%]',
+          'bgblue80',
+          'z-10',
+          ChnagePosition,
+        ]"
+      >
         <img
           class="brightness-[0.]"
           src="assets/images/common/signup.png"
@@ -58,17 +72,19 @@ const handleSubmit = async (e) => {
           >Subscriber</a
         >
       </div>
+      <!-- signup Form -->
+      <signUp />
       <div
-        class="rightCol lg:w-[50%] w-[100%] p-6 bg-gray-100"
+        class="rightCol lg:w-[50%] w-[100%] lg:p-6 p-3 bg-gray-100"
         style="background-color: rgb(243, 244, 246) !important"
       >
-        <div class="heading text-center text-5xl mb-4">Login</div>
+        <div class="heading text-center lg:text-5xl text-3xl lg:mb-4 mb-2">Login</div>
         <!-- <form @submit="handleSubmit"> -->
         <p class="text-[red] text-center">{{ showMessage }}</p>
         <div class="flex items-center gap-4 mb-4">
           <input
             type="email"
-            class="py-3 text-xl px-2 rounded border-gray-400 border w-[100%]"
+            class="lg:py-3 py-2 text-xl px-2 rounded border-gray-400 border w-[100%]"
             autocomplete="off"
             placeholder="Enter Email"
             v-model="formData.email"
@@ -76,7 +92,7 @@ const handleSubmit = async (e) => {
         </div>
         <div class="flex items-center gap-4 mb-4">
           <input
-            class="py-3 text-xl px-2 rounded border-gray-400 border w-[100%]"
+            class="lg:py-3 py-2 text-xl px-2 rounded border-gray-400 border w-[100%]"
             autocomplete="off"
             type="password"
             placeholder="Enter Password"
@@ -86,7 +102,7 @@ const handleSubmit = async (e) => {
 
         <button
           type="button"
-          class="loginbtn bgorange py-2 px-3 rounded text-white text-2xl flex justify-center w-1/2 m-auto"
+          class="loginbtn bgorange py-2 px-5 rounded text-white text-2xl flex justify-center max-w-[220px] w-full m-auto"
           @click="handleSubmit"
         >
           Login
@@ -94,22 +110,23 @@ const handleSubmit = async (e) => {
         <!-- </form> -->
 
         <span class="text-center block text-4xl py-3">OR</span>
-        <a
-          href="../signup"
-          class="py-2 px-3 rounded text-white text-2xl commonbtn block w-1/2 text-center m-auto mb-4"
+        <span
+          href=""
+          class="py-2 px-3 rounded text-white text-2xl commonbtn block max-w-[220px] w-full text-center m-auto mb-4 cursor-pointer"
           style="background: #204887"
+          @click="toggelForm"
         >
           Register
-        </a>
+        </span>
       </div>
-      <Button
+      <!-- <Button
         type="button"
         id="closebtn"
         class="absolute top-0 right-0 bg-transparent"
         @click="close"
       >
         <i class="pi pi-times text-3xl text-gray-600"></i>
-      </Button>
+      </Button> -->
     </div>
   </Dialog>
 </template>
@@ -126,6 +143,14 @@ const handleSubmit = async (e) => {
 }
 
 .flexDialog {
+  .fixedBanner {
+    position: absolute;
+    left: 0;
+    &.active {
+      transition: all 0.8s ease-in-out;
+      left: 50%;
+    }
+  }
   .loginbtn {
     span {
       display: none;
@@ -146,6 +171,28 @@ const handleSubmit = async (e) => {
 
   .p-dialog-header-icon {
     display: none;
+  }
+}
+@media (max-width: 576px) {
+  .p-component-overlay-enter {
+    overflow-y: scroll;
+    padding: 5px;
+    box-shadow: unset;
+  }
+  .flexDialog {
+    .fixedBanner {
+      height: 50%;
+      &.active {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 48%;
+      }
+      img {
+        height: 100%;
+        object-fit: cover;
+      }
+    }
   }
 }
 </style>

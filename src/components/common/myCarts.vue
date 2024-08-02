@@ -15,7 +15,7 @@ onMounted(() => {
 
 <template>
   <div class="myordersmain container py-5">
-    <h1 class="text-3xl font-semibold mb-4 text-center">My wishlist</h1>
+    <h1 class="text-3xl font-semibold mb-4 text-center">My Cart</h1>
     <template v-if="cards.length === 0">
       <div class="text-center">
         <p class="text-2xl border p-2 px-3 w-fit m-auto mb-2">No Item found.</p>

@@ -16,7 +16,7 @@ export const usePopularCateStore = defineStore('usePopularCateStore', {
                     throw new Error('Failed to fetch products');
                 }
                 this.cards = res.data;
-                console.log('Fetched cards:', this.cards);
+                // console.log('Fetched cards:', this.cards);
                 this.isLoading = false;
             } catch (error) {
                 console.error('Error fetching products:', error);

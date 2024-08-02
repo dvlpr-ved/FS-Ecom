@@ -21,9 +21,9 @@ export const useAuthStore = defineStore('auth', {
             this.isSignedUp = true;
         },
         Login(payload){
-            console.log(payload)
+            // console.log(payload)
             this.userData = payload.data;
-            console.log(payload.data);
+            // console.log(payload.data);
             localStorage.removeItem('OAuth-token');
             localStorage.setItem('OAuth-token' , payload.token);
             this.makeUserLoggedIn();

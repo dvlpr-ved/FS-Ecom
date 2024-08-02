@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref } from "vue";
+
 const props = defineProps<{
   images?: string;
   title?: string;
@@ -9,33 +11,24 @@ const props = defineProps<{
 
 const apiAddToCartStore = useAddToCartStore();
 
-// const cards = computed(() => apiAddToCartStore.cards);
-// const isLoading = computed(() => apiAddToCartStore.isLoading);
-// const error = computed(() => apiAddToCartStore.error);
-
 const showFilledHeart = ref(false);
 const isAdded = ref(false);
 
 const addToCart = async (product_id: number) => {
   try {
-    await apiAddToCartStore.fetchAddToCart({ product_id });
-    console.log(product_id);
-    isAdded.value = !true;
+    const success = await apiAddToCartStore.fetchAddToCart({ product_id });
+    if (success) {
+      isAdded.value = true;
+    }
   } catch (error) {
     console.error("Error Adding Product In Cart:", error);
   }
 };
-
-console.log(isAdded);
 </script>
 
 <template>
   <div class="commonCard shadow transition border relative">
-    <div
-      class="watchListIcons absolute top-[15px] z-10 right-[15px] cursor-pointer"
-      @mouseover="showFilledHeart = true"
-      @mouseleave="showFilledHeart = false"
-    >
+    <div class="watchListIcons absolute top-[15px] z-10 right-[15px] cursor-pointer">
       <p class="relative">
         <i
           class="text-4xl pi pi-heart"
@@ -50,23 +43,27 @@ console.log(isAdded);
         ></i>
       </p>
     </div>
-    <NuxtLink :to="`../searchresult/${id}`">
+    <NuxtLink :to="`../searchresult/${props.id}`">
       <figure class="relative">
-        <!-- <img class="w-full cardimg" :src="props.images" :alt="props.title" loading="lazy"> -->
         <img
           class="w-full cardimg"
-          src="https://rukminim2.flixcart.com/image/612/612/xif0q/sari/7/o/q/free-3671s2574-samah-unstitched-original-imahyhhchhk94gzk.jpeg?q=70"
+          :src="
+            props.images ||
+            'https://rukminim2.flixcart.com/image/612/612/xif0q/sari/7/o/q/free-3671s2574-samah-unstitched-original-imahyhhchhk94gzk.jpeg?q=70'
+          "
           :alt="props.title"
           loading="lazy"
         />
       </figure>
       <div class="cardContent p-2 pb-0">
-        <!-- <p class="cardtitle text-gray-500 font-bold">{{ title }}</p> -->
-        <p class="cardtitle text-gray-500 text-2xl title">Banarasee Sarees</p>
+        <p class="cardtitle text-gray-500 text-2xl title">{{ props.title || "Title" }}</p>
         <p class="cardtitle text-gray-700 text-2xl font-bold">
-          <span class="line-through">₹700</span> ₹{{ props.price }}
+          <span class="line-through" v-if="props.price && props.price < 700">₹700</span>
+          ₹{{ props.price || "Price" }}
         </p>
-        <!-- <p class="card_desc">{{ description.slice(0, 30) }}...</p> -->
+        <p class="card_desc" v-if="props.description">
+          {{ props.description.slice(0, 30) }}...
+        </p>
       </div>
     </NuxtLink>
   </div>

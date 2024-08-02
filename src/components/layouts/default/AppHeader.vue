@@ -1,11 +1,12 @@
 <script setup lang="ts">
-const CartItems = ref(12);
-const whitelistd = ref(2);
-const whitelistItems = ref(2);
+const CartItems = ref(0);
+const wishlistd = ref(2);
+const wishlistItems = ref(2);
 const NotiFication = ref(10);
 
 const authStore = useAuthStore();
 const showAutoComplete = ref(false);
+
 const handleChange = (e: any) => {
   // showAutoComplete.value = !showAutoComplete.value;
   showAutoComplete.value = true;
@@ -23,6 +24,15 @@ const toogleModal = () => {
     visible.value = true;
   }
 };
+
+const GetItemFromCart = useGetItemFromCart();
+const TotalcartItems = computed(() => GetItemFromCart.items || []);
+onMounted(() => {
+  GetItemFromCart.fetchGetItemFromCart();
+});
+watch(TotalcartItems, (newItems) => {
+  CartItems.value = newItems.length;
+});
 </script>
 
 <template>
@@ -37,14 +47,19 @@ const toogleModal = () => {
       </div>
 
       <div class="searchField lg:flex hidden relative">
-        <input class="py-2 px-3 w-full border border-gray-300 rounded text-xl bg-gray-100" placeholder="Search Here..." @click="handleChange" @blur="handleBlur" />
+        <input
+          class="py-2 px-3 w-full border border-gray-300 rounded text-xl bg-gray-100"
+          placeholder="Search Here..."
+          @click="handleChange"
+          @blur="handleBlur"
+        />
         <SearchAutoComplete v-if="showAutoComplete" />
       </div>
 
       <ul class="navList flex items-center justify-center capitalize gap-5">
         <li class="icons relative cart" v-tooltip="'View Cart'">
           <NuxtLink
-            to="../orders"
+            to="../mycart"
             class="border border-gray-300 rounded-[100%] flex items-center justify-center"
           >
             <i class="pi pi-shopping-cart text-2xl"></i>
@@ -56,15 +71,17 @@ const toogleModal = () => {
         </li>
         <li class="icons relative cart">
           <NuxtLink
-            to="../whitelist"
+            to="../wishlist"
             class="border border-gray-300 rounded-[100%] flex items-center justify-center"
           >
             <i class="pi pi-heart text-2xl"></i>
           </NuxtLink>
           <span
             class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
-            >{{ whitelistd }}</span
           >
+            <!-- {{ wishlistd }} -->
+            {{ CartItems }}
+          </span>
         </li>
         <li class="block">
           <button class="subscribe commonbtn text-xl">subscribe</button>
@@ -77,7 +94,7 @@ const toogleModal = () => {
           <i class="pi pi-user text-4xl"></i>
           <span v-if="!authStore.getUser" class="text inline">LOGIN / REGISTER</span>
           <NuxtLink to="/myaccounts" v-else class="text inline">
-            <small v-if="authStore.getUser" class="block text-sm">welcome</small>
+            <small v-if="authStore.getUser" class="block text-sm">Hello</small>
             {{ authStore.getUser ? authStore.getUser.name : "" }}
           </NuxtLink>
         </li>
@@ -92,22 +109,22 @@ const toogleModal = () => {
       <ul class="navList flex items-center justify-center space-x-4">
         <li class="icons text-center cart">
           <NuxtLink
-            to="../whitelist"
+            to="../wishlist"
             class="border border-gray-300 rounded-[100%] flex items-center justify-center"
           >
-            <img src="~assets/images/common/messenger.png"/>
+            <img src="~assets/images/common/messenger.png" />
           </NuxtLink>
         </li>
         <li class="icons relative cart">
           <NuxtLink
-            to="../whitelist"
+            to="../wishlist"
             class="border border-gray-300 rounded-[100%] flex items-center justify-center"
           >
             <i class="pi pi-heart text-2xl"></i>
           </NuxtLink>
           <span
             class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
-            >{{ whitelistd }}</span
+            >{{ wishlistd }}</span
           >
         </li>
       </ul>

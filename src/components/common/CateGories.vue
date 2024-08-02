@@ -88,21 +88,8 @@ onBeforeUnmount(() => {
         <carousel :items-to-show="itemsToShow">
           <slide v-for="(item, index) in cards" :key="index" class="categories-card">
             <div class="avt-wrap">
-              <!-- <img
-                class="avatar"
-                :src="item.thumbnail ? item.thumbnail : 'assets/images/img.jpg'"
-                :alt="item.title"
-                loading="lazy"
-              /> -->
-              <!-- ========================= -->
-              <!-- for now we are using local images -->
-              <img
-                class="avatar"
-                :src="item.image"
-                :alt="item.title"
-                loading="lazy"
-              />
-              <span class="categories-title hidden">{{ item.title }}</span>
+              <img class="avatar" :src="item.image" :alt="item.name" loading="lazy" />
+              <span class="categories-title">{{ item.name }}</span>
             </div>
           </slide>
           <template #addons>
