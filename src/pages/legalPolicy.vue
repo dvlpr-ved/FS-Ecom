@@ -2,13 +2,16 @@
 
 <template>
   <section class="staticPages afterBefore">
-    <div class="imgdiv">
+    <!-- <div class="imgdiv">
       <h2 class="text-5xl font-semibold text-white text-center pagesHeading afterBefore">
         Legal & Policies
       </h2>
-    </div>
+    </div> -->
     <div class="container lg:py-5 py-4">
       <div class="wrapContent">
+      <h2 class="text-5xl font-semibold text-center pagesHeading">
+        Legal & Policies
+      </h2>
         <h1 class="text-4xl font-bold my-4">Shipping Policy</h1>
         <div class="leading-7">
           <p class="lg:text-justify lg:text-[16px] mb-4">

@@ -66,7 +66,7 @@ input{padding: 5px 10px; border: 1px solid #b1b1b1;}
 .staticPages{
     &::after, &::before{background: url(../../images/common/pattern1.png) no-repeat; background-position: right bottom;}
     &::before{background: url(../../images/common/pattern.png) no-repeat; background-position: left top;}
-    .imgdiv{padding: 90px 0;  background: url('../../images/pages/pagesBanner.jpg');}
+    .imgdiv{padding: 50px 0;  background: url('../../images/pages/pagesBanner.jpg');}
     .pagesHeading{ width: fit-content; margin: 0 auto;
         &::after, &::before{top: inherit; bottom: -1rem;}
         &::after{width: 60%; height: 1px; background: var(--white);}

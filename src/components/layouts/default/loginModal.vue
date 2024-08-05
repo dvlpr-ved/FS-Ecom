@@ -31,9 +31,10 @@ const handleSubmit = async (e) => {
     const payload = { ...responseData, data: responseData.user };
     if (responseData.success) {
       authStore.Login(payload);
-      if (document.getElementById("closebtn")) {
-        document.getElementById("closebtn").click();
-      }
+      // if (document.getElementById("closebtn")) {
+      //   document.getElementById("closebtn").click();
+      // }
+      window.location.reload();
     } else {
       showMessage.value = responseData.msg;
     }
@@ -119,14 +120,14 @@ const toggelForm = () => {
           Register
         </span>
       </div>
-      <!-- <Button
+      <Button
         type="button"
         id="closebtn"
         class="absolute top-0 right-0 bg-transparent"
         @click="close"
       >
         <i class="pi pi-times text-3xl text-gray-600"></i>
-      </Button> -->
+      </Button>
     </div>
   </Dialog>
 </template>

@@ -57,7 +57,7 @@ const submitForm = () => {
             />
           </div>
           <div class="mb-4 w-full">
-            <label for="address" class="block lg:text-xl text-sm title">Address:</label>
+            <label for="address" class="block lg:text-xl text-sm title">Message:</label>
             <textarea
               id="address"
               v-model="formData.address"
@@ -80,9 +80,6 @@ const submitForm = () => {
 
 <style scoped lang="scss">
 .contactpage {
-  .imgdiv {
-    padding: 50px 0;
-  }
   .inputField {
     border: 0;
     border-bottom: 1px solid #ddd;
