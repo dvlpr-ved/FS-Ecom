@@ -1,18 +1,16 @@
 <script setup lang="ts">
+import {fetchFromSanctum} from '/utils/sanctumApi.js'
 const CartItems = ref(0);
 const wishlistd = ref(2);
 const wishlistItems = ref(2);
 const NotiFication = ref(10);
+const config = useRuntimeConfig();
 
 const authStore = useAuthStore();
 const showAutoComplete = ref(false);
 
-const handleChange = (e: any) => {
-  // showAutoComplete.value = !showAutoComplete.value;
-  showAutoComplete.value = true;
-};
-const handleBlur = () => {
-  showAutoComplete.value = false;
+const handleBlur = (e) => {
+  // showAutoComplete.value = false;
 };
 const visible = ref(false);
 
@@ -33,6 +31,29 @@ onMounted(() => {
 watch(TotalcartItems, (newItems) => {
   CartItems.value = newItems.length;
 });
+
+const searchQuery = ref('');
+watch(searchQuery , (val) => {
+  if(val.length > 2){
+    fetchSearchResult();
+  }
+});
+const searchResult = reactive({
+  catg : [],
+  products : [],
+  tagged : []
+});
+const fetchSearchResult =async () => { 
+  const data =await fetchFromSanctum({method : 'POST' , 'url' : `${config.API_BASE_URL ? config.API_BASE_URL : 'https://fashtsaly.com/API/public/'}api/fetchSearchResult` , body : {
+    query : searchQuery.value
+  }});
+  if(data.success){
+    searchResult.catg = data.catg;
+    searchResult.products = data.products;
+    searchResult.tagged = data.tagged;
+    showAutoComplete.value = true;
+  }
+}
 </script>
 
 <template>
@@ -50,10 +71,10 @@ watch(TotalcartItems, (newItems) => {
         <input
           class="py-2 px-3 w-full border border-gray-300 rounded text-xl bg-gray-100"
           placeholder="Search Here..."
-          @click="handleChange"
+          v-model="searchQuery"
           @blur="handleBlur"
         />
-        <SearchAutoComplete v-if="showAutoComplete" />
+        <SearchAutoComplete v-if="showAutoComplete" :results="searchResult" />
       </div>
 
       <ul class="navList flex items-center justify-center capitalize gap-5">

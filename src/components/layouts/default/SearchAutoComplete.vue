@@ -1,57 +1,41 @@
 <script setup>
 import { ref } from "vue";
 
-const queryItems = ref([
-  {
-    id: 1,
-    searchQuery: 'Query 1'
-  },
-  {
-    id: 2,
-    searchQuery: 'Query 2'
-  },
-  {
-    id: 3,
-    searchQuery: 'Query 3'
-  },
-  {
-    id: 4,
-    searchQuery: 'Query 4'
-  },
-  {
-    id: 4,
-    searchQuery: 'Query 4'
-  },
-  {
-    id: 5,
-    searchQuery: 'Query 5'
-  },
-  {
-    id: 6,
-    searchQuery: 'Query 6'
-  },
-  {
-    id: 7,
-    searchQuery: 'Query 7'
-  },
-  {
-    id: 8,
-    searchQuery: 'Query 8'
-  },
-  {
-    id: 9,
-    searchQuery: 'Query 9'
-  },
-]);
-
+const {results} = defineProps({
+  results : {
+    type : Object,
+    default : {}
+  }
+});
+const navigateForward = (query) => {
+  const router = useRouter();
+  router.push({
+      path: '/searchResult',
+      query: query
+    });
+}
 </script>
 
 
 <template>
   <ul class="autoCompleteDropDwon w-full shadow-lg absolute top-[40px] bg-gray-100">
-    <li v-for="(items, index) in queryItems"
-      class="ease-linear duration-300 py-2 cursor-pointer capitalize border-bottom-1 border-gray-300"
-      :key="index">{{ items.searchQuery }}
+    <li v-for="list in results.catg" :key="list.id"
+      @click="navigateForward({category : list.id})"
+      class="ease-linear duration-300 py-2 cursor-pointer capitalize border-bottom-1 border-gray-300">
+      {{ list.name }}
+    </li>
+    <li v-for="list in results.products" :key="list.id"
+      @click = "navigateForward({product : list.id})"
+      class="ease-linear duration-300 py-2 cursor-pointer capitalize border-bottom-1 border-gray-300">
+      {{ list.name }}
+    </li>
+    <li v-for="list in results.tagged" :key="list.id"
+      @click = "navigateForward({product : list.id})"
+      class="ease-linear duration-300 py-2 cursor-pointer capitalize border-bottom-1 border-gray-300">
+      {{ list.name }}
+    </li>
+    <li v-if="results.catg.length == 0 && results.products.length == 0 && results.tagged.length == 0" class="ease-linear duration-300 py-2 cursor-pointer capitalize border-bottom-1 border-gray-300">
+      No results found
     </li>
   </ul>
 </template>
