@@ -8,7 +8,6 @@ const authStore = useAuthStore();
 const showAutoComplete = ref(false);
 
 const handleChange = (e: any) => {
-  // showAutoComplete.value = !showAutoComplete.value;
   showAutoComplete.value = true;
 };
 const handleBlur = () => {
@@ -124,7 +123,7 @@ watch(TotalcartItems, (newItems) => {
           </NuxtLink>
           <span
             class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
-            >{{ wishlistd }}</span
+            >{{ CartItems }}</span
           >
         </li>
       </ul>
@@ -139,7 +138,7 @@ watch(TotalcartItems, (newItems) => {
   padding: 8px 0;
   border-bottom: 1px solid var(--gray);
   position: relative;
-  z-index: 9;
+  z-index: 12;
   background-color: #fff;
 
   &.active {

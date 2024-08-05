@@ -1,5 +1,6 @@
 <script setup>
 const visible = ref(false);
+const SearchVisible = ref(false);
 
 const authStore = useAuthStore();
 
@@ -7,6 +8,12 @@ const toogleModal = () => {
   if (!authStore.userData) {
     visible.value = true;
   }
+};
+const toggelSearchVisible = () => {
+  SearchVisible.value = true;
+};
+const closeSearchVisible = () => {
+  SearchVisible.value = false;
 };
 </script>
 <template>
@@ -19,11 +26,12 @@ const toogleModal = () => {
         <i class="pi pi-home"></i>
         <span class="text-sm block">Home</span>
       </NuxtLink>
-      <NuxtLink to="#" class="block">
+      <NuxtLink to="#" class="block" @click="toggelSearchVisible">
         <i class="pi pi-search"></i>
         <span class="text-sm block">Search</span>
       </NuxtLink>
-      <NuxtLink to="../blogs" class="block">
+      <!-- <NuxtLink to="../blogs" class="block"> -->
+      <NuxtLink to="../newproducts" class="block">
         <i class="pi pi-sync"></i>
         <span class="text-sm block">Update</span>
       </NuxtLink>
@@ -46,4 +54,7 @@ const toogleModal = () => {
     </div>
   </footer>
   <LoginModal :visible="visible" />
+  <template v-if="SearchVisible">
+    <SearchFieldMobile :isSearchForMb="SearchVisible" :closeBtn="closeSearchVisible" />
+  </template>
 </template>

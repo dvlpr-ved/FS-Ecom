@@ -2,11 +2,7 @@
 
 <template>
   <section class="staticPages afterBefore">
-    <div class="imgdiv">
-      <h2 class="text-5xl font-semibold text-white text-center pagesHeading afterBefore">
-        <!-- Cancellation Policy -->
-      </h2>
-    </div>
+    
     <div class="container lg:py-5 py-4">
       <div class="wrapContent">
         <h2 class="text-4xl font-bold my-4">Cancellation Policy</h2>
