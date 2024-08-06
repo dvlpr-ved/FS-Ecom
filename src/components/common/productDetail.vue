@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import {publicApi} from '/utils/publicApi.js'
 const Checkvisible = ref("");
 const productCount = ref(1);
-
+const route = useRoute();
 const addMoreProduct = () => {
   productCount.value++;
 };
@@ -15,17 +16,31 @@ const handleAddToCart = () => {
 const handleAdCartClose = () => {
   Checkvisible.value = "";
 };
+const vendor = ref(null);
+const product = ref(null);
+const suggestions = ref(null);
+const getProduct =async () => {
+  const {data ,  success} = await publicApi({'url' : `api/getProductDetails` , 'method' : 'POST' , 'body' : {product_id : route.params.id}});
+  if(success){
+    vendor.value = data.vendor;
+    product.value = data.product;
+    suggestions.value = data.suggestions;
+  }
+}
+onMounted(() => {
+  getProduct();
+})
 </script>
 <template>
   <div class="productdetail_man_div py-5">
-    <div class="container">
+    <div v-if="product" class="container">
       <div class="flexdiv flex flex-wrap justify-between">
         <div class="detailGallery lg:w-[48%] w-[100%] bg-gray-200 p-2">
           <ProductZoomImages />
         </div>
 
         <div class="productcontent lg:w-[50%] w-[100%]">
-          <h6 class="pro-title lg:text-6xl text-4xl mb-3">Banarasi Blue Saree</h6>
+          <h6 class="pro-title lg:text-6xl text-4xl mb-3">{{ product.name ? product.name : '' }}</h6>
           <div class="price">
             <p class="cardtitle text-3xl font-[500] text-black mb-3">
               <span class="line-through text-2xl text-gray-700">₹800</span> ₹700

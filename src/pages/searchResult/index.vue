@@ -1,16 +1,23 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
+import { useRoute, useRuntimeConfig } from 'nuxt/app'; // Make sure you are importing from 'nuxt/app' if using Nuxt
 
 const products = ref([]);
 const loading = ref(true);
 const isMobileNavVisible = ref("");
+const route = useRoute();
 
 const getDataFunc = async () => {
   try {
-    const response = await fetch("https://dummyjson.com/products");
-    const data = await response.json();
-    products.value = data.products;
-    loading.value = false;
+    const config = useRuntimeConfig();
+    const query = route.query; 
+    const suffix = query.category ? `api/fetchSearchItems?category=${query.category}` : `api/fetchSearchItems?product=${query.product}`;
+    const res = await fetch(`${config.API_BASE_URL ? config.API_BASE_URL : 'https://fashtsaly.com/API/public/'}${suffix}` , { method: 'POST' });
+    const data = await res.json();
+    if (data.success) {
+      products.value = data.data.data;
+      loading.value = false;
+    }
   } catch (error) {
     console.error("Error fetching products:", error);
   }
@@ -19,9 +26,14 @@ const getDataFunc = async () => {
 const openFilter = () => {
   isMobileNavVisible.value = "active";
 };
+
 const closeFilter = () => {
   isMobileNavVisible.value = "";
 };
+
+watch(() => route.query, () => {
+  getDataFunc();
+});
 
 onMounted(async () => {
   getDataFunc();
@@ -31,54 +43,29 @@ onMounted(async () => {
 <template>
   <div class="SearchResultPage py-4">
     <div class="container flex flex-wrap justify-between">
-      <aside
-        class="LeftFilters lg:w-[20%] w-[100%] bg-gray-100 lg:sticky py-2 h-[fit-content] top-2"
-      >
-        <div
-          class="flexdiv fixinMb lg:block flex justify-between lg:border-b px-4 py-2 lg:mb-3"
-        >
+      <aside class="LeftFilters lg:w-[20%] w-[100%] bg-gray-100 lg:sticky py-2 h-[fit-content] top-2">
+        <div class="flexdiv fixinMb lg:block flex justify-between lg:border-b px-4 py-2 lg:mb-3">
           <h1 class="text-3xl">Filters</h1>
-          <button class="lg:hidden filterBtn" @click="openFilter()">
+          <button class="lg:hidden filterBtn" @click="openFilter">
             <i class="pi pi-filter text-3xl"></i>
           </button>
         </div>
-        <div :class="['overlay', isMobileNavVisible]" @click="closeFilter()"></div>
+        <div :class="['overlay', isMobileNavVisible]" @click="closeFilter"></div>
         <div :class="['checkboxWrapper px-4 transition-all', isMobileNavVisible]">
           <div class="checkbox mb-3">
-            <input
-              class="styled-checkbox"
-              id="checkboxes"
-              type="checkbox"
-              value="value"
-              checked
-            />
+            <input class="styled-checkbox" id="checkboxes" type="checkbox" value="value" checked />
             <label for="checkboxes" class="text-xl title">All Catagories</label>
           </div>
           <div class="checkbox mb-3">
-            <input
-              class="styled-checkbox"
-              id="checkboxes0"
-              type="checkbox"
-              value="value"
-            />
+            <input class="styled-checkbox" id="checkboxes0" type="checkbox" value="value" />
             <label for="checkboxes0" class="text-xl title">Sarees</label>
           </div>
           <div class="checkbox mb-3">
-            <input
-              class="styled-checkbox"
-              id="checkboxes1"
-              type="checkbox"
-              value="value"
-            />
+            <input class="styled-checkbox" id="checkboxes1" type="checkbox" value="value" />
             <label for="checkboxes1" class="text-xl title">Lehanga</label>
           </div>
           <div class="checkbox mb-3">
-            <input
-              class="styled-checkbox"
-              id="checkboxes2"
-              type="checkbox"
-              value="value"
-            />
+            <input class="styled-checkbox" id="checkboxes2" type="checkbox" value="value" />
             <label for="checkboxes2" class="text-xl title">Kurti</label>
           </div>
         </div>
@@ -92,9 +79,9 @@ onMounted(async () => {
           <template v-else v-for="item in products" :key="item.id">
             <CommonCard
               :id="item.id"
-              :title="item.title"
-              :images="item.images"
-              :price="item.price"
+              :title="item.name"
+              :images="item.images[0].source"
+              :price="item.mrp"
               :description="item.description"
             />
           </template>

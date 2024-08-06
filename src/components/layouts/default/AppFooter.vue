@@ -3,7 +3,8 @@ const route = useRoute();
 const isSelectedRoute = ref(false);
 
 onMounted(() => {
-  isSelectedRoute.value = route.path === "/myaccounts";
+  console.log(route.path);
+  isSelectedRoute.value = route.path === "/myAccounts";
 });
 
 
