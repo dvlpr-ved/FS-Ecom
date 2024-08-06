@@ -1,29 +1,53 @@
 <script setup>
-import {fetchFromSanctum} from '../utils/sanctumApi.js'
+import { fetchFromSanctum } from "../utils/sanctumApi.js";
+
+const isLoading = ref(true);
 
 const blocks = ref([]);
 const getHomePageData = async () => {
   const config = useRuntimeConfig();
-  const data = await fetchFromSanctum({method : 'POST' , 'url' : `${config.API_BASE_URL ? config.API_BASE_URL : 'https://fashtsaly.com/API/public/'}api/getHomePageData`});
-  if(data.success){
+  const data = await fetchFromSanctum({
+    method: "POST",
+    url: `${
+      config.API_BASE_URL ? config.API_BASE_URL : "https://fashtsaly.com/API/public/"
+    }api/getHomePageData`,
+  });
+  if (data.success) {
     blocks.value = data.data;
+    isLoading.value = false;
   }
-}
+};
 onMounted(() => {
   getHomePageData();
 });
 </script>
 
 <template>
+  <template v-if="isLoading">
+    <div class="lg:block hidden">
+      <div class="bannerAni h-[40vh] animate-pulse rounded bg-gray-200 my-5"></div>
+      <div class="cardsAni flex gap-2">
+        <ShimmereCard />
+        <ShimmereCard />
+        <ShimmereCard />
+        <ShimmereCard />
+      </div>
+    </div>
+  </template>
+
+  <template v-else-if="blocks.length === 0">
+    <h1 class="text-2xl">we are facing some technical issues</h1>
+  </template>
+
   <div v-for="block in blocks.length">
     <div v-if="block != 2">
-      <AppBanner :data="blocks[block-1]" v-if="blocks[block-1].type=='Banner'" />      
-      <Highlights :data="blocks[block-1]" v-else/>      
+      <AppBanner :data="blocks[block - 1]" v-if="blocks[block - 1].type == 'Banner'" />
+      <Highlights :data="blocks[block - 1]" v-else />
     </div>
     <div v-else>
       <CateGories></CateGories>
-      <AppBanner :data="blocks[block-1]" v-if="blocks[block-1].type=='Banner'" />      
-      <Highlights :data="blocks[block-1]" v-else/>
+      <AppBanner :data="blocks[block - 1]" v-if="blocks[block - 1].type == 'Banner'" />
+      <Highlights :data="blocks[block - 1]" v-else />
     </div>
   </div>
 </template>
