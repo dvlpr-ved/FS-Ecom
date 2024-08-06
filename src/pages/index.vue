@@ -33,6 +33,13 @@ onMounted(() => {
         <ShimmereCard />
       </div>
     </div>
+    <div class="lg:hidden block">
+      <div class="bannerAni h-[40vh] animate-pulse rounded bg-gray-200 my-5"></div>
+      <div class="cardsAni flex gap-2">
+        <ShimmereCard />
+        <ShimmereCard />
+      </div>
+    </div>
   </template>
 
   <template v-else-if="blocks.length === 0">

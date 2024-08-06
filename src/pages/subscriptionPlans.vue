@@ -1,6 +1,7 @@
 <script setup>
 const plansData = ref([]);
 const message = ref("");
+const isLoading = ref(true);
 const getPlanData = async () => {
   try {
     const response = await fetch(
@@ -11,6 +12,7 @@ const getPlanData = async () => {
     );
     const jsonResponse = await response.json();
     plansData.value = jsonResponse.data;
+    isLoading.value = false;
   } catch (error) {
     message.value = "Right now we don't have any subscription plans.";
   }
@@ -22,7 +24,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="subsPlansMain py-3 bg-gray-100">
+  <div class="cardsAni flex gap-2 justify-center" v-if="isLoading">
+    <ShimmereCard />
+    <ShimmereCard />
+  </div>
+  <div class="subsPlansMain py-3 bg-gray-100" v-else>
     <div class="container flex justify-center items-center">
       <div class="offers" v-for="pricing in plansData" :key="pricing.id">
         <h2 class="text-2xl mb-3">{{ pricing.title }}</h2>
