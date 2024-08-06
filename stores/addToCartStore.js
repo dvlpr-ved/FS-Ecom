@@ -21,11 +21,9 @@ export const useAddToCartStore = defineStore('useAddToCartStore', {
                     body,
                 });
 
-                if (!response.ok) {
+                if (!response.success) {
                     throw new Error('Error in Add To Cart');
-                }
-
-                console.log('response', await response.json());
+                }    
                 this.isLoading = false;
                 return true;
             } catch (error) {

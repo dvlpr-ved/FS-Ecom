@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-
+const emit  = defineEmits(['close']);
 const {results} = defineProps({
   results : {
     type : Object,
@@ -8,11 +8,17 @@ const {results} = defineProps({
   }
 });
 const navigateForward = (query) => {
-  const router = useRouter();
-  router.push({
-      path: '/searchResult',
-      query: query
+  emit('close');
+  if(query.category){
+    const router = useRouter();
+    router.push({
+        path: '/searchResult',
+        query: query
     });
+  }
+  else{
+    navigateTo(`/searchResult/${query.product}`)
+  }
 }
 </script>
 
@@ -20,17 +26,17 @@ const navigateForward = (query) => {
 <template>
   <ul class="autoCompleteDropDwon w-full shadow-lg absolute top-[40px] bg-gray-100">
     <li v-for="list in results.catg" :key="list.id"
-      @click="navigateForward({category : list.id})"
+      @mousedown.prevent="navigateForward({category : list.id})"
       class="ease-linear duration-300 py-2 cursor-pointer capitalize border-bottom-1 border-gray-300">
       {{ list.name }}
     </li>
     <li v-for="list in results.products" :key="list.id"
-      @click = "navigateForward({product : list.id})"
+      @mousedown.prevent = "navigateForward({product : list.id})"
       class="ease-linear duration-300 py-2 cursor-pointer capitalize border-bottom-1 border-gray-300">
       {{ list.name }}
     </li>
     <li v-for="list in results.tagged" :key="list.id"
-      @click = "navigateForward({product : list.id})"
+      @mousedown.prevent = "navigateForward({product : list.id})"
       class="ease-linear duration-300 py-2 cursor-pointer capitalize border-bottom-1 border-gray-300">
       {{ list.name }}
     </li>

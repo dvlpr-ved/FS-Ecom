@@ -10,7 +10,7 @@ const authStore = useAuthStore();
 const showAutoComplete = ref(false);
 
 const handleBlur = (e) => {
-  // showAutoComplete.value = false;
+  showAutoComplete.value = false;
 };
 const visible = ref(false);
 
@@ -74,7 +74,7 @@ const fetchSearchResult =async () => {
           v-model="searchQuery"
           @blur="handleBlur"
         />
-        <SearchAutoComplete v-if="showAutoComplete" :results="searchResult" />
+        <SearchAutoComplete @close="showAutoComplete=false" v-if="showAutoComplete" :results="searchResult" />
       </div>
 
       <ul class="navList flex items-center justify-center capitalize gap-5">
