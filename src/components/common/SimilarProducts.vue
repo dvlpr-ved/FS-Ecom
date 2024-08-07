@@ -4,6 +4,12 @@ const isLoading = ref(true);
 const cards = ref([]);
 const NoData = ref("");
 
+const {suggestions} = defineProps({
+  suggestions : {
+    default : () => []
+  }
+});
+console.log(suggestions);
 const getData = async () => {
   try {
     const r = await fetch("https://dummyjson.com/products/category/womens-dresses");
@@ -63,8 +69,8 @@ onBeforeUnmount(() => {
       <div v-else class="relative pb-5">
         <h1>{{ NoData }}</h1>
         <carousel :items-to-show="itemsToShow">
-          <slide v-for="card in cards" :key="card.id">
-            <HomePageCard :thumbnail="card.thumbnail" :title="card.title" />
+          <slide v-for="card in suggestions" :key="card.id">
+            <HomePageCard :thumbnail="card.images" :title="card.name" />
           </slide>
           <template #addons>
             <navigation />

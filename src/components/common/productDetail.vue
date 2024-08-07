@@ -19,12 +19,16 @@ const handleAdCartClose = () => {
 const vendor = ref(null);
 const product = ref(null);
 const suggestions = ref(null);
+const color = ref(null);
+const size = ref(null);
 const getProduct =async () => {
   const {data ,  success} = await publicApi({'url' : `api/getProductDetails` , 'method' : 'POST' , 'body' : {product_id : route.params.id}});
   if(success){
     vendor.value = data.vendor;
     product.value = data.product;
     suggestions.value = data.suggestions;
+    color.value = data.colors;
+    size.value = data.sizes;
   }
 }
 onMounted(() => {
@@ -48,52 +52,33 @@ onMounted(() => {
           </div>
           <div class="sizesBox flex items-center gap-x-2 mb-3">
             <span class="text-2xl">Sizes :</span>
-            <div class="checkbox border-r px-2 py-1 border-gray-500">
+            <div v-for="s in size" class="checkbox border-r px-2 py-1 border-gray-500">
               <input
                 class="styled-checkbox"
                 id="msize"
                 type="radio"
-                value="M"
-                name="size"
+                :value="s"
+                :name="`${s}`"
               />
-              <label for="msize" class="text-xl title">M</label>
+              <label for="msize" class="text-xl title">{{ s }}</label>
             </div>
-            <div class="checkbox border-r px-2 py-1 border-gray-500">
+          </div>
+          <div class="sizesBox flex items-center gap-x-2 mb-3">
+            <span class="text-2xl">Colors :</span>
+            <div v-for="c in color" class="checkbox border-r px-2 py-1 border-gray-500">
               <input
                 class="styled-checkbox"
-                id="lsize"
+                id="msize"
                 type="radio"
-                value="L"
-                name="size"
-                checked
+                :value="c"
+                :name="`${c}`"
               />
-              <label for="lsize" class="text-xl title">L</label>
-            </div>
-            <div class="checkbox border-r px-2 py-1 border-gray-500">
-              <input
-                class="styled-checkbox"
-                id="xlsize"
-                type="radio"
-                value="XL"
-                name="size"
-              />
-              <label for="xlsize" class="text-xl title">XL</label>
-            </div>
-            <div class="checkbox px-2 py-1">
-              <input
-                class="styled-checkbox"
-                id="xxlsize"
-                type="radio"
-                value="XXL"
-                name="size"
-              />
-              <label for="xxlsize" class="text-xl title">XXL</label>
+              <label for="msize" class="text-xl title">{{ c }}</label>
             </div>
           </div>
 
           <article class="productdesc mb-3">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iusto nostrum non
-            nulla obcaecati officiis, repellat molestiae quae animi.
+              {{ product.description ?  product.description : ''}}
           </article>
           <div
             class="productCounter mb-3 flex gap-4 border border-gray-400 p-2 px-3 w-[fit-content]"
@@ -135,21 +120,21 @@ onMounted(() => {
             </NuxtLink>
           </div>
 
-          <div class="vendrsDetail">
+          <div class="vendrsDetail" v-if="vendor">
             <div class="flex pb-2 gap-2 items-center lg:text-[18px] text-1xl">
               Seller Name :
-              <span class="text-gray-600" style="font-size: 16px">Devesh</span>
+              <span class="text-gray-600" style="font-size: 16px">{{ vendor.name ? vendor.name : ''}}</span>
             </div>
             <div class="flex pb-2 gap-2 items-center lg:text-[18px] text-1xl">
               Seller Address :
-              <span class="text-gray-600" style="font-size: 16px">Jaipur rajasthan</span>
+              <span class="text-gray-600" style="font-size: 16px">{{ vendor.email ? vendor.email : '' }}</span>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Releted Products -->
-      <SimilarProducts />
+      <SimilarProducts  :suggestions="suggestions"/>
     </div>
   </div>
 
