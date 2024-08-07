@@ -7,6 +7,8 @@ const props = defineProps<{
 const formData = ref({
   name: "User Name",
   email: "test@gmail.com",
+  phone: "0123123123",
+  phoneOpt: "0999999999",
   pincode: "0123456",
   locality: "1 26M, DDA Flats Pocket 1, New Kondli",
   address: "1 26M, DDA Flats Pocket 1, New Kondli",
@@ -41,6 +43,16 @@ const formData = ref({
 
     <div class="in_box lg:w-[48%] w-[100%] relative">
       <span class="absolute top-[-10px] bg-white px-3 border block ml-3"
+        >Phone No. Primary</span
+      >
+      <input
+        type="tel"
+        class="w-full py-3 px-3 text-[15px] border rounded border-gray-500 text-gray-700 uppercase"
+        v-model="formData.phone"
+      />
+    </div>
+    <div class="in_box lg:w-[48%] w-[100%] relative">
+      <span class="absolute top-[-10px] bg-white px-3 border block ml-3"
         >Area Pincode</span
       >
       <input
@@ -49,7 +61,7 @@ const formData = ref({
         v-model="formData.pincode"
       />
     </div>
-    <div class="in_box lg:w-[48%] w-[100%] relative">
+    <div class="in_box lg:w-[100%] w-[100%] relative">
       <span class="absolute top-[-10px] bg-white px-3 border block ml-3"
         >Your Locality</span
       >
