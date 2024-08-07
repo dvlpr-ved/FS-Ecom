@@ -6,7 +6,6 @@ const { data } = defineProps({
 });
 console.log("highligths", data);
 const itemsToShow = ref(4);
-const NoData = ref("");
 
 const updateItemsToShow = () => {
   const screenWidth = window.innerWidth;
@@ -36,26 +35,12 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="similarCardWrapper lg:py-5 py-2 bg-gray-200">
-    <div class="container lg:bg-gray-50 bg-white">
+    <div class="container bg-gray-100">
       <div class="flexHeading flex justify-between items-center lg:py-5 py-2">
         <h3 class="text-2xl lg:text-3xl">{{ data.name }}</h3>
         <NuxtLink href="searchresult" class="commonbtn">View All</NuxtLink>
       </div>
-      <template v-if="isLoading">
-        <div class="lg:flex hidden justify-between py-4">
-          <ShimmereCard />
-          <ShimmereCard />
-          <ShimmereCard />
-          <ShimmereCard />
-        </div>
-        <!-- for mb -->
-        <div class="flex lg:hidden justify-between pb-5">
-          <div class="w-[48%] h-40 animate-pulse bg-gray-200"></div>
-          <div class="w-[48%] h-40 animate-pulse bg-gray-200"></div>
-        </div>
-      </template>
-      <div v-else class="relative pb-5">
-        <h1>{{ NoData }}</h1>
+      <div class="relative pb-5">
         <carousel :items-to-show="itemsToShow">
           <slide v-for="card in data.products" :key="card.id">
             <HomePageCard :thumbnail="card.images" :title="card.name" />
