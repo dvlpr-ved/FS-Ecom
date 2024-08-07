@@ -1,12 +1,28 @@
-<script setup>
-import { template } from "@whoj/utils";
+<script setup lang="ts">
 import { ref } from "vue";
 
 const GetItemFromCart = useGetItemFromCart();
-
 const cards = computed(() => GetItemFromCart.items || []);
 const isLoading = computed(() => GetItemFromCart.isLoading);
 const error = computed(() => GetItemFromCart.error);
+
+const apiReomoveItemFromCart = useRemoveItemFromCart();
+
+const RemoveItemFromCart = async (product_id: number) => {
+  const isConfirmed = window.confirm(
+    "Are you sure you want to remove this item from the cart?"
+  );
+
+  if (isConfirmed) {
+    const res = await apiReomoveItemFromCart.fetchRemoveItemCart({ product_id });
+    GetItemFromCart.fetchGetItemFromCart();
+    if (res) {
+      console.log("item removed");
+    } else {
+      console.error("Error in Removing Item From Cart");
+    }
+  }
+};
 
 onMounted(() => {
   GetItemFromCart.fetchGetItemFromCart();
@@ -100,7 +116,10 @@ onMounted(() => {
                     <p class="text-gray-600 mb-1">Price: ₹{{ items.mrp }}</p>
                   </div>
                   <div class="flexbtn flex gap-5 lg:mt-3 mt-2">
-                    <button class="bg-[#e53535] text-white py-1 px-3 rounded">
+                    <button
+                      class="bg-[#e53535] text-white py-1 px-3 rounded"
+                      @click="RemoveItemFromCart(items.id)"
+                    >
                       Remove
                     </button>
                     <button class="bgorange text-white py-1 px-3 rounded">
@@ -112,7 +131,9 @@ onMounted(() => {
             </div>
           </div>
 
-          <div class="priceTable bg-white lg:w-[35%] w-[100%] lg:mt-0 mt-3 h-fit sticky top-5">
+          <div
+            class="priceTable bg-white lg:w-[35%] w-[100%] lg:mt-0 mt-3 h-fit sticky top-5"
+          >
             <h5 class="text-2xl text-gray-700 border-b border-b-gray-300 p-3">
               Price details
             </h5>
@@ -132,8 +153,12 @@ onMounted(() => {
               <span class="text-xl font-bold">Total Amount</span>
               <span class="text-xl text-gray-800 font-bold"> ₹ 2000 </span>
             </div>
-            <p class="text-xl p-3">Your Saving <span class="text-xl text-green-600">₹1,737</span> on this order</p>
-            <button class="px-4 py-2 text-2xl bgorange text-white w-full">Place Order</button>
+            <p class="text-xl p-3">
+              Your Saving <span class="text-xl text-green-600">₹1,737</span> on this order
+            </p>
+            <button class="px-4 py-2 text-2xl bgorange text-white w-full">
+              Place Order
+            </button>
           </div>
         </div>
       </template>
