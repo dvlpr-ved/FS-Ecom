@@ -1,56 +1,96 @@
+<script setup>
+const plansData = ref([]);
+const message = ref("");
+const isLoading = ref(true);
+const getPlanData = async () => {
+  try {
+    const response = await fetch(
+      "https://fashtsaly.com/API/public/api/getSubscriptionPlans",
+      {
+        method: "GET",
+      }
+    );
+    const jsonResponse = await response.json();
+    plansData.value = jsonResponse.data;
+    isLoading.value = false;
+  } catch (error) {
+    message.value = "Right now we don't have any subscription plans.";
+  }
+};
+
+onMounted(() => {
+  getPlanData();
+});
+</script>
+
 <template>
-  <div class="container mx-auto py-8">
-    <h1 class="text-3xl font-bold text-center mb-8">Choose a Plan</h1>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div v-for="(plan, index) in plans" :key="index" class="bg-white rounded-lg shadow-lg p-6 flex flex-col">
-        <div class="flex items-center justify-center h-12">
-          <span class="text-xl font-bold">{{ plan.title }}</span>
-        </div>
-        <div class="flex items-center justify-center mt-4">
-          <span class="text-gray-700 text-lg">{{ plan.price }}</span>
-        </div>
-        <ul class="text-sm text-gray-600 mt-4 flex-1">
-          <li v-for="(feature, idx) in plan.features" :key="idx" class="flex items-center mb-2">
-            <i class="pi pi-check-circle text-green-500 mr-2"></i> {{ feature }}
-          </li>
-        </ul>
-        <button class="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded self-center">
-          Subscribe
-        </button>
+  <div class="cardsAni flex gap-2 justify-center" v-if="isLoading">
+    <ShimmereCard />
+    <ShimmereCard />
+  </div>
+  <div class="subsPlansMain py-3 bg-gray-100" v-else>
+    <div class="container flex justify-center items-center">
+      <div class="offers" v-for="pricing in plansData" :key="pricing.id">
+        <h2 class="text-2xl mb-3">{{ pricing.title }}</h2>
+        <h3 class="price text-3xl">₹ {{ pricing.price }}</h3>
+        <small>Annually</small>
+        <p>{{ pricing.description }}</p>
+        <button class="rounded">Subscribe</button>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      plans: [
-        {
-          title: "Basic",
-          price: "$10",
-          features: ["Feature 1", "Feature 2", "Feature 3"],
-        },
-        {
-          title: "Standard",
-          price: "$20",
-          features: ["Feature 1", "Feature 2", "Feature 3", "Feature 4"],
-        },
-        {
-          title: "Premium",
-          price: "$30",
-          features: ["Feature 1", "Feature 2", "Feature 3", "Feature 4", "Feature 5"],
-        },
-      ],
-    };
-  },
-};
-</script>
+<style lang="scss">
+.subsPlansMain {
+  .container {
+    z-index: 1;
+  }
 
-<style scoped>
-/* PrimeVue Icon Styles */
-@import 'primevue/resources/primevue.min.css';
-@import 'primevue/resources/themes/saga-blue/theme.css';
-@import 'primeicons/primeicons.css';
+  .offers {
+    position: relative;
+    text-align: center;
+    background: #fff;
+    padding: 1%;
+    margin: 10px;
+    width: 300px;
+    height: auto;
+    top: 0;
+    border: 1px solid #eaeaea;
+    z-index: 1;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .offers:hover {
+    position: relative;
+    top: -20px;
+  }
+
+  .offers:nth-child(2) {
+    border-top: 2px solid var(--text-blue);
+    box-shadow: 0 0 10px 0px #0000001c;
+  }
+
+  .offers:nth-child(2) h3 {
+    margin-top: 20px;
+  }
+
+  button {
+    font-size: 18px;
+    font-weight: 500;
+    background: var(--primary);
+    color: #fff;
+    margin: 30px auto 20px auto;
+    padding: 4% 8%;
+    border: 0;
+    transition-duration: 0.5s;
+  }
+
+  button:hover {
+    background: var(--text-blue);
+  }
+}
 </style>
