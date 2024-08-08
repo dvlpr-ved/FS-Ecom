@@ -70,7 +70,7 @@ onBeforeUnmount(() => {
         <h1>{{ NoData }}</h1>
         <carousel :items-to-show="itemsToShow">
           <slide v-for="card in suggestions" :key="card.id">
-            <HomePageCard :thumbnail="card.images" :title="card.name" />
+            <HomePageCard :thumbnail="card.images" :title="card.name" :id="card.id" />
           </slide>
           <template #addons>
             <navigation />

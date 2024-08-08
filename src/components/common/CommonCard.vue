@@ -46,11 +46,8 @@ const addToCart = async (product_id: number) => {
     <NuxtLink :to="`../searchresult/${props.id}`">
       <figure class="relative">
         <img
-          class="w-full cardimg"
-          :src="
-            props.images ||
-            'https://rukminim2.flixcart.com/image/612/612/xif0q/sari/7/o/q/free-3671s2574-samah-unstitched-original-imahyhhchhk94gzk.jpeg?q=70'
-          "
+          class="w-full cardimg lg:h-[335px] lg:w-[265px]"
+          :src="props.images || '~assets/images/common/noImage.jpg'"
           :alt="props.title"
           loading="lazy"
         />

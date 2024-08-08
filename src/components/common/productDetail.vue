@@ -3,14 +3,20 @@ import {publicApi} from '/utils/publicApi.js'
 const Checkvisible = ref("");
 const productCount = ref(1);
 const route = useRoute();
+
+const cart = useCartStore();
 const addMoreProduct = () => {
-  productCount.value++;
+  if(sku.value.stock > productCount.value){
+    productCount.value++;
+  }
 };
 const removeMoreProduct = () => {
   if (productCount.value > 1) productCount.value--;
 };
 
-const handleAddToCart = () => {
+const handleAddToCart =async () => {
+  await cart.saveCartItem(sku.id);
+  cart.getCartItems();
   Checkvisible.value = "active";
 };
 const handleAdCartClose = () => {
@@ -21,6 +27,9 @@ const product = ref(null);
 const suggestions = ref(null);
 const color = ref(null);
 const size = ref(null);
+const colorSelected = ref(null);
+const sizeSelected = ref(null);
+const sku = ref(null);
 const getProduct =async () => {
   const {data ,  success} = await publicApi({'url' : `api/getProductDetails` , 'method' : 'POST' , 'body' : {product_id : route.params.id}});
   if(success){
@@ -29,49 +38,89 @@ const getProduct =async () => {
     suggestions.value = data.suggestions;
     color.value = data.colors;
     size.value = data.sizes;
+    sku.value = data.sku;
+    colorSelected.value = sku.value.color ? sku.value.color : '';
+    sizeSelected.value = sku.value.size ? sku.value.size : '';
   }
 }
 onMounted(() => {
   getProduct();
 })
+const handleSizeChange= (val) => {
+  sizeSelected.value = val;
+}
+const handleColorChange = (val) => {
+  colorSelected.value =val;
+}
+const skuIsLoading =ref(false);
+const isOutOfStock = ref(false);
+watch([colorSelected, sizeSelected],async () => {
+  skuIsLoading.value = true;
+  const res = await fetchFromSanctum({
+    url : `https://fashtsaly.com/API/public/api/fetchSingleSku` ,
+    method : 'POST',
+    body:{
+      product_id : product.value.id,
+      color : colorSelected.value,
+      size : sizeSelected.value,
+    } 
+  });
+  if(res.success){
+    skuIsLoading.value = false;
+    sku.value = res.sku;
+    if(sku.stock < 1){
+      isOutOfStock.value = true;
+    }
+    else{
+      if(productCount.value > sku.stock){
+        productCount.value = sku.stock;
+      }
+      isOutOfStock.value = false;
+    }
+  }
+  else{
+    isOutOfStock.value = true
+  }
+});
 </script>
 <template>
   <div class="productdetail_man_div py-5">
     <div v-if="product" class="container">
       <div class="flexdiv flex flex-wrap justify-between">
         <div class="detailGallery lg:w-[48%] w-[100%] bg-gray-200 p-2">
-          <ProductZoomImages />
+          <ProductZoomImages :data="sku.image"/>
         </div>
 
         <div class="productcontent lg:w-[50%] w-[100%]">
           <h6 class="pro-title lg:text-6xl text-4xl mb-3">{{ product.name ? product.name : '' }}</h6>
           <div class="price">
-            <p class="cardtitle text-3xl font-[500] text-black mb-3">
-              <span class="line-through text-2xl text-gray-700">₹800</span> ₹700
+            <p v-if="!skuIsLoading" class="cardtitle text-3xl font-[500] text-black mb-3">
+              <!-- <span class="line-through text-2xl text-gray-700">₹800</span> -->
+               ₹{{ sku.price ? sku.price : '' }}
             </p>
           </div>
           <div class="sizesBox flex items-center gap-x-2 mb-3">
             <span class="text-2xl">Sizes :</span>
-            <div v-for="s in size" class="checkbox border-r px-2 py-1 border-gray-500">
+            <div v-for="s in size" @click="handleSizeChange(s)" class="checkbox border-r px-2 py-1 border-gray-500">
               <input
                 class="styled-checkbox"
-                id="msize"
                 type="radio"
-                :value="s"
-                :name="`${s}`"
+                :checked="sizeSelected==s ? true : false"
+                name="sizeselected"
+                v-model="sizeSelected"
               />
               <label for="msize" class="text-xl title">{{ s }}</label>
             </div>
           </div>
           <div class="sizesBox flex items-center gap-x-2 mb-3">
             <span class="text-2xl">Colors :</span>
-            <div v-for="c in color" class="checkbox border-r px-2 py-1 border-gray-500">
+            <div v-for="c in color" @click="handleColorChange(c)" class="checkbox border-r px-2 py-1 border-gray-500">
               <input
                 class="styled-checkbox"
-                id="msize"
-                type="radio"
-                :value="c"
-                :name="`${c}`"
+                type="radio"  
+                name="colorsekected"
+                :checked="colorSelected==c ? true : false"
+                v-model="colorSelected"
               />
               <label for="msize" class="text-xl title">{{ c }}</label>
             </div>
@@ -92,9 +141,11 @@ onMounted(() => {
           <div class="btnsdiv flex justify-between">
             <button
               @click="handleAddToCart"
+              :danger="true"
+              :disabled="skuIsLoading || isOutOfStock ? true : false"
               class="py-3 w-[48%] bg-black transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
             >
-              <i class="pi pi-cart-plus lg:text-3xl text-2xl"></i> Add to cart
+              <i class="pi pi-cart-plus lg:text-3xl text-2xl"></i> {{ isOutOfStock ? 'Out of stock' : 'Add to cart' }}
             </button>
             <button class="w-[48%]">
               <BookNow

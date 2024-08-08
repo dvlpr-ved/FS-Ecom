@@ -2,12 +2,13 @@
 const props = defineProps<{
   thumbnail?: string;
   title?: string;
+  id:Number;
 }>();
 </script>
 
 <template>
   <div class="commonCard border lg:ml-3 ml-1 tooltipGroup relative">
-    <NuxtLink to="searchresult/">
+    <NuxtLink :to="`/searchresult/${props.id}`">
       <div class="imgsdiv">
         <img
           class="w-full cardImg bg-gray-200"

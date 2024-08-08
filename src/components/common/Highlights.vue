@@ -43,7 +43,7 @@ onBeforeUnmount(() => {
       <div class="relative pb-5">
         <carousel :items-to-show="itemsToShow">
           <slide v-for="card in data.products" :key="card.id">
-            <HomePageCard :thumbnail="card.images" :title="card.name" />
+            <HomePageCard :thumbnail="card.images" :title="card.name" :id="card.id" />
           </slide>
           <template #addons>
             <navigation />

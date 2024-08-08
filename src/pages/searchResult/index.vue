@@ -1,18 +1,26 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
-import { useRoute, useRuntimeConfig } from 'nuxt/app'; // Make sure you are importing from 'nuxt/app' if using Nuxt
+import { useRoute, useRuntimeConfig } from "nuxt/app"; // Make sure you are importing from 'nuxt/app' if using Nuxt
 
 const products = ref([]);
 const loading = ref(true);
 const isMobileNavVisible = ref("");
 const route = useRoute();
+const cartAddedMessage = ref(null);
 
 const getDataFunc = async () => {
   try {
     const config = useRuntimeConfig();
-    const query = route.query; 
-    const suffix = query.category ? `api/fetchSearchItems?category=${query.category}` : `api/fetchSearchItems?product=${query.product}`;
-    const res = await fetch(`${config.API_BASE_URL ? config.API_BASE_URL : 'https://fashtsaly.com/API/public/'}${suffix}` , { method: 'POST' });
+    const query = route.query;
+    const suffix = query.category
+      ? `api/fetchSearchItems?category=${query.category}`
+      : `api/fetchSearchItems?product=${query.product}`;
+    const res = await fetch(
+      `${
+        config.API_BASE_URL ? config.API_BASE_URL : "https://fashtsaly.com/API/public/"
+      }${suffix}`,
+      { method: "POST" }
+    );
     const data = await res.json();
     if (data.success) {
       products.value = data.data.data;
@@ -31,9 +39,25 @@ const closeFilter = () => {
   isMobileNavVisible.value = "";
 };
 
-watch(() => route.query, () => {
-  getDataFunc();
-});
+const apiAddToCartStore = useAddToCartStore();
+
+watch(
+  () => apiAddToCartStore.message,
+  (newMessage) => {
+    if (newMessage) {
+      console.log(newMessage);
+      cartAddedMessage.value = newMessage;
+      alert(cartAddedMessage.value)
+    }
+  }
+);
+
+watch(
+  () => route.query,
+  () => {
+    getDataFunc();
+  }
+);
 
 onMounted(async () => {
   getDataFunc();
@@ -43,8 +67,12 @@ onMounted(async () => {
 <template>
   <div class="SearchResultPage py-4">
     <div class="container flex flex-wrap justify-between">
-      <aside class="LeftFilters lg:w-[20%] w-[100%] bg-gray-100 lg:sticky py-2 h-[fit-content] top-2">
-        <div class="flexdiv fixinMb lg:block flex justify-between lg:border-b px-4 py-2 lg:mb-3">
+      <aside
+        class="LeftFilters lg:w-[20%] w-[100%] bg-gray-100 lg:sticky py-2 h-[fit-content] top-2"
+      >
+        <div
+          class="flexdiv fixinMb lg:block flex justify-between lg:border-b px-4 py-2 lg:mb-3"
+        >
           <h1 class="text-3xl">Filters</h1>
           <button class="lg:hidden filterBtn" @click="openFilter">
             <i class="pi pi-filter text-3xl"></i>
@@ -53,23 +81,45 @@ onMounted(async () => {
         <div :class="['overlay', isMobileNavVisible]" @click="closeFilter"></div>
         <div :class="['checkboxWrapper px-4 transition-all', isMobileNavVisible]">
           <div class="checkbox mb-3">
-            <input class="styled-checkbox" id="checkboxes" type="checkbox" value="value" checked />
+            <input
+              class="styled-checkbox"
+              id="checkboxes"
+              type="checkbox"
+              value="value"
+              checked
+            />
             <label for="checkboxes" class="text-xl title">All Catagories</label>
           </div>
           <div class="checkbox mb-3">
-            <input class="styled-checkbox" id="checkboxes0" type="checkbox" value="value" />
+            <input
+              class="styled-checkbox"
+              id="checkboxes0"
+              type="checkbox"
+              value="value"
+            />
             <label for="checkboxes0" class="text-xl title">Sarees</label>
           </div>
           <div class="checkbox mb-3">
-            <input class="styled-checkbox" id="checkboxes1" type="checkbox" value="value" />
+            <input
+              class="styled-checkbox"
+              id="checkboxes1"
+              type="checkbox"
+              value="value"
+            />
             <label for="checkboxes1" class="text-xl title">Lehanga</label>
           </div>
           <div class="checkbox mb-3">
-            <input class="styled-checkbox" id="checkboxes2" type="checkbox" value="value" />
+            <input
+              class="styled-checkbox"
+              id="checkboxes2"
+              type="checkbox"
+              value="value"
+            />
             <label for="checkboxes2" class="text-xl title">Kurti</label>
           </div>
         </div>
       </aside>
+
       <div class="rightSideCards lg:w-[79%] w-[100%] lg:mt-0 mt-3">
         <div class="CardsFlexdiv flex fwrap lg:gap-x-4 gap-x-2 lg:gap-y-5 gap-y-2">
           <template v-if="loading">

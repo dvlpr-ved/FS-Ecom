@@ -1,26 +1,32 @@
 <script setup lang="ts">
-const images = ref([
-  {
-    src:
-      "https://rukminim2.flixcart.com/image/832/832/xif0q/ethnic-set/k/u/2/xxl-tie-dye-001-fabunna-cotton-original-imagzwfb5v6mjupy.jpeg?q=70&crop=false",
-  },
-  {
-    src:
-      "https://rukminim2.flixcart.com/image/832/832/xif0q/ethnic-set/j/7/e/xxs-m-rani-printed-jalwaniya-original-imagxyh45nr2r8gf.jpeg?q=70&crop=false",
-  },
-  {
-    src:
-      "https://rukminim2.flixcart.com/image/832/832/xif0q/ethnic-set/0/0/r/xxs-m-rani-printed-jalwaniya-original-imagxyh4qfqbejat.jpeg?q=70&crop=false",
-  },
-  {
-    src:
-      "https://rukminim2.flixcart.com/image/832/832/xif0q/ethnic-set/j/7/e/xxs-m-rani-printed-jalwaniya-original-imagxyh45nr2r8gf.jpeg?q=70&crop=false",
-  },
-]);
+const {data} = defineProps({
+  data : {
+    default : () => []
+  }
+});
+// console.log(data);
+// const responsiveOptions = ref([
+//     {
+//         breakpoint: '1300px',
+//         numVisible: 4
+//     },
+//     {
+//         breakpoint: '575px',
+//         numVisible: 1
+//     }
+// ]);
 </script>
 
 <template>
-  <div class="productGallery">
+<Galleria :value="data"  :numVisible="1" containerStyle="max-width: 640px">
+    <template #item="slotProps">
+        <img :src="slotProps.item.source" :alt="slotProps.item.source" style="width: 100%" />
+    </template>
+    <template #thumbnail="slotProps">
+        <img :src="slotProps.item.source" :alt="slotProps.item.source" />
+    </template>
+</Galleria>  
+  <!-- <div class="productGallery">
     <image-magnifier
       :src="image"
       :zoom-src="image"
@@ -29,7 +35,7 @@ const images = ref([
       zoom-width="400"
       zoom-height="300"
     ></image-magnifier>
-  </div>
+  </div> -->
 </template>
 
 <style lang="scss">
