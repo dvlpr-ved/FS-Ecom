@@ -9,7 +9,7 @@ export const useAddAddress = defineStore('useAddAddress', {
         async fetchAddAddress({ name, email, phone, pincode, locality, address, city, states, landmark }) {
             try {
                 const body = {
-                    name, email, phone, pincode, locality, address, city, states, landmark
+                    name, email, phone, pincode, locality, address, city, state : states, landmark
                 };
                 const response = await fetchFromSanctum({
                     method: 'POST',
