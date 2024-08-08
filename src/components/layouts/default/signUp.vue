@@ -120,9 +120,11 @@ const toggleFieldType = () => {
     style="background: #f1f1f1; border-bottom: 1px solid #ddd"
   >
     <div class="formSide">
-      <h5 class="heading lg:text-5xl text-3xl text-center lg:mb-4 mb-2">Create an Account!</h5>
+      <h5 class="heading lg:text-5xl text-3xl text-center lg:mb-4 mb-2">
+        Create an Account!
+      </h5>
 
-      <form class="inputFields lg:px-5 px-4 border-bottom" @submit="handleSubmit">
+      <form class="inputFields lg:px-5 px-4 border-bottom">
         <div v-if="!isOtpFeildVisible">
           <div class="inputbox mb-3">
             <input
@@ -181,7 +183,10 @@ const toggleFieldType = () => {
           />
           <p class="text-[red]">{{ formError.otp }}</p>
         </div>
-        <button class="commonbtn py-2 px-5 text-xl block rounded m-auto max-w-[220px] w-full">
+        <button
+          class="commonbtn py-2 px-5 text-xl block rounded m-auto max-w-[220px] w-full"
+          @click="handleSubmit"
+        >
           Sign Up
         </button>
       </form>
@@ -190,7 +195,7 @@ const toggleFieldType = () => {
 
       <a
         href="#"
-        class="py-2 px-5 text-xl rounded text-white commonbtn block  m-auto lg:mb-4 mb-2 max-w-[220px] w-full"
+        class="py-2 px-5 text-xl rounded text-white commonbtn block m-auto lg:mb-4 mb-2 max-w-[220px] w-full"
         style="background: #204887"
         >Login With Google</a
       >
