@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useAddToCartStore = defineStore('useAddToCartStore', {
+export const useWishlistStore = defineStore('useWishlistStore', {
     state: () => ({
         isLoading: false,
         error: null,

@@ -9,14 +9,14 @@ const props = defineProps<{
   description?: string;
 }>();
 
-const apiAddToCartStore = useAddToCartStore();
+const apiAddWishlistStore = useWishlistStore();
 
 const showFilledHeart = ref(false);
 const isAdded = ref(false);
 
 const addToCart = async (product_id: number) => {
   try {
-    const success = await apiAddToCartStore.fetchAddToCart({ product_id });
+    const success = await apiAddWishlistStore.fetchAddToCart({ product_id });
     if (success) {
       isAdded.value = true;
     }
