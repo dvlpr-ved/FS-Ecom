@@ -12,6 +12,9 @@ export const useCartStore = defineStore('cart', {
         getCartLength(){
             return this.cartItems.length
         },
+        getCartTotal(){
+            return this.cartItems.reduce((sum, item) => sum + item.price ? item.price : 0, 0);
+        }
     },
     actions : {
         async getCartItems(){
@@ -29,22 +32,28 @@ export const useCartStore = defineStore('cart', {
                 }
                 const data = await response.data;
                 this.cartItems = data;
-                console.log(this.cartItems);
                 return true
             }
             catch (error) {
             }
         },
-        async saveCartItem(product_id){
-            const req  = {product_id , is_wishlist : 0};
+        async saveCartItem({product_id , quantity}){
+            const itemExists = this.cartItems.some(item => item.product_id === product_id);
+            if(itemExists){
+                return {success : false , msg : 'item already exists'};
+            }
             const response = await fetchFromSanctum({
                 method: 'POST',
                 url: 'https://fashtsaly.com/API/public/api/addToCart',
-                req,
+                body : {
+                    'product_id' : product_id,
+                    'is_wishlist' : 0,
+                    'quantity' : quantity
+                },
             });    
             if(response.success){
                 this.cartItems.push(response.data);
-                return true
+                return response;
             }    
         }
     }

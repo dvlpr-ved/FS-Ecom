@@ -9,7 +9,6 @@ const {suggestions} = defineProps({
     default : () => []
   }
 });
-console.log(suggestions);
 const getData = async () => {
   try {
     const r = await fetch("https://dummyjson.com/products/category/womens-dresses");
