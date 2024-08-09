@@ -15,9 +15,15 @@ const removeMoreProduct = () => {
 };
 
 const handleAddToCart =async () => {
-  await cart.saveCartItem(sku.id);
-  cart.getCartItems();
-  Checkvisible.value = "active";
+  const addToCart = await cart.saveCartItem({product_id : sku.value.id , is_wishlist : 0 , quantity : productCount.value});
+  if(addToCart.success){
+    Checkvisible.value = "active";
+  }
+  else{
+    if(addToCart.msg){
+      alert(addToCart.msg);
+    }
+  }
 };
 const handleAdCartClose = () => {
   Checkvisible.value = "";
@@ -90,7 +96,6 @@ watch([colorSelected, sizeSelected],async () => {
         <div class="detailGallery lg:w-[48%] w-[100%] bg-gray-200 p-2">
           <ProductZoomImages :data="sku.image"/>
         </div>
-
         <div class="productcontent lg:w-[50%] w-[100%]">
           <h6 class="pro-title lg:text-6xl text-4xl mb-3">{{ product.name ? product.name : '' }}</h6>
           <div class="price">

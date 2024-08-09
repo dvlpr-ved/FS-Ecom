@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const GetItemFromCart = useGetItemFromCart();
-const cards = computed(() => GetItemFromCart.items || []);
-const isLoading = computed(() => GetItemFromCart.isLoading);
-const error = computed(() => GetItemFromCart.error);
-
+const GetItemFromCart = useCartStore();
+const cards = computed(() => GetItemFromCart.getCart || []);
+const loading = ref(false);
 const apiReomoveItemFromCart = useRemoveItemFromCart();
-
 const RemoveItemFromCart = async (product_id: number) => {
   const isConfirmed = window.confirm(
     "Are you sure you want to remove this item from the cart?"
@@ -23,10 +20,6 @@ const RemoveItemFromCart = async (product_id: number) => {
     }
   }
 };
-
-onMounted(() => {
-  GetItemFromCart.fetchGetItemFromCart();
-});
 </script>
 
 <template>
@@ -81,7 +74,7 @@ onMounted(() => {
         </div>
       </template>
 
-      <template v-else-if="cards.length === 0">
+      <template v-else-if="cards.getCartLength === 0">
         <div class="text-center">
           <p class="text-2xl border p-2 px-3 w-fit m-auto mb-2">No Item found.</p>
           <NuxtLink to="../" class="text-3xl text-blue-600">Explore Product</NuxtLink>
@@ -100,8 +93,8 @@ onMounted(() => {
                 <div class="flex-shrink-0">
                   <img
                     :src="
-                      items.images && items.images.length > 0
-                        ? items.images[0].source
+                      items.image && items.image.length > 0
+                        ? items.image[0].source
                         : 'https://via.placeholder.com/96'
                     "
                     alt="Product Image"
@@ -111,9 +104,9 @@ onMounted(() => {
                 </div>
                 <div class="contentdiv">
                   <div class="topconten">
-                    <h2 class="text-lg font-semibold mb-2">{{ items.name }}</h2>
+                    <h2 class="text-lg font-semibold mb-2">{{ items.product_name }}</h2>
                     <p class="text-gray-600 mb-1">{{ items.created_at }}</p>
-                    <p class="text-gray-600 mb-1">Price: ₹{{ items.mrp }}</p>
+                    <p class="text-gray-600 mb-1">Price: ₹{{ items.price }}</p>
                   </div>
                   <div class="flexbtn flex gap-5 lg:mt-3 mt-2">
                     <button
@@ -139,22 +132,22 @@ onMounted(() => {
             </h5>
             <div class="flexPrice flex justify-between p-3">
               <span class="text-xl">Price (2 Items)</span>
-              <span class="text-xl text-gray-800">₹ 2000</span>
+              <span class="text-xl text-gray-800">₹ {{ cards.getCartTotal }}</span>
             </div>
             <div class="flexPrice flex justify-between p-3">
               <span class="text-xl">Discount</span>
-              <span class="text-xl text-green-600">- ₹ 300</span>
+              <span class="text-xl text-green-600">- ₹ 0</span>
             </div>
             <div class="flexPrice flex justify-between border-b border-b-gray-300 p-3">
               <span class="text-xl">Delivery Charges</span>
-              <span class="text-xl text-gray-800"> ₹ 40 </span>
+              <span class="text-xl text-gray-800"> ₹ 0 </span>
             </div>
             <div class="flexPrice flex justify-between border-b border-b-gray-300 p-3">
               <span class="text-xl font-bold">Total Amount</span>
-              <span class="text-xl text-gray-800 font-bold"> ₹ 2000 </span>
+              <span class="text-xl text-gray-800 font-bold"> ₹ {{ cards.getCartTotal }} </span>
             </div>
             <p class="text-xl p-3">
-              Your Saving <span class="text-xl text-green-600">₹1,737</span> on this order
+              Your Saving <span class="text-xl text-green-600">₹0</span> on this order
             </p>
             <button class="px-4 py-2 text-2xl bgorange text-white w-full">
               Place Order

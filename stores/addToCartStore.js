@@ -15,7 +15,7 @@ export const useAddToCartStore = defineStore('useAddToCartStore', {
             try {
 
                 await getItemStore.fetchGetItemFromCart();
-                const itemExists = getItemStore.items.some(item => product_id === product_id)
+                const itemExists = getItemStore.items.some(item => item.id === product_id)
 
                 if (itemExists) {
                     this.message = 'Item is already in the cart.'
