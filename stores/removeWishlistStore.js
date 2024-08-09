@@ -1,13 +1,13 @@
 import { defineStore } from "pinia";
 
-export const useRemoveItemFromCart = defineStore('useRemoveItemFromCart', {
+export const useRemoveWhishlist = defineStore('useRemoveWhishlist', {
     state: () => ({
         isLoading: false,
         error: null,
         message: null
     }),
     actions: {
-        async fetchRemoveItemCart({ product_id }) {
+        async fetchRemoveWishlist({ product_id }) {
 
             try {
                 const body = {

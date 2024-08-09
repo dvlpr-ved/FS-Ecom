@@ -4,22 +4,23 @@ import { ref } from "vue";
 const GetItemFromCart = useCartStore();
 const cards = computed(() => GetItemFromCart.getCart || []);
 const loading = ref(false);
-const apiReomoveItemFromCart = useRemoveItemFromCart();
-const RemoveItemFromCart = async (product_id: number) => {
-  const isConfirmed = window.confirm(
-    "Are you sure you want to remove this item from the cart?"
-  );
 
-  if (isConfirmed) {
-    const res = await apiReomoveItemFromCart.fetchRemoveItemCart({ product_id });
-    GetItemFromCart.fetchGetItemFromCart();
-    if (res) {
-      console.log("item removed");
-    } else {
-      console.error("Error in Removing Item From Cart");
-    }
-  }
-};
+// const apiReomoveItemFromCart = useRemoveItemFromCart();
+// const RemoveItemFromCart = async (product_id: number) => {
+//   const isConfirmed = window.confirm(
+//     "Are you sure you want to remove this item from the cart?"
+//   );
+
+//   if (isConfirmed) {
+//     const res = await apiReomoveItemFromCart.fetchRemoveItemCart({ product_id });
+//     GetItemFromCart.fetchGetItemFromCart();
+//     if (res) {
+//       console.log("item removed");
+//     } else {
+//       console.error("Error in Removing Item From Cart");
+//     }
+//   }
+// };
 </script>
 
 <template>
