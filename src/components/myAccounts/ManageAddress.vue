@@ -9,12 +9,13 @@ function toggleAddress() {
 }
 
 const useGetAddressStore = useGetAddress();
-const userData = computed(() => useGetAddressStore.userAddress || []);
+const userAddress = computed(() => useGetAddressStore.userAddress || []);
+const isLoading = computed(() => useGetAddressStore.isLoading);
 
 onMounted(() => {
   useGetAddressStore.fetchUserAddress();
 });
-console.log("userData", userData);
+console.log("userAddress", userAddress);
 </script>
 
 <template>
@@ -36,30 +37,41 @@ console.log("userData", userData);
       </template>
 
       <template v-if="NewAddress">
-        <addAddress :toggleAddress="toggleAddress" />
+        <addAddress :toggleAddress="toggleAddress" :isLoading="isLoading" />
       </template>
       <!-- add div -->
-      <div v-if="!editing" class="commondiv p-3 border mb-3 mt-3">
-        <div class="topFlex flex justify-between">
-          <div class="userName flex lg:gap-5 gap-2 mb-2">
-            <span class="font-[500] text-[15px] uppercase">user name </span>
-            <span class="font-[500] text-[15px] uppercase">0999999999 </span>
+      <div v-if="!editing" class="cardwrapper flex flex-col-reverse">
+        <template v-if="isLoading">
+          <div class="shimmer p-9 animate-pulse rounded bg-gray-200 w-full"></div>
+        </template>
+
+        <template v-for="data in userAddress" :key="data.id">
+          <div class="commondiv p-3 border mb-3">
+            <div class="topFlex flex justify-between">
+              <div class="userName flex lg:gap-5 gap-2 mb-2">
+                <span class="font-[500] text-[15px] uppercase"
+                  >Name : {{ data.name }}
+                </span>
+                <span class="font-[500] text-[15px] uppercase"
+                  >Phone : {{ data.phone }}
+                </span>
+              </div>
+              <div>
+                <span
+                  class="text-blue-700 font-[500] text-xl cursor-pointer"
+                  @click="toggleEdit"
+                  >{{ editing ? "Cancel" : "Edit" }}</span
+                >
+              </div>
+            </div>
+            <div class="textAddress flex">
+              <p class="text-[15px] capitalize">
+                locality : {{ data.locality }}, city : {{ data.city }}
+                <span class="font-[500] text-[15px]"> Pincode : {{ data.pincode }}</span>
+              </p>
+            </div>
           </div>
-          <div>
-            <span
-              class="text-blue-700 font-[500] text-xl cursor-pointer"
-              @click="toggleEdit"
-              >{{ editing ? "Cancel" : "Edit" }}</span
-            >
-          </div>
-        </div>
-        <div class="textAddress flex">
-          <p class="text-[15px]">
-            1 26M, DDA Flats Pocket 1, New Kondli, 1 26M, DDA Flats Pocket 1, New Kondli,
-            New Delhi, Delhi -
-            <span class="font-[500] text-[15px]">105599</span>
-          </p>
-        </div>
+        </template>
       </div>
       <!-- add form -->
       <template v-else>

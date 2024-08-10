@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from "vue";
-
 const props = defineProps<{
   images?: string;
   title?: string;
@@ -9,19 +7,27 @@ const props = defineProps<{
   description?: string;
 }>();
 
-const apiAddToCartStore = useAddToCartStore();
+const wishlistStore = useWishlistStore();
 
 const showFilledHeart = ref(false);
 const isAdded = ref(false);
+const message = ref<string | null>(null);
 
 const addToCart = async (product_id: number) => {
   try {
-    const success = await apiAddToCartStore.fetchAddToCart({ product_id });
-    if (success) {
+    const result = await wishlistStore.saveWishlistItems({ product_id });
+    if (result.success) {
       isAdded.value = true;
+      message.value = result.msg;
+      alert(result.msg);
+    } else {
+      message.value = result.msg;
+      alert(result.msg);
     }
   } catch (error) {
-    console.error("Error Adding Product In Cart:", error);
+    console.error("Error Adding Product to Cart:", error);
+    message.value = "Error adding product to wishlist";
+    alert(message.value);
   }
 };
 </script>

@@ -23,13 +23,13 @@ const toogleModal = () => {
   }
 };
 
-const GetItemFromCart = useGetItemFromCart();
-const TotalcartItems = computed(() => GetItemFromCart.items || []);
+const getWishlistItems = useWishlistStore();
+const TotalcartItems = computed(() => getWishlistItems.getWishlist || []);
 onMounted(() => {
-  GetItemFromCart.fetchGetItemFromCart();
+  getWishlistItems.fetchWishlistItems();
 });
 watch(TotalcartItems, (newItems) => {
-  CartItems.value = newItems.length;
+  wishlistd.value = newItems.length;
 });
 
 const searchQuery = ref('');
@@ -100,8 +100,7 @@ const fetchSearchResult =async () => {
           <span
             class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
           >
-            <!-- {{ wishlistd }} -->
-            {{ CartItems }}
+            {{ wishlistd }}
           </span>
         </li>
         <li class="block">
