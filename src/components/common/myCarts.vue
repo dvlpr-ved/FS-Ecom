@@ -5,7 +5,7 @@ const GetItemFromCart = useCartStore();
 const cards = computed(() => GetItemFromCart.getCart || []);
 const total = computed(() => GetItemFromCart.getCartTotal || []);
 const loading = ref(false);
-const apiRemoveItemFromCart = useRemoveItemFromCart();
+// const apiRemoveItemFromCart = useRemoveItemFromCart();
 const RemoveItemFromCart = async (product_id: number) => {
   const isConfirmed = window.confirm(
     "Are you sure you want to remove this item from the cart?"

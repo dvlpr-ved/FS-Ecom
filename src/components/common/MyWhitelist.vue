@@ -1,6 +1,6 @@
 <script setup>
 const ApiGetWhishlistItems = useWishlistStore();
-const cards = computed(() => ApiGetWhishlistItems.getWishlist);
+const cards = computed(() => ApiGetWhishlistItems.getWishlist || []);
 const isLoading = ref(true);
 
 const RemoveItemFromCart = async (product_id) => {
@@ -111,7 +111,7 @@ onMounted(() => {
                 </div>
                 <button
                   class="absolute top-0 right-0 text-gray-600"
-                  @click="RemoveItemFromCart"
+                  @click="RemoveItemFromCart(items.id)"
                 >
                   <i class="pi pi-trash text-xl"></i>
                 </button>

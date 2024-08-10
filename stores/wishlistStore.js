@@ -20,7 +20,7 @@ export const useWishlistStore = defineStore('useWishlistStore', {
         async fetchWishlistItems() {
             try {
                 const body = {
-                    is_wishlist: 1
+                    wishlist: 1
                 };
                 const response = await fetchFromSanctum({
                     method: 'POST',
@@ -69,6 +69,9 @@ export const useWishlistStore = defineStore('useWishlistStore', {
 
                 if (!response.success) {
                     throw new Error('Error in Removing Item From Cart');
+                }
+                else{
+                    this.wishlistItems = this.wishlistItems.filter(item => item.id != product_id);
                 }
                 this.message = 'Error in Removing Item From Cart'
                 return true;

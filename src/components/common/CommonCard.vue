@@ -18,8 +18,8 @@ const addToCart = async (product_id: number) => {
     const result = await wishlistStore.saveWishlistItems({ product_id });
     if (result.success) {
       isAdded.value = true;
-      message.value = result.msg;
-      alert(result.msg);
+      // message.value = result.msg;
+      // alert(result.msg);
     } else {
       message.value = result.msg;
       alert(result.msg);
