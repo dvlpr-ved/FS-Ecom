@@ -36,6 +36,7 @@ const size = ref(null);
 const colorSelected = ref(null);
 const sizeSelected = ref(null);
 const sku = ref(null);
+const imageShown = ref(null);
 const getProduct =async () => {
   const {data ,  success} = await publicApi({'url' : `api/getProductDetails` , 'method' : 'POST' , 'body' : {product_id : route.params.id}});
   if(success){
@@ -47,6 +48,7 @@ const getProduct =async () => {
     sku.value = data.sku;
     colorSelected.value = sku.value.color ? sku.value.color : '';
     sizeSelected.value = sku.value.size ? sku.value.size : '';
+    imageShown.value = sku.value.image[0] ? sku.value.image[0].source : '';
   }
 }
 onMounted(() => {
@@ -94,7 +96,7 @@ watch([colorSelected, sizeSelected],async () => {
     <div v-if="product" class="container">
       <div class="flexdiv flex flex-wrap justify-between">
         <div class="detailGallery lg:w-[48%] w-[100%] bg-gray-200 p-2">
-          <ProductZoomImages :data="sku.image"/>
+          <ProductZoomImages :data="imageShown ? imageShown : ''"/>
         </div>
         <div class="productcontent lg:w-[50%] w-[100%]">
           <h6 class="pro-title lg:text-6xl text-4xl mb-3">{{ product.name ? product.name : '' }}</h6>
@@ -187,6 +189,11 @@ watch([colorSelected, sizeSelected],async () => {
             </div>
           </div>
         </div>
+        <carousel items-to-show="2">
+            <slide v-for="image in sku.image" :key="image.name">
+                <img @click="imageShown = image.source" :src="image.source"  class="w-[130px] h-[140px]">
+            </slide>
+        </carousel>
       </div>
 
       <!-- Releted Products -->

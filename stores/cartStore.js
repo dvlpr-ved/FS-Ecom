@@ -13,7 +13,7 @@ export const useCartStore = defineStore('cart', {
             return this.cartItems.length
         },
         getCartTotal(){
-            return this.cartItems.reduce((sum, item) => sum + item.price ? item.price : 0, 0);
+            return this.cartItems.reduce((sum, item) => sum + parseInt(item.price), 0);
         }
     },
     actions : {
@@ -30,7 +30,7 @@ export const useCartStore = defineStore('cart', {
                 if (!response) {
                     throw new Error('Error in Getting Item from Cart');
                 }
-                const data = await response.data;
+                const data = await response;
                 this.cartItems = data;
                 return true
             }
@@ -38,7 +38,7 @@ export const useCartStore = defineStore('cart', {
             }
         },
         async saveCartItem({product_id , quantity}){
-            const itemExists = this.cartItems.some(item => item.product_id === product_id);
+            const itemExists = this.cartItems.some(item => item.id === product_id);
             if(itemExists){
                 return {success : false , msg : 'item already exists'};
             }
@@ -55,6 +55,20 @@ export const useCartStore = defineStore('cart', {
                 this.cartItems.push(response.data);
                 return response;
             }    
+        },
+        async DeleteFromCart({product_id}){
+            const response = await fetchFromSanctum({
+                method: 'POST',
+                url: 'https://fashtsaly.com/API/public/api/deleteCart',
+                body : {
+                    'product_id' : product_id,
+                    'is_wishlist' : 0
+                },
+            });                
+            if(response.success){
+                this.cartItems = this.cartItems.filter(item => item.id != product_id);
+                return true;
+            }
         }
     }
 });

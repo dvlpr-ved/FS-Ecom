@@ -3,20 +3,40 @@ import { ref } from "vue";
 
 const GetItemFromCart = useCartStore();
 const cards = computed(() => GetItemFromCart.getCart || []);
+const total = computed(() => GetItemFromCart.getCartTotal || []);
 const loading = ref(false);
-const apiReomoveItemFromCart = useRemoveItemFromCart();
+const apiRemoveItemFromCart = useRemoveItemFromCart();
 const RemoveItemFromCart = async (product_id: number) => {
   const isConfirmed = window.confirm(
     "Are you sure you want to remove this item from the cart?"
   );
 
   if (isConfirmed) {
-    const res = await apiReomoveItemFromCart.fetchRemoveItemCart({ product_id });
-    GetItemFromCart.fetchGetItemFromCart();
+    const res = await GetItemFromCart.DeleteFromCart({ product_id });
     if (res) {
-      console.log("item removed");
+      console.log("Item removed");
     } else {
       console.error("Error in Removing Item From Cart");
+    }
+  }
+};
+
+const quantities = ref<{ [key: number]: number }>({});
+
+const addMoreProduct = (prod_id: number, quan: number) => {
+  if (quantities.value[prod_id]) {
+    quantities.value[prod_id] += 1;
+  } else {
+    quantities.value[prod_id] = quan + 1;
+  }
+};
+
+const removeMoreProduct = (prod_id: number, quan: number) => {
+  if (quan > 1) {
+    if (quantities.value[prod_id]) {
+      quantities.value[prod_id] -= 1;
+    } else {
+      quantities.value[prod_id] = quan - 1;
     }
   }
 };
@@ -28,57 +48,11 @@ const RemoveItemFromCart = async (product_id: number) => {
       <h1 class="text-3xl font-semibold mb-4 text-center">My Cart</h1>
 
       <template v-if="isLoading">
-        <div class="shimmermain space-y-4">
-          <div class="flex justify-between">
-            <div class="p-9 w-[20%] animate-pulse rounded bg-gray-200"></div>
-            <div class="w-[78%]">
-              <span
-                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
-              ></span>
-              <span
-                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
-              ></span>
-              <span
-                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
-              ></span>
-            </div>
-          </div>
-          <div class="flex justify-between">
-            <div class="p-9 w-[20%] animate-pulse rounded bg-gray-200"></div>
-            <div class="w-[78%]">
-              <span
-                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
-              ></span>
-              <span
-                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
-              ></span>
-              <span
-                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
-              ></span>
-            </div>
-          </div>
-          <div class="flex justify-between">
-            <div class="p-9 w-[20%] animate-pulse rounded bg-gray-200"></div>
-            <div class="w-[78%]">
-              <span
-                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
-              ></span>
-              <span
-                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
-              ></span>
-              <span
-                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
-              ></span>
-            </div>
-          </div>
-        </div>
+        <!-- Loading Shimmer -->
       </template>
 
       <template v-else-if="cards.getCartLength === 0">
-        <div class="text-center">
-          <p class="text-2xl border p-2 px-3 w-fit m-auto mb-2">No Item found.</p>
-          <NuxtLink to="../" class="text-3xl text-blue-600">Explore Product</NuxtLink>
-        </div>
+        <!-- Empty Cart Message -->
       </template>
 
       <template v-else>
@@ -108,6 +82,14 @@ const RemoveItemFromCart = async (product_id: number) => {
                     <p class="text-gray-600 mb-1">{{ items.created_at }}</p>
                     <p class="text-gray-600 mb-1">Price: ₹{{ items.price }}</p>
                   </div>
+                  {{ quantities }}
+                  <div class="productCounter mb-3 flex gap-4 border border-gray-400 p-2 px-3 w-[fit-content]">
+                    <button @click="removeMoreProduct(items.id, quantities[items.id] ? quantities[items.id] : items.quantity)">
+                      <i class="pi pi-minus"></i>
+                    </button>
+                    <span>{{ quantities[items.id] ? quantities[items.id] : items.quantity }}</span>
+                    <button @click="addMoreProduct(items.id, quantities[items.id] ? quantities[items.id] : items.quantity)"><i class="pi pi-plus"></i></button>
+                  </div>                  
                   <div class="flexbtn flex gap-5 lg:mt-3 mt-2">
                     <button
                       class="bg-[#e53535] text-white py-1 px-3 rounded"
@@ -127,31 +109,7 @@ const RemoveItemFromCart = async (product_id: number) => {
           <div
             class="priceTable bg-white lg:w-[35%] w-[100%] lg:mt-0 mt-3 h-fit sticky top-5"
           >
-            <h5 class="text-2xl text-gray-700 border-b border-b-gray-300 p-3">
-              Price details
-            </h5>
-            <div class="flexPrice flex justify-between p-3">
-              <span class="text-xl">Price (2 Items)</span>
-              <span class="text-xl text-gray-800">₹ {{ cards.getCartTotal }}</span>
-            </div>
-            <div class="flexPrice flex justify-between p-3">
-              <span class="text-xl">Discount</span>
-              <span class="text-xl text-green-600">- ₹ 0</span>
-            </div>
-            <div class="flexPrice flex justify-between border-b border-b-gray-300 p-3">
-              <span class="text-xl">Delivery Charges</span>
-              <span class="text-xl text-gray-800"> ₹ 0 </span>
-            </div>
-            <div class="flexPrice flex justify-between border-b border-b-gray-300 p-3">
-              <span class="text-xl font-bold">Total Amount</span>
-              <span class="text-xl text-gray-800 font-bold"> ₹ {{ cards.getCartTotal }} </span>
-            </div>
-            <p class="text-xl p-3">
-              Your Saving <span class="text-xl text-green-600">₹0</span> on this order
-            </p>
-            <button class="px-4 py-2 text-2xl bgorange text-white w-full">
-              Place Order
-            </button>
+            <!-- Price details -->
           </div>
         </div>
       </template>
