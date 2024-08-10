@@ -6,7 +6,6 @@ const products = ref([]);
 const loading = ref(true);
 const isMobileNavVisible = ref("");
 const route = useRoute();
-const cartAddedMessage = ref(null);
 
 const getDataFunc = async () => {
   try {
@@ -39,18 +38,6 @@ const closeFilter = () => {
   isMobileNavVisible.value = "";
 };
 
-const apiAddToCartStore = useAddToCartStore();
-
-watch(
-  () => apiAddToCartStore.message,
-  (newMessage) => {
-    if (newMessage) {
-      console.log(newMessage);
-      cartAddedMessage.value = newMessage;
-      alert(cartAddedMessage.value)
-    }
-  }
-);
 
 watch(
   () => route.query,

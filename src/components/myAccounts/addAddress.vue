@@ -113,7 +113,7 @@ const saveChanges = async () => {
 </script>
 
 <template>
-  <div class="formdiv flex gap-5 flex-wrap">
+  <div class="formdiv flex gap-5 flex-wrap mb-3">
     <div class="in_box lg:w-[48%] w-[100%] relative">
       <span class="absolute top-[-10px] bg-white px-3 border block ml-3">Your Name</span>
       <input
