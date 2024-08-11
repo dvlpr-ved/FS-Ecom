@@ -8,28 +8,57 @@ const props = defineProps<{
 }>();
 
 const wishlistStore = useWishlistStore();
+const fetchWishlistData = async () => {
+  await wishlistStore.fetchWishlistItems();
+};
 
-const showFilledHeart = ref(false);
-const isAdded = ref(false);
+const getWishlist = computed(() => wishlistStore.getWishlist);
+
+const isItemInWishlist = computed(() =>
+  getWishlist.value.some((item) => item.product_id === props.id)
+);
+
+const showFilledHeart = computed(() => isItemInWishlist.value);
+
 const message = ref<string | null>(null);
 
 const addToCart = async (product_id: number) => {
+  if (props.id === undefined) {
+    message.value = "Product ID is undefined";
+    alert(message.value);
+    return;
+  }
+
   try {
-    const result = await wishlistStore.saveWishlistItems({ product_id });
-    if (result.success) {
-      isAdded.value = true;
-      // message.value = result.msg;
-      // alert(result.msg);
+    const isInWishlist = isItemInWishlist.value;
+    let result;
+    if (isInWishlist) {
+      const removed = await wishlistStore.fetchRemoveWishlist(product_id);
+      if (removed) {
+        message.value = "Item removed from wishlist";
+      } else {
+        message.value = "Failed to remove item from wishlist";
+      }
     } else {
-      message.value = result.msg;
-      alert(result.msg);
+      result = await wishlistStore.saveWishlistItems(product_id);
+      if (result.success) {
+        message.value = "Item added to wishlist";
+      } else {
+        message.value = result.msg;
+      }
+    }
+    if (message.value) {
+      alert(message.value);
     }
   } catch (error) {
-    console.error("Error Adding Product to Cart:", error);
-    message.value = "Error adding product to wishlist";
+    console.error("Error adding/removing product from wishlist:", error);
+    message.value = "Error adding/removing product from wishlist";
     alert(message.value);
   }
 };
+onMounted(async () => {
+  await fetchWishlistData();
+});
 </script>
 
 <template>
@@ -45,7 +74,7 @@ const addToCart = async (product_id: number) => {
           @click="addToCart(props.id)"
           class="text-4xl pi pi-heart-fill"
           style="color: rgb(239 68 68)"
-          v-if="showFilledHeart || isAdded"
+          v-if="showFilledHeart"
         ></i>
       </p>
     </div>
