@@ -13,6 +13,13 @@ export const useWishlistStore = defineStore('wishlistStore', {
         },
         getWishlistTotal() {
             return this.wishlistItems.reduce((sum, item) => sum + (item.price || 0), 0);
+        },
+        getWishlisterIds(){
+            var ids = [];
+            this.wishlistItems.forEach(item => {
+                ids.push(item.id);
+            });
+            return ids;
         }
     },
     actions: {

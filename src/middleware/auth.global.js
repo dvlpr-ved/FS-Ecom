@@ -3,11 +3,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     const authStore =  useAuthStore();
     const cartStore = useCartStore();
     const wishlistStore = useWishlistStore();
-    if(!authStore.isLoggedin && process.client){     
+    if(!authStore.isUserLoggedin && process.client){     
         const data  =  await fetchFromSanctum({method : 'POST' , url : 'https://fashtsaly.com/API/public/api/refresh-token'});
         authStore.Login(data);
     }
-    if(authStore.isLoggedin){
+    if(authStore.isUserLoggedin){
         console.log(cartStore.getCart , wishlistStore.getWishlist);
         if(!cartStore.getCart.length){
             await cartStore.getCartItems();

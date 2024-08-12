@@ -13,12 +13,12 @@ const fetchWishlistData = async () => {
 };
 
 const getWishlist = computed(() => wishlistStore.getWishlist);
+const getWishlistIds = computed(() => wishlistStore.getWishlisterIds);
 
 const isItemInWishlist = computed(() =>
   getWishlist.value.some((item) => item.product_id === props.id)
 );
 
-const showFilledHeart = computed(() => isItemInWishlist.value);
 
 const message = ref<string | null>(null);
 
@@ -74,7 +74,7 @@ onMounted(async () => {
           @click="addToCart(props.id)"
           class="text-4xl pi pi-heart-fill"
           style="color: rgb(239 68 68)"
-          v-if="showFilledHeart"
+          v-if="getWishlistIds.indexOf(props.id) > -1"
         ></i>
       </p>
     </div>
