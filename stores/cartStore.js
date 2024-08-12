@@ -13,7 +13,7 @@ export const useCartStore = defineStore('cart', {
             return this.cartItems.length
         },
         getCartTotal(){
-            return this.cartItems.reduce((sum, item) => sum + parseInt(item.price), 0);
+            return this.cartItems.reduce((sum, item) => sum + parseInt(item.price)*parseInt(item.quantity), 0);
         }
     },
     actions : {
@@ -24,14 +24,14 @@ export const useCartStore = defineStore('cart', {
                 };
                 const response = await fetchFromSanctum({
                     method: 'POST',
-                    url: 'https://fashtsaly.com/API/public/api/getCart',
+                    url: 'https://fashtsaly.com/API/public/api/getCart?query=1',
                     body
                 });
                 if (!response) {
                     throw new Error('Error in Getting Item from Cart');
                 }
-                const data = await response;
-                this.cartItems = data;
+                const data =  response;
+                this.cartItems = data.data;
                 return true
             }
             catch (error) {

@@ -40,6 +40,24 @@ const removeMoreProduct = (prod_id: number, quan: number) => {
     }
   }
 };
+const proceedCheckout =async () => {
+  let arr = [];
+  cards.value.forEach(element => {
+    let elem = element;
+    if(Object.keys(quantities.value).length > 0){
+      elem.quantity = quantities.value[element.id] ?  quantities.value[element.id] : element.quantity;
+    }
+    arr.push(elem);
+  });
+  const res = await fetchFromSanctum({
+    url : 'https://fashtsaly.com/API/public/api/proccedCheckout' ,
+    method: 'POST',
+    body : {items : arr}
+  });
+  if(res.success){
+    navigateTo('checkout');
+  }
+}
 </script>
 
 <template>
@@ -47,13 +65,61 @@ const removeMoreProduct = (prod_id: number, quan: number) => {
     <div class="myorder_inner container">
       <h1 class="text-3xl font-semibold mb-4 text-center">My Cart</h1>
 
+
       <template v-if="isLoading">
-        <!-- Loading Shimmer -->
+        <div class="shimmermain space-y-4">
+          <div class="flex justify-between">
+            <div class="p-9 w-[20%] animate-pulse rounded bg-gray-200"></div>
+            <div class="w-[78%]">
+              <span
+                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
+              ></span>
+              <span
+                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
+              ></span>
+              <span
+                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
+              ></span>
+            </div>
+          </div>
+          <div class="flex justify-between">
+            <div class="p-9 w-[20%] animate-pulse rounded bg-gray-200"></div>
+            <div class="w-[78%]">
+              <span
+                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
+              ></span>
+              <span
+                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
+              ></span>
+              <span
+                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
+              ></span>
+            </div>
+          </div>
+          <div class="flex justify-between">
+            <div class="p-9 w-[20%] animate-pulse rounded bg-gray-200"></div>
+            <div class="w-[78%]">
+              <span
+                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
+              ></span>
+              <span
+                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
+              ></span>
+              <span
+                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
+              ></span>
+            </div>
+          </div>
+        </div>
       </template>
 
       <template v-else-if="cards.getCartLength === 0">
-        <!-- Empty Cart Message -->
+        <div class="text-center">
+          <p class="text-2xl border p-2 px-3 w-fit m-auto mb-2">No Item found.</p>
+          <NuxtLink to="../" class="text-3xl text-blue-600">Explore Product</NuxtLink>
+        </div>
       </template>
+
 
       <template v-else>
         <div class="cardsflex flex flex-wrap justify-between relative">
@@ -80,9 +146,8 @@ const removeMoreProduct = (prod_id: number, quan: number) => {
                   <div class="topconten">
                     <h2 class="text-lg font-semibold mb-2">{{ items.product_name }}</h2>
                     <p class="text-gray-600 mb-1">{{ items.created_at }}</p>
-                    <p class="text-gray-600 mb-1">Price: ₹{{ items.price }}</p>
+                    <p class="text-gray-600 mb-1">Price: ₹{{ items.price }}/PCS</p>
                   </div>
-                  {{ quantities }}
                   <div class="productCounter mb-3 flex gap-4 border border-gray-400 p-2 px-3 w-[fit-content]">
                     <button @click="removeMoreProduct(items.id, quantities[items.id] ? quantities[items.id] : items.quantity)">
                       <i class="pi pi-minus"></i>
@@ -109,7 +174,31 @@ const removeMoreProduct = (prod_id: number, quan: number) => {
           <div
             class="priceTable bg-white lg:w-[35%] w-[100%] lg:mt-0 mt-3 h-fit sticky top-5"
           >
-            <!-- Price details -->
+          <h5 class="text-2xl text-gray-700 border-b border-b-gray-300 p-3">
+              Price details
+            </h5>
+            <div class="flexPrice flex justify-between p-3">
+              <span class="text-xl">Price (2 Items)</span>
+              <span class="text-xl text-gray-800">₹ {{ total }}</span>
+            </div>
+            <div class="flexPrice flex justify-between p-3">
+              <span class="text-xl">Discount</span>
+              <span class="text-xl text-green-600">- ₹ 0</span>
+            </div>
+            <div class="flexPrice flex justify-between border-b border-b-gray-300 p-3">
+              <span class="text-xl">Delivery Charges</span>
+              <span class="text-xl text-gray-800"> ₹ 0 </span>
+            </div>
+            <div class="flexPrice flex justify-between border-b border-b-gray-300 p-3">
+              <span class="text-xl font-bold">Total Amount</span>
+              <span class="text-xl text-gray-800 font-bold"> ₹ {{ total }} </span>
+            </div>
+            <p class="text-xl p-3">
+              Your Saving <span class="text-xl text-green-600">₹0</span> on this order
+            </p>
+            <button @click="proceedCheckout" class="px-4 py-2 text-2xl bgorange text-white w-full">
+              Place Order
+            </button>
           </div>
         </div>
       </template>

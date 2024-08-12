@@ -24,7 +24,7 @@ export const useWishlistStore = defineStore('useWishlistStore', {
                 };
                 const response = await fetchFromSanctum({
                     method: 'POST',
-                    url: 'https://fashtsaly.com/API/public/api/getCart',
+                    url: 'https://fashtsaly.com/API/public/api/getCart?query=2',
                     body
                 });
                 if (!response) {
