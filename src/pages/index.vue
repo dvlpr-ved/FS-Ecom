@@ -25,7 +25,7 @@ onMounted(() => {
 <template>
   <template v-if="isLoading">
     <div class="lg:block hidden">
-      <div class="bannerAni h-[40vh] animate-pulse rounded bg-gray-200 my-5"></div>
+      <div class="bannerAni h-[40vh] animate-pulse shimmer rounded bg-gray-200 my-5"></div>
       <div class="cardsAni flex gap-2">
         <ShimmereCard />
         <ShimmereCard />

@@ -76,6 +76,15 @@ input{padding: 5px 10px; border: 1px solid #b1b1b1;}
     .container{max-width: 800px;}
 }
 
+
+@keyframes shimmer {
+    0% {background-position: -1000px 0;}
+    100% {background-position: 1000px 0;}
+}
+.shimmer {position: relative;overflow: hidden;background: #f6f7f8;background: linear-gradient(to right, #f6f7f8 8%, #e2e2e2 38%, #f6f7f8 54%);background-size: 1000px 100%;animation: shimmer 1.5s infinite linear;}
+.shimmer::before {content: "";position: absolute;top: 0;left: -100%;height: 100%;width: 100%;background: inherit;animation: shimmer 1.5s infinite linear;}
+
+
 @media (max-width:768px) {  
     .staticPages{
         &::after, &::before{background: none;}

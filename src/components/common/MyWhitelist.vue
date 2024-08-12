@@ -94,8 +94,8 @@ onMounted(() => {
               <div class="flex-shrink-0">
                 <img
                   :src="
-                    items.image && items.image.length > 0
-                      ? items.image[0].source
+                    items.images && items.images.length > 0
+                      ? items.images[0].source
                       : 'https://via.placeholder.com/96'
                   "
                   alt="Product Image"
@@ -107,7 +107,7 @@ onMounted(() => {
                 <div class="topconten">
                   <h2 class="text-lg font-semibold mb-2">{{ items.name }}</h2>
                   <p class="text-gray-600 mb-1">{{ items.created_at }}</p>
-                  <p class="text-gray-600 mb-1">Price: ₹{{ items.price }}</p>
+                  <p class="text-gray-600 mb-1">Price: ₹{{ items.mrp }}</p>
                 </div>
                 <button
                   class="absolute top-0 right-0 text-gray-600"
