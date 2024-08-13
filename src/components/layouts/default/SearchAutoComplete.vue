@@ -61,9 +61,9 @@ const navigateForward = (query) => {
     </li>
     <li
       v-if="
-        results.catg.length == 0 &&
-        results.products.length == 0 &&
-        results.tagged.length == 0
+        results.catg.length === 0 &&
+        results.products.length === 0 &&
+        results.tagged.length === 0
       "
       class="ease-linear duration-300 py-2 cursor-pointer capitalize border-bottom-1 border-gray-300"
     >

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {fetchFromSanctum} from '/utils/sanctumApi.js'
+import { fetchFromSanctum } from "/utils/sanctumApi.js";
 const CartItems = ref(0);
 const wishlistd = ref(2);
 const wishlistItems = ref(2);
@@ -32,28 +32,34 @@ watch(TotalcartItems, (newItems) => {
   wishlistd.value = newItems.length;
 });
 
-const searchQuery = ref('');
-watch(searchQuery , (val) => {
-  if(val.length > 2){
+const searchQuery = ref("");
+watch(searchQuery, (val) => {
+  if (val.length > 2) {
     fetchSearchResult();
   }
 });
 const searchResult = reactive({
-  catg : [],
-  products : [],
-  tagged : []
+  catg: [],
+  products: [],
+  tagged: [],
 });
-const fetchSearchResult =async () => { 
-  const data =await fetchFromSanctum({method : 'POST' , 'url' : `${config.API_BASE_URL ? config.API_BASE_URL : 'https://fashtsaly.com/API/public/'}api/fetchSearchResult` , body : {
-    query : searchQuery.value
-  }});
-  if(data.success){
+const fetchSearchResult = async () => {
+  const data = await fetchFromSanctum({
+    method: "POST",
+    url: `${
+      config.API_BASE_URL ? config.API_BASE_URL : "https://fashtsaly.com/API/public/"
+    }api/fetchSearchResult`,
+    body: {
+      query: searchQuery.value,
+    },
+  });
+  if (data.success) {
     searchResult.catg = data.catg;
     searchResult.products = data.products;
     searchResult.tagged = data.tagged;
     showAutoComplete.value = true;
   }
-}
+};
 </script>
 
 <template>
@@ -74,7 +80,11 @@ const fetchSearchResult =async () => {
           v-model="searchQuery"
           @blur="handleBlur"
         />
-        <SearchAutoComplete @close="showAutoComplete=false" v-if="showAutoComplete" :results="searchResult" />
+        <SearchAutoComplete
+          @close="showAutoComplete = false"
+          v-if="showAutoComplete"
+          :results="searchResult"
+        />
       </div>
 
       <ul class="navList flex items-center justify-center capitalize gap-5">
@@ -106,16 +116,17 @@ const fetchSearchResult =async () => {
         <li class="block">
           <button class="subscribe commonbtn text-xl">subscribe</button>
         </li>
-        <li
-          class="icons relative user flex items-center gap-2 cursor-pointer"
-          label="Show"
-          @click="toogleModal"
-        >
-          <i class="pi pi-user text-4xl"></i>
+        <li class="icons relative user" label="Show" @click="toogleModal">
+          <!-- <i class="pi pi-user text-4xl"></i> -->
           <span v-if="!authStore.getUser" class="text inline">LOGIN / REGISTER</span>
-          <NuxtLink to="/myaccounts" v-else class="text inline">
-            <small v-if="authStore.getUser" class="block text-sm">Hello</small>
-            {{ authStore.getUser ? authStore.getUser.name : "" }}
+          <NuxtLink to="/myaccounts" v-else class="text flex items-center gap-2">
+            <span class="userIcon">
+              <img src="assets/images/users/user.png" class="h-[35px]" alt="user Icon" />
+            </span>
+            <span class="usrText">
+              <small v-if="authStore.getUser" class="block text-sm">Welcome</small>
+              {{ authStore.getUser ? authStore.getUser.name : "" }}
+            </span>
           </NuxtLink>
         </li>
       </ul>

@@ -8,14 +8,13 @@ function toggleAddress() {
   NewAddress.value = !NewAddress.value;
 }
 
-const useGetAddressStore = useGetAddress();
+const useGetAddressStore = useAddressStore();
 const userAddress = computed(() => useGetAddressStore.userAddress || []);
 const isLoading = computed(() => useGetAddressStore.isLoading);
 
 onMounted(() => {
   useGetAddressStore.fetchUserAddress();
 });
-console.log("userAddress", userAddress);
 </script>
 
 <template>
