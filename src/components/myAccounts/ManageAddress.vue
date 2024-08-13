@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 const editing = ref(false);
 const NewAddress = ref(false);
-function toggleEdit() {
+const valueEdit = ref({});
+function toggleEdit(data) {
   editing.value = !editing.value;
+  valueEdit.value = data;
 }
 function toggleAddress() {
   NewAddress.value = !NewAddress.value;
@@ -59,7 +61,7 @@ console.log("userAddress", userAddress);
               <div>
                 <span
                   class="text-blue-700 font-[500] text-xl cursor-pointer"
-                  @click="toggleEdit"
+                  @click="toggleEdit(data)"
                   >{{ editing ? "Cancel" : "Edit" }}</span
                 >
               </div>
@@ -75,7 +77,7 @@ console.log("userAddress", userAddress);
       </div>
       <!-- add form -->
       <template v-else>
-        <editAddress :editing="editing" :toggleEdit="toggleEdit" />
+        <editAddress :editing="editing" :toggleEdit="toggleEdit" :data="valueEdit" />
       </template>
     </div>
   </div>

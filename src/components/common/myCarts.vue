@@ -5,6 +5,12 @@ const GetItemFromCart = useCartStore();
 const cards = computed(() => GetItemFromCart.getCart || []);
 const total = computed(() => GetItemFromCart.getCartTotal || []);
 const loading = ref(false);
+const totalComputed = computed(() => {
+  return cards.value.reduce((sum, item) => {
+    const quantity = quantities.value[item.id] || item.quantity;
+    return sum + item.price * quantity;
+  }, 0);
+});
 // const apiRemoveItemFromCart = useRemoveItemFromCart();
 const RemoveItemFromCart = async (product_id: number) => {
   const isConfirmed = window.confirm(
@@ -179,7 +185,7 @@ const proceedCheckout =async () => {
             </h5>
             <div class="flexPrice flex justify-between p-3">
               <span class="text-xl">Price (2 Items)</span>
-              <span class="text-xl text-gray-800">₹ {{ total }}</span>
+              <span class="text-xl text-gray-800">₹ {{ totalComputed }}</span>
             </div>
             <div class="flexPrice flex justify-between p-3">
               <span class="text-xl">Discount</span>
@@ -191,7 +197,7 @@ const proceedCheckout =async () => {
             </div>
             <div class="flexPrice flex justify-between border-b border-b-gray-300 p-3">
               <span class="text-xl font-bold">Total Amount</span>
-              <span class="text-xl text-gray-800 font-bold"> ₹ {{ total }} </span>
+              <span class="text-xl text-gray-800 font-bold"> ₹ {{ totalComputed }} </span>
             </div>
             <p class="text-xl p-3">
               Your Saving <span class="text-xl text-green-600">₹0</span> on this order
