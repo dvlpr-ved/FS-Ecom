@@ -5,23 +5,33 @@ const { data } = defineProps({
   },
 });
 onMounted(() => {
-  if (document.getElementsByClassName("image-container")) {
-    const imageContainer = document.querySelector(".image-container");
-    if (imageContainer) {
-      const image = imageContainer.querySelector("img");
+  const imageContainer = document.querySelector(".image-container");
+  if (imageContainer) {
+    const image = imageContainer.querySelector("img");
 
-      imageContainer.addEventListener("mousemove", function (e) {
-        const rect = imageContainer.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+    const updatePosition = (x, y, rect) => {
+      const xPercent = (x / rect.width) * 100;
+      const yPercent = (y / rect.height) * 100;
 
-        const xPercent = (x / rect.width) * 100;
-        const yPercent = (y / rect.height) * 100;
+      image.style.setProperty("--mouse-x", `${xPercent}%`);
+      image.style.setProperty("--mouse-y", `${yPercent}%`);
+    };
 
-        image.style.setProperty("--mouse-x", `${xPercent}%`);
-        image.style.setProperty("--mouse-y", `${yPercent}%`);
-      });
-    }
+    const handleMove = (e) => {
+      const rect = imageContainer.getBoundingClientRect();
+      let x, y;
+      if (e.touches) {
+        x = e.touches[0].clientX - rect.left;
+        y = e.touches[0].clientY - rect.top;
+      } else {
+        x = e.clientX - rect.left;
+        y = e.clientY - rect.top;
+      }
+      updatePosition(x, y, rect);
+    };
+
+    imageContainer.addEventListener("mousemove", handleMove);
+    imageContainer.addEventListener("touchmove", handleMove);
   }
 });
 </script>

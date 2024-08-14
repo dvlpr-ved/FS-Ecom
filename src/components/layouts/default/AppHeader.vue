@@ -18,7 +18,7 @@ const closeModal = () => {
   visible.value = false;
 };
 const toogleModal = () => {
-  if (!authStore.userData) {
+  if (!authStore.isUserLoggedin) {
     visible.value = true;
   }
 };
@@ -26,7 +26,6 @@ const toogleModal = () => {
 const getWishlistItems = useWishlistStore();
 const TotalcartItems = computed(() => getWishlistItems.getWishlist || []);
 onMounted(() => {
-  getWishlistItems.fetchWishlistItems();
 });
 watch(TotalcartItems, (newItems) => {
   wishlistd.value = newItems.length;
@@ -112,7 +111,7 @@ const fetchSearchResult =async () => {
           @click="toogleModal"
         >
           <i class="pi pi-user text-4xl"></i>
-          <span v-if="!authStore.getUser" class="text inline">LOGIN / REGISTER</span>
+          <span v-if="!authStore.isUserLoggedin" class="text inline">LOGIN / REGISTER</span>
           <NuxtLink to="/myaccounts" v-else class="text inline">
             <small v-if="authStore.getUser" class="block text-sm">Hello</small>
             {{ authStore.getUser ? authStore.getUser.name : "" }}

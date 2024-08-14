@@ -5,8 +5,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     const wishlistStore = useWishlistStore();
     if(!authStore.isUserLoggedin && process.client){     
         const data  =  await fetchFromSanctum({method : 'POST' , url : 'https://fashtsaly.com/API/public/api/refresh-token'});
-        authStore.Login(data);
+        if(data.res){
+            authStore.Login(data);
+        }
     }
+    console.log(authStore.isUserLoggedin);
     if(authStore.isUserLoggedin){
         console.log(cartStore.getCart , wishlistStore.getWishlist);
         if(!cartStore.getCart.length){

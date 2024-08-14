@@ -102,15 +102,15 @@ watch([colorSelected, sizeSelected], async () => {
       <div class="flexdiv flex flex-wrap justify-between">
         <div class="detailGallery lg:w-[42%] w-[100%]">
           <ProductZoomImages :data="imageShown ? imageShown : ''" />
-          <carousel items-to-show="4">
-            <slide v-for="image in sku.image" :key="image.name">
+          <div class="flex overflow-x-auto lg:w-[42%] w-[100%]">
+            <div v-for="image in sku.image">
               <img
                 @click="imageShown = image.source"
                 :src="image.source"
                 class="w-[80px] h-[80px] cursor-pointer"
-              />
-            </slide>
-          </carousel>
+              />              
+            </div>
+          </div>
         </div>
         <div class="productcontent lg:w-[58%] w-[100%]">
           <h6 class="pro-title lg:text-6xl text-4xl mb-3">

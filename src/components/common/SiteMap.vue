@@ -18,8 +18,8 @@
         routes: [
           { url: '/', label: 'Home' },
           { url: '/about', label: 'About' },
-          { url: '/services', label: 'Services' },
-          { url: '/contact', label: 'Contact' }
+          { url: '/', label: 'Services' },
+          { url: '/contactus', label: 'Contact' }
           // Add more routes as needed
         ]
       };

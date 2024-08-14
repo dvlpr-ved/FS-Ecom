@@ -27,12 +27,12 @@ const authStore = useAuthStore();
       <div class="commonbox userAvtarInfo p-3 bg-white shadow-sm rounded-sm mb-3">
         <div class="headingLg mb-3 text-xl headingsFont">My Activity</div>
         <NuxtLink
-          to="orders"
+        to="/"
           class="text-[15px] block capitalize mb-2 hover:text-orange-400"
           ><i class="pi pi-arrow-right"></i> My Orders
         </NuxtLink>
 
-        <NuxtLink to="whitelist" class="text-[15px] block capitalize hover:text-pink-500"
+        <NuxtLink to="/wishlist" class="text-[15px] block capitalize hover:text-pink-500"
           ><i class="pi pi-heart"></i> Whitelist
         </NuxtLink>
       </div>
