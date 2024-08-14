@@ -2,51 +2,57 @@
   <section class="chkOutComp bg-gray-200">
     <div class="flex container justify-center flex-wrap py-4">
       <div class="leftside lg:w-[70%] w-[100%]">
-        <div class="w-full lg:px-4 px-0">
+        <div class="w-full px-4">
           <div v-if="notItems">
-          <div class="flex bg-white flex-wrap">
-            <div class="lg:w-[50%] w-[100%] py-12 border shimmer mb-3"></div>
-            <div class="lg:w-[50%] py-12 border shimmer mb-3"></div>
+            <p class="text-2xl mb-2">Loading Products</p>
+            <div class="w-full py-12 shimmer mb-3"></div>
           </div>
-          </div>
-
-          <div class="flex bg-white flex-wrap">
-            <div v-for="product in items" :key="product.id" class="lg:w-[50%] w-[100%] p-2 border">
-              <div class="flex">
-                <div class="w-16 h-16 bg-gray-200 rounded-md overflow-hidden">
-                  <img
-                    :src="product.image[0] ? product.image[0].source : 'No Image'"
-                    alt="Product Image"
-                    class="object-cover w-full h-full"
-                  />
-                </div>
-                <div class="ml-4">
-                  <h2 class="text-lg font-semibold">{{ product.product_name }}</h2>
-                  <!-- <p class="text-gray-600">{{ product.description }}</p> -->
-                  <div class="flex items-center mt-2">
-                    <label class="mr-2">Quantity:</label>
-                    <input
-                      type="number"
-                      class="border border-gray-300 px-3 py-1 rounded-md w-16 text-center"
-                      v-model="quantities[product.id]"
-                      @input="updateTotalPrice(product)"
+          <div class="flex flex-wrap -mx-4">
+            <div
+              v-for="product in items"
+              :key="product.id"
+              class="w-full lg:w-2/3 px-4 mb-4"
+            >
+              <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex">
+                  <div class="w-16 h-16 bg-gray-200 rounded-md overflow-hidden">
+                    <img
+                      :src="product.image[0] ? product.image[0].source : 'No Image'"
+                      alt="Product Image"
+                      class="object-cover w-full h-full"
                     />
                   </div>
-                  <p class="font-semibold mt-2">Total Price: ₹{{ product.totalPrice }}</p>
-                  <button
-                    @click="removeProduct(product.id)"
-                    class="mt-2 text-white px-4 py-1 rounded"
-                    style="background: red"
-                  >
-                    Remove
-                  </button>
+                  <div class="ml-4">
+                    <h2 class="text-lg font-semibold">{{ product.product_name }}</h2>
+                    <p class="text-gray-600">{{ product.description }}</p>
+                    <div class="flex items-center mt-2">
+                      <label class="mr-2">Quantity:</label>
+                      <input
+                        type="number"
+                        class="border border-gray-300 px-3 py-1 rounded-md w-16 text-center"
+                        v-model="quantities[product.id]"
+                        @input="updateTotalPrice(product)"
+                      />
+                    </div>
+                    <p class="font-semibold mt-2">
+                      Total Price: ₹{{ product.totalPrice }}
+                    </p>
+                    <button
+                      @click="removeProduct(product.id)"
+                      class="mt-2 text-white px-4 py-1 rounded"
+                      style="background: red"
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="w-full lg:px-4 px-0">
+
+        <div class="w-full px-4">
           <div class="addressTopCard bg-white">
             <h1 class="text-2xl font-semibold mb-3 p-2 px-4 bgblue80 text-white">
               Delivery Address
@@ -255,7 +261,7 @@ const shipping = ref(5);
 const total = ref(0);
 const selectedAddress = ref(null);
 
-const useGetAddressStore = useGetAddress();
+const useGetAddressStore = useAddressStore();
 const userAddress = computed(() => useGetAddressStore.userAddress || []);
 const isLoading = computed(() => useGetAddressStore.isLoading);
 
