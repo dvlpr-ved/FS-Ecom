@@ -32,7 +32,7 @@ const authStore = useAuthStore();
           ><i class="pi pi-arrow-right"></i> My Orders
         </NuxtLink>
 
-        <NuxtLink to="whitelist" class="text-[15px] block capitalize hover:text-pink-500"
+        <NuxtLink to="wishlist" class="text-[15px] block capitalize hover:text-pink-500"
           ><i class="pi pi-heart"></i> Whitelist
         </NuxtLink>
       </div>

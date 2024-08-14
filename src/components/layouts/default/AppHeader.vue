@@ -111,11 +111,14 @@ const fetchSearchResult =async () => {
           label="Show"
           @click="toogleModal"
         >
-          <i class="pi pi-user text-4xl"></i>
+          <i v-if="!authStore.getUser" class="pi pi-user text-4xl"></i>
           <span v-if="!authStore.getUser" class="text inline">LOGIN / REGISTER</span>
-          <NuxtLink to="/myaccounts" v-else class="text inline">
-            <small v-if="authStore.getUser" class="block text-sm">Hello</small>
+          <NuxtLink to="/myaccounts" v-else class="text flex gap-2 items-center">
+            <img  v-if="authStore.getUser.name" src="assets/images/users/user.png" class="h-8" alt="user icons"/>
+            <p class="userText">
+              <small v-if="authStore.getUser.name" class="block text-sm">welcome</small>
             {{ authStore.getUser ? authStore.getUser.name : "" }}
+            </p>
           </NuxtLink>
         </li>
       </ul>
