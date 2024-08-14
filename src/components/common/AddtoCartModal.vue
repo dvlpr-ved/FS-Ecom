@@ -44,7 +44,7 @@ const props = defineProps({
 
   &.active {
     right: 0;
-    z-index: 9;
+    z-index: 15;
   }
 }
 </style>

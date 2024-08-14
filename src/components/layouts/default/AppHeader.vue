@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {fetchFromSanctum} from '/utils/sanctumApi.js'
+import { fetchFromSanctum } from "/utils/sanctumApi.js";
 const CartItems = ref(0);
 const wishlistd = ref(2);
 const wishlistItems = ref(2);
@@ -31,28 +31,34 @@ watch(TotalcartItems, (newItems) => {
   wishlistd.value = newItems.length;
 });
 
-const searchQuery = ref('');
-watch(searchQuery , (val) => {
-  if(val.length > 2){
+const searchQuery = ref("");
+watch(searchQuery, (val) => {
+  if (val.length > 2) {
     fetchSearchResult();
   }
 });
 const searchResult = reactive({
-  catg : [],
-  products : [],
-  tagged : []
+  catg: [],
+  products: [],
+  tagged: [],
 });
-const fetchSearchResult =async () => { 
-  const data =await fetchFromSanctum({method : 'POST' , 'url' : `${config.API_BASE_URL ? config.API_BASE_URL : 'https://fashtsaly.com/API/public/'}api/fetchSearchResult` , body : {
-    query : searchQuery.value
-  }});
-  if(data.success){
+const fetchSearchResult = async () => {
+  const data = await fetchFromSanctum({
+    method: "POST",
+    url: `${
+      config.API_BASE_URL ? config.API_BASE_URL : "https://fashtsaly.com/API/public/"
+    }api/fetchSearchResult`,
+    body: {
+      query: searchQuery.value,
+    },
+  });
+  if (data.success) {
     searchResult.catg = data.catg;
     searchResult.products = data.products;
     searchResult.tagged = data.tagged;
     showAutoComplete.value = true;
   }
-}
+};
 </script>
 
 <template>
@@ -73,7 +79,11 @@ const fetchSearchResult =async () => {
           v-model="searchQuery"
           @blur="handleBlur"
         />
-        <SearchAutoComplete @close="showAutoComplete=false" v-if="showAutoComplete" :results="searchResult" />
+        <SearchAutoComplete
+          @close="showAutoComplete = false"
+          v-if="showAutoComplete"
+          :results="searchResult"
+        />
       </div>
 
       <ul class="navList flex items-center justify-center capitalize gap-5">
