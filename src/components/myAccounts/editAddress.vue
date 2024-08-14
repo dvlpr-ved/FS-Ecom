@@ -2,9 +2,12 @@
 const props = defineProps<{
   editing: boolean;
   toggleEdit: () => void;
+  data : Object;
 }>();
-
+const editAddress = useAddAddress();
+const useGetAddressStore = useGetAddress();
 const formData = ref({
+  id : 0,
   name: "User Name",
   email: "test@gmail.com",
   phone: "0123123123",
@@ -18,9 +21,47 @@ const formData = ref({
   landmark: "hanuman mandir",
   addresstype: "addtype",
 });
+watch(props.data , () => {
+  const dataPrev = props.data;
+  formData.value.entry_id = dataPrev.id;
+  formData.value.name = dataPrev.name;
+  formData.value.email = dataPrev.email;
+  formData.value.phone = dataPrev.phone;
+  formData.value.pincode = dataPrev.pincode;
+  formData.value.locality = dataPrev.locality;
+  formData.value.address = dataPrev.address;
+  formData.value.city = dataPrev.city;
+  formData.value.selectedState = dataPrev.state;
+  formData.value.landmark = dataPrev.landmark;
+  formData.value.id = dataPrev.id;
+
+} , { immediate: true });
+const saveChanges =async () => {
+  const res =await editAddress.fetchUpdateAddAddress(
+    {
+      entry_id : formData.value.id,
+      name: formData.value.name,
+      email: formData.value.email,
+      phone: formData.value.phone,
+      pincode: formData.value.pincode,
+      locality: formData.value.locality,
+      address: formData.value.address,
+      city: formData.value.city,
+      states: formData.value.selectedState,
+      landmark: formData.value.landmark,
+    }
+  );
+  if(res){
+    useGetAddressStore.fetchUserAddress();
+    props.toggleEdit();
+  }else{
+
+  }
+}
 </script>
 
 <template>
+  <!-- {{data}} -->
   <div class="formdiv flex gap-5 flex-wrap">
     <div class="in_box lg:w-[48%] w-[100%] relative">
       <span class="absolute top-[-10px] bg-white px-3 border block ml-3">Your Name</span>

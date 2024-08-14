@@ -2,19 +2,18 @@
 const route = useRoute();
 const isSelectedRoute = ref(false);
 
-onMounted(() => {
-  console.log(route.path);
-  isSelectedRoute.value = route.path === "/myAccounts";
-});
+const checkRoute = () => {
+  isSelectedRoute.value = route.path.toLowerCase().includes('myaccounts');
+};
 
+watch(route, checkRoute, { immediate: true });
 
-function checkSelectedRoute() {}
 </script>
 
 <template>
   <footer
     class="AppFooter lg:bg-blue-800 lg:text-white text-black lg:block md:hidden"
-    :class="{ hidden: !isSelectedRoute }"
+    :class="{ hidden: isSelectedRoute }"
   >
     <div class="container">
       <div class="footerFlex">

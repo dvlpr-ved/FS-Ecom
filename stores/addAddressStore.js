@@ -31,22 +31,21 @@ export const useAddressStore = defineStore('useAddressStore', {
                 return false;
             }
         },
-
-        async fetchEditAddress({ id, name, email, phone, pincode, locality, address, city, states, landmark }) {
+        async fetchUpdateAddAddress({entry_id, name, email, phone, pincode, locality, address, city, states, landmark }) {
             try {
                 const body = {
-                    id, name, email, phone, pincode, locality, address, city, state: states, landmark
+                    entry_id , name, email, phone, pincode, locality, address, city, state : states, landmark
                 };
                 const response = await fetchFromSanctum({
                     method: 'POST',
-                    url: `https://fashtsaly.com/API/public/api/updateUserAddress/${id}`,
+                    url: 'https://fashtsaly.com/API/public/api/saveUserAddress',
                     body,
                 });
                 if (!response.success) {
-                    this.error = 'Error Updating Address';
+                    this.error = 'Error Updating Address'
                     throw new Error('Error Updating Address');
                 }
-                this.successMessage = 'Address Updated';
+                this.successMessage = 'Address Added';
                 return true;
             } catch (error) {
                 console.error('Error Updating Address:', error);
@@ -73,6 +72,6 @@ export const useAddressStore = defineStore('useAddressStore', {
                 this.error = 'Error in Getting Address From Cart';
                 this.isLoading = false;
             }
-        }
+        }        
     }
 });

@@ -4,6 +4,8 @@ const props = defineProps<{
   toggleAddress: () => void;
 }>();
 
+const useGetAddressStore = useGetAddress();
+
 const formData = ref({
   name: "",
   email: "",
@@ -101,6 +103,7 @@ const saveChanges = async () => {
     });
 
     if (success) {
+      useGetAddressStore.fetchUserAddress();
       console.log("Address added successfully");
       props.toggleAddress();
     } else {

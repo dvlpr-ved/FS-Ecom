@@ -42,9 +42,9 @@ export const useWishlistStore = defineStore('wishlistStore', {
             }
         },
         async saveWishlistItems(product_id) {
-            const itemExists = this.wishlistItems.some(item => item.product_id === product_id);
+            const itemExists = this.wishlistItems.some(item => item.id === product_id);
             if (itemExists) {
-                return { success: false, msg: 'Item already exists' };
+                return await this.fetchRemoveWishlist(product_id);
             }
             try {
                 const response = await fetchFromSanctum({
@@ -70,7 +70,7 @@ export const useWishlistStore = defineStore('wishlistStore', {
                     body
                 });
                 if (response.success) {
-                    this.wishlistItems = this.wishlistItems.filter(item => item.product_id !== product_id);
+                    this.wishlistItems = this.wishlistItems.filter(item => item.id !== product_id);
                     return true;
                 } else {
                     throw new Error('Error removing item from wishlist');
