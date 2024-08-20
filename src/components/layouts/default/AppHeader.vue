@@ -2,7 +2,9 @@
 import { fetchFromSanctum } from "/utils/sanctumApi.js";
 const cartstore = useCartStore();
 const CartItems = computed(() => cartstore.getCartLength || []);
-const wishlistd = ref(2);
+const getWishlistItems = useWishlistStore();
+const wishlistd = computed(() => getWishlistItems.getWishlistLength || []);
+// const wishlistd = ref(2);
 const wishlistItems = ref(2);
 const NotiFication = ref(10);
 const config = useRuntimeConfig();
@@ -23,14 +25,6 @@ const toogleModal = () => {
     visible.value = true;
   }
 };
-
-const getWishlistItems = useWishlistStore();
-const TotalcartItems = computed(() => getWishlistItems.getWishlist || []);
-onMounted(() => {
-});
-watch(TotalcartItems, (newItems) => {
-  wishlistd.value = newItems.length;
-});
 
 const searchQuery = ref("");
 watch(searchQuery, (val) => {
@@ -96,7 +90,7 @@ const fetchSearchResult = async () => {
             <i class="pi pi-shopping-cart text-2xl"></i>
             <span
               class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
-              >{{ CartItems ? CartItems  : '' }}</span
+              >{{ CartItems ? CartItems : "" }}</span
             >
           </NuxtLink>
         </li>
@@ -110,7 +104,7 @@ const fetchSearchResult = async () => {
           <span
             class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
           >
-            {{ wishlistd }}
+            {{ wishlistd ? wishlistd : "" }}
           </span>
         </li>
         <li class="block">
@@ -121,11 +115,16 @@ const fetchSearchResult = async () => {
           label="Show"
           @click="toogleModal"
         >
-          <i class="pi pi-user text-4xl"></i>
-          <span v-if="!authStore.isUserLoggedin" class="text inline">LOGIN / REGISTER</span>
-          <NuxtLink to="/myaccounts" v-else class="text inline">
-            <small v-if="authStore.getUser" class="block text-sm">Hello</small>
-            {{ authStore.getUser ? authStore.getUser.name : "" }}
+          <template v-if="!authStore.isUserLoggedin">
+            <i class="pi pi-user text-4xl"></i>
+            <span class="text inline">LOGIN / REGISTER</span>
+          </template>
+          <NuxtLink to="/myaccounts" v-else class="text flex gap-2 items-center">
+            <img src="~assets/images/users/user.png" class="h-10" />
+            <p>
+              <small v-if="authStore.getUser" class="block text-sm">welcome</small>
+              {{ authStore.getUser ? authStore.getUser.name : "" }}
+            </p>
           </NuxtLink>
         </li>
       </ul>
@@ -154,7 +153,7 @@ const fetchSearchResult = async () => {
           </NuxtLink>
           <span
             class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
-            >{{ CartItems ? CartItems : '' }}</span
+            >{{ CartItems ? CartItems : "" }}</span
           >
         </li>
       </ul>

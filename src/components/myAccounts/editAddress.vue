@@ -4,8 +4,8 @@ const props = defineProps<{
   toggleEdit: () => void;
   data : Object;
 }>();
-const editAddress = useAddAddress();
-const useGetAddressStore = useGetAddress();
+const editAddress = useAddressStore();
+const useGetAddressStore = useAddressStore();
 const formData = ref({
   id : 0,
   name: "User Name",

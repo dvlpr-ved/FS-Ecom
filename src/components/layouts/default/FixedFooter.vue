@@ -5,9 +5,9 @@ const SearchVisible = ref(false);
 const authStore = useAuthStore();
 
 const toogleModal = () => {
-  if (!authStore.userData) {
-    visible.value = true;
-  }
+  visible.value = true;
+  // if (!authStore.userData) {
+  // }
 };
 const toggelSearchVisible = () => {
   SearchVisible.value = true;
@@ -35,7 +35,7 @@ const closeSearchVisible = () => {
         <i class="pi pi-sync"></i>
         <span class="text-sm block">Update</span>
       </NuxtLink>
-      <template v-if="!authStore.getUser">
+      <template v-if="!authStore.getUser.name">
         <span class="block" @click="toogleModal">
           <i class="pi pi-user"></i>
           <span class="text-sm block">My Account</span>

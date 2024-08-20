@@ -4,7 +4,7 @@ const props = defineProps<{
   toggleAddress: () => void;
 }>();
 
-const useGetAddressStore = useGetAddress();
+const useGetAddressStore = useAddressStore();
 
 const formData = ref({
   name: "",
@@ -30,7 +30,7 @@ const errors = ref({
   selectedState: "",
 });
 
-const addAddressStore = useAddAddress();
+const addAddressStore = useAddressStore();
 const successMessage = addAddressStore.successMessage;
 console.log(successMessage);
 
