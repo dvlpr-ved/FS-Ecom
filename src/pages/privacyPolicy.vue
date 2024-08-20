@@ -17,6 +17,12 @@
         </p>
       </div>
       <!--  -->
+      <h1 class="text-4xl font-bold mb-2 mt-3">Access to Information </h1>
+      <div class="leading-7">
+        <p class="lg:text-justify lg:text-[16px]">
+          You can visit the Website and browse without having to provide personal details. During your visit to the Website you remain anonymous and at no time can we identify you unless you have provided the information or created an account on the Website. 
+        </p>
+        </div>      
       <h1 class="text-4xl font-bold mb-2 mt-3">Information Collection</h1>
       <div class="leading-7">
         <p class="lg:text-justify lg:text-[16px]">
@@ -31,6 +37,7 @@
           </li>
           <li class="lg:text-justify lg:text-[16px]">IP address</li>
           <li class="lg:text-justify lg:text-[16px]">Operating system</li>
+          <li class="lg:text-justify lg:text-[16px]">Other information as per our registration process.          </li>
         </ul>
         <p class="mt-4">
           We may collect this information when you register on our website, place an
@@ -38,10 +45,17 @@
           website in any other way.
         </p>
       </div>
-      <!--  -->
+      <!--  -->    
       <h2 class="text-4xl font-bold mb-2 mt-3">Information Use</h2>
       <div class="leading-7">
         <p class="lg:text-justify lg:text-[16px]">
+          We will not use your personal and financial information for any purpose other than to complete a transaction with you. We will keep your information for as long as we are either required to by law or as is relevant for the purposes for which it was collected. We will only use your information where it is necessary and will only collect information if it is relevant to our dealings with you. Wherever it is possible, we will indicate which fields are required and which fields are optional.
+        </p>
+        <h4 class="text-2xl font-bold mb-2 mt-3">How is your information treated with third party users?</h4>
+        <p class="lg:text-justify lg:text-[16px] mt-2">
+          ‘‘cookie’’ is a small piece of information stored by a web-server on a web browser so that it can be later read back from that browser. Cookies are useful for enabling the browser to remember information specific to a given user.  Cookie technology will only be used to track non-personal information such as IP address, type of browser, operating system, and domain names to improve our site. Any personal information is not extracted in this process. 
+        </p>
+        <p class="lg:text-justify lg:text-[16px] mt-2">
           We may use the personal information that we collect from our users in the
           following ways:
         </p>

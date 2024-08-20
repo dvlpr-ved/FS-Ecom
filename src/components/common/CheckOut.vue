@@ -208,11 +208,11 @@
                     v-model="formData.landmark"
                   />
                 </div>
-                <button
+                <!-- <button
                   class="py-2 px-5 rounded text-white text-[18px] bgblue80 w-fit m-auto uppercase"
                 >
                   deliver here
-                </button>
+                </button> -->
               </div>
             </div>
           </div>

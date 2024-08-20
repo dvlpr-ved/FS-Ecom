@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+
 const route = useRoute();
 const isSelectedRoute = ref(false);
 
@@ -7,14 +10,13 @@ const checkRoute = () => {
 };
 
 watch(route, checkRoute, { immediate: true });
-
 </script>
 
 <template>
   <footer
-    class="AppFooter lg:bg-blue-800 lg:text-white text-black lg:block md:hidden"
-    :class="{ hidden: isSelectedRoute }"
-  >
+class="AppFooter lg:bg-blue-800 lg:text-white text-black lg:block"
+:style="{ display: isSelectedRoute ? 'block' : 'none' }"
+>
     <div class="container">
       <div class="footerFlex">
         <ul class="flex justify-between fwrap lg:pl-5 pl-0">
@@ -24,7 +26,7 @@ watch(route, checkRoute, { immediate: true });
             <div class="title font-bold text-2xl capitalize mb-2">information</div>
             <NuxtLink to="/about">About Us</NuxtLink>
             <NuxtLink to="/contactus">Contact Us</NuxtLink>
-            <NuxtLink to="/">Privacy Policy</NuxtLink>
+            <NuxtLink to="/privacypolicy">Privacy Policy</NuxtLink>
             <NuxtLink to="/">Legal & Policies</NuxtLink>
             <NuxtLink to="/">shipping policy</NuxtLink>
           </li>

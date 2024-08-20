@@ -64,6 +64,22 @@ const proceedCheckout =async () => {
     navigateTo('checkout');
   }
 }
+const proceedCheckoutSingle =async (item) => {
+  let arr = [];
+    let elem = item;
+    if(Object.keys(quantities.value).length > 0){
+      elem.quantity = quantities.value[item.id] ?  quantities.value[item.id] : item.quantity;
+    }
+    arr.push(elem);
+  const res = await fetchFromSanctum({
+    url : 'https://fashtsaly.com/API/public/api/proccedCheckout' ,
+    method: 'POST',
+    body : {items : arr}
+  });
+  if(res.success){
+    navigateTo('checkout');
+  }
+}
 </script>
 
 <template>
@@ -168,7 +184,7 @@ const proceedCheckout =async () => {
                     >
                       Remove
                     </button>
-                    <button class="bgorange text-white py-1 px-3 rounded">
+                    <button @click="proceedCheckoutSingle(items)" class="bgorange text-white py-1 px-3 rounded">
                       Buy This
                     </button>
                   </div>

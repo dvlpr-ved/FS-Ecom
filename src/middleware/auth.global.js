@@ -9,9 +9,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             authStore.Login(data);
         }
     }
-    console.log(authStore.isUserLoggedin);
     if(authStore.isUserLoggedin){
-        console.log(cartStore.getCart , wishlistStore.getWishlist);
         if(!cartStore.getCart.length){
             await cartStore.getCartItems();
         }

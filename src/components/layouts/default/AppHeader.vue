@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { fetchFromSanctum } from "/utils/sanctumApi.js";
-const CartItems = ref(0);
+const cartstore = useCartStore();
+const CartItems = computed(() => cartstore.getCartLength || []);
 const wishlistd = ref(2);
 const wishlistItems = ref(2);
 const NotiFication = ref(10);
@@ -95,7 +96,7 @@ const fetchSearchResult = async () => {
             <i class="pi pi-shopping-cart text-2xl"></i>
             <span
               class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
-              >{{ CartItems }}</span
+              >{{ CartItems ? CartItems  : '' }}</span
             >
           </NuxtLink>
         </li>
@@ -153,7 +154,7 @@ const fetchSearchResult = async () => {
           </NuxtLink>
           <span
             class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
-            >{{ CartItems }}</span
+            >{{ CartItems ? CartItems : '' }}</span
           >
         </li>
       </ul>
