@@ -135,7 +135,7 @@ const proceedCheckoutSingle =async (item) => {
         </div>
       </template>
 
-      <template v-else-if="cards.getCartLength === 0">
+      <template v-else-if="cards.length === 0">
         <div class="text-center">
           <p class="text-2xl border p-2 px-3 w-fit m-auto mb-2">No Item found.</p>
           <NuxtLink to="../" class="text-3xl text-blue-600">Explore Product</NuxtLink>
@@ -144,7 +144,7 @@ const proceedCheckoutSingle =async (item) => {
 
 
       <template v-else>
-        <div class="cardsflex flex flex-wrap justify-between relative">
+        <div v-if="cards.length" class="cardsflex flex flex-wrap justify-between relative">
           <div class="cardsWrapper bg-white lg:w-[60%] w-[100%]">
             <div
               v-for="items in cards"

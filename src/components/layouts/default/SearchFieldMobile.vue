@@ -4,6 +4,44 @@ const props = defineProps<{
   closeBtn: () => void;
 }>();
 const handleChange = () => {};
+const emit = defineEmits(['close']);
+const config = useRuntimeConfig();
+const searchQuery = ref("");
+watch(searchQuery, (val) => {
+  if (val.length > 2) {
+    fetchSearchResult();
+  }
+});
+const searchResult = reactive({
+  catg: [],
+  products: [],
+  tagged: [],
+});
+const showAutoComplete = ref(false);
+const fetchSearchResult = async () => {
+  const data = await fetchFromSanctum({
+    method: "POST",
+    url: `${
+      config.API_BASE_URL ? config.API_BASE_URL : "https://fashtsaly.com/API/public/"
+    }api/fetchSearchResult`,
+    body: {
+      query: searchQuery.value,
+    },
+  });
+const handleBlur = (e) => {
+  showAutoComplete.value = false;
+};
+  if (data.success) {
+    searchResult.catg = data.catg;
+    searchResult.products = data.products;
+    searchResult.tagged = data.tagged;
+    showAutoComplete.value = true;
+  }
+};
+const closeModal = () => {
+  showAutoComplete.value =false;
+  emit('close')
+}
 </script>
 
 <template>
@@ -13,15 +51,20 @@ const handleChange = () => {};
   >
     <div class="flexdiv flex items-center bg-gray-100">
       <input
-        class="py-3 px-3 w-[80%] border-0 rounded text-xl bg-transparent"
-        placeholder="Search Here..."
-        @click="handleChange"
-      />
+          class="py-2 px-3 w-full border border-gray-300 rounded text-xl bg-gray-100"
+          placeholder="Search Here..."
+          v-model="searchQuery"
+          @blur="handleBlur"
+        />
       <button class="cancelBtn text-blue-700 px-2 text-xl" @click="closeBtn">
         close
       </button>
     </div>
-    <SearchAutoComplete />
+    <SearchAutoComplete
+          @close="closeModal"
+          v-if="showAutoComplete"
+          :results="searchResult"
+        />
   </div>
 </template>
 

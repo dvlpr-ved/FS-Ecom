@@ -55,6 +55,6 @@ const closeSearchVisible = () => {
   </footer>
   <LoginModal :visible="visible" />
   <template v-if="SearchVisible">
-    <SearchFieldMobile :isSearchForMb="SearchVisible" :closeBtn="closeSearchVisible" />
+    <SearchFieldMobile :isSearchForMb="SearchVisible" :closeBtn="closeSearchVisible" @close="closeSearchVisible" />
   </template>
 </template>

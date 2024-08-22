@@ -24,7 +24,7 @@
                   </div>
                   <div class="ml-4">
                     <h2 class="text-lg font-semibold">{{ product.product_name }}</h2>
-                    <p class="text-gray-600">{{ product.description }}</p>
+                    <!-- <p class="text-gray-600">{{ product.description }}</p> -->
                     <div class="flex items-center mt-2">
                       <label class="mr-2">Quantity:</label>
                       <input

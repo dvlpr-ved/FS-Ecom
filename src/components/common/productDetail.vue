@@ -21,7 +21,8 @@ const handleAddToCart = async () => {
     quantity: productCount.value,
   });
   if (addToCart.success) {
-    Checkvisible.value = "active";
+    navigateTo('/mycart');
+    // Checkvisible.value = "active";
   } else {
     if (addToCart.msg) {
       alert(addToCart.msg);
@@ -83,6 +84,7 @@ watch([colorSelected, sizeSelected], async () => {
   if (res.success) {
     skuIsLoading.value = false;
     sku.value = res.sku;
+    imageShown.value = sku.value.image[0] ? sku.value.image[0].source : "";
     if (sku.stock < 1) {
       isOutOfStock.value = true;
     } else {

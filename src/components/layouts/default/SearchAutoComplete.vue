@@ -59,7 +59,7 @@ const navigateForward = (query) => {
       <small class="text-sm text-grey-100">Tagged</small>      
     </div>
     </li>
-    <li
+    <!-- <li
       v-if="
         results.catg.length === 0 &&
         results.products.length === 0 &&
@@ -68,7 +68,7 @@ const navigateForward = (query) => {
       class="ease-linear duration-300 py-2 cursor-pointer capitalize border-bottom-1 border-gray-300"
     >
       No results found
-    </li>
+    </li> -->
   </ul>
 </template>
 

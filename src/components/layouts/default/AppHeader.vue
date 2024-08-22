@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { fetchFromSanctum } from "/utils/sanctumApi.js";
 const cartstore = useCartStore();
-const CartItems = computed(() => cartstore.getCartLength || []);
+const CartItems = computed(() => cartstore.getCartLength || '');
 const getWishlistItems = useWishlistStore();
-const wishlistd = computed(() => getWishlistItems.getWishlistLength || []);
+const wishlistd = computed(() => getWishlistItems.getWishlistLength || '');
 // const wishlistd = ref(2);
 const wishlistItems = ref(2);
 const NotiFication = ref(10);

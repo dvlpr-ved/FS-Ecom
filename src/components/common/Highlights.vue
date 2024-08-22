@@ -4,7 +4,6 @@ const { data } = defineProps({
     type: Object,
   },
 });
-console.log("highligths", data);
 const itemsToShow = ref(4);
 
 const updateItemsToShow = () => {
@@ -41,7 +40,7 @@ onBeforeUnmount(() => {
         <NuxtLink href="searchresult" class="commonbtn">View All</NuxtLink>
       </div>
       <div class="relative pb-5">
-        <carousel :items-to-show="itemsToShow">
+        <carousel :items-to-show="itemsToShow" :wrap-around="true">
           <slide v-for="card in data.products" :key="card.id">
             <HomePageCard :thumbnail="card.images" :title="card.name" :id="card.id" />
           </slide>

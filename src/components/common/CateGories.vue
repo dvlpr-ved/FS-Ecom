@@ -86,7 +86,7 @@ onBeforeUnmount(() => {
       </template>
 
       <div v-else class="slidesWraper flex justify-center gap-3 relative">
-        <carousel :items-to-show="itemsToShow">
+        <carousel :items-to-show="4" >
           <slide v-for="(item, index) in cards" :key="index" class="categories-card">
             <div class="avt-wrap">
               <NuxtLink :to="'searchResult?category='+item.id">
