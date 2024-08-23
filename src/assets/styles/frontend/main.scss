@@ -11,6 +11,10 @@
     &.active{position: fixed; left: 0; right: 0; top: 0; bottom: 0; height: 100%; width: 100%; background: rgba(0,0,0,.4); z-index: 11;}
 }
 
+::-webkit-scrollbar {width: 0;height: 0;}
+::-webkit-scrollbar-track {background: #f1f1f1;}
+::-webkit-scrollbar-thumb {background: #888;}
+::-webkit-scrollbar-thumb:hover {background: #555;}
 
 // secondary fonts
 h1, h2, h3, h4, h5, h6, .heading, .headings, .title{font-family: "Roboto", sans-serif;}

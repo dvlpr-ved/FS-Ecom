@@ -153,8 +153,9 @@ const fetchSearchResult = async () => {
           </NuxtLink>
           <span
             class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
-            >{{ CartItems ? CartItems : "" }}</span
           >
+            {{ wishlistd ? wishlistd : "" }}
+          </span>
         </li>
       </ul>
     </div>
