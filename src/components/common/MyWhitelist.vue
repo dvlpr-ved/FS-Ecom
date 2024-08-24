@@ -90,7 +90,7 @@ onMounted(() => {
             :key="items.id"
             class="bcards py-2 border-b border-b-300 lg:p-3 p-2"
           >
-            <NuxtLink to="#" class="bcards_inner flex lg:gap-4 gap-3 relative">
+            <NuxtLink :to="`searchresult/${items.id}`" class="bcards_inner flex lg:gap-4 gap-3 relative">
               <div class="flex-shrink-0">
                 <img
                   :src="

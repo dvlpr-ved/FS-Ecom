@@ -63,7 +63,7 @@ const fetchSearchResult = async () => {
     <div class="headerDesk container lg:flex hidden justify-between">
       <div class="headerLeft flex justify-between items-center">
         <NuxtLink to="/" class="logo">
-          <span class="text-3xl uppercase">fashtsaly</span>
+          <span class="text-3xl uppercase headingsFont">fashtsaly</span>
         </NuxtLink>
       </div>
 

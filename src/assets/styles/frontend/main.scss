@@ -63,6 +63,15 @@ input{padding: 5px 10px; border: 1px solid #b1b1b1;}
     &:checked + label:after {content: '';position: absolute;left: 5px;top: 9px;background: white;width: 2px;height: 2px;box-shadow: 2px 0 0 white,4px 0 0 white,4px -2px 0 white,4px -4px 0 white,4px -6px 0 white,4px -8px 0 white;transform: rotate(45deg);}
 }
 
+.sizesBox{
+    .checkbox{ position: relative;}
+    .sizeBoxInput {position: absolute; opacity: 0;
+        & + label {position: relative; display: block; padding: 0 8px; font-size: 15px; border-radius: 2px; cursor: pointer; border: 1px solid #ddd; color: #797979;}
+        &:checked + label {border-color: var(--primary); color: var(--primary);}
+    }
+}
+
+
 .afterBefore {position: relative; z-index: 1;
     &::after, &::before{content: ''; position: absolute; left: 0; bottom: 0; top: 0; bottom: 0; width: 100%; height: 100%; z-index: -1;}
 }

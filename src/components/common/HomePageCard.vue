@@ -2,7 +2,7 @@
 const props = defineProps<{
   thumbnail?: string;
   title?: string;
-  id:Number;
+  id: Number;
 }>();
 </script>
 
@@ -12,13 +12,18 @@ const props = defineProps<{
       <div class="imgsdiv">
         <img
           class="w-full cardImg bg-gray-200"
-          :src="props.thumbnail[0].source"
+          :src="
+            props.thumbnail
+              ? props.thumbnail[0].source
+              : '_nuxt/assets/images/common/noImage.jpg'
+          "
           alt="highlight img"
           loading="lazy"
         />
       </div>
       <p class="ellipsisText lg:text-xl text-xl text-center pt-3 pb-2">
-        {{ props.title.slice(0, 39) }}
+        {{ props.title }}
+        <!-- {{ props.title.slice(0, 28) }} -->
       </p>
       <span
         class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
