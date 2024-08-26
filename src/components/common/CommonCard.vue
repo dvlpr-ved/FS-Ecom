@@ -81,17 +81,17 @@ onMounted(async () => {
     <NuxtLink :to="`../searchresult/${props.id}`">
       <figure class="relative">
         <img
-          class="w-full cardimg lg:h-[335px] lg:w-[265px]"
+          class="w-full cardimg lg:h-[335px] lg:w-[265px] h-[201px]"
           :src="props.images || '~assets/images/common/noImage.jpg'"
           :alt="props.title"
           loading="lazy"
         />
       </figure>
       <div class="cardContent p-2 pb-0">
-        <p class="cardtitle ellipsisText text-gray-500 text-2xl title">
+        <p class="cardtitle ellipsisText text-gray-600 text-xl title">
           {{ props.title || "Title" }}
         </p>
-        <p class="cardtitle text-gray-700 text-2xl font-bold">
+        <p class="cardtitle rmvPriceFromHome text-gray-700 text-2xl font-bold">
           <span class="line-through" v-if="props.price && props.price < 700">₹700</span>
           ₹{{ props.price || "Price" }}
         </p>

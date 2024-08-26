@@ -33,7 +33,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="similarCardWrapper lg:py-3 py-2 bg-gray-200">
+  <div class="similarCardWrapper highCardMain lg:py-3 py-2 bg-gray-200">
     <div class="container bg-gray-100">
       <div class="flexHeading flex justify-between items-center lg:py-3 py-2">
         <h3 class="text-2xl lg:text-3xl">{{ data.name }}</h3>
@@ -54,6 +54,9 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="scss">
+.highCardMain{
+  .rmvPriceFromHome{display:none;}
+}
 .similarCardWrapper {
   &:hover .carousel__prev,
   &:hover .carousel__next {

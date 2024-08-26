@@ -125,13 +125,15 @@ watch([colorSelected, sizeSelected], async () => {
               ₹{{ sku.price ? sku.price : "" }}
             </p>
 
-            <span v-else-if="skuIsLoading || isOutOfStock" class="text-3xl block mb-3">Contact Seller</span>
+            <span v-else-if="skuIsLoading || isOutOfStock" class="text-3xl block mb-3"
+              >Contact Seller</span
+            >
             <span
               v-else
               class="block shimmer py-4 mb-1 w-[25%] rounded-sm bg-gray-50"
             ></span>
           </div>
-          <div class="sizesBox flex items-center gap-x-2 mb-3">
+          <div class="sizesBox flex items-center mb-3">
             <span class="text-2xl">Sizes :</span>
             <div
               v-for="s in size"
@@ -148,8 +150,8 @@ watch([colorSelected, sizeSelected], async () => {
               <label for="msize" class="title">{{ s }}</label>
             </div>
           </div>
-          <div class="sizesBox flex items-center gap-x-2 mb-3">
-            <span class="text-2xl">Colors :</span>
+          <div class="sizesBox flex items-center flex-wrap mb-3">
+            <span class="text-2xl inline-block lg:w-auto w-full">Colors :</span>
             <div
               v-for="c in color"
               @click="handleColorChange(c)"
@@ -186,11 +188,11 @@ watch([colorSelected, sizeSelected], async () => {
               class="py-3 w-[48%] bg-black transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
             >
               <i class="pi pi-cart-plus lg:text-3xl text-2xl"></i>
-              {{ isOutOfStock ? "Out of stock" : "Add to cart" }}
+              {{ isOutOfStock ? "Out of stock" : "Add to cart / Buy Now" }}
             </button>
             <button class="w-[48%]">
               <NuxtLink
-                to="https://api.whatsapp.com/send?phone=+910123456789&text=Hello, Looking for banarasee saree. Get in touch with me my name is"
+                :to="`https://api.whatsapp.com/send?phone=+910123456789&text=Hello, Looking i want to buy ${product.name}. Get in touch with me my name is`"
                 class="Booknowbtn animate-bounce py-3 bg-green-400 text-white capitalize rounded text-2xl text-center flex items-center gap-2 justify-center"
                 target="_blank"
                 ><i class="pi pi-whatsapp lg:text-3xl text-2xl"></i
