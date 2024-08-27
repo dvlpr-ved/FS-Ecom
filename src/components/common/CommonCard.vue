@@ -19,7 +19,6 @@ const isItemInWishlist = computed(() =>
   getWishlist.value.some((item) => item.product_id === props.id)
 );
 
-
 const message = ref<string | null>(null);
 
 const addToCart = async (product_id: number) => {
@@ -48,7 +47,8 @@ const addToCart = async (product_id: number) => {
       }
     }
     if (message.value) {
-      alert(message.value);
+      // alert(message.value);
+      navigateTo("/wishlist");
     }
   } catch (error) {
     console.error("Error adding/removing product from wishlist:", error);
@@ -62,7 +62,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="commonCard shadow transition border relative">
+  <div class="commonCard shadow transition border tooltipGroup relative">
     <div class="watchListIcons absolute top-[15px] z-10 right-[15px] cursor-pointer">
       <p class="relative">
         <i
@@ -81,21 +81,29 @@ onMounted(async () => {
     <NuxtLink :to="`../searchresult/${props.id}`">
       <figure class="relative">
         <img
-          class="w-full cardimg lg:h-[335px] lg:w-[265px]"
+          class="w-full cardimg lg:h-[335px] lg:w-[265px] h-[201px]"
           :src="props.images || '~assets/images/common/noImage.jpg'"
           :alt="props.title"
           loading="lazy"
         />
       </figure>
       <div class="cardContent p-2 pb-0">
-        <p class="cardtitle text-gray-500 text-2xl title">{{ props.title || "Title" }}</p>
-        <p class="cardtitle text-gray-700 text-2xl font-bold">
+        <p class="cardtitle ellipsisText text-gray-600 text-xl title">
+          {{ props.title || "Title" }}
+        </p>
+        <p class="cardtitle rmvPriceFromHome text-gray-700 text-2xl font-bold">
           <span class="line-through" v-if="props.price && props.price < 700">₹700</span>
           ₹{{ props.price || "Price" }}
         </p>
-        <p class="card_desc" v-if="props.description">
+        <!-- <p class="card_desc" v-if="props.description">
           {{ props.description.slice(0, 30) }}...
-        </p>
+        </p> -->
+
+        <span
+          class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
+        >
+          {{ props.title }}
+        </span>
       </div>
     </NuxtLink>
   </div>

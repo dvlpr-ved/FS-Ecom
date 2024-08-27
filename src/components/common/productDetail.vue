@@ -21,11 +21,12 @@ const handleAddToCart = async () => {
     quantity: productCount.value,
   });
   if (addToCart.success) {
-    navigateTo('/mycart');
+    navigateTo("/mycart");
     // Checkvisible.value = "active";
   } else {
     if (addToCart.msg) {
-      alert(addToCart.msg);
+      // alert(addToCart.msg);
+      navigateTo("/mycart");
     }
   }
 };
@@ -110,12 +111,12 @@ watch([colorSelected, sizeSelected], async () => {
                 @click="imageShown = image.source"
                 :src="image.source"
                 class="w-[80px] h-[80px] cursor-pointer"
-              />              
+              />
             </div>
           </div>
         </div>
         <div class="productcontent lg:w-[58%] w-[100%]">
-          <h6 class="pro-title lg:text-6xl text-4xl mb-3">
+          <h6 class="pro-title lg:text-2xl text-4xl mb-3">
             {{ product.name ? product.name : "" }}
           </h6>
           <div class="price">
@@ -123,39 +124,47 @@ watch([colorSelected, sizeSelected], async () => {
               <!-- <span class="line-through text-2xl text-gray-700">₹800</span> -->
               ₹{{ sku.price ? sku.price : "" }}
             </p>
+
+            <span v-else-if="skuIsLoading || isOutOfStock" class="text-3xl block mb-3"
+              >Contact Seller</span
+            >
+            <span
+              v-else
+              class="block shimmer py-4 mb-1 w-[25%] rounded-sm bg-gray-50"
+            ></span>
           </div>
-          <div class="sizesBox flex items-center gap-x-2 mb-3">
+          <div class="sizesBox flex items-center mb-3">
             <span class="text-2xl">Sizes :</span>
             <div
               v-for="s in size"
               @click="handleSizeChange(s)"
-              class="checkbox border-r px-2 py-1 border-gray-500"
+              class="checkbox px-2 py-1 border-gray-500"
             >
               <input
-                class="styled-checkbox"
+                class="sizeBoxInput"
                 type="radio"
                 :checked="sizeSelected == s ? true : false"
                 name="sizeselected"
                 v-model="sizeSelected"
               />
-              <label for="msize" class="text-xl title">{{ s }}</label>
+              <label for="msize" class="title">{{ s }}</label>
             </div>
           </div>
-          <div class="sizesBox flex items-center gap-x-2 mb-3">
-            <span class="text-2xl">Colors :</span>
+          <div class="sizesBox flex items-center flex-wrap mb-3">
+            <span class="text-2xl inline-block lg:w-auto w-full">Colors :</span>
             <div
               v-for="c in color"
               @click="handleColorChange(c)"
-              class="checkbox border-r px-2 py-1 border-gray-500"
+              class="checkbox px-2 py-1 border-gray-500"
             >
               <input
-                class="styled-checkbox"
+                class="sizeBoxInput"
                 type="radio"
                 name="colorsekected"
                 :checked="colorSelected == c ? true : false"
                 v-model="colorSelected"
               />
-              <label for="msize" class="text-xl title">{{ c }}</label>
+              <label for="msize" class="title">{{ c }}</label>
             </div>
           </div>
 
@@ -179,17 +188,20 @@ watch([colorSelected, sizeSelected], async () => {
               class="py-3 w-[48%] bg-black transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
             >
               <i class="pi pi-cart-plus lg:text-3xl text-2xl"></i>
-              {{ isOutOfStock ? "Out of stock" : "Add to cart" }}
+              {{ isOutOfStock ? "Out of stock" : "Add to cart / Buy Now" }}
             </button>
             <button class="w-[48%]">
-              <BookNow
-                :bounceAni="'animate-bounce'"
-                bookingLink="https://api.whatsapp.com/send?phone=+910123456789&text=Hello, Looking for banarasee saree. Get in touch with me my name is"
-              />
+              <NuxtLink
+                :to="`https://api.whatsapp.com/send?phone=+910123456789&text=Hello, Looking i want to buy ${product.name}. Get in touch with me my name is`"
+                class="Booknowbtn animate-bounce py-3 bg-green-400 text-white capitalize rounded text-2xl text-center flex items-center gap-2 justify-center"
+                target="_blank"
+                ><i class="pi pi-whatsapp lg:text-3xl text-2xl"></i
+                >{{ skuIsLoading || isOutOfStock ? "Inquire Now" : "Book Now" }}</NuxtLink
+              >
             </button>
           </div>
-          <div class="sharediv py-5 flex gap-2 items-end">
-            <span class="lg:text-2xl mb-1">Share Now : </span>
+          <div class="sharediv py-5 flex flex-wrap gap-2 items-end">
+            <span class="lg:text-2xl mb-1 w-full">Share Now : </span>
             <NuxtLink to="JavaScript:void(0)">
               <i class="pi pi-instagram text-2xl transition"></i>
             </NuxtLink>
@@ -206,18 +218,19 @@ watch([colorSelected, sizeSelected], async () => {
           </div>
 
           <div class="vendrsDetail" v-if="vendor">
-            <div class="flex pb-2 gap-2 items-center lg:text-[18px] text-1xl">
-              Seller Name :
-              <span class="text-gray-600" style="font-size: 16px">{{
-                vendor.name ? vendor.name : ""
-              }}</span>
+            <div class="flex flex-wrap pb-2 gap-2 items-center lg:text-[18px] text-1xl">
+              <p class="w-full text-3xl">Seller Details</p>
+              <span class="text-gray-600" style="font-size: 16px"
+                >{{ vendor.name ? vendor.name : "" }},
+                {{ vendor.email ? vendor.email : "" }}</span
+              >
             </div>
-            <div class="flex pb-2 gap-2 items-center lg:text-[18px] text-1xl">
+            <!-- <div class="flex pb-2 gap-2 items-center lg:text-[18px] text-1xl">
               Seller Address :
               <span class="text-gray-600" style="font-size: 16px">{{
                 vendor.email ? vendor.email : ""
               }}</span>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

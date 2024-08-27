@@ -1,5 +1,4 @@
 <script setup>
-
 const itemsToShow = ref(4);
 // const isLoading = ref(true);
 
@@ -9,13 +8,13 @@ const updateItemsToShow = () => {
   if (screenWidth < 576) {
     itemsToShow.value = 4;
   } else if (screenWidth < 768) {
-    itemsToShow.value = 6;
+    itemsToShow.value = 5;
   } else if (screenWidth < 1024) {
     itemsToShow.value = 7;
   } else if (screenWidth < 1440) {
-    itemsToShow.value = 9;
+    itemsToShow.value = 7;
   } else {
-    itemsToShow.value = 9;
+    itemsToShow.value = 7;
   }
 };
 
@@ -85,11 +84,11 @@ onBeforeUnmount(() => {
         </div>
       </template>
 
-      <div v-else class="slidesWraper flex justify-center gap-3 relative">
-        <carousel :items-to-show="4" >
+      <div v-else class="slidesWraper flex justify-center gap-3 w-full relative">
+        <carousel :items-to-show="itemsToShow">
           <slide v-for="(item, index) in cards" :key="index" class="categories-card">
             <div class="avt-wrap">
-              <NuxtLink :to="'searchResult?category='+item.id">
+              <NuxtLink :to="'searchResult?category=' + item.id">
                 <img class="avatar" :src="item.image" :alt="item.name" loading="lazy" />
                 <span class="categories-title">{{ item.name }}</span>
               </NuxtLink>
@@ -114,9 +113,6 @@ onBeforeUnmount(() => {
     border-radius: 50%;
     margin: 0 auto;
     transition: all 0.4s ease;
-    // border: 5px solid var(--primary);
-    // padding: 6px;
-    // background: #fff;
 
     &:hover {
       transform: scale(1.1);

@@ -63,7 +63,7 @@ const fetchSearchResult = async () => {
     <div class="headerDesk container lg:flex hidden justify-between">
       <div class="headerLeft flex justify-between items-center">
         <NuxtLink to="/" class="logo">
-          <span class="text-3xl uppercase">fashtsaly</span>
+          <span class="text-3xl uppercase headingsFont">fashtsaly</span>
         </NuxtLink>
       </div>
 
@@ -153,8 +153,9 @@ const fetchSearchResult = async () => {
           </NuxtLink>
           <span
             class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
-            >{{ CartItems ? CartItems : "" }}</span
           >
+            {{ wishlistd ? wishlistd : "" }}
+          </span>
         </li>
       </ul>
     </div>
