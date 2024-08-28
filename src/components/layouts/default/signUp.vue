@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { ref } from "vue";
+const props = defineProps({
+  toggleForm: Function,
+});
+
 
 const visible = ref(false);
 const inputType = ref("password");
@@ -195,10 +198,16 @@ const toggleFieldType = () => {
 
       <a
         href="#"
+        class="py-2 px-5 text-xl rounded text-white commonbtn block m-auto text-center lg:mb-4 mb-2 max-w-[220px] w-full"
+        style="background: #204887"
+        @click="toggleForm"
+        >Login</a
+      >
+      <!-- <a
+        href="#"
         class="py-2 px-5 text-xl rounded text-white commonbtn block m-auto lg:mb-4 mb-2 max-w-[220px] w-full"
         style="background: #204887"
-        >Login With Google</a
-      >
+        >Login With Google</a> -->
     </div>
   </div>
 </template>

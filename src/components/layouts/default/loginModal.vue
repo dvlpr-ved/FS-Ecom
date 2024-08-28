@@ -5,7 +5,7 @@ const props = defineProps<{
 }>();
 
 const value = ref(null);
-const ChnagePosition = ref("");
+const ChangePosition = ref("inactive");
 const showMessage = ref("");
 
 const formData = {
@@ -51,8 +51,8 @@ const handleSubmit = async (e: Event) => {
   }
 };
 
-const toggelForm = () => {
-  ChnagePosition.value = "active";
+const toggleForm = () => {
+  ChangePosition.value = ChangePosition.value === "active" ? "inactive" : "active";
 };
 </script>
 
@@ -67,7 +67,7 @@ const toggelForm = () => {
           'w-[100%]',
           'bgblue80',
           'z-10',
-          ChnagePosition,
+          ChangePosition,
         ]"
       >
         <img
@@ -84,7 +84,7 @@ const toggelForm = () => {
       </div>
 
       <!-- Signup Form -->
-      <signUp />
+      <signUp :toggleForm="toggleForm" />
 
       <div
         class="rightCol lg:w-[50%] w-[100%] lg:p-6 p-3 bg-gray-100"
@@ -129,7 +129,7 @@ const toggelForm = () => {
           href="#"
           class="py-2 px-3 rounded text-white text-2xl commonbtn block max-w-[220px] w-full text-center m-auto mb-4 cursor-pointer"
           style="background: #204887"
-          @click="toggelForm"
+          @click="toggleForm"
         >
           Register
         </span>
@@ -165,6 +165,9 @@ const toggelForm = () => {
     &.active {
       transition: all 0.8s ease-in-out;
       left: 50%;
+    }
+    &.inactive {
+      transition: all 0.8s ease-in-out;
     }
   }
   .loginbtn {

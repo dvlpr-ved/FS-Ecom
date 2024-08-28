@@ -27,8 +27,8 @@ class="AppFooter lg:bg-blue-800 lg:text-white text-black lg:block"
             <NuxtLink to="/about">About Us</NuxtLink>
             <NuxtLink to="/contactus">Contact Us</NuxtLink>
             <NuxtLink to="/privacypolicy">Privacy Policy</NuxtLink>
-            <NuxtLink to="/">Legal & Policies</NuxtLink>
-            <NuxtLink to="/">shipping policy</NuxtLink>
+            <NuxtLink to="/legalpolicy">Legal & Policies</NuxtLink>
+            <NuxtLink to="/shippingpolicy">shipping policy</NuxtLink>
           </li>
           <li
             class="lg:w-[20%] w-[50%] footerLi lg:py-5 px-3 py-3 lg:mb-0 mb-3 lg:border-0 border-b"
@@ -37,7 +37,7 @@ class="AppFooter lg:bg-blue-800 lg:text-white text-black lg:block"
             <NuxtLink to="../payment">Payment</NuxtLink>
             <NuxtLink to="../cancellation">Cancellation & Return</NuxtLink>
             <NuxtLink to="../faq">FAQ</NuxtLink>
-            <NuxtLink to="#">Sitemap</NuxtLink>
+            <NuxtLink to="../sitemap">Sitemap</NuxtLink>
           </li>
           <li class="lg:w-[20%] w-[100%] footerLi lg:py-5 px-3 py-3 lg:border-0 border-b">
             <div class="title font-bold text-2xl capitalize mb-2">Reach Out to Us</div>

@@ -33,7 +33,7 @@ const authStore = useAuthStore();
         </NuxtLink>
 
         <NuxtLink to="/wishlist" class="text-[15px] block capitalize hover:text-pink-500"
-          ><i class="pi pi-heart"></i> Whitelist
+          ><i class="pi pi-heart"></i> wishlist
         </NuxtLink>
       </div>
       <div class="commonbox userAvtarInfo p-3 bg-white shadow-sm rounded-sm mb-3">
