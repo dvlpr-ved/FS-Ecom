@@ -54,6 +54,10 @@ const fetchSearchResult = async () => {
     showAutoComplete.value = true;
   }
 };
+const closeAutoomplete = () => {
+  showAutoComplete.value = false;
+  searchQuery.value = ''
+}
 </script>
 
 <template>
@@ -75,7 +79,7 @@ const fetchSearchResult = async () => {
           @blur="handleBlur"
         />
         <SearchAutoComplete
-          @close="showAutoComplete = false"
+          @close="closeAutoomplete"
           v-if="showAutoComplete"
           :results="searchResult"
         />

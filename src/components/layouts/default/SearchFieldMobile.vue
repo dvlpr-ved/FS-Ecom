@@ -39,6 +39,7 @@ const handleBlur = (e) => {
   }
 };
 const closeModal = () => {
+  searchQuery.value = '';
   showAutoComplete.value =false;
   emit('close')
 }

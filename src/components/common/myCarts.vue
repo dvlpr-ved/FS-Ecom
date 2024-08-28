@@ -11,6 +11,7 @@ const totalComputed = computed(() => {
     return sum + item.price * quantity;
   }, 0);
 });
+
 // const apiRemoveItemFromCart = useRemoveItemFromCart();
 const RemoveItemFromCart = async (product_id: number) => {
   const isConfirmed = window.confirm(

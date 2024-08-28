@@ -3,6 +3,10 @@ const props = defineProps<{
   thumbnail?: string;
   title?: string;
   id: Number;
+  hidePrice:{
+    type : Boolean,
+    default : false
+  }
 }>();
 </script>
 
@@ -31,7 +35,7 @@ const props = defineProps<{
         {{ props.title }}
       </span>
 
-      <p class="cardtitle text-gray-700 text-2xl font-bold">
+      <p v-if="!hidePrice" class="cardtitle text-gray-700 text-2xl font-bold">
         <span class="line-through">₹1000</span> ₹999
       </p>
     </NuxtLink>

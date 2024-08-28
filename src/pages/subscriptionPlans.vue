@@ -1,7 +1,9 @@
 <script setup>
+import {load} from '@cashfreepayments/cashfree-js';
 const plansData = ref([]);
 const message = ref("");
 const isLoading = ref(true);
+const disabled = ref(false);
 const getPlanData = async () => {
   try {
     const response = await fetch(
@@ -21,6 +23,76 @@ const getPlanData = async () => {
 onMounted(() => {
   getPlanData();
 });
+const order_id = ref(0);
+const proceedPayment = async (planid) => {
+  disabled.value = true;
+  const config = useRuntimeConfig();
+  const url = `${
+    config.API_BASE_URL ? config.API_BASE_URL : "https://fashtsaly.com/API/public/"
+  }api/initiate-payment`;
+  
+  try {
+    const data = await fetchFromSanctum({
+      url: url,
+      method: 'POST',
+      body : {
+        plan : planid
+      }
+    });
+    if (data.cf_order_id) {
+      order_id.value = data.id;
+      const cashfree = await load({
+        mode: "production" //or production
+      });
+
+      let checkoutOptions = {
+        paymentSessionId: data.payment_session_id,
+        redirectTarget: "_modal"
+      };
+      const result =await cashfree.checkout(checkoutOptions);
+        if(result.error){
+          alert(result.error.message)
+          disabled.value = false;
+        }
+        if(result.redirect){
+          alert("Please try some diffrent browser");
+          disabled.value = false;
+        }
+        if(result.paymentDetails){
+          disabled.value = false;
+          getPaymentData();
+        }
+    } else {
+      disabled.value = false;
+      alert('Failed to initiate payment.');
+    }
+  } catch (error) {
+    disabled.value = false;
+    console.error('Error initiating payment:', error);
+  }
+};
+const getPaymentData = async () => {
+  disabled.value = true;
+    const config = useRuntimeConfig();
+  const url = `${
+    config.API_BASE_URL ? config.API_BASE_URL : "https://fashtsaly.com/API/public/"
+  }api/paymentFetch`;
+  const data = await fetchFromSanctum({
+    url : url,
+    method : 'POST',
+    body : {
+      order_id : order_id.value
+    }
+  });
+  disabled.value = false;
+  if(data.res){
+    alert('Payment Successfull');
+    navigateTo('/');
+  }
+  else{
+    alert(data.msg);
+  }
+}
 </script>
 
 <template>
@@ -35,7 +107,7 @@ onMounted(() => {
         <h3 class="price text-3xl">₹ {{ pricing.price }}</h3>
         <small>Annually</small>
         <p>{{ pricing.description }}</p>
-        <button class="rounded">Subscribe</button>
+        <button :disabled="disabled" @click="proceedPayment(pricing.id)" class="rounded">Subscribe</button>
       </div>
     </div>
   </div>

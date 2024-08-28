@@ -22,10 +22,8 @@ const handleAddToCart = async () => {
   });
   if (addToCart.success) {
     navigateTo("/mycart");
-    // Checkvisible.value = "active";
   } else {
     if (addToCart.msg) {
-      // alert(addToCart.msg);
       navigateTo("/mycart");
     }
   }
