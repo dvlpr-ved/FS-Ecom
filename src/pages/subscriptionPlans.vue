@@ -1,5 +1,5 @@
 <script setup>
-import {load} from '@cashfreepayments/cashfree-js';
+import { load } from "@cashfreepayments/cashfree-js";
 const plansData = ref([]);
 const message = ref("");
 const isLoading = ref(true);
@@ -30,69 +30,68 @@ const proceedPayment = async (planid) => {
   const url = `${
     config.API_BASE_URL ? config.API_BASE_URL : "https://fashtsaly.com/API/public/"
   }api/initiate-payment`;
-  
+
   try {
     const data = await fetchFromSanctum({
       url: url,
-      method: 'POST',
-      body : {
-        plan : planid
-      }
+      method: "POST",
+      body: {
+        plan: planid,
+      },
     });
     if (data.cf_order_id) {
       order_id.value = data.id;
       const cashfree = await load({
-        mode: "production" //or production
+        mode: "production", //or production
       });
 
       let checkoutOptions = {
         paymentSessionId: data.payment_session_id,
-        redirectTarget: "_modal"
+        redirectTarget: "_modal",
       };
-      const result =await cashfree.checkout(checkoutOptions);
-        if(result.error){
-          alert(result.error.message)
-          disabled.value = false;
-        }
-        if(result.redirect){
-          alert("Please try some diffrent browser");
-          disabled.value = false;
-        }
-        if(result.paymentDetails){
-          disabled.value = false;
-          getPaymentData();
-        }
+      const result = await cashfree.checkout(checkoutOptions);
+      if (result.error) {
+        alert(result.error.message);
+        disabled.value = false;
+      }
+      if (result.redirect) {
+        alert("Please try some diffrent browser");
+        disabled.value = false;
+      }
+      if (result.paymentDetails) {
+        disabled.value = false;
+        getPaymentData();
+      }
     } else {
       disabled.value = false;
-      alert('Failed to initiate payment.');
+      alert("Failed to initiate payment.");
     }
   } catch (error) {
     disabled.value = false;
-    console.error('Error initiating payment:', error);
+    console.error("Error initiating payment:", error);
   }
 };
 const getPaymentData = async () => {
   disabled.value = true;
-    const config = useRuntimeConfig();
+  const config = useRuntimeConfig();
   const url = `${
     config.API_BASE_URL ? config.API_BASE_URL : "https://fashtsaly.com/API/public/"
   }api/paymentFetch`;
   const data = await fetchFromSanctum({
-    url : url,
-    method : 'POST',
-    body : {
-      order_id : order_id.value
-    }
+    url: url,
+    method: "POST",
+    body: {
+      order_id: order_id.value,
+    },
   });
   disabled.value = false;
-  if(data.res){
-    alert('Payment Successfull');
-    navigateTo('/');
-  }
-  else{
+  if (data.res) {
+    alert("Payment Successfull");
+    navigateTo("/");
+  } else {
     alert(data.msg);
   }
-}
+};
 </script>
 
 <template>
@@ -100,17 +99,162 @@ const getPaymentData = async () => {
     <ShimmereCard />
     <ShimmereCard />
   </div>
-  <div class="subsPlansMain py-3 bg-gray-100" v-else>
-    <div class="container flex justify-center items-center">
-      <div class="offers" v-for="pricing in plansData" :key="pricing.id">
-        <h2 class="text-2xl mb-3">{{ pricing.title }}</h2>
-        <h3 class="price text-3xl">₹ {{ pricing.price }}</h3>
-        <small>Annually</small>
-        <p>{{ pricing.description }}</p>
-        <button :disabled="disabled" @click="proceedPayment(pricing.id)" class="rounded">Subscribe</button>
+  <div class="subsPlansMain py-5 bg-gray-100" v-else>
+    <div class="container flex justify-center flex-wrap items-start">
+      <div class="offers lg:w-[300px] md:w-[300px] w-[100%]" v-for="pricing in plansData" :key="pricing.id">
+        <h2 class="bgblue80 text-white py-3 lg:text-4xl text-3xl">{{ pricing.title }}</h2>
+        <h3 class="price lg:text-5xl text-4xl py-3 bg-gray-100">₹ {{ pricing.price }}</h3>
+        <!-- <small>Annually</small> -->
+        <!-- <p>{{ pricing.description }}</p> -->
+        <ul>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            Search By Image
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            5 Searches
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            Easy download
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            manufacturer details
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            wholesale price
+          </li>
+        </ul>
+        <button :disabled="disabled" @click="proceedPayment(pricing.id)" class="rounded">
+          Subscribe
+        </button>
       </div>
     </div>
   </div>
+
+  <div class="subsPlansMain py-5 bg-gray-100">
+    <div class="container flex justify-center flex-wrap items-start">
+      <div class="offers lg:w-[300px] md:w-[300px] w-[100%]">
+        <h2 class="bgblue80 text-white py-3 lg:text-4xl text-3xl">Free</h2>
+        <h3 class="price lg:text-5xl text-4xl py-3 bg-gray-100">₹ 0.00</h3>
+        <ul>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            Search By Image
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            5 Searches
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            Easy download
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            manufacturer details
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            wholesale price
+          </li>
+        </ul>
+        <button class="rounded">Subscribe</button>
+      </div>
+      <div class="offers lg:w-[300px] md:w-[300px] w-[100%]">
+        <h2 class="bgblue80 text-white py-3 lg:text-4xl text-3xl">Small Bussiness</h2>
+        <h3 class="price lg:text-5xl text-4xl py-3 bg-gray-100">₹ 299.00/Yr</h3>
+        <ul>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            Search By Image
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            400 Searches
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            Easy download
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            manufacturer details
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            wholesale price
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            no mention our details
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            Whatsapp support
+          </li>
+        </ul>
+        <button class="rounded">Subscribe</button>
+      </div>
+      <div class="offers lg:w-[300px] md:w-[300px] w-[100%]">
+        <h2 class="bgblue80 text-white py-3 lg:text-4xl text-3xl">Enterprises</h2>
+        <h3 class="price lg:text-5xl text-4xl py-3 bg-gray-100">₹ 599.00/Yr</h3>
+        <ul>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            Search By Image
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            1500 Searches
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            Easy download
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            manufacturer details
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            wholesale price
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            no mention our details
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            Whatsapp/call support
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            Whatsapp group updates (for new and sale update)
+          </li>
+        </ul>
+        <button class="rounded">Subscribe</button>
+      </div>
+      <div class="offers lg:w-[300px] md:w-[300px] w-[100%]">
+        <h2 class="bgblue80 text-white py-3 lg:text-4xl text-3xl">Branding</h2>
+        <h3 class="price lg:text-5xl text-4xl py-3 bg-gray-100">₹ 1199.00/Yr</h3>
+        <ul>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            Search By Image
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            2000 Searches
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            Easy download
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            manufacturer details
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            wholesale price
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            no mention our details
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            Whatsapp/call support
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            Whatsapp group updates (for new and sale update)
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            Branding solution
+          </li>
+          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
+            COD for UR customer
+          </li>
+        </ul>
+        <button class="rounded">Subscribe</button>
+      </div>
+      
+      
+    </div>
+  </div>
+
 </template>
 
 <style lang="scss">
@@ -123,9 +267,7 @@ const getPaymentData = async () => {
     position: relative;
     text-align: center;
     background: #fff;
-    padding: 1%;
     margin: 10px;
-    width: 300px;
     height: auto;
     top: 0;
     border: 1px solid #eaeaea;
@@ -138,25 +280,25 @@ const getPaymentData = async () => {
 
   .offers:hover {
     position: relative;
-    top: -20px;
+    top: -10px;
   }
 
-  .offers:nth-child(2) {
-    border-top: 2px solid var(--text-blue);
+  /*.offers:nth-child(even) {
+    border: 2px solid var(--primary);
     box-shadow: 0 0 10px 0px #0000001c;
+  } 
+   .offers:nth-child(even) {
+    transform:scale(1.04)
   }
-
-  .offers:nth-child(2) h3 {
-    margin-top: 20px;
-  }
+  */
 
   button {
     font-size: 18px;
     font-weight: 500;
     background: var(--primary);
     color: #fff;
-    margin: 30px auto 20px auto;
-    padding: 4% 8%;
+    margin: 10px auto 10px auto;
+    padding: 3% 8%;
     border: 0;
     transition-duration: 0.5s;
   }
