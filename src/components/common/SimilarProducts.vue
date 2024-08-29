@@ -51,7 +51,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="similarCardWrapper">
     <div class="container bg-white">
-    <div class="heading w-full lg:text-6xl text-4xl py-5 headingsFont">Similar Products</div>
+    <div class="heading w-full lg:text-4xl text-3xl py-5 headingsFont">Similar Products</div>
       <template v-if="isLoading">
         <div class="lg:flex hidden justify-between py-4">
           <ShimmereCard />

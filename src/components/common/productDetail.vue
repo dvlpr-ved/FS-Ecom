@@ -16,7 +16,7 @@ const removeMoreProduct = () => {
 
 const handleAddToCart = async (action) => {
   if(isOutOfStock.value){
-    navigateTo(`https://api.whatsapp.com/send?phone=+910123456789&text=Hello, Looking i want to buy ${product.value.name}. Get in touch with me my name is`);
+    navigateTo(`https://api.whatsapp.com/send?phone=+910123456789&text=Hello, I want to buy ${product.value.name}.  My name is`);
     return;
   }
   const addToCart = await cart.saveCartItem({
@@ -123,9 +123,9 @@ watch([colorSelected, sizeSelected], async () => {
           </div>
         </div>
         <div class="productcontent lg:w-[58%] w-[100%]">
-          <h6 class="pro-title lg:text-2xl text-4xl mb-3">
+          <div class="pro-title lg:text-3xl text-2xl mb-3">
             {{ product.name ? product.name : "" }}
-          </h6>
+          </div>
           <div class="price">
             <p v-if="!skuIsLoading" class="cardtitle text-3xl font-[500] text-black mb-3">
               <!-- <span class="line-through text-2xl text-gray-700">₹800</span> -->
@@ -187,28 +187,29 @@ watch([colorSelected, sizeSelected], async () => {
             <span>{{ productCount }}</span>
             <button @click="addMoreProduct"><i class="pi pi-plus"></i></button>
           </div>
-          <div class="btnsdiv flex justify-between gap-3">
-            <button
-              @click="handleAddToCart('buy')"
-              :danger="true"
-              :disabled="skuIsLoading || isOutOfStock ? true : false"
-              class="py-3 w-[48%] bg-black transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
-            >
-            ₹ {{ isOutOfStock ? "Out of stock" : "Buy Now" }}
-            </button>
+          <div class="btnsdiv flex flex-wrap gap-3">
             <button
               @click="handleAddToCart('cart')"
               :danger="true"
               :disabled="skuIsLoading || isOutOfStock ? true : false"
-              class="py-3 w-[48%] bg-black transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
+              class="py-3 lg:w-[28%] w-[48%] text-xl bg-black transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
             >
               <i class="pi pi-cart-plus lg:text-3xl text-2xl"></i>
               {{ isOutOfStock ? "Out of stock" : "Add to cart" }}
+            </button>
+            <button
+              @click="handleAddToCart('buy')"
+              :danger="true"
+              :disabled="skuIsLoading || isOutOfStock ? true : false"
+              class="py-3 lg:w-[28%] w-[48%] text-xl bgorange transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
+            >
+              <i class="pi pi-tag lg:text-3xl text-2xl"></i>
+             {{ isOutOfStock ? "Out of stock" : "Buy Now" }}
             </button>                        
-            <button class="w-[48%]">
+            <button class="lg:w-[28%] w-[100%]">
               <NuxtLink
-                :to="`https://api.whatsapp.com/send?phone=+910123456789&text=Hello, Looking i want to buy ${product.name}. Get in touch with me my name is`"
-                class="Booknowbtn animate-bounce py-3 bg-green-400 text-white capitalize rounded text-2xl text-center flex items-center gap-2 justify-center"
+                :to="`https://api.whatsapp.com/send?phone=+910123456789&text=Hello, I want to buy ${product.name}. My name is`"
+                class="Booknowbtn py-3 bg-green-400 text-white capitalize rounded text-2xl text-center flex items-center gap-2 justify-center"
                 target="_blank"
                 ><i class="pi pi-whatsapp lg:text-3xl text-2xl"></i
                 >{{ skuIsLoading || isOutOfStock ? "Inquire Now" : "Book Now" }}</NuxtLink

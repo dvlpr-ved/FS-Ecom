@@ -3,12 +3,12 @@
 <template>
   <section class="staticPages afterBefore">
     <!-- <div class="imgdiv">
-      <h2 class="text-5xl font-semibold text-white text-center pagesHeading afterBefore">
-        About Us
-      </h2>
+      <h3 class="text-5xl font-semibold text-white text-center pagesHeading afterBefore">
+        Privacy Policy
+      </h3>
     </div> -->
     <div class="container lg:py-5 py-4">
-      <h1 class="text-4xl font-bold mb-2 mt-2">Privacy Policy</h1>
+      <h3 class="text-4xl font-bold mb-5 mt-2 text-center">Privacy Policy</h3>
       <div class="leading-7">
         <p class="lg:text-justify lg:text-[16px]">
           We, Fashtsaly are committed to protecting the privacy of our users. This Privacy
@@ -17,13 +17,13 @@
         </p>
       </div>
       <!--  -->
-      <h1 class="text-4xl font-bold mb-2 mt-3">Access to Information </h1>
+      <div class="text-4xl font-bold mb-2 mt-3">Access to Information </div>
       <div class="leading-7">
         <p class="lg:text-justify lg:text-[16px]">
           You can visit the Website and browse without having to provide personal details. During your visit to the Website you remain anonymous and at no time can we identify you unless you have provided the information or created an account on the Website. 
         </p>
         </div>      
-      <h1 class="text-4xl font-bold mb-2 mt-3">Information Collection</h1>
+      <div class="text-4xl font-bold mb-2 mt-3">Information Collection</div>
       <div class="leading-7">
         <p class="lg:text-justify lg:text-[16px]">
           We may collect the following personal information from our users:
@@ -46,12 +46,12 @@
         </p>
       </div>
       <!--  -->    
-      <h2 class="text-4xl font-bold mb-2 mt-3">Information Use</h2>
+      <div class="text-4xl font-bold mb-2 mt-3">Information Use</div>
       <div class="leading-7">
         <p class="lg:text-justify lg:text-[16px]">
           We will not use your personal and financial information for any purpose other than to complete a transaction with you. We will keep your information for as long as we are either required to by law or as is relevant for the purposes for which it was collected. We will only use your information where it is necessary and will only collect information if it is relevant to our dealings with you. Wherever it is possible, we will indicate which fields are required and which fields are optional.
         </p>
-        <h4 class="text-2xl font-bold mb-2 mt-3">How is your information treated with third party users?</h4>
+        <div class="text-2xl font-bold mb-2 mt-3">How is your information treated with third party users?</div>
         <p class="lg:text-justify lg:text-[16px] mt-2">
           ‘‘cookie’’ is a small piece of information stored by a web-server on a web browser so that it can be later read back from that browser. Cookies are useful for enabling the browser to remember information specific to a given user.  Cookie technology will only be used to track non-personal information such as IP address, type of browser, operating system, and domain names to improve our site. Any personal information is not extracted in this process. 
         </p>
@@ -79,7 +79,7 @@
         </ul>
       </div>
       <!--  -->
-      <h2 class="text-4xl font-bold mb-2 mt-3">Information Sharing</h2>
+      <div class="text-4xl font-bold mb-2 mt-3">Information Sharing</div>
       <div class="leading-7">
         <p class="lg:text-justify lg:text-[16px]">
           We may share your personal information with third parties in the following ways:
@@ -103,7 +103,7 @@
         </ul>
       </div>
       <!--  -->
-      <h3 class="text-4xl font-bold mb-2 mt-3">Payment and Security</h3>
+      <div class="text-4xl font-bold mb-2 mt-3">Payment and Security</div>
       <div class="leading-7">
         <p class="lg:text-justify lg:text-[16px]">
           We use industry-standard security measures to protect your personal information,
@@ -112,7 +112,7 @@
         </p>
       </div>
       <!--  -->
-      <h3 class="text-4xl font-bold mb-2 mt-3">Cookie Policy</h3>
+      <div class="text-4xl font-bold mb-2 mt-3">Cookie Policy</div>
       <div class="leading-7">
         <p class="lg:text-justify lg:text-[16px]">
           We use cookies and similar technologies to track user activity on our website
@@ -121,7 +121,7 @@
         </p>
       </div>
       <!--  -->
-      <h3 class="text-4xl font-bold mb-2 mt-3">Opt-Out</h3>
+      <div class="text-4xl font-bold mb-2 mt-3">Opt-Out</div>
       <div class="leading-7">
         <p class="lg:text-justify lg:text-[16px]">
           If you would like to opt-out of receiving marketing communications from us, you
@@ -129,7 +129,7 @@
         </p>
       </div>
       <!--  -->
-      <h3 class="text-4xl font-bold mb-2 mt-3">Contact Information</h3>
+      <div class="text-4xl font-bold mb-2 mt-3">Contact Information</div>
       <div class="leading-7">
         <p class="lg:text-justify lg:text-[16px]">
           If you have any questions or concerns about this Privacy Policy, please contact
@@ -137,7 +137,7 @@
         </p>
       </div>
       <!--  -->
-      <h3 class="text-4xl font-bold mb-2 mt-3">Changes to This Policy</h3>
+      <div class="text-4xl font-bold mb-2 mt-3">Changes to This Policy</div>
       <div class="leading-7">
         <p class="lg:text-justify lg:text-[16px]">
           We reserve the right to make changes to this Privacy Policy at any time. Any

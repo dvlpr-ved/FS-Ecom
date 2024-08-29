@@ -9,7 +9,7 @@
     </div> -->
     <div class="container lg:py-5 py-4">
       <div class="wrapContent">
-        <h1 class="text-4xl font-bold mt-4 mb-5 pagesHeading afterBefore ml-0">Shipping Policy</h1>
+        <h1 class="text-4xl font-bold mt-4 mb-5 text-center">Shipping Policy</h1>
         <div class="leading-7">
           <p class="lg:text-justify lg:text-[16px] mb-4">
             we are happy to offer free shipping to customers in pan India. However, if you

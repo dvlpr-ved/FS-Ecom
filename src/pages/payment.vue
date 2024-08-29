@@ -5,7 +5,7 @@
     
     <div class="container lg:py-5 py-4">
       <div class="wrapContent">
-        <h2 class="text-4xl font-bold my-4">Payment Policy</h2>
+        <h2 class="text-4xl font-bold my-4 text-center">Payment Policy</h2>
         <div class="leading-7">
           <p class="lg:text-justify lg:text-[16px] mb-4">
             At Fashtsaly, we strive to make our products and services available to as many

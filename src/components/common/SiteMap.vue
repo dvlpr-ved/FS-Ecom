@@ -21,7 +21,7 @@
       <h1 class="text-4xl font-bold text-orange-500">Sitemap</h1>
       <ul class="lg:py-4 py-2 pagesLink">
         <li class="flex flex-wrap gap-x-4 gap-y-2 items-center">
-          <h3 class="w-full text-4xl">Pages</h3>
+          <div class="w-full text-4xl capitalize">Pages</div>
           <NuxtLink to="/" class="hover:underline text-gray-600 text-[15px] capitalize">Home</NuxtLink>
           <NuxtLink to="/about" class="hover:underline text-gray-600 text-[15px] capitalize">About US</NuxtLink>
           <NuxtLink to="/contactus" class="hover:underline text-gray-600 text-[15px] capitalize">contact US</NuxtLink>
@@ -37,7 +37,7 @@
       </ul>
       <ul class="lg:py-4 py-2 pagesLink">
         <li class="flex flex-wrap gap-x-4 gap-y-2 items-center">
-          <h3 class="w-full text-4xl">product catagories</h3>
+          <div class="w-full text-4xl capitalize">product catagories</div>
           <NuxtLink to="/" class="hover:underline text-gray-600 text-[15px] capitalize">Home</NuxtLink>
           <NuxtLink to="/about" class="hover:underline text-gray-600 text-[15px] capitalize">About US</NuxtLink>
           <NuxtLink to="/contactus" class="hover:underline text-gray-600 text-[15px] capitalize">contact US</NuxtLink>
