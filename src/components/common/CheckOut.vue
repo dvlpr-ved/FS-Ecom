@@ -416,7 +416,7 @@ const getPaymentData =async () => {
   disabled.value = false;
   if(data.res){
     alert('Payment Successfull');
-    navigateTo(`/orderConfirmed/${order_id.value}`);
+    navigateTo(`/orderConfirmed/${data.order_id}`);
   }
   else{
     alert(data.msg);
