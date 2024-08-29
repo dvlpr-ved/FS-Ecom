@@ -240,6 +240,7 @@
           <button
             class="mt-4 hover:opacity-90 text-white px-4 py-2 w-full text-2xl"
             style="background: var(--primary)"
+            @click="processPayment"
           >
             Proceed to Payment
           </button>
@@ -251,13 +252,14 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import {load} from '@cashfreepayments/cashfree-js';
 
 const quantities = ref({});
 const items = ref([]);
 const notItems = ref(true);
 const totalPrice = ref(0);
 const subtotal = ref(0);
-const shipping = ref(5);
+const shipping = ref(0);
 const total = ref(0);
 const selectedAddress = ref(null);
 
@@ -341,6 +343,85 @@ onMounted(async () => {
   await getCheckoutProduct();
   useGetAddressStore.fetchUserAddress();
 });
+const order_id = ref('');
+const disabled = ref(false);
+const processing = ref(false);
+const processPayment =async () => {
+  processing.value = true;
+  const config = useRuntimeConfig();
+  const url = `${
+    config.API_BASE_URL ? config.API_BASE_URL : "https://fashtsaly.com/API/public/"
+  }api/initiate-checkout`;
+
+  const response = await fetchFromSanctum({
+    url : url,
+    method : 'POST',
+    body : {
+      shippingDetails : formData.value,
+      items :items.value ,
+      productQuantity : quantities.value,
+      selectedAddress : selectedAddress.value
+    }
+  });
+  if(response.success){
+    const data = response.data;
+    if (data.cf_order_id) {
+      order_id.value = data.id;
+      const cashfree = await load({
+        mode: "production" //or production
+      });
+
+      let checkoutOptions = {
+        paymentSessionId: data.payment_session_id,
+        redirectTarget: "_modal"
+      };
+      const result =await cashfree.checkout(checkoutOptions);
+        if(result.error){
+          alert(result.error.message)
+          disabled.value = false;
+        }
+        if(result.redirect){
+          alert("Please try some diffrent browser");
+          disabled.value = false;
+        }
+        if(result.paymentDetails){
+          disabled.value = false;
+          getPaymentData();
+        }
+    } else {
+      disabled.value = false;
+      alert('Failed to initiate payment.');
+    }
+  }
+  else if(response.msg){
+    alert(response.msg);
+  }
+  else{
+    alert('Failed to initiate checkout');
+  }
+}
+const getPaymentData =async () => {
+  disabled.value = true;
+  const config = useRuntimeConfig();
+  const url = `${
+    config.API_BASE_URL ? config.API_BASE_URL : "https://fashtsaly.com/API/public/"
+  }api/paymentFetchCheckout`;
+  const data = await fetchFromSanctum({
+    url : url,
+    method : 'POST',
+    body : {
+      order_id : order_id.value
+    }
+  });
+  disabled.value = false;
+  if(data.res){
+    alert('Payment Successfull');
+    navigateTo('/orderConfirmed');
+  }
+  else{
+    alert(data.msg);
+  }  
+}
 </script>
 
 <style scoped>
