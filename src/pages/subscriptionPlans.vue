@@ -101,37 +101,6 @@ const getPaymentData = async () => {
   </div>
   <div class="subsPlansMain py-5 bg-gray-100" v-else>
     <div class="container flex justify-center flex-wrap items-start">
-      <div class="offers lg:w-[300px] md:w-[300px] w-[100%]" v-for="pricing in plansData" :key="pricing.id">
-        <h2 class="bgblue80 text-white py-3 lg:text-4xl text-3xl">{{ pricing.title }}</h2>
-        <h3 class="price lg:text-5xl text-4xl py-3 bg-gray-100">₹ {{ pricing.price }}</h3>
-        <!-- <small>Annually</small> -->
-        <!-- <p>{{ pricing.description }}</p> -->
-        <ul>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            Search By Image
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            5 Searches
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            Easy download
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            manufacturer details
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            wholesale price
-          </li>
-        </ul>
-        <button :disabled="disabled" @click="proceedPayment(pricing.id)" class="rounded">
-          Subscribe
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div class="subsPlansMain py-5 bg-gray-100">
-    <div class="container flex justify-center flex-wrap items-start">
       <div class="offers lg:w-[300px] md:w-[300px] w-[100%]">
         <h2 class="bgblue80 text-white py-3 lg:text-4xl text-3xl">Free</h2>
         <h3 class="price lg:text-5xl text-4xl py-3 bg-gray-100">₹ 0.00</h3>
@@ -152,106 +121,19 @@ const getPaymentData = async () => {
             wholesale price
           </li>
         </ul>
-        <button class="rounded">Subscribe</button>
-      </div>
-      <div class="offers lg:w-[300px] md:w-[300px] w-[100%]">
-        <h2 class="bgblue80 text-white py-3 lg:text-4xl text-3xl">Small Bussiness</h2>
-        <h3 class="price lg:text-5xl text-4xl py-3 bg-gray-100">₹ 299.00/Yr</h3>
-        <ul>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            Search By Image
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            400 Searches
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            Easy download
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            manufacturer details
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            wholesale price
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            no mention our details
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            Whatsapp support
-          </li>
+        <button class="rounded" @click="navigateTo('/')">Continue</button>
+      </div>      
+      <div class="offers lg:w-[300px] md:w-[300px] w-[100%]" v-for="pricing in plansData" :key="pricing.id">
+        <h2 class="bgblue80 text-white py-3 lg:text-4xl text-3xl">{{ pricing.title }}</h2>
+        <h3 class="price lg:text-5xl text-4xl py-3 bg-gray-100">₹ {{ pricing.price }}</h3>
+        <!-- <small>Annually</small> -->
+        <!-- <p>{{ pricing.description }}</p> -->
+        <ul v-html="pricing.description">
         </ul>
-        <button class="rounded">Subscribe</button>
+        <button :disabled="disabled" @click="proceedPayment(pricing.id)" class="rounded">
+          Subscribe
+        </button>
       </div>
-      <div class="offers lg:w-[300px] md:w-[300px] w-[100%]">
-        <h2 class="bgblue80 text-white py-3 lg:text-4xl text-3xl">Enterprises</h2>
-        <h3 class="price lg:text-5xl text-4xl py-3 bg-gray-100">₹ 599.00/Yr</h3>
-        <ul>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            Search By Image
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            1500 Searches
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            Easy download
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            manufacturer details
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            wholesale price
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            no mention our details
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            Whatsapp/call support
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            Whatsapp group updates (for new and sale update)
-          </li>
-        </ul>
-        <button class="rounded">Subscribe</button>
-      </div>
-      <div class="offers lg:w-[300px] md:w-[300px] w-[100%]">
-        <h2 class="bgblue80 text-white py-3 lg:text-4xl text-3xl">Branding</h2>
-        <h3 class="price lg:text-5xl text-4xl py-3 bg-gray-100">₹ 1199.00/Yr</h3>
-        <ul>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            Search By Image
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            2000 Searches
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            Easy download
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            manufacturer details
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            wholesale price
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            no mention our details
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            Whatsapp/call support
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            Whatsapp group updates (for new and sale update)
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            Branding solution
-          </li>
-          <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
-            COD for UR customer
-          </li>
-        </ul>
-        <button class="rounded">Subscribe</button>
-      </div>
-      
-      
     </div>
   </div>
 

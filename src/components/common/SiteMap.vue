@@ -31,8 +31,8 @@
           <NuxtLink to="/cancellation" class="hover:underline text-gray-600 text-[15px] capitalize">Cancellation Policy</NuxtLink>
           <NuxtLink to="/faq" class="hover:underline text-gray-600 text-[15px] capitalize">faq</NuxtLink>
           <NuxtLink to="/subscriptionplans" class="hover:underline text-gray-600 text-[15px] capitalize">subscription plans</NuxtLink>
-          <NuxtLink to="/ourservies" class="hover:underline text-gray-600 text-[15px] capitalize">Our Servies</NuxtLink>
-          <NuxtLink to="/advertise" class="hover:underline text-gray-600 text-[15px] capitalize">Advertise</NuxtLink>
+          <NuxtLink to="#" class="hover:underline text-gray-600 text-[15px] capitalize">Our Servies</NuxtLink>
+          <NuxtLink to="#" class="hover:underline text-gray-600 text-[15px] capitalize">Advertise</NuxtLink>
         </li>
       </ul>
       <ul class="lg:py-4 py-2 pagesLink">
@@ -47,8 +47,8 @@
           <NuxtLink to="/cancellation" class="hover:underline text-gray-600 text-[15px] capitalize">Cancellation Policy</NuxtLink>
           <NuxtLink to="/faq" class="hover:underline text-gray-600 text-[15px] capitalize">faq</NuxtLink>
           <NuxtLink to="/subscriptionplans" class="hover:underline text-gray-600 text-[15px] capitalize">subscription plans</NuxtLink>
-          <NuxtLink to="/ourservies" class="hover:underline text-gray-600 text-[15px] capitalize">Our Servies</NuxtLink>
-          <NuxtLink to="/advertise" class="hover:underline text-gray-600 text-[15px] capitalize">Advertise</NuxtLink>
+          <NuxtLink to="#" class="hover:underline text-gray-600 text-[15px] capitalize">Our Servies</NuxtLink>
+          <NuxtLink to="#" class="hover:underline text-gray-600 text-[15px] capitalize">Advertise</NuxtLink>
         </li>
       </ul>
     </div>

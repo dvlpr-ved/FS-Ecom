@@ -66,7 +66,7 @@ class="AppFooter lg:bg-blue-800 lg:text-white text-black lg:block"
             <ul>
               <li class="footerLi">
                 <div class="title font-bold text-2xl capitalize mb-2">Our Servies</div>
-                <NuxtLink to="../subscriptionplans">Subscription Plans</NuxtLink>
+                <NuxtLink to="/subscriptionplans">Subscription Plans</NuxtLink>
                 <NuxtLink to="#">Our Servies</NuxtLink>
                 <NuxtLink to="#">Advertise</NuxtLink>
               </li>

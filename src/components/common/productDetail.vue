@@ -14,14 +14,23 @@ const removeMoreProduct = () => {
   if (productCount.value > 1) productCount.value--;
 };
 
-const handleAddToCart = async () => {
+const handleAddToCart = async (action) => {
+  if(isOutOfStock.value){
+    navigateTo(`https://api.whatsapp.com/send?phone=+910123456789&text=Hello, Looking i want to buy ${product.value.name}. Get in touch with me my name is`);
+    return;
+  }
   const addToCart = await cart.saveCartItem({
     product_id: sku.value.id,
     is_wishlist: 0,
     quantity: productCount.value,
   });
   if (addToCart.success) {
+    if(action == 'buy'){
     navigateTo("/mycart");
+    }
+    else{
+      alert('Item added to cart');
+    }
   } else {
     if (addToCart.msg) {
       navigateTo("/mycart");
@@ -178,16 +187,24 @@ watch([colorSelected, sizeSelected], async () => {
             <span>{{ productCount }}</span>
             <button @click="addMoreProduct"><i class="pi pi-plus"></i></button>
           </div>
-          <div class="btnsdiv flex justify-between">
+          <div class="btnsdiv flex justify-between gap-3">
             <button
-              @click="handleAddToCart"
+              @click="handleAddToCart('buy')"
+              :danger="true"
+              :disabled="skuIsLoading || isOutOfStock ? true : false"
+              class="py-3 w-[48%] bg-black transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
+            >
+            ₹ {{ isOutOfStock ? "Out of stock" : "Buy Now" }}
+            </button>
+            <button
+              @click="handleAddToCart('cart')"
               :danger="true"
               :disabled="skuIsLoading || isOutOfStock ? true : false"
               class="py-3 w-[48%] bg-black transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
             >
               <i class="pi pi-cart-plus lg:text-3xl text-2xl"></i>
-              {{ isOutOfStock ? "Out of stock" : "Add to cart / Buy Now" }}
-            </button>
+              {{ isOutOfStock ? "Out of stock" : "Add to cart" }}
+            </button>                        
             <button class="w-[48%]">
               <NuxtLink
                 :to="`https://api.whatsapp.com/send?phone=+910123456789&text=Hello, Looking i want to buy ${product.name}. Get in touch with me my name is`"
