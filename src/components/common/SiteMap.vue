@@ -1,17 +1,4 @@
-<template>
-    <!-- will useing this design later -->
-    <!-- https://www.elegantthemes.com/blog/divi-resources/how-to-create-a-dynamic-html-sitemap-page-in-divi -->
-    <div class="p-4 max-w-[800px] mx-auto">
-      <h1 class="text-2xl font-bold mb-4">Sitemap</h1>
-      <ul class="space-y-2 flex flex-wrap gap-4 items-center">
-        <li v-for="(route, index) in routes" :key="index" class="text-blue-500 w-1/3">
-          <NuxtLink :to="route.url" class="hover:underline block p-3 rounded-lg shadow-md bg-white text-gray-800 hover:bg-gray-100 transition duration-300 ease-in-out">{{ route.label }}</NuxtLink>
-        </li>
-      </ul>
-    </div>
-  </template>
-  
-  <script>
+ <script>
   export default {
     data() {
       return {
@@ -26,6 +13,46 @@
     }
   };
   </script>
+
+<template>
+    <!-- will useing this design later -->
+    <!-- https://www.elegantthemes.com/blog/divi-resources/how-to-create-a-dynamic-html-sitemap-page-in-divi -->
+    <div class="p-4 max-w-[800px] mx-auto">
+      <h1 class="text-4xl font-bold text-orange-500">Sitemap</h1>
+      <ul class="lg:py-4 py-2 pagesLink">
+        <li class="flex flex-wrap gap-x-4 gap-y-2 items-center">
+          <h3 class="w-full text-4xl">Pages</h3>
+          <NuxtLink to="/" class="hover:underline text-gray-600 text-[15px] capitalize">Home</NuxtLink>
+          <NuxtLink to="/about" class="hover:underline text-gray-600 text-[15px] capitalize">About US</NuxtLink>
+          <NuxtLink to="/contactus" class="hover:underline text-gray-600 text-[15px] capitalize">contact US</NuxtLink>
+          <NuxtLink to="/privacypolicy" class="hover:underline text-gray-600 text-[15px] capitalize">privacy & policy</NuxtLink>
+          <NuxtLink to="/shippingpolicy" class="hover:underline text-gray-600 text-[15px] capitalize">shipping policy</NuxtLink>
+          <NuxtLink to="/payment" class="hover:underline text-gray-600 text-[15px] capitalize">payment</NuxtLink>
+          <NuxtLink to="/cancellation" class="hover:underline text-gray-600 text-[15px] capitalize">Cancellation Policy</NuxtLink>
+          <NuxtLink to="/faq" class="hover:underline text-gray-600 text-[15px] capitalize">faq</NuxtLink>
+          <NuxtLink to="/subscriptionplans" class="hover:underline text-gray-600 text-[15px] capitalize">subscription plans</NuxtLink>
+          <NuxtLink to="/ourservies" class="hover:underline text-gray-600 text-[15px] capitalize">Our Servies</NuxtLink>
+          <NuxtLink to="/advertise" class="hover:underline text-gray-600 text-[15px] capitalize">Advertise</NuxtLink>
+        </li>
+      </ul>
+      <ul class="lg:py-4 py-2 pagesLink">
+        <li class="flex flex-wrap gap-x-4 gap-y-2 items-center">
+          <h3 class="w-full text-4xl">product catagories</h3>
+          <NuxtLink to="/" class="hover:underline text-gray-600 text-[15px] capitalize">Home</NuxtLink>
+          <NuxtLink to="/about" class="hover:underline text-gray-600 text-[15px] capitalize">About US</NuxtLink>
+          <NuxtLink to="/contactus" class="hover:underline text-gray-600 text-[15px] capitalize">contact US</NuxtLink>
+          <NuxtLink to="/privacypolicy" class="hover:underline text-gray-600 text-[15px] capitalize">privacy & policy</NuxtLink>
+          <NuxtLink to="/shippingpolicy" class="hover:underline text-gray-600 text-[15px] capitalize">shipping policy</NuxtLink>
+          <NuxtLink to="/payment" class="hover:underline text-gray-600 text-[15px] capitalize">payment</NuxtLink>
+          <NuxtLink to="/cancellation" class="hover:underline text-gray-600 text-[15px] capitalize">Cancellation Policy</NuxtLink>
+          <NuxtLink to="/faq" class="hover:underline text-gray-600 text-[15px] capitalize">faq</NuxtLink>
+          <NuxtLink to="/subscriptionplans" class="hover:underline text-gray-600 text-[15px] capitalize">subscription plans</NuxtLink>
+          <NuxtLink to="/ourservies" class="hover:underline text-gray-600 text-[15px] capitalize">Our Servies</NuxtLink>
+          <NuxtLink to="/advertise" class="hover:underline text-gray-600 text-[15px] capitalize">Advertise</NuxtLink>
+        </li>
+      </ul>
+    </div>
+  </template>
   
   <style lang="scss"></style
   

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { fetchFromSanctum } from "/utils/sanctumApi.js";
 const cartstore = useCartStore();
-const CartItems = computed(() => cartstore.getCartLength || '');
+const CartItems = computed(() => cartstore.getCartLength || "");
 const getWishlistItems = useWishlistStore();
-const wishlistd = computed(() => getWishlistItems.getWishlistLength || '');
+const wishlistd = computed(() => getWishlistItems.getWishlistLength || "");
 // const wishlistd = ref(2);
 const wishlistItems = ref(2);
 const NotiFication = ref(10);
@@ -56,8 +56,9 @@ const fetchSearchResult = async () => {
 };
 const closeAutoomplete = () => {
   showAutoComplete.value = false;
-  searchQuery.value = ''
-}
+  searchQuery.value = "";
+};
+
 </script>
 
 <template>
@@ -68,6 +69,7 @@ const closeAutoomplete = () => {
       <div class="headerLeft flex justify-between items-center">
         <NuxtLink to="/" class="logo">
           <span class="text-3xl uppercase headingsFont">fashtsaly</span>
+          <!-- <img src="https://fashtsaly.com/wp-content/uploads/2023/02/fashtsaly.png" class=" h-[50px]"/> -->
         </NuxtLink>
       </div>
 
@@ -112,7 +114,9 @@ const closeAutoomplete = () => {
           </span>
         </li>
         <li class="block">
-          <button class="subscribe commonbtn text-xl">subscribe</button>
+          <NuxtLink class="subscribe commonbtn text-xl" to="subscriptionplans"
+            >subscribe</NuxtLink
+          >
         </li>
         <li
           class="icons relative user flex items-center gap-2 cursor-pointer"
@@ -169,6 +173,7 @@ const closeAutoomplete = () => {
 </template>
 
 <style lang="scss" scoped>
+.p-progressbar {display: none!important;}
 .AppHeader {
   padding: 8px 0;
   border-bottom: 1px solid var(--gray);

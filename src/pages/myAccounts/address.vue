@@ -2,6 +2,15 @@
 definePageMeta({
   layout: "myaccounts",
 });
+
+
+const authStore = useAuthStore();
+onMounted(() => {
+  if (!authStore.isUserLoggedin) {
+    navigateTo("/");
+  }
+});
+
 </script>
 
 <template>
