@@ -105,7 +105,7 @@ onMounted(() => {
               </div>
               <div class="contentdiv">
                 <div class="topconten">
-                  <h2 class="text-lg font-semibold mb-2">{{ items.name }}</h2>
+                  <div class="text-lg font-semibold mb-2">{{ items.name }}</div>
                   <p class="text-gray-600 mb-1">{{ items.created_at }}</p>
                   <p class="text-gray-600 mb-1">Price: ₹{{ items.mrp }}</p>
                 </div>

@@ -102,8 +102,8 @@ const getPaymentData = async () => {
   <div class="subsPlansMain py-5 bg-gray-100" v-else>
     <div class="container flex justify-center flex-wrap items-start">
       <div class="offers lg:w-[300px] md:w-[300px] w-[100%]">
-        <h2 class="bgblue80 text-white py-3 lg:text-4xl text-3xl">Free</h2>
-        <h3 class="price lg:text-5xl text-4xl py-3 bg-gray-100">₹ 0.00</h3>
+        <h3 class="bgblue80 text-white py-3 lg:text-3xl text-3xl">Free</h3>
+        <div class="price lg:text-5xl text-3xl py-3 bg-gray-100">₹ 0.00</div>
         <ul>
           <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
             Search By Image
@@ -122,10 +122,10 @@ const getPaymentData = async () => {
           </li>
         </ul>
         <button class="rounded" @click="navigateTo('/')">Continue</button>
-      </div>      
+      </div>    
       <div class="offers lg:w-[300px] md:w-[300px] w-[100%]" v-for="pricing in plansData" :key="pricing.id">
-        <h2 class="bgblue80 text-white py-3 lg:text-4xl text-3xl">{{ pricing.title }}</h2>
-        <h3 class="price lg:text-5xl text-4xl py-3 bg-gray-100">₹ {{ pricing.price }}</h3>
+        <h3 class="bgblue80 text-white py-3 lg:text-3xl text-3xl">{{ pricing.title }}</h3>
+        <div class="price lg:text-5xl text-3xl py-3 bg-gray-100">₹ {{ pricing.price }}</div>
         <!-- <small>Annually</small> -->
         <!-- <p>{{ pricing.description }}</p> -->
         <ul v-html="pricing.description">
