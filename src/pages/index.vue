@@ -1,4 +1,10 @@
 <script setup>
+useSeoMeta({
+  title: "Online Shopping Site for Reselling Products",
+  keywords: "Online Shopping in India, online Shopping store, Online Shopping Site, Buy Online, Shop Online, Online.",
+  description: "Online Shopping Site for Reselling Products"
+});
+
 import { fetchFromSanctum } from "../utils/sanctumApi.js";
 
 const isLoading = ref(true);
@@ -25,7 +31,9 @@ onMounted(() => {
 <template>
   <template v-if="isLoading">
     <div class="lg:block hidden">
-      <div class="bannerAni h-[40vh] animate-pulse shimmer rounded bg-gray-200 my-5"></div>
+      <div
+        class="bannerAni h-[40vh] animate-pulse shimmer rounded bg-gray-200 my-5"
+      ></div>
       <div class="cardsAni flex gap-2">
         <ShimmereCard />
         <ShimmereCard />

@@ -1,6 +1,14 @@
 @import url(reset.scss);
+// only logo
+@import url('https://fonts.googleapis.com/css2?family=Happy+Monkey&display=swap');
+// default fonts
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+// ===========================================//
+// headings fonts
+@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&display=swap');
+
+// roboto removed
+// @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 // colors
 :root{--gray:#f1f1f1;--black:#181818;--white:#ffffff;--primary:#ff9900; --seconcary:#ff6161;--text-blue:#113580; --boxshadow: 0px 3px 6px rgba(0, 0, 0, 0.16);}
@@ -17,10 +25,12 @@
 ::-webkit-scrollbar-thumb:hover {background: #555;}
 
 // secondary fonts
-h1, h2, h3, h4, h5, h6, .heading, .headings, .title{font-family: "Roboto", sans-serif;}
+h1, h2, h3, h4, h5, h6{font-family: "Mochiy Pop P One", sans-serif; letter-spacing: 2px; font-weight: 400;}
+// h1, h2, h3, h4, h5, h6, .heading, .headings, .title{font-family: "Mochiy Pop P One", sans-serif; letter-spacing: 2px; font-weight: 400;}
 h1, h2, h3, h4, h5, h6, .heading, .headings{text-transform: capitalize;}
-.headingsFont{font-family: "Roboto", sans-serif;}
+.headingsFont{font-family: "Mochiy Pop P One", sans-serif; letter-spacing: 2px; font-weight: 400;}
 
+.logo {font-family: "Happy Monkey", system-ui;font-weight: 600; letter-spacing: 2px;}
 // default css
 input{padding: 5px 10px; border: 1px solid #b1b1b1;}
 .body{background: var(--white); color: var(--black);}

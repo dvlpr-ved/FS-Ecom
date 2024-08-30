@@ -67,8 +67,8 @@ const closeAutoomplete = () => {
     <!-- only for desktop -->
     <div class="headerDesk container lg:flex hidden justify-between">
       <div class="headerLeft flex justify-between items-center">
-        <NuxtLink to="/" class="logo">
-          <span class="text-3xl uppercase headingsFont">fashtsaly</span>
+        <NuxtLink to="/" class="logo text text-5xl">
+          fashtsaly
           <!-- <img src="https://fashtsaly.com/wp-content/uploads/2023/02/fashtsaly.png" class=" h-[50px]"/> -->
         </NuxtLink>
       </div>
@@ -140,9 +140,10 @@ const closeAutoomplete = () => {
 
     <!-- header for mobile -->
     <div class="container mx-auto flex items-center justify-between py-1 lg:hidden">
-      <NuxtLink to="/" class="logo">
-        <span class="text-3xl uppercase font-bold">Fashtsaly</span>
-      </NuxtLink>
+       <NuxtLink to="/" class="logo text text-5xl">
+          fashtsaly
+          <!-- <img src="https://fashtsaly.com/wp-content/uploads/2023/02/fashtsaly.png" class=" h-[50px]"/> -->
+        </NuxtLink>
       <ul class="navList flex items-center justify-center space-x-4">
         <li class="icons text-center cart">
           <NuxtLink

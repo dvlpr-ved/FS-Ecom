@@ -12,6 +12,7 @@ const totalComputed = computed(() => {
   }, 0);
 });
 
+
 // const apiRemoveItemFromCart = useRemoveItemFromCart();
 const RemoveItemFromCart = async (product_id: number) => {
   const isConfirmed = window.confirm(
@@ -87,8 +88,6 @@ const proceedCheckoutSingle =async (item) => {
   <div class="myordersmain bg-gray-200 py-5">
     <div class="myorder_inner container">
       <h1 class="text-3xl font-semibold mb-4 text-center">My Cart</h1>
-
-
       <template v-if="isLoading">
         <div class="shimmermain space-y-4">
           <div class="flex justify-between">
@@ -167,7 +166,7 @@ const proceedCheckoutSingle =async (item) => {
                 </div>
                 <div class="contentdiv">
                   <div class="topconten">
-                    <h2 class="text-lg font-semibold mb-2">{{ items.product_name }}</h2>
+                    <div class="text-lg font-semibold mb-2">{{ items.product_name }}</div>
                     <p class="text-gray-600 mb-1">{{ items.created_at }}</p>
                     <p class="text-gray-600 mb-1">Price: ₹{{ items.price }}/PCS</p>
                   </div>
@@ -197,11 +196,11 @@ const proceedCheckoutSingle =async (item) => {
           <div
             class="priceTable bg-white lg:w-[35%] w-[100%] lg:mt-0 mt-3 h-fit sticky top-5"
           >
-          <h5 class="text-2xl text-gray-700 border-b border-b-gray-300 p-3">
+          <div class="text-3xl text-gray-700 border-b border-b-gray-300 p-3">
               Price details
-            </h5>
+            </div>
             <div class="flexPrice flex justify-between p-3">
-              <span class="text-xl">Price (2 Items)</span>
+              <span class="text-xl">Price </span>
               <span class="text-xl text-gray-800">₹ {{ totalComputed }}</span>
             </div>
             <div class="flexPrice flex justify-between p-3">

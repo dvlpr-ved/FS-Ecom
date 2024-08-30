@@ -5,7 +5,7 @@
     
     <div class="container lg:py-5 py-4">
       <div class="wrapContent">
-        <h2 class="text-4xl font-bold my-4">Cancellation Policy</h2>
+        <h2 class="text-4xl font-bold my-4 text-center">Cancellation Policy</h2>
         <div class="leading-7">
           <p class="lg:text-justify lg:text-[16px] mb-4">
             Thank you for choosing to shop with us! We strive to provide our customers
@@ -14,9 +14,9 @@
             cancellation policy.
           </p>
           <div class="subWrapper pl-3">
-            <h2 class="text-2xl font-bold my-4 text-gray-700">
+            <div class="text-2xl font-bold my-4 text-gray-700">
               Cancellation by the Customer:
-            </h2>
+            </div>
             <p class="lg:text-justify lg:text-[16px] mb-4">
               If for any reason you wish to cancel your order, you may do so by contacting
               our customer service team
@@ -33,9 +33,9 @@
             </p>
           </div>
           <div class="subWrapper pl-3">
-            <h2 class="text-2xl font-bold my-4 text-gray-700">
+            <div class="text-2xl font-bold my-4 text-gray-700">
               Cancellation by the Company:
-            </h2>
+            </div>
             <p class="lg:text-justify lg:text-[16px] mb-4">
               We reserve the right to cancel any order at any time for any reason. In the
               event that we need to cancel your order, we will notify you as soon as
@@ -43,7 +43,7 @@
             </p>
           </div>
           <div class="subWrapper pl-3">
-            <h2 class="text-2xl font-bold my-4 text-gray-700">Refund Policy:</h2>
+            <div class="text-2xl font-bold my-4 text-gray-700">Refund Policy:</div>
             <p class="lg:text-justify lg:text-[16px] mb-4">
               If the order is cancelled, lost or un-delivered to your preferred location,
               we will refund the complete order, if paid online.
