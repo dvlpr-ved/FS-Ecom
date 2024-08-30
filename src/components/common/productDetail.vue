@@ -26,14 +26,14 @@ const handleAddToCart = async (action) => {
   });
   if (addToCart.success) {
     if(action == 'buy'){
-    navigateTo("/mycart");
+    navigateTo("/myCart");
     }
     else{
       alert('Item added to cart');
     }
   } else {
     if (addToCart.msg) {
-      navigateTo("/mycart");
+      navigateTo("/myCart");
     }
   }
 };

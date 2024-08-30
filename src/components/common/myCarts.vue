@@ -62,7 +62,7 @@ const proceedCheckout =async () => {
     body : {items : arr}
   });
   if(res.success){
-    navigateTo('checkout');
+    navigateTo('CheckOut');
   }
 }
 const proceedCheckoutSingle =async (item) => {
@@ -78,7 +78,7 @@ const proceedCheckoutSingle =async (item) => {
     body : {items : arr}
   });
   if(res.success){
-    navigateTo('checkout');
+    navigateTo('CheckOut');
   }
 }
 </script>
