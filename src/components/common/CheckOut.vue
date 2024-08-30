@@ -347,6 +347,10 @@ const order_id = ref('');
 const disabled = ref(false);
 const processing = ref(false);
 const processPayment =async () => {
+  if(!formData.value.name || !formData.value.email || !formData.value.phone){
+    alert('Fill shipping details');
+    return false;
+  }
   processing.value = true;
   const config = useRuntimeConfig();
   const url = `${
