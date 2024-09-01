@@ -5,7 +5,7 @@ const authStore = useAuthStore();
 <template>
   <aside class="accountsAsideBar lg:w-[24%] w-[100%]">
     <div class="lg:sticky lg:top-3">
-      <div class="commonbox userAvtarInfo p-3 bg-white shadow-sm rounded-sm mb-3">
+      <div class="commonbox userAvtarInfo p-3 bg-white shadow-sm rounded-sm lg:mb-3 lg:border-0 border-b border-gray-300">
         <div class="flexdiv flex gap-3">
           <img
             class="w-[50px] h-[50px] rounded-full"
@@ -24,8 +24,8 @@ const authStore = useAuthStore();
           </div>
         </div>
       </div>
-      <div class="commonbox userAvtarInfo p-3 bg-white shadow-sm rounded-sm mb-3">
-        <div class="headingLg mb-3 text-xl headingsFont">My Activity</div>
+      <div class="commonbox userAvtarInfo p-3 bg-white shadow-sm rounded-sm lg:mb-3 lg:border-0 border-b border-gray-300">
+        <div class="headingLg mb-3 text-xl">My Activity</div>
         <NuxtLink
         to="/"
           class="text-[15px] block capitalize mb-2 hover:text-orange-400"
@@ -36,10 +36,10 @@ const authStore = useAuthStore();
           ><i class="pi pi-heart"></i> wishlist
         </NuxtLink>
       </div>
-      <div class="commonbox userAvtarInfo p-3 bg-white shadow-sm rounded-sm mb-3">
-        <div class="headingLg mb-3 text-xl headingsFont">Account Detail</div>
+      <div class="commonbox userAvtarInfo p-3 bg-white shadow-sm rounded-sm lg:mb-3 lg:border-0 border-b border-gray-300">
+        <div class="headingLg mb-3 text-xl">Account Detail</div>
         <NuxtLink
-          to="/myaccounts"
+          to="#editprofile"
           class="text-[15px] block capitalize mb-2 hover:text-orange-400"
           ><i class="pi pi-arrow-right"></i> Edit Profile
         </NuxtLink>
@@ -50,7 +50,7 @@ const authStore = useAuthStore();
         </NuxtLink>
       </div>
       <div class="commonbox userAvtarInfo p-3 bg-white shadow-sm rounded-sm lg:mb-0 mb-3">
-        <div class="headingLg text-xl cursor-pointer text-center">
+        <div class="headingLg text-xl cursor-pointer lg:text-center">
           <i class="pi pi-sign-out text-xl"></i> Log Out
         </div>
       </div>

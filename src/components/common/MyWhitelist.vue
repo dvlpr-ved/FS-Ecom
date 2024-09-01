@@ -78,6 +78,9 @@ onMounted(() => {
 
       <template v-else-if="cards.length === 0">
         <div class="text-center">
+          <div class="iconimg">
+            <i class="pi pi-heart text-8xl text-gray-500"></i>
+          </div>
           <p class="text-2xl border p-2 px-3 w-fit m-auto mb-2">No Item found.</p>
           <NuxtLink to="../" class="text-3xl text-blue-600">Explore Product</NuxtLink>
         </div>
@@ -90,7 +93,10 @@ onMounted(() => {
             :key="items.id"
             class="bcards py-2 border-b border-b-300 lg:p-3 p-2"
           >
-            <NuxtLink :to="`searchresult/${items.id}`" class="bcards_inner flex lg:gap-4 gap-3 relative">
+            <NuxtLink
+              :to="`searchresult/${items.id}`"
+              class="bcards_inner flex lg:gap-4 gap-3 relative"
+            >
               <div class="flex-shrink-0">
                 <img
                   :src="

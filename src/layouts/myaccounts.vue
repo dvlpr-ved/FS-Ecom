@@ -20,8 +20,8 @@ export default defineComponent({
 
 <template>
   <AppHeader />
-  <section class="myAccounts bg-gray-200 py-5">
-    <div class="container">
+  <section class="myAccounts bg-gray-200 lg:py-5">
+    <div class="container lg:px-2 p-0">
       <div class="flexdivPanel flex flex-wrap justify-between">
         <AsideBar />
         <div class="accountsRightPanel lg:w-[74%] w-[100%]">

@@ -29,9 +29,9 @@ function saveChanges() {
 </script>
 
 <template>
-  <div class="editProfile_div bg-white p-5 rounded-sm">
-    <div class="titeldiv flex gap-2 items-center mb-5">
-      <p class="text-xl headingsFont font-[500]">Personal Information</p>
+  <div id="editprofile" class="editProfile_div bg-white p-5 rounded-sm">
+    <div class="titeldiv flex gap-2 items-center pb-2">
+      <p class="text-xl font-[500]">Personal Information</p>
       <span class="text-blue-700 font-[500] text-xl cursor-pointer" @click="toggleEdit">{{
         editing ? "Cancel" : "Edit"
       }}</span>
@@ -59,7 +59,7 @@ function saveChanges() {
       </div>
 
       <div class="gender_div w-full flex flex-wrap gap-x-4">
-        <p class="w-full mb-2 text-[16px] headingsFont">Your Gender</p>
+        <p class="w-full mb-2 text-[16px]">Your Gender</p>
         <div class="in_box flex items-center gap-2 cursor-pointer">
           <input
             type="radio"

@@ -4,7 +4,7 @@ const props = defineProps<{
   closeBtn: () => void;
 }>();
 const handleChange = () => {};
-const emit = defineEmits(['close']);
+const emit = defineEmits(["close"]);
 const config = useRuntimeConfig();
 const searchQuery = ref("");
 watch(searchQuery, (val) => {
@@ -28,9 +28,9 @@ const fetchSearchResult = async () => {
       query: searchQuery.value,
     },
   });
-const handleBlur = (e) => {
-  showAutoComplete.value = false;
-};
+  const handleBlur = (e) => {
+    showAutoComplete.value = false;
+  };
   if (data.success) {
     searchResult.catg = data.catg;
     searchResult.products = data.products;
@@ -39,10 +39,10 @@ const handleBlur = (e) => {
   }
 };
 const closeModal = () => {
-  searchQuery.value = '';
-  showAutoComplete.value =false;
-  emit('close')
-}
+  searchQuery.value = "";
+  showAutoComplete.value = false;
+  emit("close");
+};
 </script>
 
 <template>
@@ -52,20 +52,21 @@ const closeModal = () => {
   >
     <div class="flexdiv flex items-center bg-gray-100">
       <input
-          class="py-2 px-3 w-full border border-gray-300 rounded text-xl bg-gray-100"
-          placeholder="Search Here..."
-          v-model="searchQuery"
-          @blur="handleBlur"
-        />
+        class="py-2 px-3 w-full border border-gray-300 rounded text-xl bg-gray-100"
+        placeholder="Search Here..."
+        v-model="searchQuery"
+        @blur="handleBlur"
+      />
       <button class="cancelBtn text-blue-700 px-2 text-xl" @click="closeBtn">
         close
       </button>
     </div>
+    <CateGories />
     <SearchAutoComplete
-          @close="closeModal"
-          v-if="showAutoComplete"
-          :results="searchResult"
-        />
+      @close="closeModal"
+      v-if="showAutoComplete"
+      :results="searchResult"
+    />
   </div>
 </template>
 
@@ -73,6 +74,15 @@ const closeModal = () => {
 .SearchFieldMobile {
   .autoCompleteDropDwon {
     box-shadow: unset;
+  }
+  .categories-main-div {
+    display: block;
+    .container {
+      padding: 0;
+    }
+    .heading {
+      display: none;
+    }
   }
 }
 </style>

@@ -12,7 +12,6 @@ const totalComputed = computed(() => {
   }, 0);
 });
 
-
 // const apiRemoveItemFromCart = useRemoveItemFromCart();
 const RemoveItemFromCart = async (product_id: number) => {
   const isConfirmed = window.confirm(
@@ -48,40 +47,42 @@ const removeMoreProduct = (prod_id: number, quan: number) => {
     }
   }
 };
-const proceedCheckout =async () => {
+const proceedCheckout = async () => {
   let arr = [];
-  cards.value.forEach(element => {
+  cards.value.forEach((element) => {
     let elem = element;
-    if(Object.keys(quantities.value).length > 0){
-      elem.quantity = quantities.value[element.id] ?  quantities.value[element.id] : element.quantity;
+    if (Object.keys(quantities.value).length > 0) {
+      elem.quantity = quantities.value[element.id]
+        ? quantities.value[element.id]
+        : element.quantity;
     }
     arr.push(elem);
   });
   const res = await fetchFromSanctum({
-    url : 'https://fashtsaly.com/API/public/api/proccedCheckout' ,
-    method: 'POST',
-    body : {items : arr}
+    url: "https://fashtsaly.com/API/public/api/proccedCheckout",
+    method: "POST",
+    body: { items: arr },
   });
-  if(res.success){
-    navigateTo('CheckOut');
+  if (res.success) {
+    navigateTo("checkout");
   }
-}
-const proceedCheckoutSingle =async (item) => {
+};
+const proceedCheckoutSingle = async (item) => {
   let arr = [];
-    let elem = item;
-    if(Object.keys(quantities.value).length > 0){
-      elem.quantity = quantities.value[item.id] ?  quantities.value[item.id] : item.quantity;
-    }
-    arr.push(elem);
-  const res = await fetchFromSanctum({
-    url : 'https://fashtsaly.com/API/public/api/proccedCheckout' ,
-    method: 'POST',
-    body : {items : arr}
-  });
-  if(res.success){
-    navigateTo('CheckOut');
+  let elem = item;
+  if (Object.keys(quantities.value).length > 0) {
+    elem.quantity = quantities.value[item.id] ? quantities.value[item.id] : item.quantity;
   }
-}
+  arr.push(elem);
+  const res = await fetchFromSanctum({
+    url: "https://fashtsaly.com/API/public/api/proccedCheckout",
+    method: "POST",
+    body: { items: arr },
+  });
+  if (res.success) {
+    navigateTo("checkout");
+  }
+};
 </script>
 
 <template>
@@ -137,14 +138,19 @@ const proceedCheckoutSingle =async (item) => {
 
       <template v-else-if="cards.length === 0">
         <div class="text-center">
+          <div class="iconimg">
+            <i class="pi pi-shopping-cart text-8xl text-gray-500"></i>
+          </div>
           <p class="text-2xl border p-2 px-3 w-fit m-auto mb-2">No Item found.</p>
           <NuxtLink to="../" class="text-3xl text-blue-600">Explore Product</NuxtLink>
         </div>
       </template>
 
-
       <template v-else>
-        <div v-if="cards.length" class="cardsflex flex flex-wrap justify-between relative">
+        <div
+          v-if="cards.length"
+          class="cardsflex flex flex-wrap justify-between relative"
+        >
           <div class="cardsWrapper bg-white lg:w-[60%] w-[100%]">
             <div
               v-for="items in cards"
@@ -170,13 +176,33 @@ const proceedCheckoutSingle =async (item) => {
                     <p class="text-gray-600 mb-1">{{ items.created_at }}</p>
                     <p class="text-gray-600 mb-1">Price: ₹{{ items.price }}/PCS</p>
                   </div>
-                  <div class="productCounter mb-3 flex gap-4 border border-gray-400 p-2 px-3 w-[fit-content]">
-                    <button @click="removeMoreProduct(items.id, quantities[items.id] ? quantities[items.id] : items.quantity)">
+                  <div
+                    class="productCounter mb-3 flex gap-4 border border-gray-400 p-2 px-3 w-[fit-content]"
+                  >
+                    <button
+                      @click="
+                        removeMoreProduct(
+                          items.id,
+                          quantities[items.id] ? quantities[items.id] : items.quantity
+                        )
+                      "
+                    >
                       <i class="pi pi-minus"></i>
                     </button>
-                    <span>{{ quantities[items.id] ? quantities[items.id] : items.quantity }}</span>
-                    <button @click="addMoreProduct(items.id, quantities[items.id] ? quantities[items.id] : items.quantity)"><i class="pi pi-plus"></i></button>
-                  </div>                  
+                    <span>{{
+                      quantities[items.id] ? quantities[items.id] : items.quantity
+                    }}</span>
+                    <button
+                      @click="
+                        addMoreProduct(
+                          items.id,
+                          quantities[items.id] ? quantities[items.id] : items.quantity
+                        )
+                      "
+                    >
+                      <i class="pi pi-plus"></i>
+                    </button>
+                  </div>
                   <div class="flexbtn flex gap-5 lg:mt-3 mt-2">
                     <button
                       class="bg-[#e53535] text-white py-1 px-3 rounded"
@@ -184,7 +210,10 @@ const proceedCheckoutSingle =async (item) => {
                     >
                       Remove
                     </button>
-                    <button @click="proceedCheckoutSingle(items)" class="bgorange text-white py-1 px-3 rounded">
+                    <button
+                      @click="proceedCheckoutSingle(items)"
+                      class="bgorange text-white py-1 px-3 rounded"
+                    >
                       Buy This
                     </button>
                   </div>
@@ -196,7 +225,7 @@ const proceedCheckoutSingle =async (item) => {
           <div
             class="priceTable bg-white lg:w-[35%] w-[100%] lg:mt-0 mt-3 h-fit sticky top-5"
           >
-          <div class="text-3xl text-gray-700 border-b border-b-gray-300 p-3">
+            <div class="text-3xl text-gray-700 border-b border-b-gray-300 p-3">
               Price details
             </div>
             <div class="flexPrice flex justify-between p-3">
@@ -218,7 +247,10 @@ const proceedCheckoutSingle =async (item) => {
             <p class="text-xl p-3">
               Your Saving <span class="text-xl text-green-600">₹0</span> on this order
             </p>
-            <button @click="proceedCheckout" class="px-4 py-2 text-2xl bgorange text-white w-full">
+            <button
+              @click="proceedCheckout"
+              class="px-4 py-2 text-2xl bgorange text-white w-full"
+            >
               Place Order
             </button>
           </div>

@@ -58,20 +58,20 @@ const toggleForm = () => {
 
 <template>
   <Dialog :visible="props.visible" modal class="p-0" :style="{ width: '1024px' }">
-    <div class="flexDialog flex flex-wrap justify-between relative">
+    <div class="flexDialog flex flex-wrap justify-between relative overflow-hidden">
       <div
         :class="[
           'fixedBanner',
           'absolute',
           'lg:w-[50%]',
           'w-[100%]',
-          'bgblue80',
+          'bgblue800',
           'z-10',
           ChangePosition,
         ]"
       >
         <img
-          class="brightness-[0.]"
+          class="brightness-[0.] w-full"
           src="assets/images/common/signup.png"
           alt="subscriber"
         />
@@ -86,11 +86,10 @@ const toggleForm = () => {
       <!-- Signup Form -->
       <signUp :toggleForm="toggleForm" />
 
-      <div
-        class="rightCol lg:w-[50%] w-[100%] lg:p-6 p-3 bg-gray-100"
-        style="background-color: rgb(243, 244, 246) !important"
-      >
-        <div class="heading text-center lg:text-5xl text-3xl lg:mb-4 mb-2">Login</div>
+      <div class="rightCol lg:w-[50%] w-[100%] lg:p-6 p-3">
+        <div class="heading text-center lg:text-3xl text-2xl lg:mb-4 mb-2 headingsFont">
+          Login
+        </div>
 
         <p class="text-[red] text-center">{{ showMessage }}</p>
 
@@ -123,7 +122,7 @@ const toggleForm = () => {
           </button>
         </form>
 
-        <span class="text-center block text-4xl py-3">OR</span>
+        <span class="text-center block text-4xl lg:py-3 py-1">OR</span>
 
         <span
           href="#"
@@ -195,8 +194,12 @@ const toggleForm = () => {
 @media (max-width: 576px) {
   .p-component-overlay-enter {
     overflow-y: scroll;
-    padding: 5px;
+    padding: 0;
     box-shadow: unset;
+    .p-dialog {
+      height: 100%;
+      background-color: #fff;
+    }
   }
   .flexDialog {
     .fixedBanner {

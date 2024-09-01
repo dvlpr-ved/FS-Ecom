@@ -46,16 +46,15 @@ onMounted(() => {
 .image-container {
   overflow: hidden;
   width: 100%;
-  height: 420px;
+  /*height: 420px;*/
 }
 
 .image-container .img_lg {
-  max-height: 416px;
-  max-width: 416px;
+  max-height: 464px;
+  max-width: 348px;
   margin: 0 auto;
   cursor: grab;
   transition: transform 0.3s ease, transform-origin 0.3s ease;
-  /*object-fit: cover;*/
 }
 
 .image-container:hover .img_lg {
@@ -64,5 +63,11 @@ onMounted(() => {
 
 .image-container .img_lg:hover {
   transform-origin: var(--mouse-x) var(--mouse-y);
+}
+@media (max-width: 992px) {
+  .image-container .img_lg {
+    max-height: 376px;
+    max-width:100%;
+  }
 }
 </style>
