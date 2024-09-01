@@ -1,8 +1,9 @@
 <script setup>
 useSeoMeta({
   title: "Online Shopping Site for Reselling Products",
-  keywords: "Online Shopping in India, online Shopping store, Online Shopping Site, Buy Online, Shop Online, Online.",
-  description: "Online Shopping Site for Reselling Products"
+  keywords:
+    "Online Shopping in India, online Shopping store, Online Shopping Site, Buy Online, Shop Online, Online.",
+  description: "Online Shopping Site for Reselling Products",
 });
 
 import { fetchFromSanctum } from "../utils/sanctumApi.js";
@@ -63,6 +64,241 @@ onMounted(() => {
       <CateGories></CateGories>
       <AppBanner :data="blocks[block - 1]" v-if="blocks[block - 1].type == 'Banner'" />
       <Highlights :data="blocks[block - 1]" v-else />
+    </div>
+  </div>
+
+  <div class="fixedSectiopn py-2 bg-gray-200">
+    <div class="deviderFixedSection container bg-gray-100 flex flex-wrap justify-between gap-y-4">
+      <div class="recentViewd border border-gray-300 my-3 rounded p-2 lg:w-[49.6%] w-[100%]">
+        <div class="flexHeading flex justify-between items-center mb-2">
+          <h6 class="text-xl">Recent View</h6>
+          <NuxtLink href="#" class="block">
+            <i class="pi pi-chevron-circle-right text-orange-500 text-3xl"></i>
+          </NuxtLink>
+        </div>
+        <div class="gridViews flex flex-wrap gap-y-2 lg:gap-x-3 gap-x-1">
+          <div class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
+            <NuxtLink to="`#`">
+              <div class="imgsdiv">
+                <img
+                  class="w-full cardImg bg-gray-200 lg:h-[270px] h-[250px] object-cover"
+                  src="https://fashtsaly.com/API/public/uploads/maroonanarkali.jpeg"
+                  alt="highlight img"
+                  loading="lazy"
+                />
+              </div>
+              <p class="ellipsisText lg:text-xl text-xl text-center pt-3 capitalize">
+                product title
+                <!-- {{ props.title.slice(0, 28) }} -->
+              </p>
+              <span
+                class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
+              >
+                product title
+              </span>
+            </NuxtLink>
+          </div>
+          <div class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
+            <NuxtLink to="`#`">
+              <div class="imgsdiv">
+                <img
+                  class="w-full cardImg bg-gray-200 lg:h-[270px] h-[250px] object-cover"
+                  src="https://fashtsaly.com/API/public/uploads/maroonanarkali.jpeg"
+                  alt="highlight img"
+                  loading="lazy"
+                />
+              </div>
+              <p class="ellipsisText lg:text-xl text-xl text-center pt-3 capitalize">
+                product title
+                <!-- {{ props.title.slice(0, 28) }} -->
+              </p>
+              <span
+                class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
+              >
+                product title
+              </span>
+            </NuxtLink>
+          </div>
+          <div class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
+            <NuxtLink to="`/searchresult/`">
+              <div class="imgsdiv">
+                <img
+                  class="w-full cardImg bg-gray-200 lg:h-[270px] h-[250px] object-cover"
+                  src="https://fashtsaly.com/API/public/uploads/maroonanarkali.jpeg"
+                  alt="highlight img"
+                  loading="lazy"
+                />
+              </div>
+              <p class="ellipsisText lg:text-xl text-xl text-center pt-3 capitalize">
+                product title
+                <!-- {{ props.title.slice(0, 28) }} -->
+              </p>
+              <span
+                class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
+              >
+                product title
+              </span>
+            </NuxtLink>
+          </div>
+          <div class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
+            <NuxtLink to="`/searchresult/`">
+              <div class="imgsdiv">
+                <img
+                  class="w-full cardImg bg-gray-200 lg:h-[270px] h-[250px] object-cover"
+                  src="https://fashtsaly.com/API/public/uploads/maroonanarkali.jpeg"
+                  alt="highlight img"
+                  loading="lazy"
+                />
+              </div>
+              <p class="ellipsisText lg:text-xl text-xl text-center pt-3 capitalize">
+                product title
+                <!-- {{ props.title.slice(0, 28) }} -->
+              </p>
+              <span
+                class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
+              >
+                product title
+              </span>
+            </NuxtLink>
+          </div>
+          <div class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
+            <NuxtLink to="`/searchresult/`">
+              <div class="imgsdiv">
+                <img
+                  class="w-full cardImg bg-gray-200 lg:h-[270px] h-[250px] object-cover"
+                  src="https://fashtsaly.com/API/public/uploads/maroonanarkali.jpeg"
+                  alt="highlight img"
+                  loading="lazy"
+                />
+              </div>
+              <p class="ellipsisText lg:text-xl text-xl text-center pt-3 capitalize">
+                product title
+                <!-- {{ props.title.slice(0, 28) }} -->
+              </p>
+              <span
+                class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
+              >
+                product title
+              </span>
+            </NuxtLink>
+          </div>
+        </div>
+      </div>
+      <div class="wishlistedOnHome border border-gray-300 my-3 rounded p-2 lg:w-[49.6%] w-[100%]">
+        <div class="flexHeading flex justify-between items-center mb-2">
+          <h6 class="text-xl">wishlist</h6>
+          <NuxtLink href="wishlist" class="block">
+            <i class="pi pi-chevron-circle-right text-orange-500 text-3xl"></i>
+          </NuxtLink>
+        </div>
+        <div class="gridViews flex flex-wrap gap-y-2 lg:gap-x-3 gap-x-1">
+          <div class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
+            <NuxtLink to="`#`">
+              <div class="imgsdiv">
+                <img
+                  class="w-full cardImg bg-gray-200 lg:h-[270px] h-[250px] object-cover"
+                  src="https://fashtsaly.com/API/public/uploads/maroonanarkali.jpeg"
+                  alt="highlight img"
+                  loading="lazy"
+                />
+              </div>
+              <p class="ellipsisText lg:text-xl text-xl text-center pt-3 capitalize">
+                product title
+                <!-- {{ props.title.slice(0, 28) }} -->
+              </p>
+              <span
+                class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
+              >
+                product title
+              </span>
+            </NuxtLink>
+          </div>
+          <div class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
+            <NuxtLink to="`/searchresult/`">
+              <div class="imgsdiv">
+                <img
+                  class="w-full cardImg bg-gray-200 lg:h-[270px] h-[250px] object-cover"
+                  src="https://fashtsaly.com/API/public/uploads/maroonanarkali.jpeg"
+                  alt="highlight img"
+                  loading="lazy"
+                />
+              </div>
+              <p class="ellipsisText lg:text-xl text-xl text-center pt-3 capitalize">
+                product title
+                <!-- {{ props.title.slice(0, 28) }} -->
+              </p>
+              <span
+                class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
+              >
+                product title
+              </span>
+            </NuxtLink>
+          </div>
+          <div class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
+            <NuxtLink to="`/searchresult/`">
+              <div class="imgsdiv">
+                <img
+                  class="w-full cardImg bg-gray-200 lg:h-[270px] h-[250px] object-cover"
+                  src="https://fashtsaly.com/API/public/uploads/maroonanarkali.jpeg"
+                  alt="highlight img"
+                  loading="lazy"
+                />
+              </div>
+              <p class="ellipsisText lg:text-xl text-xl text-center pt-3 capitalize">
+                product title
+                <!-- {{ props.title.slice(0, 28) }} -->
+              </p>
+              <span
+                class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
+              >
+                product title
+              </span>
+            </NuxtLink>
+          </div>
+          <div class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
+            <NuxtLink to="`/searchresult/`">
+              <div class="imgsdiv">
+                <img
+                  class="w-full cardImg bg-gray-200 lg:h-[270px] h-[250px] object-cover"
+                  src="https://fashtsaly.com/API/public/uploads/maroonanarkali.jpeg"
+                  alt="highlight img"
+                  loading="lazy"
+                />
+              </div>
+              <p class="ellipsisText lg:text-xl text-xl text-center pt-3 capitalize">
+                product title
+                <!-- {{ props.title.slice(0, 28) }} -->
+              </p>
+              <span
+                class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
+              >
+                product title
+              </span>
+            </NuxtLink>
+          </div>
+          <div class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
+            <NuxtLink to="`/searchresult/`">
+              <div class="imgsdiv">
+                <img
+                  class="w-full cardImg bg-gray-200 lg:h-[270px] h-[250px] object-cover"
+                  src="https://fashtsaly.com/API/public/uploads/maroonanarkali.jpeg"
+                  alt="highlight img"
+                  loading="lazy"
+                />
+              </div>
+              <p class="ellipsisText lg:text-xl text-xl text-center pt-3 capitalize">
+                product title
+                <!-- {{ props.title.slice(0, 28) }} -->
+              </p>
+              <span
+                class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
+              >
+                product title
+              </span>
+            </NuxtLink>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

@@ -3,7 +3,6 @@ const props = defineProps({
   toggleForm: Function,
 });
 
-
 const visible = ref(false);
 const inputType = ref("password");
 const successMessage = ref("");
@@ -120,37 +119,36 @@ const toggleFieldType = () => {
 <template>
   <div
     class="signupmaindiv lg:w-[50%] w-[100%] lg:p-5 p-2"
-    style="background: #f1f1f1; border-bottom: 1px solid #ddd"
   >
     <div class="formSide">
-      <h5 class="heading lg:text-5xl text-3xl text-center lg:mb-4 mb-2">
+      <h5 class="heading lg:text-3xl text-2xl text-center lg:mb-4 mb-3">
         Create an Account!
       </h5>
 
       <form class="inputFields lg:px-5 px-4 border-bottom">
         <div v-if="!isOtpFeildVisible">
-          <div class="inputbox mb-3">
+          <div class="inputbox lg:mb-3 mb-2">
             <input
               type="text"
-              class="py-2 text-xl border-0 border-b w-full border-gray-400"
+              class="py-2 px-3 text-xl border w-full border-gray-400 rounded"
               placeholder="Enter Your Name*"
               v-model="formData.name"
             />
             <p class="text-[red]">{{ formError.name }}</p>
           </div>
-          <div class="inputbox mb-3">
+          <div class="inputbox lg:mb-3 mb-2">
             <input
               type="email"
-              class="py-2 text-xl border-0 border-b w-full border-gray-400"
+              class="py-2 px-3 text-xl border w-full border-gray-400 rounded"
               placeholder="Enter Your Email*"
               v-model="formData.email"
             />
             <p class="text-[red]">{{ formError.email }}</p>
           </div>
-          <div class="inputbox mb-3 relative">
+          <div class="inputbox lg:mb-3 mb-2 relative">
             <input
               :type="inputType"
-              class="py-2 text-xl border-0 border-b w-full border-gray-400"
+              class="py-2 px-3 text-xl border w-full border-gray-400 rounded"
               placeholder="Enter Your Password*"
               v-model="formData.password"
             />
@@ -160,10 +158,10 @@ const toggleFieldType = () => {
               <span v-else class="pi pi-eye-slash"></span>
             </button> -->
           </div>
-          <div class="inputbox mb-3 relative">
+          <div class="inputbox lg:mb-3 mb-2 relative">
             <input
               :type="inputType"
-              class="py-2 text-xl border-0 border-b w-full border-gray-400"
+              class="py-2 px-3 text-xl border w-full border-gray-400 rounded"
               placeholder="Confirm Password*"
               v-model="formData.confirmPassword"
             />
@@ -180,7 +178,7 @@ const toggleFieldType = () => {
           </p>
           <input
             type="text"
-            class="py-2 text-xl border-0 border-b w-full border-gray-400"
+            class="py-2 px-3 text-xl border w-full border-gray-400 rounded"
             placeholder="Enter OTP"
             v-model="formData.otp"
           />
@@ -190,11 +188,11 @@ const toggleFieldType = () => {
           class="commonbtn py-2 px-5 text-xl block rounded m-auto max-w-[220px] w-full"
           @click="handleSubmit"
         >
-          Sign Up
+          {{ isOtpFeildVisible ? "Verify otp" : "Sign Up" }}
         </button>
       </form>
 
-      <span class="text-center block text-2xl lg:py-3 py-1">OR</span>
+      <span class="text-center block text-2xl lg:py-2 py-1">OR</span>
 
       <a
         href="#"

@@ -22,19 +22,19 @@ onMounted(() => {
 <template>
   <div class="manageAddress">
     <div class="inner_div bg-gray-50 p-5">
-      <h5 class="text-2xl text-center mb-4">Manage Addresses</h5>
+      <div class="text-2xl text-center mb-4">Manage Addresses</div>
       <template v-if="!NewAddress"
         ><div
           class="commondiv p-3 border border-gray-500 mb-4 cursor-pointer"
           @click="toggleAddress"
         >
-          <h5 class="text-xl" style="color: var(--text-blue)">
+          <div class="text-xl" style="color: var(--text-blue)">
             <i class="pi pi-plus"></i> Add a New Addresses
-          </h5>
+          </div>
         </div></template
       >
       <template v-else>
-        <h5 class="text-xl p-3" style="color: var(--text-blue)">Add Addresses</h5>
+        <div class="text-xl p-3" style="color: var(--text-blue)">Add Addresses</div>
       </template>
 
       <template v-if="NewAddress">

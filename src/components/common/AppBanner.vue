@@ -1,21 +1,22 @@
 <script setup>
-
-const {data} = defineProps({
-  'data' : {
-    type : Object
-  }
-}); 
+const { data } = defineProps({
+  data: {
+    type: Object,
+  },
+});
 
 const itemsToShow = ref(1);
 const isLoading = ref(true);
 </script>
 
 <template>
-  <div v-if="data.source.length > 1"  class="appBannerSlider">
+  <div v-if="data.source.length > 1" class="appBannerSlider">
     <carousel :items-to-show="itemsToShow">
       <slide v-for="card in data.source" :key="card.source">
-        <img class="slideImg lg:block hidden" :src="card.source" load />
-        <img class="slideImg lg:hidden block" :src="card.source" />
+        <NuxtLink to="#">
+          <img class="slideImg lg:block hidden" :src="card.source" loading="lazy" />
+          <img class="slideImg lg:hidden block" :src="card.source" loading="lazy" />
+        </NuxtLink>
       </slide>
       <template #addons>
         <navigation />
@@ -23,7 +24,9 @@ const isLoading = ref(true);
     </carousel>
   </div>
   <div v-else class="appBannerSlider">
-    <img class="slideImg lg:block hidden" :src="data.source[0].source" load />
+    <NuxtLink to="#">
+      <img class="slideImg lg:block hidden" :src="data.source[0].source" loading="lazy" />
+    </NuxtLink>
   </div>
 </template>
 

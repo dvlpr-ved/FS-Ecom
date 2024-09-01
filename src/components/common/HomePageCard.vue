@@ -3,15 +3,15 @@ const props = defineProps<{
   thumbnail?: string;
   title?: string;
   id: Number;
-  hidePrice:{
-    type : Boolean,
-    default : false
-  }
+  hidePrice: {
+    type: Boolean;
+    default: false;
+  };
 }>();
 </script>
 
 <template>
-  <div class="commonCard border lg:ml-3 ml-1 tooltipGroup relative">
+  <div class="commonCard border lg:ml-[2px] tooltipGroup relative">
     <NuxtLink :to="`/searchresult/${props.id}`">
       <div class="imgsdiv">
         <img
