@@ -33,16 +33,26 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="similarCardWrapper highCardMain lg:py-3 py-2 bg-gray-200">
+  <div class="similarCardWrapper highCardMain lg:py-2 py-2 bg-gray-200">
     <div class="container bg-gray-100">
-      <div class="flexHeading flex justify-between items-center lg:py-3 py-2">
+      <div class="flexHeading flex justify-between items-center lg:py-2 py-2">
         <h3 class="text-2xl lg:text-3xl">{{ data.name }}</h3>
-        <NuxtLink href="searchresult" class="commonbtn">View All</NuxtLink>
+        <NuxtLink href="searchresult" class="commonbtn lg:block hidden"
+          >View All</NuxtLink
+        >
+        <NuxtLink href="searchresult" class="lg:hidden block">
+          <i class="pi pi-chevron-circle-right text-orange-500 text-4xl"></i>
+        </NuxtLink>
       </div>
       <div class="relative pb-5">
         <carousel :items-to-show="itemsToShow" :wrap-around="true">
           <slide v-for="card in data.products" :key="card.id">
-            <HomePageCard :hidePrice="true" :thumbnail="card.images" :title="card.name" :id="card.id" />
+            <HomePageCard
+              :hidePrice="true"
+              :thumbnail="card.images"
+              :title="card.name"
+              :id="card.id"
+            />
           </slide>
           <template #addons>
             <navigation />
@@ -54,8 +64,10 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="scss">
-.highCardMain{
-  .rmvPriceFromHome{display:none;}
+.highCardMain {
+  .rmvPriceFromHome {
+    display: none;
+  }
 }
 .similarCardWrapper {
   &:hover .carousel__prev,

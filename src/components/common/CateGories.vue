@@ -38,7 +38,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="categories-main-div lg:py-5 py-3 text-center">
     <div class="container">
-      <h1 class="heading lg:text-5xl text-2xl mb-5">Explore Popular Categories</h1>
+      <h1 class="heading lg:text-5xl text-2xl mb-5">Explore categories</h1>
       <template v-if="isLoading">
         <!-- for desk -->
         <div class="lg:flex justify-between hidden gap-5">
@@ -84,13 +84,16 @@ onBeforeUnmount(() => {
         </div>
       </template>
 
-      <div v-else class="slidesWraper flex justify-center gap-3 w-full relative">
+      <div
+        v-else
+        class="slidesWraper flex justify-center gap-3 w-full relative max-w-[85%] m-auto"
+      >
         <carousel :items-to-show="itemsToShow">
           <slide v-for="(item, index) in cards" :key="index" class="categories-card">
             <div class="avt-wrap">
               <NuxtLink :to="'searchResult?category=' + item.id">
                 <img class="avatar" :src="item.image" :alt="item.name" loading="lazy" />
-                <span class="categories-title">{{ item.name }}</span>
+                <span class="categories-title ellipsisText">{{ item.name }}</span>
               </NuxtLink>
             </div>
           </slide>
@@ -105,6 +108,7 @@ onBeforeUnmount(() => {
 
 <style lang="scss">
 .categories-main-div {
+  text-align: center;
   background-color: var(--gray);
   .avatar {
     height: 120px;
@@ -122,9 +126,10 @@ onBeforeUnmount(() => {
 
 @media (max-width: 576px) {
   .categories-main-div {
+    display:none;
     .avatar {
-      height: 90px;
-      width: 90px;
+      height: 80px;
+      width: 80px;
     }
   }
 }

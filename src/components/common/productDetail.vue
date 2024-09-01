@@ -15,8 +15,10 @@ const removeMoreProduct = () => {
 };
 
 const handleAddToCart = async (action) => {
-  if(isOutOfStock.value){
-    navigateTo(`https://api.whatsapp.com/send?phone=+910123456789&text=Hello, I want to buy ${product.value.name}.  My name is`);
+  if (isOutOfStock.value) {
+    navigateTo(
+      `https://api.whatsapp.com/send?phone=+910123456789&text=Hello, I want to buy ${product.value.name}.  My name is`
+    );
     return;
   }
   const addToCart = await cart.saveCartItem({
@@ -25,11 +27,10 @@ const handleAddToCart = async (action) => {
     quantity: productCount.value,
   });
   if (addToCart.success) {
-    if(action == 'buy'){
-    navigateTo("/mycart");
-    }
-    else{
-      alert('Item added to cart');
+    if (action == "buy") {
+      navigateTo("/mycart");
+    } else {
+      alert("Item added to cart");
     }
   } else {
     if (addToCart.msg) {
@@ -107,10 +108,10 @@ watch([colorSelected, sizeSelected], async () => {
 });
 </script>
 <template>
-  <div class="productdetail_man_div py-5">
-    <div v-if="product" class="container">
-      <div class="flexdiv flex flex-wrap justify-between">
-        <div class="detailGallery lg:w-[42%] w-[100%]">
+  <div class="productdetail_man_div bg-gray-200">
+    <div v-if="product" class="container bg-gray-100">
+      <div class="flexdiv flex flex-wrap lg:justify-between justify-center border-b border-gray-300 pb-5">
+        <div class="detailGallery lg:w-[48%] w-[100%] static lg:pt-5 pt-2 lg:sticky h-fit top-0">
           <ProductZoomImages :data="imageShown ? imageShown : ''" />
           <div class="flex overflow-x-auto lg:w-[42%] w-[100%]">
             <div v-for="image in sku.image">
@@ -122,8 +123,8 @@ watch([colorSelected, sizeSelected], async () => {
             </div>
           </div>
         </div>
-        <div class="productcontent lg:w-[58%] w-[100%]">
-          <div class="pro-title lg:text-3xl text-2xl mb-3">
+        <div class="productcontent lg:w-[50%] w-[100%] pt-4">
+          <div class="pro-title lg:text-3xl text-2xl mb-3 capitalize">
             {{ product.name ? product.name : "" }}
           </div>
           <div class="price">
@@ -141,7 +142,7 @@ watch([colorSelected, sizeSelected], async () => {
             ></span>
           </div>
           <div class="sizesBox flex items-center mb-3">
-            <span class="text-2xl">Sizes :</span>
+            <span class="text-gray-700">Sizes :</span>
             <div
               v-for="s in size"
               @click="handleSizeChange(s)"
@@ -158,7 +159,7 @@ watch([colorSelected, sizeSelected], async () => {
             </div>
           </div>
           <div class="sizesBox flex items-center flex-wrap mb-3">
-            <span class="text-2xl inline-block lg:w-auto w-full">Colors :</span>
+            <span class="text-gray-700 inline-block lg:w-auto w-full">Colors :</span>
             <div
               v-for="c in color"
               @click="handleColorChange(c)"
@@ -174,7 +175,19 @@ watch([colorSelected, sizeSelected], async () => {
               <label for="msize" class="title">{{ c }}</label>
             </div>
           </div>
-
+          <div class="msgBox">
+            <!-- for normal user -->
+            <p class="capitalize flex items-center gap-2">
+              <i class="pi pi-tag text-xl text-orange-500"></i> Additional 10% off on all
+              prepaid orders
+            </p>
+            <!-- for subscribers -->
+            <p class="capitalize hidden">
+              <i class="pi pi-tag text-xl text-orange-500"></i> Additional 50/- rs off on
+              all prepaid orders
+            </p>
+          </div>
+          <div class="text-2xl py-2">Description :</div>
           <article class="productdesc mb-3">
             {{ product.description ? product.description : "" }}
           </article>
@@ -187,12 +200,12 @@ watch([colorSelected, sizeSelected], async () => {
             <span>{{ productCount }}</span>
             <button @click="addMoreProduct"><i class="pi pi-plus"></i></button>
           </div>
-          <div class="btnsdiv flex flex-wrap gap-3">
+          <div class="btnsdiv flex flex-wrap gap-3 mb-5">
             <button
               @click="handleAddToCart('cart')"
               :danger="true"
               :disabled="skuIsLoading || isOutOfStock ? true : false"
-              class="py-3 lg:w-[28%] w-[48%] text-xl bg-black transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
+              class="py-3 lg:w-[31%] w-[48%] text-xl bg-black transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
             >
               <i class="pi pi-cart-plus lg:text-3xl text-2xl"></i>
               {{ isOutOfStock ? "Out of stock" : "Add to cart" }}
@@ -201,12 +214,12 @@ watch([colorSelected, sizeSelected], async () => {
               @click="handleAddToCart('buy')"
               :danger="true"
               :disabled="skuIsLoading || isOutOfStock ? true : false"
-              class="py-3 lg:w-[28%] w-[48%] text-xl bgorange transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
+              class="py-3 lg:w-[31%] w-[48%] text-xl bgorange transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
             >
               <i class="pi pi-tag lg:text-3xl text-2xl"></i>
-             {{ isOutOfStock ? "Out of stock" : "Buy Now" }}
-            </button>                        
-            <button class="lg:w-[28%] w-[100%]">
+              {{ isOutOfStock ? "Ask Query for stock" : "Buy Now" }}
+            </button>
+            <button class="lg:w-[31%] w-[100%]">
               <NuxtLink
                 :to="`https://api.whatsapp.com/send?phone=+910123456789&text=Hello, I want to buy ${product.name}. My name is`"
                 class="Booknowbtn py-3 bg-green-400 text-white capitalize rounded text-2xl text-center flex items-center gap-2 justify-center"
@@ -216,8 +229,8 @@ watch([colorSelected, sizeSelected], async () => {
               >
             </button>
           </div>
-          <div class="sharediv py-5 flex flex-wrap gap-2 items-end">
-            <span class="lg:text-2xl mb-1 w-full">Share Now : </span>
+          <!-- <div class="sharediv py-5 flex flex-wrap lg:gap-x-5 items-end">
+            <span class="lg:text-xl mb-1 w-full capitalize">Share on social media: </span>
             <NuxtLink to="JavaScript:void(0)">
               <i class="pi pi-instagram text-2xl transition"></i>
             </NuxtLink>
@@ -227,26 +240,25 @@ watch([colorSelected, sizeSelected], async () => {
             <NuxtLink to="JavaScript:void(0)">
               <i class="pi pi-facebook text-2xl transition"></i>
             </NuxtLink>
-            <!-- <NuxtLink to="JavaScript:void(0)"> <i class="pi pi-pinterest text-2xl transition"></i> </NuxtLink> -->
             <NuxtLink to="JavaScript:void(0)">
               <i class="pi pi-twitter text-2xl transition"></i>
             </NuxtLink>
-          </div>
-
+          </div> -->
           <div class="vendrsDetail" v-if="vendor">
             <div class="flex flex-wrap pb-2 gap-2 items-center lg:text-[18px] text-1xl">
-              <p class="w-full text-3xl">Seller Details</p>
+              <p class="w-full text-xl capitalize">Manufacturer details:</p>
               <span class="text-gray-600" style="font-size: 16px"
                 >{{ vendor.name ? vendor.name : "" }},
                 {{ vendor.email ? vendor.email : "" }}</span
               >
             </div>
-            <!-- <div class="flex pb-2 gap-2 items-center lg:text-[18px] text-1xl">
-              Seller Address :
-              <span class="text-gray-600" style="font-size: 16px">{{
-                vendor.email ? vendor.email : ""
-              }}</span>
-            </div> -->
+          </div>
+          <div class="que-and-review border bg-gray-100 p-3 pr-5 lg:w-[97%]">
+            <askQuetion />
+            <div class="border mt-2 bg-gray-200 p-2 rounded">
+            <div class="text-2xl mb-2 headingsFontt">Ratings & Reviews</div>
+              <reviewRating />
+            </div>
           </div>
         </div>
       </div>
@@ -281,11 +293,13 @@ watch([colorSelected, sizeSelected], async () => {
       </div>
     </div>
   </div>
-
-  <AddtoCartModal :Checkvisible="Checkvisible" :handleAdCartClose="handleAdCartClose" />
+  <!-- <AddtoCartModal :Checkvisible="Checkvisible" :handleAdCartClose="handleAdCartClose" /> -->
 </template>
 
 <style lang="scss">
+.productdetail_man_div .container {
+  max-width: 1400px;
+}
 .sharediv {
   i {
     border: 1px solid var(--primary);
