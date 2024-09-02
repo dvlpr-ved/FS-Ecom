@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { ref, watch } from "vue";
+import { useRoute } from "vue-router";
 
 const route = useRoute();
 const isSelectedRoute = ref(false);
 
 const checkRoute = () => {
-  isSelectedRoute.value = route.path.toLowerCase().includes('myaccounts');
+  isSelectedRoute.value = route.path.toLowerCase().includes("myaccounts");
 };
 
 watch(route, checkRoute, { immediate: true });
@@ -14,9 +14,9 @@ watch(route, checkRoute, { immediate: true });
 
 <template>
   <footer
-class="AppFooter lg:bg-blue-800 lg:text-white text-black lg:block"
-:style="{ display: isSelectedRoute ? 'block' : 'none' }"
->
+    class="AppFooter lg:bg-blue-800 lg:text-white text-black lg:block"
+    :style="{ display: isSelectedRoute ? 'block' : 'none' }"
+  >
     <div class="container">
       <div class="footerFlex">
         <ul class="flex justify-between fwrap lg:pl-5 pl-0">
@@ -34,6 +34,7 @@ class="AppFooter lg:bg-blue-800 lg:text-white text-black lg:block"
             class="lg:w-[20%] w-[50%] footerLi lg:py-5 px-3 py-3 lg:mb-0 mb-3 lg:border-0 border-b"
           >
             <div class="title font-bold text-2xl capitalize mb-2">Help</div>
+            <NuxtLink to="../myorder">my orders</NuxtLink>
             <NuxtLink to="../payment">Payment</NuxtLink>
             <NuxtLink to="../cancellation">Cancellation & Return</NuxtLink>
             <NuxtLink to="../faq">FAQ</NuxtLink>

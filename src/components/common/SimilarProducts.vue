@@ -4,8 +4,11 @@ const isLoading = ref(true);
 const cards = ref([]);
 const NoData = ref("");
 
-const { suggestions } = defineProps({
+const { suggestions, vendorsProducts } = defineProps({
   suggestions: {
+    default: () => [],
+  },
+  vendorsProducts: {
     default: () => [],
   },
 });
@@ -51,9 +54,6 @@ onBeforeUnmount(() => {
 <template>
   <div class="similarCardWrapper">
     <div class="container bg-white">
-      <div class="heading w-full lg:text-3xl text-3xl py-3 headingsFont">
-        Similar Products
-      </div>
       <template v-if="isLoading">
         <div class="lg:flex hidden justify-between py-4">
           <ShimmereCard />
@@ -68,22 +68,51 @@ onBeforeUnmount(() => {
         </div>
       </template>
       <div v-else class="relative pb-5">
-        <h1>{{ NoData }}</h1>
-        <template v-if="suggestions.length < 4">
-          <div class="flex flex-wrap gap-2" v-for="card in suggestions" :key="card.id">
-            <HomePageCard :thumbnail="card.images" :title="card.name" :id="card.id" />
+        <div class="similarProducts">
+          <div class="heading w-full lg:text-3xl text-3xl py-3 headingsFont">
+            Similar Products
           </div>
-        </template>
-        <template v-else>
-          <carousel :items-to-show="itemsToShow">
-            <slide v-for="card in suggestions" :key="card.id">
+          <template v-if="suggestions.length > 4">
+            <div class="flex gap-2" v-for="card in suggestions" :key="card.id">
               <HomePageCard :thumbnail="card.images" :title="card.name" :id="card.id" />
-            </slide>
-            <template #addons>
-              <navigation />
-            </template>
-          </carousel>
-        </template>
+            </div>
+          </template>
+          <template v-else>
+            <carousel :items-to-show="itemsToShow">
+              <slide v-for="card in suggestions" :key="card.id">
+                <HomePageCard :thumbnail="card.images" :title="card.name" :id="card.id" />
+              </slide>
+              <template #addons>
+                <navigation />
+              </template>
+            </carousel>
+          </template>
+        </div>
+
+        <div class="vendorsProducts">
+          <div class="heading w-full lg:text-3xl text-3xl py-3 headingsFont">
+            Seller Products {{vendorsProducts.length}}
+          </div>
+          <template v-if="vendorsProducts.length > 4">
+            <div
+              class="flex flex-wrap gap-2"
+              v-for="card in vendorsProducts"
+              :key="card.id"
+            >
+              <HomePageCard :thumbnail="card.images" :title="card.name" :id="card.id" />
+            </div>
+          </template>
+          <template v-else>
+            <carousel :items-to-show="itemsToShow">
+              <slide v-for="card in vendorsProducts" :key="card.id">
+                <HomePageCard :thumbnail="card.images" :title="card.name" :id="card.id" />
+              </slide>
+              <template #addons>
+                <navigation />
+              </template>
+            </carousel>
+          </template>
+        </div>
       </div>
     </div>
   </div>

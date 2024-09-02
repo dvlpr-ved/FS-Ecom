@@ -6,10 +6,17 @@ const props = defineProps<{
   price?: number;
   description?: string;
 }>();
+import { useToast } from "primevue/usetoast";
 
 const wishlistStore = useWishlistStore();
 const fetchWishlistData = async () => {
   await wishlistStore.fetchWishlistItems();
+};
+
+const toast = useToast();
+
+const show = (message) => {
+  toast.add({ severity: "info", detail: message, life: 3000 });
 };
 
 const getWishlist = computed(() => wishlistStore.getWishlist);
@@ -35,6 +42,7 @@ const addToCart = async (product_id: number) => {
       const removed = await wishlistStore.fetchRemoveWishlist(product_id);
       if (removed) {
         message.value = "Item removed from wishlist";
+        show(message.value);
       } else {
         message.value = "Failed to remove item from wishlist";
       }
@@ -48,12 +56,13 @@ const addToCart = async (product_id: number) => {
     }
     if (message.value) {
       // alert(message.value);
-      navigateTo("/wishlist");
+      // navigateTo("/wishlist");
+      show(message.value);
     }
   } catch (error) {
     console.error("Error adding/removing product from wishlist:", error);
     message.value = "Error adding/removing product from wishlist";
-    alert(message.value);
+    show(message.value);
   }
 };
 onMounted(async () => {
@@ -63,6 +72,7 @@ onMounted(async () => {
 
 <template>
   <div class="commonCard shadow transition border tooltipGroup relative">
+    <Toast />
     <div class="watchListIcons absolute top-[15px] z-10 right-[15px] cursor-pointer">
       <p class="relative">
         <i
@@ -92,9 +102,15 @@ onMounted(async () => {
           {{ props.title || "Title" }}
         </p>
         <p class="cardtitle rmvPriceFromHome text-gray-700 text-2xl font-bold">
-          <span class="line-through" v-if="props.price && props.price < 700">₹700</span>
-          ₹{{ props.price || "Price" }}
+          <!-- <span class="line-through" v-if="props.price && props.price < 700">₹700</span> -->
+          ₹ {{ props.price || "Price" }}
+          <span class="line-through text-2xl">₹700</span>
         </p>
+
+        <span class="bgblue80 py-1 px-2 block w-fit capitalize mt-1 text-white"
+          >save 20%</span
+        >
+
         <!-- <p class="card_desc" v-if="props.description">
           {{ props.description.slice(0, 30) }}...
         </p> -->
