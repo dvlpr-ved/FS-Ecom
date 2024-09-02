@@ -269,8 +269,7 @@ watch([colorSelected, sizeSelected], async () => {
         </div>
       </div>
       <!-- Releted Products -->
-      <SimilarProducts :suggestions="suggestions" />
-      <SimilarProducts :vendorsProducts="vendorsProducts" />
+      <SimilarProducts :vendorsProducts="vendorsProducts" :suggestions="suggestions" />
     </div>
     <div v-else>
       <div class="container mx-auto px-4 py-8">
