@@ -20,6 +20,11 @@ const submitReply = (id) => {
     question.replyText = "";
   }
 };
+const getQuestionAnswers = () => {
+  // const data = publicApi({
+  //   url : ``,
+  // })
+}
 </script>
 
 <template>
