@@ -99,11 +99,14 @@ const getPaymentData = async () => {
     <ShimmereCard />
     <ShimmereCard />
   </div>
-  <div class="subsPlansMain py-5 bg-gray-100" v-else>
+  <div class="subsPlansMain py-8 bg-gray-100" v-else>
     <div class="container flex justify-center flex-wrap items-start">
       <div class="offers lg:w-[300px] md:w-[300px] w-[100%]">
-        <h3 class="bgblue80 text-white py-3 lg:text-3xl text-3xl">Free</h3>
+        <h3 class="text-dark py-3 text-xl">Free</h3>
         <div class="price lg:text-5xl text-3xl py-3 bg-gray-100">₹ 0.00</div>
+        <div class="bg-gray-200">
+          <button class="rounded-xl" @click="navigateTo('/')">Continue</button>
+        </div>
         <ul>
           <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
             Search By Image
@@ -121,22 +124,41 @@ const getPaymentData = async () => {
             wholesale price
           </li>
         </ul>
-        <button class="rounded" @click="navigateTo('/')">Continue</button>
-      </div>    
-      <div class="offers lg:w-[300px] md:w-[300px] w-[100%]" v-for="pricing in plansData" :key="pricing.id">
-        <h3 class="bgblue80 text-white py-3 lg:text-3xl text-3xl">{{ pricing.title }}</h3>
-        <div class="price lg:text-5xl text-3xl py-3 bg-gray-100">₹ {{ pricing.price }}</div>
+      </div>
+      <div
+        :class="`offers lg:w-[300px] md:w-[300px] w-[100%] relative ${
+          pricing.title == 'Enterprises' ? 'mt-[-46px]' : ''
+        }`"
+        v-for="pricing in plansData"
+        :key="pricing.id"
+      >
+        <p
+          :class="`spclTag text-xl w-fit m-auto rounded-full bg-gray-300 text-dark top-[-15px] px-3 ${
+            pricing.title == 'Enterprises' ? 'py-1 mt-3' : ''
+          }`"
+        >
+          {{ pricing.title == "Enterprises" ? "most popular" : "" }}
+        </p>
+
+        <h3 class="text-dark py-3 text-xl">{{ pricing.title }}</h3>
+        <div class="price lg:text-5xl text-3xl py-3 bg-gray-100">
+          ₹ {{ pricing.price }}
+        </div>
+        <div class="bg-gray-200">
+          <button
+            :disabled="disabled"
+            @click="proceedPayment(pricing.id)"
+            class="rounded-xl"
+          >
+            Subscribe
+          </button>
+        </div>
         <!-- <small>Annually</small> -->
         <!-- <p>{{ pricing.description }}</p> -->
-        <ul v-html="pricing.description">
-        </ul>
-        <button :disabled="disabled" @click="proceedPayment(pricing.id)" class="rounded">
-          Subscribe
-        </button>
+        <ul v-html="pricing.description"></ul>
       </div>
     </div>
   </div>
-
 </template>
 
 <style lang="scss">
@@ -149,7 +171,7 @@ const getPaymentData = async () => {
     position: relative;
     text-align: center;
     background: #fff;
-    margin: 10px;
+    /*margin: 10px;*/
     height: auto;
     top: 0;
     border: 1px solid #eaeaea;
@@ -177,16 +199,16 @@ const getPaymentData = async () => {
   button {
     font-size: 18px;
     font-weight: 500;
-    background: var(--primary);
+    background: var(--text-blue);
     color: #fff;
     margin: 10px auto 10px auto;
-    padding: 3% 8%;
+    padding: 2% 8%;
     border: 0;
     transition-duration: 0.5s;
   }
 
   button:hover {
-    background: var(--text-blue);
+    background: var(--primary);
   }
 }
 </style>

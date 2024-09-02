@@ -44,6 +44,7 @@ const handleAdCartClose = () => {
 const vendor = ref(null);
 const product = ref(null);
 const suggestions = ref(null);
+const vendorsProducts = ref(null);
 const color = ref(null);
 const size = ref(null);
 const colorSelected = ref(null);
@@ -58,6 +59,7 @@ const getProduct = async () => {
   });
   if (success) {
     vendor.value = data.vendor;
+    vendorsProducts.value = data.same_vendor;
     product.value = data.product;
     suggestions.value = data.suggestions;
     color.value = data.colors;
@@ -110,8 +112,12 @@ watch([colorSelected, sizeSelected], async () => {
 <template>
   <div class="productdetail_man_div bg-gray-200">
     <div v-if="product" class="container bg-gray-100">
-      <div class="flexdiv flex flex-wrap lg:justify-between justify-center border-b border-gray-300 pb-5">
-        <div class="detailGallery lg:w-[48%] w-[100%] static lg:pt-5 pt-2 lg:sticky h-fit top-0">
+      <div
+        class="flexdiv flex flex-wrap lg:justify-between justify-center border-b border-gray-300 pb-5"
+      >
+        <div
+          class="detailGallery lg:w-[48%] w-[100%] static lg:pt-5 pt-2 lg:sticky h-fit top-0"
+        >
           <ProductZoomImages :data="imageShown ? imageShown : ''" />
           <div class="flex overflow-x-auto lg:w-[42%] w-[100%]">
             <div v-for="image in sku.image">
@@ -256,7 +262,7 @@ watch([colorSelected, sizeSelected], async () => {
           <div class="que-and-review border bg-gray-100 p-3 pr-5 lg:w-[97%]">
             <askQuetion />
             <div class="border mt-2 bg-gray-200 p-2 rounded">
-            <div class="text-2xl mb-2 headingsFontt">Ratings & Reviews</div>
+              <div class="text-2xl mb-2 headingsFontt">Ratings & Reviews</div>
               <reviewRating />
             </div>
           </div>
@@ -264,6 +270,7 @@ watch([colorSelected, sizeSelected], async () => {
       </div>
       <!-- Releted Products -->
       <SimilarProducts :suggestions="suggestions" />
+      <SimilarProducts :vendorsProducts="vendorsProducts" />
     </div>
     <div v-else>
       <div class="container mx-auto px-4 py-8">
