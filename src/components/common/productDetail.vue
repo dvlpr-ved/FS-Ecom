@@ -68,8 +68,21 @@ const getProduct = async () => {
     colorSelected.value = sku.value.color ? sku.value.color : "";
     sizeSelected.value = sku.value.size ? sku.value.size : "";
     imageShown.value = sku.value.image[0] ? sku.value.image[0].source : "";
+    saveProductToVisited(data.product);
   }
 };
+function saveProductToVisited(product) {
+  const visitedProducts = JSON.parse(localStorage.getItem("visitedProducts")) || [];
+  const updatedProducts = visitedProducts.filter(p => p.id !== product.id);
+
+  updatedProducts.unshift(product);
+  if (updatedProducts.length > 6) {
+    updatedProducts.pop(); // Remove the oldest product (last in the array)
+  }
+
+  localStorage.setItem("visitedProducts", JSON.stringify(updatedProducts));
+
+}
 onMounted(() => {
   getProduct();
 });

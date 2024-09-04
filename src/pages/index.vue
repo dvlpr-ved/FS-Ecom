@@ -11,6 +11,7 @@ import { fetchFromSanctum } from "../utils/sanctumApi.js";
 const isLoading = ref(true);
 
 const blocks = ref([]);
+const recently_viewed = ref();
 const getHomePageData = async () => {
   const config = useRuntimeConfig();
   const data = await fetchFromSanctum({
@@ -28,6 +29,10 @@ const ApiGetWhishlistItems = useWishlistStore();
 const wishlistItems = computed(() => ApiGetWhishlistItems.getWishlist || []);
 onMounted(() => {
   getHomePageData();
+  if(localStorage.getItem("visitedProducts"))
+  {
+    recently_viewed.value = JSON.parse(localStorage.getItem("visitedProducts"));
+  }
 });
 
 </script>
@@ -71,6 +76,37 @@ onMounted(() => {
   </div>
   <div class="fixedSectiopn py-2 bg-gray-200">
     <div class="deviderFixedSection container bg-gray-100 flex flex-wrap justify-between gap-y-4">
+      <div class="wishlistedOnHome border border-gray-300 my-3 rounded p-2 lg:w-[49.6%] w-[100%]">
+        <div class="flexHeading flex justify-between items-center mb-2">
+          <h6 class="text-xl">wishlist</h6>
+          <NuxtLink href="wishlist" class="block">
+            <i class="pi pi-chevron-circle-right text-orange-500 text-3xl"></i>
+          </NuxtLink>
+        </div>
+        <div v-if="recently_viewed" class="gridViews flex flex-wrap gap-y-2 lg:gap-x-3 gap-x-1">
+          <div v-for="recent_prod in recently_viewed" class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
+            <NuxtLink :to="`/searchresult/${recent_prod.id}`">
+              <div class="imgsdiv">
+                <img
+                  class="w-full cardImg bg-gray-200 lg:h-[270px] h-[250px] object-cover"
+                  :src="recent_prod.images[0].source"
+                  alt="highlight img"
+                  loading="lazy"
+                />
+              </div>
+              <p class="ellipsisText lg:text-xl text-xl text-center pt-3 capitalize">
+                {{ recent_prod.name }}
+                <!-- {{ props.title.slice(0, 28) }} -->
+              </p>
+              <span
+                class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
+              >
+                {{ recent_prod.name }}
+              </span>
+            </NuxtLink>
+          </div>
+        </div>
+      </div>      
       <div class="recentViewd border border-gray-300 my-3 rounded p-2 lg:w-[49.6%] w-[100%]">
         <div class="flexHeading flex justify-between items-center mb-2">
           <h6 class="text-xl">Recent View</h6>
@@ -80,7 +116,7 @@ onMounted(() => {
         </div>
         <div class="gridViews flex flex-wrap gap-y-2 lg:gap-x-3 gap-x-1">
           <div v-for="product in wishlistItems" v-if="wishlistItems.length > 0" :key="product.id" class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
-            <NuxtLink to="`#`">
+            <NuxtLink :to="`/searchresult/${product.id}`">
               <div class="imgsdiv">
                 <img
                   class="w-full cardImg bg-gray-200 lg:h-[270px] h-[250px] object-cover"
@@ -97,121 +133,6 @@ onMounted(() => {
                 class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
               >
                 {{ product.name }}
-              </span>
-            </NuxtLink>
-          </div>
-        </div>
-      </div>
-      <div class="wishlistedOnHome border border-gray-300 my-3 rounded p-2 lg:w-[49.6%] w-[100%]">
-        <div class="flexHeading flex justify-between items-center mb-2">
-          <h6 class="text-xl">wishlist</h6>
-          <NuxtLink href="wishlist" class="block">
-            <i class="pi pi-chevron-circle-right text-orange-500 text-3xl"></i>
-          </NuxtLink>
-        </div>
-        <div class="gridViews flex flex-wrap gap-y-2 lg:gap-x-3 gap-x-1">
-          <div class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
-            <NuxtLink to="`#`">
-              <div class="imgsdiv">
-                <img
-                  class="w-full cardImg bg-gray-200 lg:h-[270px] h-[250px] object-cover"
-                  src="https://fashtsaly.com/API/public/uploads/maroonanarkali.jpeg"
-                  alt="highlight img"
-                  loading="lazy"
-                />
-              </div>
-              <p class="ellipsisText lg:text-xl text-xl text-center pt-3 capitalize">
-                product title
-                <!-- {{ props.title.slice(0, 28) }} -->
-              </p>
-              <span
-                class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
-              >
-                product title
-              </span>
-            </NuxtLink>
-          </div>
-          <div class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
-            <NuxtLink to="`/searchresult/`">
-              <div class="imgsdiv">
-                <img
-                  class="w-full cardImg bg-gray-200 lg:h-[270px] h-[250px] object-cover"
-                  src="https://fashtsaly.com/API/public/uploads/maroonanarkali.jpeg"
-                  alt="highlight img"
-                  loading="lazy"
-                />
-              </div>
-              <p class="ellipsisText lg:text-xl text-xl text-center pt-3 capitalize">
-                product title
-                <!-- {{ props.title.slice(0, 28) }} -->
-              </p>
-              <span
-                class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
-              >
-                product title
-              </span>
-            </NuxtLink>
-          </div>
-          <div class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
-            <NuxtLink to="`/searchresult/`">
-              <div class="imgsdiv">
-                <img
-                  class="w-full cardImg bg-gray-200 lg:h-[270px] h-[250px] object-cover"
-                  src="https://fashtsaly.com/API/public/uploads/maroonanarkali.jpeg"
-                  alt="highlight img"
-                  loading="lazy"
-                />
-              </div>
-              <p class="ellipsisText lg:text-xl text-xl text-center pt-3 capitalize">
-                product title
-                <!-- {{ props.title.slice(0, 28) }} -->
-              </p>
-              <span
-                class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
-              >
-                product title
-              </span>
-            </NuxtLink>
-          </div>
-          <div class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
-            <NuxtLink to="`/searchresult/`">
-              <div class="imgsdiv">
-                <img
-                  class="w-full cardImg bg-gray-200 lg:h-[270px] h-[250px] object-cover"
-                  src="https://fashtsaly.com/API/public/uploads/maroonanarkali.jpeg"
-                  alt="highlight img"
-                  loading="lazy"
-                />
-              </div>
-              <p class="ellipsisText lg:text-xl text-xl text-center pt-3 capitalize">
-                product title
-                <!-- {{ props.title.slice(0, 28) }} -->
-              </p>
-              <span
-                class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
-              >
-                product title
-              </span>
-            </NuxtLink>
-          </div>
-          <div class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
-            <NuxtLink to="`/searchresult/`">
-              <div class="imgsdiv">
-                <img
-                  class="w-full cardImg bg-gray-200 lg:h-[270px] h-[250px] object-cover"
-                  src="https://fashtsaly.com/API/public/uploads/maroonanarkali.jpeg"
-                  alt="highlight img"
-                  loading="lazy"
-                />
-              </div>
-              <p class="ellipsisText lg:text-xl text-xl text-center pt-3 capitalize">
-                product title
-                <!-- {{ props.title.slice(0, 28) }} -->
-              </p>
-              <span
-                class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
-              >
-                product title
               </span>
             </NuxtLink>
           </div>
