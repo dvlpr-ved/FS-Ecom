@@ -1,5 +1,12 @@
 <script setup lang="ts">
 import { publicApi } from "/utils/publicApi.js";
+import { useToast } from "primevue/usetoast";
+
+const toast = useToast();
+const show = (message) => {
+  toast.add({ severity: "success", detail: message, life: 4000 });
+};
+
 const Checkvisible = ref("");
 const productCount = ref(1);
 const route = useRoute();
@@ -8,6 +15,7 @@ const cart = useCartStore();
 const addMoreProduct = () => {
   if (sku.value.stock > productCount.value) {
     productCount.value++;
+    // show('product increased by one')
   }
 };
 const removeMoreProduct = () => {
@@ -30,7 +38,8 @@ const handleAddToCart = async (action) => {
     if (action == "buy") {
       navigateTo("/mycart");
     } else {
-      alert("Item added to cart");
+      show("Item added to cart");
+      // alert("Item added to cart");
     }
   } else {
     if (addToCart.msg) {
@@ -73,7 +82,7 @@ const getProduct = async () => {
 };
 function saveProductToVisited(product) {
   const visitedProducts = JSON.parse(localStorage.getItem("visitedProducts")) || [];
-  const updatedProducts = visitedProducts.filter(p => p.id !== product.id);
+  const updatedProducts = visitedProducts.filter((p) => p.id !== product.id);
 
   updatedProducts.unshift(product);
   if (updatedProducts.length > 6) {
@@ -81,7 +90,6 @@ function saveProductToVisited(product) {
   }
 
   localStorage.setItem("visitedProducts", JSON.stringify(updatedProducts));
-
 }
 onMounted(() => {
   getProduct();
@@ -123,6 +131,8 @@ watch([colorSelected, sizeSelected], async () => {
 });
 </script>
 <template>
+  <Toast />
+
   <div class="productdetail_man_div bg-gray-200">
     <div v-if="product" class="container bg-gray-100">
       <div
@@ -219,12 +229,12 @@ watch([colorSelected, sizeSelected], async () => {
             <span>{{ productCount }}</span>
             <button @click="addMoreProduct"><i class="pi pi-plus"></i></button>
           </div>
-          <div class="btnsdiv flex flex-wrap gap-3 mb-5">
+          <div class="btnsdiv flex flex-wrap lg:gap-3 lg:justify-start justify-between gap-1 mb-5">
             <button
               @click="handleAddToCart('cart')"
               :danger="true"
               :disabled="skuIsLoading || isOutOfStock ? true : false"
-              class="py-3 lg:w-[31%] w-[48%] text-xl bg-black transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
+              class="lg:py-3 py-[10px] lg:w-[31%] w-[48%] lg:text-xl bg-black transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
             >
               <i class="pi pi-cart-plus lg:text-3xl text-2xl"></i>
               {{ isOutOfStock ? "Out of stock" : "Add to cart" }}
@@ -233,15 +243,16 @@ watch([colorSelected, sizeSelected], async () => {
               @click="handleAddToCart('buy')"
               :danger="true"
               :disabled="skuIsLoading || isOutOfStock ? true : false"
-              class="py-3 lg:w-[31%] w-[48%] text-xl bgorange transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
+              class="lg:py-3 py-[10px] lg:w-[31%] w-[48%] lg:text-xl bgorange transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
             >
               <i class="pi pi-tag lg:text-3xl text-2xl"></i>
-              {{ isOutOfStock ? "Ask Query for stock" : "Buy Now" }}
+              Buy Now
+              <!-- {{ isOutOfStock ? "Ask Query for stock" : "Buy Now" }} -->
             </button>
             <button class="lg:w-[31%] w-[100%]">
               <NuxtLink
                 :to="`https://api.whatsapp.com/send?phone=+910123456789&text=Hello, I want to buy ${product.name}. My name is`"
-                class="Booknowbtn py-3 bg-green-400 text-white capitalize rounded text-2xl text-center flex items-center gap-2 justify-center"
+                class="Booknowbtn lg:py-3 py-[10px] bg-green-600 text-white capitalize rounded text-2xl text-center flex items-center gap-2 justify-center"
                 target="_blank"
                 ><i class="pi pi-whatsapp lg:text-3xl text-2xl"></i
                 >{{ skuIsLoading || isOutOfStock ? "Inquire Now" : "Book Now" }}</NuxtLink

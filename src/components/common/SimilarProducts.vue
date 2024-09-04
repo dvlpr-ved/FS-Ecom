@@ -53,7 +53,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="similarCardWrapper">
-    <div class="container bg-gray-50">
+    <div class="container bg-gray-100">
       <template v-if="isLoading">
         <div class="lg:flex hidden justify-between py-4">
           <ShimmereCard />
@@ -93,7 +93,10 @@ onBeforeUnmount(() => {
           </template>
         </div>
 
-        <div class="vendorsProducts flex flex-wrap lg:gap-3 gap-1 w-full pt-3">
+        <div
+          v-if="vendorsProducts.length >= 1"
+          class="vendorsProducts flex flex-wrap lg:gap-3 gap-1 w-full pt-3"
+        >
           <div class="heading w-full lg:text-3xl text-3xl py-1 headingsFont">
             Seller Products
           </div>

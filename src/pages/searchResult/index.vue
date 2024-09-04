@@ -1,11 +1,12 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
-import { useRoute, useRuntimeConfig } from "nuxt/app"; // Make sure you are importing from 'nuxt/app' if using Nuxt
+import { useRoute, useRuntimeConfig } from "nuxt/app";
 
 const products = ref([]);
 const loading = ref(true);
 const isMobileNavVisible = ref("");
 const route = useRoute();
+const selectedFilters = ref(["allCategories"]);
 
 const getDataFunc = async () => {
   try {
@@ -23,11 +24,46 @@ const getDataFunc = async () => {
     const data = await res.json();
     if (data.success) {
       products.value = data.data.data;
+      applyFilters();
       loading.value = false;
     }
   } catch (error) {
     console.error("Error fetching products:", error);
   }
+};
+
+const applyFilters = () => {
+  let sortedData = [...products.value];
+  if (selectedFilters.value.includes("latest")) {
+    sortedData = sortedData.sort(
+      (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    );
+  } else if (selectedFilters.value.includes("lowToHigh")) {
+    sortedData = sortedData.sort((a, b) => a.mrp - b.mrp);
+  } else if (selectedFilters.value.includes("highToLow")) {
+    sortedData = sortedData.sort((a, b) => b.mrp - a.mrp);
+  }
+  products.value = sortedData;
+};
+
+const handleSortChange = (event) => {
+  const value = event.target.value;
+
+  if (value !== "allCategories") {
+    selectedFilters.value = [value];
+  } else {
+    selectedFilters.value = ["allCategories"];
+  }
+  applyFilters();
+  closeFilter();
+};
+
+const handleAllCategoriesChange = (event) => {
+  if (event.target.checked) {
+    selectedFilters.value = ["allCategories"];
+  }
+  applyFilters();
+  closeFilter();
 };
 
 const openFilter = () => {
@@ -38,14 +74,12 @@ const closeFilter = () => {
   isMobileNavVisible.value = "";
 };
 
-
 watch(
   () => route.query,
   () => {
     getDataFunc();
   }
 );
-
 onMounted(async () => {
   getDataFunc();
 });
@@ -55,12 +89,12 @@ onMounted(async () => {
   <div class="SearchResultPage py-4">
     <div class="container flex flex-wrap justify-between">
       <aside
-        class="LeftFilters lg:w-[20%] w-[100%] bg-gray-100 lg:sticky py-2 h-[fit-content] top-2"
+        class="LeftFilters lg:w-[20%] w-[100%] bg-gray-100 sticky z-[12] py-2 h-[fit-content] lg:top-2 top-0"
       >
         <div
           class="flexdiv fixinMb lg:block flex justify-between lg:border-b px-4 py-2 lg:mb-3"
         >
-          <h1 class="text-3xl">Filters</h1>
+          <h1 class="text-2xl">Filters</h1>
           <button class="lg:hidden filterBtn" @click="openFilter">
             <i class="pi pi-filter text-3xl"></i>
           </button>
@@ -70,39 +104,54 @@ onMounted(async () => {
           <div class="checkbox mb-3">
             <input
               class="styled-checkbox"
-              id="checkboxes"
+              id="allCategories"
               type="checkbox"
-              value="value"
-              checked
+              value="allCategories"
+              v-model="selectedFilters"
+              @change="handleAllCategoriesChange"
             />
-            <label for="checkboxes" class="text-xl title">All Catagories</label>
+            <label for="allCategories" class="text-xl title capitalize"
+              >All Categories</label
+            >
           </div>
           <div class="checkbox mb-3">
             <input
               class="styled-checkbox"
-              id="checkboxes0"
+              id="sortLatest"
               type="checkbox"
-              value="value"
+              value="latest"
+              v-model="selectedFilters"
+              @change="handleSortChange"
             />
-            <label for="checkboxes0" class="text-xl title">Sarees</label>
+            <label for="sortLatest" class="text-xl title capitalize"
+              >Sort by Latest</label
+            >
           </div>
           <div class="checkbox mb-3">
             <input
               class="styled-checkbox"
-              id="checkboxes1"
+              id="sortLowToHigh"
               type="checkbox"
-              value="value"
+              value="lowToHigh"
+              v-model="selectedFilters"
+              @change="handleSortChange"
             />
-            <label for="checkboxes1" class="text-xl title">Lehanga</label>
+            <label for="sortLowToHigh" class="text-xl title capitalize"
+              >Low to High</label
+            >
           </div>
           <div class="checkbox mb-3">
             <input
               class="styled-checkbox"
-              id="checkboxes2"
+              id="sortHighToLow"
               type="checkbox"
-              value="value"
+              value="highToLow"
+              v-model="selectedFilters"
+              @change="handleSortChange"
             />
-            <label for="checkboxes2" class="text-xl title">Kurti</label>
+            <label for="sortHighToLow" class="text-xl title capitalize"
+              >High to Low</label
+            >
           </div>
         </div>
       </aside>
