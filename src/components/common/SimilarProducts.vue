@@ -28,7 +28,7 @@ const updateItemsToShow = () => {
   const screenWidth = window.innerWidth;
 
   if (screenWidth < 576) {
-    itemsToShow.value = 2;
+    itemsToShow.value = 2.7;
   } else if (screenWidth < 768) {
     itemsToShow.value = 3;
   } else if (screenWidth < 1024) {
@@ -53,7 +53,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="similarCardWrapper">
-    <div class="container bg-white">
+    <div class="container bg-gray-50">
       <template v-if="isLoading">
         <div class="lg:flex hidden justify-between py-4">
           <ShimmereCard />
@@ -68,12 +68,16 @@ onBeforeUnmount(() => {
         </div>
       </template>
       <div v-else class="relative pb-5">
-        <div class="similarProducts">
-          <div class="heading w-full lg:text-3xl text-3xl py-3 headingsFont">
+        <div class="similarProducts flex flex-wrap lg:gap-3 gap-1 w-full pt-2">
+          <div class="heading w-full lg:text-3xl text-3xl py-1 headingsFont">
             Similar Products
           </div>
-          <template v-if="suggestions.length > 4">
-            <div class="flex gap-2" v-for="card in suggestions" :key="card.id">
+          <template v-if="suggestions.length < 5">
+            <div
+              class="cards lg:w-[250px] w-[48%]"
+              v-for="card in suggestions"
+              :key="card.id"
+            >
               <HomePageCard :thumbnail="card.images" :title="card.name" :id="card.id" />
             </div>
           </template>
@@ -89,13 +93,13 @@ onBeforeUnmount(() => {
           </template>
         </div>
 
-        <div class="vendorsProducts">
-          <div class="heading w-full lg:text-3xl text-3xl py-3 headingsFont">
-            Seller Products {{vendorsProducts.length}}
+        <div class="vendorsProducts flex flex-wrap lg:gap-3 gap-1 w-full pt-3">
+          <div class="heading w-full lg:text-3xl text-3xl py-1 headingsFont">
+            Seller Products
           </div>
-          <template v-if="vendorsProducts.length > 4">
+          <template v-if="vendorsProducts.length < 5">
             <div
-              class="flex flex-wrap gap-2"
+              class="cards lg:w-[250px] w-[48%]"
               v-for="card in vendorsProducts"
               :key="card.id"
             >

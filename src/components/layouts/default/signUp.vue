@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useToast } from "primevue/usetoast";
+
 const props = defineProps({
   toggleForm: Function,
 });
@@ -8,6 +10,11 @@ const inputType = ref("password");
 const successMessage = ref("");
 const authStore = useAuthStore();
 
+const toast = useToast();
+
+const show = (message) => {
+  toast.add({ severity: "info", detail: message, life: 3000 });
+};
 const isOtpFeildVisible = ref(false);
 const formData = {
   name: "",
@@ -32,31 +39,38 @@ const handleSubmit = async (event) => {
 
   if (!formData.name) {
     formError.name = "Please Enter Name";
-    alert("Please Enter Name");
+    show("Please Enter Name");
+    // alert("Please Enter Name");
     isValid = false;
     return;
   }
   if (!formData.email) {
     formError.email = "Please Enter Email";
-    alert("Please Enter Email");
+    show("Please Enter Email");
+    // alert("Please Enter Email");
     isValid = false;
     return;
   }
   if (!formData.password) {
     formError.password = "Please Enter Password";
-    alert("Please Enter Password");
+    show("Please Enter Password");
+
+    // alert("Please Enter Password");
     isValid = false;
     return;
   }
   if (!formData.confirmPassword) {
     formError.confirmPassword = "Please Confirm Password";
-    alert("Please Confirm Password");
+    show("Please Enter Confirm Password");
+
+    // alert("Please Confirm Password");
     isValid = false;
     return;
   }
   if (formData.password !== formData.confirmPassword) {
     formError.confirmPassword = "Passwords do not match";
-    alert("Passwords do not match");
+    show("Passwords do not match");
+    // alert("Passwords do not match");
     isValid = false;
     return;
   }
@@ -100,6 +114,7 @@ const handleSubmit = async (event) => {
           isOtpFeildVisible.value = true;
         } else {
           authStore.Login(responseData);
+          closeModal();
         }
       }
     } catch (error) {
@@ -117,9 +132,9 @@ const toggleFieldType = () => {
 </script>
 
 <template>
-  <div
-    class="signupmaindiv lg:w-[50%] w-[100%] lg:p-5 p-2"
-  >
+  <Toast />
+
+  <div class="signupmaindiv lg:w-[50%] w-[100%] lg:p-5 p-2">
     <div class="formSide">
       <h5 class="heading lg:text-3xl text-2xl text-center lg:mb-4 mb-3">
         Create an Account!
