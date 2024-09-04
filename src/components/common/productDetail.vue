@@ -116,7 +116,7 @@ watch([colorSelected, sizeSelected], async () => {
         class="flexdiv flex flex-wrap lg:justify-between justify-center border-b border-gray-300 pb-5"
       >
         <div
-          class="detailGallery lg:w-[48%] w-[100%] static lg:pt-5 pt-2 lg:sticky h-fit top-0"
+          class="detailGallery lg:w-[48%] w-[100%] static lg:pt-5 pt-2 lg:pr-4 lg:sticky h-fit top-0"
         >
           <ProductZoomImages :data="imageShown ? imageShown : ''" />
           <div class="flex overflow-x-auto lg:w-[42%] w-[100%]">
