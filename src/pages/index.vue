@@ -66,12 +66,12 @@ onMounted(() => {
   <div v-for="block in blocks.length">
     <div v-if="block != 2">
       <AppBanner :data="blocks[block - 1]" v-if="blocks[block - 1].type == 'Banner'" />
-      <Highlights :data="blocks[block - 1]" v-else />
+      <Highlights :data="blocks[block - 1]" :listing_id="blocks[block - 1].listing_id" v-else />
     </div>
     <div v-else>
       <CateGories></CateGories>
       <AppBanner :data="blocks[block - 1]" v-if="blocks[block - 1].type == 'Banner'" />
-      <Highlights :data="blocks[block - 1]" v-else />
+      <Highlights :data="blocks[block - 1]" :listing_id="blocks[block - 1].listing_id" v-else />
     </div>
   </div>
   <div class="fixedSectiopn py-2 bg-gray-200">

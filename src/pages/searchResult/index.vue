@@ -6,18 +6,25 @@ const products = ref([]);
 const loading = ref(true);
 const isMobileNavVisible = ref("");
 const route = useRoute();
-
+const suffix = ref('');
 const getDataFunc = async () => {
   try {
     const config = useRuntimeConfig();
     const query = route.query;
-    const suffix = query.category
-      ? `api/fetchSearchItems?category=${query.category}`
-      : `api/fetchSearchItems?product=${query.product}`;
+    if(query.category){
+        suffix.value = `api/fetchSearchItems?category=${query.category}`;
+    }
+    else if(query.listing_id){
+      suffix.value = `api/fetchSearchItems?listing=${query.listing_id}`;
+    }
+    else{
+      suffix.value = `api/fetchSearchItems?product=${query.product}`;
+    }
+ 
     const res = await fetch(
       `${
         config.API_BASE_URL ? config.API_BASE_URL : "https://fashtsaly.com/API/public/"
-      }${suffix}`,
+      }${suffix.value}`,
       { method: "POST" }
     );
     const data = await res.json();
