@@ -1,4 +1,5 @@
 <template>
+  <Toast />
   <section class="chkOutComp bg-gray-200">
     <div class="flex container justify-center flex-wrap py-4">
       <div class="leftside lg:w-[70%] w-[100%]">
@@ -7,56 +8,47 @@
             <p class="text-2xl mb-2">Loading Products</p>
             <div class="w-full py-12 shimmer mb-3"></div>
           </div>
-          <div class="flex flex-wrap -mx-4">
-            <div
-              v-for="product in items"
-              :key="product.id"
-              class="w-full lg:w-2/3 px-4 mb-4"
-            >
-              <div class="bg-white rounded-lg shadow-md p-6">
-                <div class="flex">
-                  <div class="w-16 h-16 bg-gray-200 rounded-md overflow-hidden">
-                    <img
-                      :src="product.image[0] ? product.image[0].source : 'No Image'"
-                      alt="Product Image"
-                      class="object-cover w-full h-full"
+          <div class="flex flex-wrap bg-white rounded-lg shadow-md mb-2">
+            <div v-for="product in items" :key="product.id" class="w-full lg:w-2/3">
+              <div class="flex border-b border-gray-300 p-2">
+                <div class="w-16 h-16 bg-gray-200 rounded-md overflow-hidden">
+                  <img
+                    :src="product.image[0] ? product.image[0].source : 'No Image'"
+                    alt="Product Image"
+                    class="object-cover w-full h-full"
+                  />
+                </div>
+                <div class="ml-4">
+                  <div class="text-lg font-semibold">{{ product.product_name }}</div>
+                  <!-- <p class="text-gray-600">{{ product.description }}</p> -->
+                  <div class="flex items-center mt-2">
+                    <label class="mr-2">Quantity:</label>
+                    <input
+                      type="number"
+                      class="border border-gray-300 px-3 py-1 rounded-md w-16 text-center"
+                      v-model="quantities[product.id]"
+                      @input="updateTotalPrice(product)"
                     />
                   </div>
-                  <div class="ml-4">
-                    <h2 class="text-lg font-semibold">{{ product.product_name }}</h2>
-                    <!-- <p class="text-gray-600">{{ product.description }}</p> -->
-                    <div class="flex items-center mt-2">
-                      <label class="mr-2">Quantity:</label>
-                      <input
-                        type="number"
-                        class="border border-gray-300 px-3 py-1 rounded-md w-16 text-center"
-                        v-model="quantities[product.id]"
-                        @input="updateTotalPrice(product)"
-                      />
-                    </div>
-                    <p class="font-semibold mt-2">
-                      Total Price: ₹{{ product.totalPrice }}
-                    </p>
-                    <button
-                      @click="removeProduct(product.id)"
-                      class="mt-2 text-white px-4 py-1 rounded"
-                      style="background: red"
-                    >
-                      Remove
-                    </button>
-                  </div>
+                  <p class="font-semibold mt-2">Total Price: ₹{{ product.totalPrice }}</p>
+                  <button
+                    @click="removeProduct(product.id)"
+                    class="mt-2 text-white px-4 py-1 rounded"
+                    style="background: red"
+                  >
+                    Remove
+                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-
         <div class="w-full px-4">
           <div class="addressTopCard bg-white">
-            <h1 class="text-2xl font-semibold mb-3 p-2 px-4 bgblue80 text-white">
+            <div class="text-2xl font-semibold mb-3 p-2 px-4 bgblue80 text-white">
               Delivery Address
-            </h1>
+            </div>
             <div class="flex flex-wrap">
               <template v-if="isLoading">
                 <div class="w-full py-12 shimmer"></div>
@@ -91,10 +83,10 @@
               <div class="py-12 shimmer"></div>
             </template>
             <div v-else>
-              <h1 class="text-2xl font-semibold mb-3 p-2 px-4 bgblue80 text-white">
+              <div class="text-2xl font-semibold mb-3 p-2 px-4 bgblue80 text-white">
                 Shipping Details
-              </h1>
-              <div class="formdiv flex gap-5 flex-wrap mb-3 p-4">
+              </div>
+              <div class="formdiv flex gap-5 flex-wrap p-4">
                 <div class="in_box lg:w-[47.5%] w-[100%] relative">
                   <span class="absolute top-[-10px] bg-white px-3 border block ml-3"
                     >Your Name</span
@@ -216,10 +208,51 @@
               </div>
             </div>
           </div>
+
+          <div class="shippingForm bg-white">
+            <template v-if="isLoading">
+              <div class="py-12 shimmer"></div>
+            </template>
+            <div v-else>
+              <div class="text-2xl font-semibold mb-3 p-2 px-4 bgblue80 text-white">
+                Seller Details
+              </div>
+              <div class="formdiv flex gap-5 flex-wrap mb-3 p-4">
+                <div class="in_box lg:w-[47.5%] w-[100%] relative">
+                  <span class="absolute top-[-10px] bg-white px-3 border block ml-3"
+                    >Your Name</span
+                  >
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    class="w-full py-3 px-3 text-[15px] border rounded border-gray-500 text-gray-700 uppercase"
+                    v-model="reSellerData.name"
+                  />
+                  <p v-if="errors.resellerName" class="text-[red] text-sm">
+                    {{ errors.resellerName }}
+                  </p>
+                </div>
+                <div class="in_box lg:w-[47.5%] w-[100%] relative">
+                  <span class="absolute top-[-10px] bg-white px-3 border block ml-3"
+                    >Your Contact No.</span
+                  >
+                  <input
+                    type="tel"
+                    placeholder="Phone No."
+                    class="w-full py-3 px-3 text-[15px] border rounded border-gray-500 text-gray-700 uppercase"
+                    v-model="reSellerData.phone"
+                  />
+                  <p v-if="errors.resellerPhone" class="text-[red] text-sm">
+                    {{ errors.resellerPhone }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="OrderSummary lg:w-[30%] w-[100%]">
+      <div class="OrderSummary lg:sticky top-5 h-fit lg:w-[30%] w-[100%]">
         <div class="bg-white shadow-md">
           <h2 class="text-lg font-semibold mb-4 p-3 bgblue80 text-white text-center">
             Order Summary
@@ -252,7 +285,8 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import {load} from '@cashfreepayments/cashfree-js';
+import { load } from "@cashfreepayments/cashfree-js";
+import { useToast } from "primevue/usetoast";
 
 const quantities = ref({});
 const items = ref([]);
@@ -262,6 +296,11 @@ const subtotal = ref(0);
 const shipping = ref(0);
 const total = ref(0);
 const selectedAddress = ref(null);
+
+const toast = useToast();
+const show = (message) => {
+  toast.add({ severity: "info", detail: message, life: 4000 });
+};
 
 const useGetAddressStore = useAddressStore();
 const userAddress = computed(() => useGetAddressStore.userAddress || []);
@@ -293,16 +332,70 @@ const formData = ref({
   landmark: "",
 });
 
-const errors = ref({
+const reSellerData = ref({
   name: "",
   email: "",
+});
+
+const errors = ref({
+  name: "",
   phone: "",
+  resellerPhone: "",
+  resellerName: "",
   pincode: "",
   locality: "",
   address: "",
   city: "",
   selectedState: "",
 });
+
+const validateForm = () => {
+  let isValid = true;
+  Object.keys(errors.value).forEach((key) => {
+    errors.value[key] = "";
+  });
+  if (!formData.value.name.trim()) {
+    errors.value.name = "Name is required.";
+    isValid = false;
+  }
+  if (!formData.value.email.trim()) {
+    errors.value.email = "Email Name is required.";
+    isValid = false;
+  }
+  if (!/^\d{10}$/.test(formData.value.phone)) {
+    errors.value.phone = "Phone Number must be 10 digits.";
+    isValid = false;
+  }
+  if (!formData.value.pincode.trim()) {
+    errors.value.pincode = "Pincode is required.";
+    isValid = false;
+  }
+  if (!formData.value.locality.trim()) {
+    errors.value.locality = "locality is required.";
+    isValid = false;
+  }
+  if (!formData.value.address.trim()) {
+    errors.value.address = "Address is required.";
+    isValid = false;
+  }
+  if (!formData.value.city.trim()) {
+    errors.value.city = "city is required.";
+    isValid = false;
+  }
+  if (!formData.value.landmark.trim()) {
+    errors.value.landmark = "landmark is required.";
+    isValid = false;
+  }
+  if (!reSellerData.value.name.trim()) {
+    errors.value.resellerName = "Name is required.";
+    isValid = false;
+  }
+  if (!/^\d{10}$/.test(reSellerData.value.phone)) {
+    errors.value.resellerPhone = "Phone Number must be 10 digits.";
+    isValid = false;
+  }
+  return isValid;
+};
 
 const removeProduct = (productId) => {
   delete quantities.value[productId];
@@ -343,14 +436,24 @@ onMounted(async () => {
   await getCheckoutProduct();
   useGetAddressStore.fetchUserAddress();
 });
-const order_id = ref('');
+const order_id = ref("");
 const disabled = ref(false);
 const processing = ref(false);
-const processPayment =async () => {
-  if(!formData.value.name || !formData.value.email || !formData.value.phone){
-    alert('Fill shipping details');
-    return false;
+const processPayment = async () => {
+  // if (!formData.value.name || !formData.value.email || !formData.value.phone) {
+  //   show("Fill shipping details");
+  //   return false;
+  // }
+  // if (!reSellerData.name || !reSellerData.phone) {
+  //   show("Fill your contact details");
+  // }
+
+  if (!validateForm()) {
+    return;
   }
+
+  console.log('here ===================', reSellerData.value.name, reSellerData.value.phone);
+
   processing.value = true;
   const config = useRuntimeConfig();
   const url = `${
@@ -358,74 +461,78 @@ const processPayment =async () => {
   }api/initiate-checkout`;
 
   const response = await fetchFromSanctum({
-    url : url,
-    method : 'POST',
-    body : {
-      shippingDetails : formData.value,
-      items :items.value ,
-      productQuantity : quantities.value,
-      selectedAddress : selectedAddress.value
-    }
+    url: url,
+    method: "POST",
+    body: {
+      shippingDetails: formData.value,
+      items: items.value,
+      productQuantity: quantities.value,
+      selectedAddress: selectedAddress.value,
+      sellerName: reSellerData.value.name,
+      sellerPhone: reSellerData.value.phone,
+    },
   });
-  if(response.success){
+  if (response.success) {
     const data = response.data;
     if (data.cf_order_id) {
       order_id.value = data.id;
       const cashfree = await load({
-        mode: "production" //or production
+        mode: "production", //or production
       });
 
       let checkoutOptions = {
         paymentSessionId: data.payment_session_id,
-        redirectTarget: "_modal"
+        redirectTarget: "_modal",
       };
-      const result =await cashfree.checkout(checkoutOptions);
-        if(result.error){
-          alert(result.error.message)
-          disabled.value = false;
-        }
-        if(result.redirect){
-          alert("Please try some diffrent browser");
-          disabled.value = false;
-        }
-        if(result.paymentDetails){
-          disabled.value = false;
-          getPaymentData();
-        }
+      const result = await cashfree.checkout(checkoutOptions);
+      if (result.error) {
+        alert(result.error.message);
+        disabled.value = false;
+      }
+      if (result.redirect) {
+        show("Please try some diffrent browser");
+        // alert("Please try some diffrent browser");
+        disabled.value = false;
+      }
+      if (result.paymentDetails) {
+        disabled.value = false;
+        getPaymentData();
+      }
     } else {
       disabled.value = false;
-      alert('Failed to initiate payment.');
+      show("Failed to initiate payment");
+      // alert("Failed to initiate payment.");
     }
+  } else if (response.msg) {
+    show("response.msg");
+    // alert(response.msg);
+  } else {
+    show("Failed to initiate checkout");
+    // alert("Failed to initiate checkout");
   }
-  else if(response.msg){
-    alert(response.msg);
-  }
-  else{
-    alert('Failed to initiate checkout');
-  }
-}
-const getPaymentData =async () => {
+};
+const getPaymentData = async () => {
   disabled.value = true;
   const config = useRuntimeConfig();
   const url = `${
     config.API_BASE_URL ? config.API_BASE_URL : "https://fashtsaly.com/API/public/"
   }api/paymentFetchCheckout`;
   const data = await fetchFromSanctum({
-    url : url,
-    method : 'POST',
-    body : {
-      order_id : order_id.value
-    }
+    url: url,
+    method: "POST",
+    body: {
+      order_id: order_id.value,
+    },
   });
   disabled.value = false;
-  if(data.res){
-    alert('Payment Successfull');
+  if (data.res) {
+    show("Payment Successfull");
+    // alert("Payment Successfull");
     navigateTo(`/orderConfirmed/${data.order_id}`);
-  }
-  else{
+  } else {
     alert(data.msg);
-  }  
-}
+  }
+};
 </script>
 
 <style scoped>

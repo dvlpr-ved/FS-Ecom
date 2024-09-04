@@ -34,7 +34,6 @@ const addAddressStore = useAddressStore();
 const successMessage = addAddressStore.successMessage;
 console.log(successMessage);
 
-
 const saveChanges = async () => {
   Object.keys(errors.value).forEach((key) => {
     errors.value[key] = "";
@@ -88,7 +87,7 @@ const saveChanges = async () => {
   if (!isValid) {
     return;
   }
-  
+
   try {
     const success = await addAddressStore.fetchAddAddress({
       name: formData.value.name,
@@ -201,7 +200,6 @@ const saveChanges = async () => {
         <option v-for="state in formData.states" :key="state" :value="state">
           {{ state }}
         </option>
-        
       </select>
       <p v-if="errors.selectedState" class="text-[red] text-sm">
         {{ errors.selectedState }}

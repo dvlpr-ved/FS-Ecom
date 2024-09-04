@@ -1,9 +1,46 @@
 <script setup>
 import { load } from "@cashfreepayments/cashfree-js";
+import { useToast } from "primevue/usetoast";
+
 const plansData = ref([]);
 const message = ref("");
 const isLoading = ref(true);
 const disabled = ref(false);
+const visible = ref(false);
+
+const selectedPlan = ref({
+  plan_name: "",
+  order_id_selectd: "",
+});
+
+const formData = ref({
+  customerName: "",
+  brandName: "",
+  customerRole: ["Reseller ", "Wholesaler", "Influencer"],
+  selectedRole: "",
+  address: "",
+  whatsappNum: "",
+  socLink: "",
+  gstNo: "",
+  coupenCode: "",
+});
+
+const errors = ref({
+  customerName: "",
+  brandName: "",
+  selectedRole: "",
+  address: "",
+  whatsappNum: "",
+  socLink: "",
+  gstNo: "",
+});
+
+const toast = useToast();
+
+const show = (message) => {
+  toast.add({ severity: "info", detail: message, life: 3000 });
+};
+
 const getPlanData = async () => {
   try {
     const response = await fetch(
@@ -23,8 +60,71 @@ const getPlanData = async () => {
 onMounted(() => {
   getPlanData();
 });
+
+const ChoosePlan = (plan_name, order_id) => {
+  selectedPlan.value.plan_name = plan_name;
+  selectedPlan.value.order_id_selectd = order_id;
+  visible.value = true;
+  console.log(selectedPlan);
+};
+
+const validateForm = () => {
+  let isValid = true;
+  Object.keys(errors.value).forEach((key) => {
+    errors.value[key] = "";
+  });
+  if (!formData.value.customerName.trim()) {
+    errors.value.customerName = "Customer Name is required.";
+    isValid = false;
+  }
+
+  if (!formData.value.brandName.trim()) {
+    errors.value.brandName = "Brand Name is required.";
+    isValid = false;
+  }
+
+  if (!formData.value.selectedRole.length) {
+    errors.value.selectedRole = "Role is required.";
+    isValid = false;
+  }
+  if (!formData.value.address.trim()) {
+    errors.value.address = "Address is required.";
+    isValid = false;
+  }
+
+  if (!/^\d{10}$/.test(formData.value.whatsappNum)) {
+    errors.value.whatsappNum = "Whatsapp Number must be 10 digits.";
+    isValid = false;
+  }
+  if (formData.value.socLink && !/^https?:\/\/.+/.test(formData.value.socLink)) {
+    errors.value.socLink = "Social media account link must be a valid URL.";
+    isValid = false;
+  }
+
+  if (formData.value.gstNo && !/^[A-Z0-9]{15}$/.test(formData.value.gstNo)) {
+    errors.value.gstNo = "GST Number must be 15 characters long.";
+    isValid = false;
+  }
+  return isValid;
+};
+
 const order_id = ref(0);
+
 const proceedPayment = async (planid) => {
+  // console.log(selectedPlan.value.order_id_selectd);
+  if (!validateForm()) {
+    return;
+  }
+
+  if (!selectedPlan.value.order_id_selectd) {
+    show("we are facing network isuue Please Try Again");
+    return;
+  }
+  if (!selectedPlan.value.plan_name) {
+    show("No plan selected.");
+    return;
+  }
+
   disabled.value = true;
   const config = useRuntimeConfig();
   const url = `${
@@ -36,7 +136,16 @@ const proceedPayment = async (planid) => {
       url: url,
       method: "POST",
       body: {
-        plan: planid,
+        plan: selectedPlan.value.order_id_selectd,
+        selectedPlan: selectedPlan.value.plan_name,
+        customerName: formData.value.customerName,
+        brandName: formData.value.brandName,
+        selectedRole: formData.value.selectedRole,
+        address: formData.value.address,
+        whatsappNum: formData.value.whatsappNum,
+        socLink: formData.value.socLink,
+        gstNo: formData.value.gstNo,
+        // coupenCode: formData.value.,
       },
     });
     if (data.cf_order_id) {
@@ -71,6 +180,7 @@ const proceedPayment = async (planid) => {
     console.error("Error initiating payment:", error);
   }
 };
+
 const getPaymentData = async () => {
   disabled.value = true;
   const config = useRuntimeConfig();
@@ -95,12 +205,13 @@ const getPaymentData = async () => {
 </script>
 
 <template>
+  <Toast />
   <div class="cardsAni flex gap-2 justify-center" v-if="isLoading">
     <ShimmereCard />
     <ShimmereCard />
   </div>
-  <div class="subsPlansMain py-8 bg-gray-100" v-else>
-    <div class="container flex justify-center flex-wrap items-start">
+  <div class="subsPlansMain lg:py-8 py-3 bg-gray-100" v-else>
+    <div class="container PlansflexingDiv flex justify-center items-start">
       <div class="offers lg:w-[300px] md:w-[300px] w-[100%]">
         <h3 class="text-dark py-3 text-xl">Free</h3>
         <div class="price lg:text-5xl text-3xl py-3 bg-gray-100">₹ 0.00</div>
@@ -127,17 +238,17 @@ const getPaymentData = async () => {
       </div>
       <div
         :class="`offers lg:w-[300px] md:w-[300px] w-[100%] relative ${
-          pricing.title == 'Enterprises' ? 'mt-[-46px]' : ''
+          index === 1 ? 'mt-[-46px]' : ''
         }`"
-        v-for="pricing in plansData"
+        v-for="(pricing, index) in plansData"
         :key="pricing.id"
       >
         <p
           :class="`spclTag text-xl w-fit m-auto rounded-full bg-gray-300 text-dark top-[-15px] px-3 ${
-            pricing.title == 'Enterprises' ? 'py-1 mt-3' : ''
+            index === 1 ? 'py-1 mt-3' : ''
           }`"
         >
-          {{ pricing.title == "Enterprises" ? "most popular" : "" }}
+          {{ index === 1 ? "most popular" : "" }}
         </p>
 
         <h3 class="text-dark py-3 text-xl">{{ pricing.title }}</h3>
@@ -145,19 +256,128 @@ const getPaymentData = async () => {
           ₹ {{ pricing.price }}
         </div>
         <div class="bg-gray-200">
-          <button
+          <button @click="ChoosePlan(pricing.title, pricing.id)" class="rounded-xl">
+            Choose plan
+          </button>
+          <!-- <button
             :disabled="disabled"
             @click="proceedPayment(pricing.id)"
             class="rounded-xl"
-          >
-            Subscribe
-          </button>
+          >Subscribe</button> -->
         </div>
-        <!-- <small>Annually</small> -->
-        <!-- <p>{{ pricing.description }}</p> -->
         <ul v-html="pricing.description"></ul>
       </div>
     </div>
+  </div>
+
+  <div class="userDetailsForm bg-orange-50">
+    <Dialog
+      v-model:visible="visible"
+      maximizable
+      modal
+      :style="{ width: '450px' }"
+      :breakpoints="{ '450px': '450px', '450px': '450px' }"
+    >
+      <div class="innerdiv lg:p-5 p-2">
+        <h3 class="text-xl mb-3 text-center capitalize">quickly provide your details</h3>
+        <div class="in_box w-[100%] relative lg:mb-3 mb-2">
+          <input
+            type="text"
+            placeholder="Your Name*"
+            class="w-full py-2 px-3 text-[15px] border rounded border-gray-500 text-gray-700 uppercase"
+            v-model="formData.customerName"
+          />
+          <p v-if="errors.customerName" class="text-orange-600 text-sm">
+            {{ errors.customerName }}
+          </p>
+        </div>
+        <div class="in_box w-[100%] relative lg:mb-3 mb-2">
+          <input
+            type="text"
+            placeholder="Your Brnad Name*"
+            class="w-full py-2 px-3 text-[15px] border rounded border-gray-500 text-gray-700 uppercase"
+            v-model="formData.brandName"
+          />
+          <p v-if="errors.brandName" class="text-orange-600 text-sm">
+            {{ errors.brandName }}
+          </p>
+        </div>
+        <div class="in_box w-[100%] relative lg:mb-3 mb-2">
+          <select
+            class="w-full py-2 px-3 text-[15px] border rounded text-gray-700 uppercase cursor-pointer border-gray-400"
+            v-model="formData.selectedRole"
+          >
+            <option value="">Select Role*</option>
+            <option v-for="c_role in formData.customerRole" :key="c_role" :value="c_role">
+              {{ c_role }}
+            </option>
+          </select>
+          <p v-if="errors.selectedRole" class="text-orange-600 text-sm">
+            {{ errors.selectedRole }}
+          </p>
+        </div>
+        <div class="in_box w-[100%] relative lg:mb-3 mb-2">
+          <input
+            type="text"
+            placeholder="Your Address*"
+            class="w-full py-2 px-3 text-[15px] border rounded border-gray-500 text-gray-700 uppercase"
+            v-model="formData.address"
+          />
+          <p v-if="errors.address" class="text-orange-600 text-sm">
+            {{ errors.address }}
+          </p>
+        </div>
+        <div class="in_box w-[100%] relative lg:mb-3 mb-2">
+          <input
+            type="text"
+            placeholder="Your Whatsapp No. For Updates*"
+            class="w-full py-2 px-3 text-[15px] border rounded border-gray-500 text-gray-700 uppercase"
+            v-model="formData.whatsappNum"
+          />
+          <p v-if="errors.whatsappNum" class="text-orange-600 text-sm">
+            {{ errors.whatsappNum }}
+          </p>
+        </div>
+        <div class="in_box w-[100%] relative lg:mb-3 mb-2">
+          <input
+            type="text"
+            placeholder="Social media account link"
+            class="w-full py-2 px-3 text-[15px] border rounded border-gray-500 text-gray-700 uppercase"
+            v-model="formData.socLink"
+          />
+          <p v-if="errors.socLink" class="text-orange-600 text-sm">
+            {{ errors.socLink }}
+          </p>
+        </div>
+        <div class="in_box w-[100%] relative lg:mb-3 mb-2">
+          <input
+            type="text"
+            placeholder="GST NO."
+            class="w-full py-2 px-3 text-[15px] border rounded border-gray-500 text-gray-700 uppercase"
+            v-model="formData.gstNo"
+          />
+          <p v-if="errors.gstNo" class="text-orange-600 text-sm">
+            {{ errors.gstNo }}
+          </p>
+        </div>
+        <div class="flexButtons flex justify-end gap-4 mt-3">
+          <button
+            class="bgblue80 text-white py-2 px-3 rounded-full block min-w-[120px]"
+            @click="visible = false"
+          >
+            Cancel
+          </button>
+          <button
+            class="bgorange text-white py-2 px-3 rounded-full block min-w-[120px]"
+            @click="proceedPayment"
+            :disabled="disabled"
+          >
+            <!-- @click="validateForm" -->
+            Make Payment
+          </button>
+        </div>
+      </div>
+    </Dialog>
   </div>
 </template>
 
@@ -209,6 +429,23 @@ const getPaymentData = async () => {
 
   button:hover {
     background: var(--primary);
+  }
+}
+
+@media (max-width: 992px) {
+  .PlansflexingDiv {
+    justify-content: start !important;
+    align-items: center;
+    overflow-x: scroll;
+    gap:0 8px;
+  }
+  .PlansflexingDiv .offers {
+    min-width: 38%;
+  }
+}
+@media (max-width: 767px) {
+  .PlansflexingDiv .offers {
+    min-width: 80%;
   }
 }
 </style>

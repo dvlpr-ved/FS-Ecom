@@ -50,8 +50,7 @@ onMounted(() => {
 }
 
 .image-container .img_lg {
-  max-height: 464px;
-  max-width: 348px;
+  max-height: 69vh;
   margin: 0 auto;
   cursor: grab;
   transition: transform 0.3s ease, transform-origin 0.3s ease;
