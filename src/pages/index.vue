@@ -76,14 +76,15 @@ onMounted(() => {
   </div>
   <div class="fixedSectiopn py-2 bg-gray-200">
     <div class="deviderFixedSection container bg-gray-100 flex flex-wrap justify-between gap-y-4">
-      <div class="wishlistedOnHome border border-gray-300 my-3 rounded p-2 lg:w-[49.6%] w-[100%]">
+      <div v-if="recently_viewed" class="wishlistedOnHome border border-gray-300 my-3 rounded p-2 lg:w-[49.6%] w-[100%]">
         <div class="flexHeading flex justify-between items-center mb-2">
           <h6 class="text-xl">Recently Viewed</h6>
           <NuxtLink href="wishlist" class="block">
             <i class="pi pi-chevron-circle-right text-orange-500 text-3xl"></i>
           </NuxtLink>
         </div>
-        <div v-if="recently_viewed" class="gridViews flex flex-wrap gap-y-2 lg:gap-x-3 gap-x-1">
+    
+        <div class="gridViews flex flex-wrap gap-y-2 lg:gap-x-3 gap-x-1">
           <div v-for="recent_prod in recently_viewed" class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
             <NuxtLink :to="`/searchresult/${recent_prod.id}`">
               <div class="imgsdiv">
@@ -107,7 +108,7 @@ onMounted(() => {
           </div>
         </div>
       </div>      
-      <div class="recentViewd border border-gray-300 my-3 rounded p-2 lg:w-[49.6%] w-[100%]">
+      <div v-if="wishlistItems.length > 0" class="recentViewd border border-gray-300 my-3 rounded p-2 lg:w-[49.6%] w-[100%]">
         <div class="flexHeading flex justify-between items-center mb-2">
           <h6 class="text-xl">Wishlist</h6>
           <NuxtLink href="#" class="block">
@@ -115,7 +116,7 @@ onMounted(() => {
           </NuxtLink>
         </div>
         <div class="gridViews flex flex-wrap gap-y-2 lg:gap-x-3 gap-x-1">
-          <div v-for="product in wishlistItems" v-if="wishlistItems.length > 0" :key="product.id" class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
+          <div v-for="product in wishlistItems" :key="product.id" class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
             <NuxtLink :to="`/searchresult/${product.id}`">
               <div class="imgsdiv">
                 <img

@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { publicApi } from "/utils/publicApi.js";
 import { useToast } from "primevue/usetoast";
+const authStore = useAuthStore();
 
 const toast = useToast();
 const show = (message) => {
   toast.add({ severity: "success", detail: message, life: 4000 });
+};
+const visible = ref(false);
+const closeModal = () => {
+  visible.value = false;
 };
 
 const Checkvisible = ref("");
@@ -23,6 +28,9 @@ const removeMoreProduct = () => {
 };
 
 const handleAddToCart = async (action) => {
+  if(!authStore.isUserLoggedin){
+    visible.value = true;
+  }
   if (isOutOfStock.value) {
     navigateTo(
       `https://api.whatsapp.com/send?phone=+910123456789&text=Hello, I want to buy ${product.value.name}.  My name is`
@@ -324,6 +332,7 @@ watch([colorSelected, sizeSelected], async () => {
     </div>
   </div>
   <!-- <AddtoCartModal :Checkvisible="Checkvisible" :handleAdCartClose="handleAdCartClose" /> -->
+  <LoginModal :visible="visible" @closemodal="closeModal" :close="closeModal" />
 </template>
 
 <style lang="scss">
