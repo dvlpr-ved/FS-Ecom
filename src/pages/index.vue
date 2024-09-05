@@ -78,7 +78,7 @@ onMounted(() => {
     <div class="deviderFixedSection container bg-gray-100 flex flex-wrap justify-between gap-y-4">
       <div class="wishlistedOnHome border border-gray-300 my-3 rounded p-2 lg:w-[49.6%] w-[100%]">
         <div class="flexHeading flex justify-between items-center mb-2">
-          <h6 class="text-xl">wishlist</h6>
+          <h6 class="text-xl">Recently Viewed</h6>
           <NuxtLink href="wishlist" class="block">
             <i class="pi pi-chevron-circle-right text-orange-500 text-3xl"></i>
           </NuxtLink>
@@ -109,7 +109,7 @@ onMounted(() => {
       </div>      
       <div class="recentViewd border border-gray-300 my-3 rounded p-2 lg:w-[49.6%] w-[100%]">
         <div class="flexHeading flex justify-between items-center mb-2">
-          <h6 class="text-xl">Recent View</h6>
+          <h6 class="text-xl">Wishlist</h6>
           <NuxtLink href="#" class="block">
             <i class="pi pi-chevron-circle-right text-orange-500 text-3xl"></i>
           </NuxtLink>

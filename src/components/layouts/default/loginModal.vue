@@ -1,13 +1,17 @@
 <script setup lang="ts">
+import { emit } from 'process';
+
 const props = defineProps<{
   visible: boolean;
   close: () => void;
 }>();
-
+const emits = defineEmits(['closemodal']);
 const value = ref(null);
 const ChangePosition = ref("inactive");
 const showMessage = ref("");
-
+const closemodal = () => {
+  emits('closemodal');
+}
 const formData = {
   email: "",
   password: "",
@@ -78,7 +82,7 @@ const toggleForm = () => {
         <NuxtLink
           href="subscriptionplans"
           class="absolute bottom-[20%] left-0 right-0 w-fit m-auto commonbtn py-2 px-5 animate-bounce text-2xl"
-          @click="props.close"
+          @click="closemodal"
           >Subscriber</NuxtLink
         >
       </div>
@@ -137,10 +141,10 @@ const toggleForm = () => {
       <Button
         type="button"
         id="closebtn"
-        class="absolute top-0 right-0 bg-transparent z-10"
+        class="absolute top-0 right-0 bg-transparent z-50"
         @click="props.close"
       >
-        <i class="pi pi-times text-3xl text-gray-600"></i>
+        <i @click="props.close" class="pi pi-times text-3xl text-gray-600"></i>
       </Button>
     </div>
   </Dialog>
@@ -216,5 +220,8 @@ const toggleForm = () => {
       }
     }
   }
+}
+#closebtn{
+  z-index: 33;
 }
 </style>

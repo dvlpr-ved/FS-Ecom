@@ -18,6 +18,7 @@ const handleBlur = (e) => {
 const visible = ref(false);
 
 const closeModal = () => {
+  console.log(333);
   visible.value = false;
 };
 const toogleModal = () => {
@@ -170,7 +171,7 @@ const closeAutoomplete = () => {
     </div>
   </header>
 
-  <LoginModal :visible="visible" :close="closeModal" />
+  <LoginModal :visible="visible" @closemodal= "closeModal" :close="closeModal" />
 </template>
 
 <style lang="scss" scoped>

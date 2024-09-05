@@ -7,6 +7,7 @@ const loading = ref(true);
 const isMobileNavVisible = ref("");
 const route = useRoute();
 const suffix = ref('');
+const categoryFilter = ref([]);
 const getDataFunc = async () => {
   try {
     const config = useRuntimeConfig();
@@ -30,6 +31,7 @@ const getDataFunc = async () => {
     const data = await res.json();
     if (data.success) {
       products.value = data.data.data;
+      categoryFilter.value = data.data.data_category;
       loading.value = false;
     }
   } catch (error) {
@@ -84,32 +86,14 @@ onMounted(async () => {
             />
             <label for="checkboxes" class="text-xl title">All Catagories</label>
           </div>
-          <div class="checkbox mb-3">
+          <div v-for="c in categoryFilter" class="checkbox mb-3">
             <input
               class="styled-checkbox"
               id="checkboxes0"
               type="checkbox"
               value="value"
             />
-            <label for="checkboxes0" class="text-xl title">Sarees</label>
-          </div>
-          <div class="checkbox mb-3">
-            <input
-              class="styled-checkbox"
-              id="checkboxes1"
-              type="checkbox"
-              value="value"
-            />
-            <label for="checkboxes1" class="text-xl title">Lehanga</label>
-          </div>
-          <div class="checkbox mb-3">
-            <input
-              class="styled-checkbox"
-              id="checkboxes2"
-              type="checkbox"
-              value="value"
-            />
-            <label for="checkboxes2" class="text-xl title">Kurti</label>
+            <label for="checkboxes0" class="text-xl title">{{c}}</label>
           </div>
         </div>
       </aside>
