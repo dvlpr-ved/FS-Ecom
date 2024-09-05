@@ -16,7 +16,7 @@ const logOut = () => {
   <aside class="accountsAsideBar lg:w-[24%] w-[100%]">
     <div class="lg:sticky lg:top-3">
       <div
-        class="commonbox userAvtarInfo p-3 bg-white shadow-sm rounded-sm lg:mb-3 lg:border-0 border-b border-gray-300"
+        class="commonbox userAvtarInfo lg:p-3 p-2 bg-white shadow-sm rounded-sm lg:mb-3 lg:border-0 border-b border-gray-300"
       >
         <div class="flexdiv flex gap-3">
           <img
@@ -37,10 +37,10 @@ const logOut = () => {
         </div>
       </div>
       <div
-        class="commonbox userAvtarInfo p-3 bg-white shadow-sm rounded-sm lg:mb-3 lg:border-0 border-b border-gray-300"
+        class="commonbox userAvtarInfo lg:p-3 p-2 bg-white shadow-sm rounded-sm lg:mb-3 lg:border-0 border-b border-gray-300"
       >
-        <div class="headingLg mb-3 text-xl">My Activity</div>
-        <NuxtLink to="/" class="text-[15px] block capitalize mb-2 hover:text-orange-400"
+        <div class="headingLg lg:mb-3 mb-2 text-xl">My Activity</div>
+        <NuxtLink to="/myorder" class="text-[15px] block capitalize mb-2 hover:text-orange-400"
           ><i class="pi pi-arrow-right"></i> My Orders
         </NuxtLink>
 
@@ -49,9 +49,9 @@ const logOut = () => {
         </NuxtLink>
       </div>
       <div
-        class="commonbox userAvtarInfo p-3 bg-white shadow-sm rounded-sm lg:mb-3 lg:border-0 border-b border-gray-300"
+        class="commonbox userAvtarInfo lg:p-3 p-2 bg-white shadow-sm rounded-sm lg:mb-3 lg:border-0 border-b border-gray-300"
       >
-        <div class="headingLg mb-3 text-xl">Account Detail</div>
+        <div class="headingLg lg:mb-3 mb-2 text-xl">Account Detail</div>
         <NuxtLink
           to="#editprofile"
           class="text-[15px] block capitalize mb-2 hover:text-orange-400"
@@ -63,7 +63,7 @@ const logOut = () => {
           ><i class="pi pi-arrow-right"></i> Manage Address
         </NuxtLink>
       </div>
-      <div class="commonbox userAvtarInfo p-3 bg-white shadow-sm rounded-sm lg:mb-0 mb-3">
+      <div class="commonbox userAvtarInfo p-3 bg-white shadow-sm rounded-sm lg:border-0 border-b border-gray-300">
         <div class="headingLg text-xl cursor-pointer lg:text-center" @click="logOut">
           <i class="pi pi-sign-out text-xl"></i> Log Out
         </div>
