@@ -8,23 +8,33 @@ const isMobileNavVisible = ref("");
 const route = useRoute();
 const selectedFilters = ref(["allCategories"]);
 
+const suffix = ref('');
+const categoryFilter = ref([]);
 const getDataFunc = async () => {
   try {
     const config = useRuntimeConfig();
     const query = route.query;
-    const suffix = query.category
-      ? `api/fetchSearchItems?category=${query.category}`
-      : `api/fetchSearchItems?product=${query.product}`;
+    if(query.category){
+        suffix.value = `api/fetchSearchItems?category=${query.category}`;
+    }
+    else if(query.listing_id){
+      suffix.value = `api/fetchSearchItems?listing=${query.listing_id}`;
+    }
+    else{
+      suffix.value = `api/fetchSearchItems?product=${query.product}`;
+    }
+ 
     const res = await fetch(
       `${
         config.API_BASE_URL ? config.API_BASE_URL : "https://fashtsaly.com/API/public/"
-      }${suffix}`,
+      }${suffix.value}`,
       { method: "POST" }
     );
     const data = await res.json();
     if (data.success) {
       products.value = data.data.data;
       applyFilters();
+      categoryFilter.value = data.data.data_category;
       loading.value = false;
     }
   } catch (error) {
@@ -114,7 +124,7 @@ onMounted(async () => {
               >All Categories</label
             >
           </div>
-          <div class="checkbox mb-3">
+          <div v-for="c in categoryFilter" class="checkbox mb-3">
             <input
               class="styled-checkbox"
               id="sortLatest"
@@ -152,6 +162,7 @@ onMounted(async () => {
             <label for="sortHighToLow" class="text-xl title capitalize"
               >High to Low</label
             >
+            <label for="checkboxes0" class="text-xl title">{{c}}</label>
           </div>
         </div>
       </aside>

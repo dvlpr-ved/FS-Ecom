@@ -157,6 +157,13 @@ const proceedPayment = async (planid) => {
       let checkoutOptions = {
         paymentSessionId: data.payment_session_id,
         redirectTarget: "_modal",
+        components: {
+          order: {
+            upi: true,        // Enable UPI
+            card: true,       // Enable Card
+            netbanking: true, // Enable Netbanking
+          },
+        },
       };
       const result = await cashfree.checkout(checkoutOptions);
       if (result.error) {

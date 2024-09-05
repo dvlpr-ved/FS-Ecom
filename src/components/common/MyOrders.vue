@@ -54,6 +54,9 @@ const submitReview = (orderId) => {
 setTimeout(() => {
   isLoading.value = false;
 }, 500);
+onMounted(() => {
+  
+});
 </script>
 
 <template>

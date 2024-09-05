@@ -31,7 +31,7 @@ const formError = {
   confirmPassword: "",
   otp: "",
 };
-
+const btnlabel = ref('Sign Up');
 const handleSubmit = async (event) => {
   event.preventDefault();
 
@@ -111,10 +111,12 @@ const handleSubmit = async (event) => {
         }
       } else {
         if (!isOtpFeildVisible.value) {
+          btnlabel.value = 'Verify';
           isOtpFeildVisible.value = true;
         } else {
           authStore.Login(responseData);
           closeModal();
+          window.location.reload();
         }
       }
     } catch (error) {
