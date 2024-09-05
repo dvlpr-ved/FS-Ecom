@@ -31,7 +31,7 @@ const getDataFunc = async () => {
     const data = await res.json();
     if (data.success) {
       products.value = data.data.data;
-      categoryFilter.value = data.data.data_category;
+      categoryFilter.value = data.data_category;
       loading.value = false;
     }
   } catch (error) {
@@ -89,11 +89,11 @@ onMounted(async () => {
           <div v-for="c in categoryFilter" class="checkbox mb-3">
             <input
               class="styled-checkbox"
-              id="checkboxes0"
+              :id="'checkboxes'+c.id"
               type="checkbox"
               value="value"
             />
-            <label for="checkboxes0" class="text-xl title">{{c}}</label>
+            <label :for="'checkboxes'+c.id" class="text-xl title">{{c.name}}</label>
           </div>
         </div>
       </aside>
