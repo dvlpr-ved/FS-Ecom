@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useRoute } from "vue-router";
 import { fetchFromSanctum } from "/utils/sanctumApi.js";
 const cartstore = useCartStore();
 const CartItems = computed(() => cartstore.getCartLength || "");
@@ -8,9 +9,22 @@ const wishlistd = computed(() => getWishlistItems.getWishlistLength || "");
 const wishlistItems = ref(2);
 const NotiFication = ref(10);
 const config = useRuntimeConfig();
+const showAutoComplete = ref(false);
 
 const authStore = useAuthStore();
-const showAutoComplete = ref(false);
+const route = useRoute();
+
+const checkRoute = () => {
+  const myaccounts = route.path.toLowerCase().includes("myaccounts");
+  const mycart = route.path.toLowerCase().includes("mycart");
+  const wishlist = route.path.toLowerCase().includes("wishlist");
+  const myorder = route.path.toLowerCase().includes("myorder");
+  if ((myaccounts || mycart || wishlist || myorder) && !authStore.isUserLoggedin) {
+    visible.value = true;
+    navigateTo("/");
+  }
+};
+watch(route, checkRoute, { immediate: true });
 
 const handleBlur = (e) => {
   showAutoComplete.value = false;
@@ -18,7 +32,6 @@ const handleBlur = (e) => {
 const visible = ref(false);
 
 const closeModal = () => {
-  console.log(333);
   visible.value = false;
 };
 const toogleModal = () => {
@@ -59,7 +72,6 @@ const closeAutoomplete = () => {
   showAutoComplete.value = false;
   searchQuery.value = "";
 };
-
 </script>
 
 <template>
@@ -141,10 +153,10 @@ const closeAutoomplete = () => {
 
     <!-- header for mobile -->
     <div class="container mx-auto flex items-center justify-between py-1 lg:hidden">
-       <NuxtLink to="/" class="logo text text-5xl">
-          fashtsaly
-          <!-- <img src="https://fashtsaly.com/wp-content/uploads/2023/02/fashtsaly.png" class=" h-[50px]"/> -->
-        </NuxtLink>
+      <NuxtLink to="/" class="logo text text-5xl">
+        fashtsaly
+        <!-- <img src="https://fashtsaly.com/wp-content/uploads/2023/02/fashtsaly.png" class=" h-[50px]"/> -->
+      </NuxtLink>
       <ul class="navList flex items-center justify-center space-x-4">
         <li class="icons text-center cart">
           <NuxtLink
@@ -171,11 +183,13 @@ const closeAutoomplete = () => {
     </div>
   </header>
 
-  <LoginModal :visible="visible" @closemodal= "closeModal" :close="closeModal" />
+  <LoginModal :visible="visible" @closemodal="closeModal" :close="closeModal" />
 </template>
 
 <style lang="scss" scoped>
-.p-progressbar {display: none!important;}
+.p-progressbar {
+  display: none !important;
+}
 .AppHeader {
   padding: 8px 0;
   border-bottom: 1px solid var(--gray);
