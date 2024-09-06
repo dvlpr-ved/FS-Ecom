@@ -1,36 +1,83 @@
 <script setup lang="ts">
+import { ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import { fetchFromSanctum } from "/utils/sanctumApi.js";
+
+// Store references
 const cartstore = useCartStore();
 const CartItems = computed(() => cartstore.getCartLength || "");
+
 const getWishlistItems = useWishlistStore();
 const wishlistd = computed(() => getWishlistItems.getWishlistLength || "");
-// const wishlistd = ref(2);
-const wishlistItems = ref(2);
-const NotiFication = ref(10);
-const config = useRuntimeConfig();
-const showAutoComplete = ref(false);
 
+// Search query and result management
+const searchQuery = ref("");
+const showAutoComplete = ref(false);
+const searchResult = ref({
+  catg: [],
+  products: [],
+  tagged: [],
+});
+
+// Config and route
+const config = useRuntimeConfig();
 const authStore = useAuthStore();
 const route = useRoute();
 
+// Modal visibility
+const visible = ref(false);
+
+// Function to check route and redirect if the user is not logged in
 const checkRoute = () => {
   const myaccounts = route.path.toLowerCase().includes("myaccounts");
   const mycart = route.path.toLowerCase().includes("mycart");
   const wishlist = route.path.toLowerCase().includes("wishlist");
   const myorder = route.path.toLowerCase().includes("myorder");
+
   if ((myaccounts || mycart || wishlist || myorder) && !authStore.isUserLoggedin) {
     visible.value = true;
     navigateTo("/");
   }
 };
+
+// Watch for route changes and trigger the route check
 watch(route, checkRoute, { immediate: true });
 
-const handleBlur = (e) => {
+// Handle search input blur
+const handleBlur = () => {
   showAutoComplete.value = false;
 };
-const visible = ref(false);
 
+// Fetch search results based on the query
+const fetchSearchResult = async () => {
+  const data = await fetchFromSanctum({
+    method: "POST",
+    url: `${config.API_BASE_URL || "https://fashtsaly.com/API/public/"}api/fetchSearchResult`,
+    body: { query: searchQuery.value },
+  });
+
+  if (data.success) {
+    searchResult.value.catg = data.catg;
+    searchResult.value.products = data.products;
+    searchResult.value.tagged = data.tagged;
+    showAutoComplete.value = true;
+  }
+};
+
+// Watch the search query input for changes and fetch results
+watch(searchQuery, (val) => {
+  if (val && val.length > 2) {
+    fetchSearchResult();
+  }
+});
+
+// Close autocomplete suggestions
+const closeAutoomplete = () => {
+  showAutoComplete.value = false;
+  searchQuery.value = "";
+};
+
+// Modal toggle functions
 const closeModal = () => {
   visible.value = false;
 };
@@ -39,53 +86,19 @@ const toogleModal = () => {
     visible.value = true;
   }
 };
-
-const searchQuery = ref("");
-watch(searchQuery, (val) => {
-  if (val.length > 2) {
-    fetchSearchResult();
-  }
-});
-const searchResult = reactive({
-  catg: [],
-  products: [],
-  tagged: [],
-});
-const fetchSearchResult = async () => {
-  const data = await fetchFromSanctum({
-    method: "POST",
-    url: `${
-      config.API_BASE_URL ? config.API_BASE_URL : "https://fashtsaly.com/API/public/"
-    }api/fetchSearchResult`,
-    body: {
-      query: searchQuery.value,
-    },
-  });
-  if (data.success) {
-    searchResult.catg = data.catg;
-    searchResult.products = data.products;
-    searchResult.tagged = data.tagged;
-    showAutoComplete.value = true;
-  }
-};
-const closeAutoomplete = () => {
-  showAutoComplete.value = false;
-  searchQuery.value = "";
-};
 </script>
 
 <template>
   <OfferLine />
+
+  <!-- Header -->
   <header class="AppHeader border-bottom">
-    <!-- only for desktop -->
+    <!-- Desktop Header -->
     <div class="headerDesk container lg:flex hidden justify-between">
       <div class="headerLeft flex justify-between items-center">
-        <NuxtLink to="/" class="logo text text-5xl">
-          fashtsaly
-          <!-- <img src="https://fashtsaly.com/wp-content/uploads/2023/02/fashtsaly.png" class=" h-[50px]"/> -->
-        </NuxtLink>
+        <NuxtLink to="/" class="logo text text-5xl">fashtsaly</NuxtLink>
       </div>
-
+      <!-- Search Bar -->
       <div class="searchField lg:flex hidden relative">
         <input
           class="py-2 px-3 w-full border border-gray-300 rounded text-xl bg-gray-100"
@@ -100,6 +113,7 @@ const closeAutoomplete = () => {
         />
       </div>
 
+      <!-- Navigation List -->
       <ul class="navList flex items-center justify-center capitalize gap-5">
         <li class="icons relative cart" v-tooltip="'View Cart'">
           <NuxtLink
@@ -107,12 +121,12 @@ const closeAutoomplete = () => {
             class="border border-gray-300 rounded-[100%] flex items-center justify-center"
           >
             <i class="pi pi-shopping-cart text-2xl"></i>
-            <span
-              class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
-              >{{ CartItems ? CartItems : "" }}</span
-            >
+            <span class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl">
+              {{ CartItems ? CartItems : "" }}
+            </span>
           </NuxtLink>
         </li>
+
         <li class="icons relative cart">
           <NuxtLink
             to="../wishlist"
@@ -120,22 +134,16 @@ const closeAutoomplete = () => {
           >
             <i class="pi pi-heart text-2xl"></i>
           </NuxtLink>
-          <span
-            class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
-          >
+          <span class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl">
             {{ wishlistd ? wishlistd : "" }}
           </span>
         </li>
+
         <li class="block">
-          <NuxtLink class="subscribe commonbtn text-xl" to="/subscriptionplans"
-            >subscribe</NuxtLink
-          >
+          <NuxtLink class="subscribe commonbtn text-xl" to="/subscriptionplans">subscribe</NuxtLink>
         </li>
-        <li
-          class="icons relative user flex items-center gap-2 cursor-pointer"
-          label="Show"
-          @click="toogleModal"
-        >
+
+        <li class="icons relative user flex items-center gap-2 cursor-pointer" @click="toogleModal">
           <template v-if="!authStore.isUserLoggedin">
             <i class="pi pi-user text-4xl"></i>
             <span class="text inline">LOGIN / REGISTER</span>
@@ -151,12 +159,10 @@ const closeAutoomplete = () => {
       </ul>
     </div>
 
-    <!-- header for mobile -->
+    <!-- Mobile Header -->
     <div class="container mx-auto flex items-center justify-between py-1 lg:hidden">
-      <NuxtLink to="/" class="logo text text-5xl">
-        fashtsaly
-        <!-- <img src="https://fashtsaly.com/wp-content/uploads/2023/02/fashtsaly.png" class=" h-[50px]"/> -->
-      </NuxtLink>
+      <NuxtLink to="/" class="logo text text-5xl">fashtsaly</NuxtLink>
+
       <ul class="navList flex items-center justify-center space-x-4">
         <li class="icons text-center cart">
           <NuxtLink
@@ -173,9 +179,7 @@ const closeAutoomplete = () => {
           >
             <i class="pi pi-heart text-2xl"></i>
           </NuxtLink>
-          <span
-            class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
-          >
+          <span class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl">
             {{ wishlistd ? wishlistd : "" }}
           </span>
         </li>
@@ -183,13 +187,16 @@ const closeAutoomplete = () => {
     </div>
   </header>
 
+  <!-- Modal for Login/Signup -->
   <LoginModal :visible="visible" @closemodal="closeModal" :close="closeModal" />
 </template>
+
 
 <style lang="scss" scoped>
 .p-progressbar {
   display: none !important;
 }
+
 .AppHeader {
   padding: 8px 0;
   border-bottom: 1px solid var(--gray);

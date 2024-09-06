@@ -7,7 +7,8 @@ const allProducts = ref([]); // To keep a copy of all products for filtering
 const loading = ref(true);
 const isMobileNavVisible = ref("");
 const route = useRoute();
-const selectedFilters = ref(["allCategories"]); // To hold selected filters
+const selectedCategories = ref(["allCategories"]); // To hold selected categories
+const selectedSort = ref(""); // To hold the selected sorting option
 
 const suffix = ref('');
 const categoryFilter = ref([]);
@@ -24,7 +25,7 @@ const getDataFunc = async () => {
     else{
       suffix.value = `api/fetchSearchItems?product=${query.product}`;
     }
- 
+
     const res = await fetch(
       `${
         config.API_BASE_URL ? config.API_BASE_URL : "https://fashtsaly.com/API/public/"
@@ -48,20 +49,20 @@ const applyFilters = () => {
   let sortedData = [...allProducts.value];
 
   // Filter by selected categories
-  if (!selectedFilters.value.includes("allCategories")) {
+  if (!selectedCategories.value.includes("allCategories")) {
     sortedData = sortedData.filter((product) =>
-      selectedFilters.value.includes(product.category.toString())
+      selectedCategories.value.includes(product.category.toString())
     );
   }
 
   // Sorting logic
-  if (selectedFilters.value.includes("latest")) {
+  if (selectedSort.value === "latest") {
     sortedData = sortedData.sort(
       (a, b) => new Date(b.created_at) - new Date(a.created_at)
     );
-  } else if (selectedFilters.value.includes("lowToHigh")) {
+  } else if (selectedSort.value === "lowToHigh") {
     sortedData = sortedData.sort((a, b) => a.mrp - b.mrp);
-  } else if (selectedFilters.value.includes("highToLow")) {
+  } else if (selectedSort.value === "highToLow") {
     sortedData = sortedData.sort((a, b) => b.mrp - a.mrp);
   }
 
@@ -69,13 +70,7 @@ const applyFilters = () => {
 };
 
 const handleSortChange = (event) => {
-  const value = event.target.value;
-
-  if (value !== "allCategories") {
-    selectedFilters.value = [value];
-  } else {
-    selectedFilters.value = ["allCategories"];
-  }
+  selectedSort.value = event.target.value;
   applyFilters();
   closeFilter();
 };
@@ -83,10 +78,10 @@ const handleSortChange = (event) => {
 const handleCategoryChange = (event, categoryId) => {
   if (event.target.checked) {
     // Add the category to selected filters
-    selectedFilters.value.push(categoryId.toString());
+    selectedCategories.value.push(categoryId.toString());
   } else {
     // Remove the category from selected filters
-    selectedFilters.value = selectedFilters.value.filter(
+    selectedCategories.value = selectedCategories.value.filter(
       (filter) => filter !== categoryId.toString()
     );
   }
@@ -97,9 +92,9 @@ const handleCategoryChange = (event, categoryId) => {
 
 const handleAllCategoriesChange = (event) => {
   if (event.target.checked) {
-    selectedFilters.value = ["allCategories"];
+    selectedCategories.value = ["allCategories"];
   } else {
-    selectedFilters.value = selectedFilters.value.filter(
+    selectedCategories.value = selectedCategories.value.filter(
       (filter) => filter !== "allCategories"
     );
   }
@@ -148,7 +143,8 @@ onMounted(async () => {
               id="allCategories"
               type="checkbox"
               value="allCategories"
-              v-model="selectedFilters"
+              name="checkboxcategory"
+              :checked="selectedCategories.includes('allCategories')"
               @change="handleAllCategoriesChange"
             />
             <label for="allCategories" class="text-xl title capitalize"
@@ -160,7 +156,9 @@ onMounted(async () => {
               class="styled-checkbox"
               :id="'category_checkbox'+c.id"
               type="checkbox"
-              :value="c.id"
+              name="checkboxcategory"
+              :value="'category'+c.id"
+              :checked="selectedCategories.includes(c.id.toString())"
               @change="(event) => handleCategoryChange(event, c.id)"
             />
             <label :for="'category_checkbox'+c.id" class="text-xl title capitalize"
@@ -171,9 +169,10 @@ onMounted(async () => {
             <input
               class="styled-checkbox"
               id="sortLatest"
-              type="checkbox"
+              name="checkboxsort"
+              type="radio"
               value="latest"
-              v-model="selectedFilters"
+              :checked="selectedSort === 'latest'"
               @change="handleSortChange"
             />
             <label for="sortLatest" class="text-xl title capitalize"
@@ -184,9 +183,10 @@ onMounted(async () => {
             <input
               class="styled-checkbox"
               id="sortLowToHigh"
-              type="checkbox"
+              name="checkboxsort"
+              type="radio"
               value="lowToHigh"
-              v-model="selectedFilters"
+              :checked="selectedSort === 'lowToHigh'"
               @change="handleSortChange"
             />
             <label for="sortLowToHigh" class="text-xl title capitalize"
@@ -197,9 +197,10 @@ onMounted(async () => {
             <input
               class="styled-checkbox"
               id="sortHighToLow"
-              type="checkbox"
+              name="checkboxsort"
+              type="radio"
               value="highToLow"
-              v-model="selectedFilters"
+              :checked="selectedSort === 'highToLow'"
               @change="handleSortChange"
             />
             <label for="sortHighToLow" class="text-xl title capitalize"

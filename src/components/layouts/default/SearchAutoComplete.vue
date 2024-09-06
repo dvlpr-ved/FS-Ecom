@@ -7,6 +7,7 @@ const { results } = defineProps({
     default: {},
   },
 });
+console.log(results);
 const navigateForward = (query) => {
   emit("close");
   if (query.category) {
