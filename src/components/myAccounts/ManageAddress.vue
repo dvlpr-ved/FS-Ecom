@@ -31,8 +31,8 @@ onMounted(() => {
           <div class="text-xl" style="color: var(--text-blue)">
             <i class="pi pi-plus"></i> Add a New Addresses
           </div>
-        </div></template
-      >
+        </div>
+      </template>
       <template v-else>
         <div class="text-xl p-3" style="color: var(--text-blue)">Add Addresses</div>
       </template>

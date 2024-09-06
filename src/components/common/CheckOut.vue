@@ -1,9 +1,9 @@
 <template>
   <Toast />
   <section class="chkOutComp bg-gray-200">
-    <div class="flex container justify-center flex-wrap py-4">
+    <div class="flex container justify-center flex-wrap lg:py-4 py-2 px-2">
       <div class="leftside lg:w-[70%] w-[100%]">
-        <div class="w-full px-4">
+        <div class="w-full lg:px-4">
           <div v-if="notItems">
             <p class="text-2xl mb-2">Loading Products</p>
             <div class="w-full py-12 shimmer mb-3"></div>
@@ -44,7 +44,7 @@
           </div>
         </div>
 
-        <div class="w-full px-4">
+        <div class="w-full lg:px-4">
           <div class="addressTopCard bg-white">
             <div class="text-2xl font-semibold mb-3 p-2 px-4 bgblue80 text-white">
               Delivery Address

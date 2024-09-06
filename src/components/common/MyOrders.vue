@@ -54,8 +54,15 @@ const submitReview = (orderId) => {
 setTimeout(() => {
   isLoading.value = false;
 }, 500);
+const getData =async () => {
+  const data  = await fetchFromSanctum({
+    url : 'https://fashtsaly.com/API/public/api/getOrders',
+    method : 'GET'
+  });
+  console.log(data);
+}
 onMounted(() => {
-  
+  getData();
 });
 </script>
 
@@ -112,8 +119,8 @@ onMounted(() => {
       <!-- <p>No orders found.</p> -->
       <div v-else>
         <div
-          v-for="order in orders"
-          :key="order.id"
+          v-for="order in data"
+          :key="order.order_id"
           class="border rounded-lg mb-2 shadow-md bg-white"
         >
           <div class="flexdiv flex p-4">
@@ -125,19 +132,19 @@ onMounted(() => {
               />
             </div>
             <div class="ml-4">
-              <h2 class="text-lg font-semibold mb-2">Order #{{ order.id }}</h2>
+              <h2 class="text-lg font-semibold mb-2">Order #{{ order.order_id }}</h2>
               <p class="text-gray-600 mb-1">Date: {{ order.date }}</p>
-              <p class="text-gray-600 mb-1">Total: ₹ {{ order.total.toFixed(2) }}</p>
+              <p class="text-gray-600 mb-1">Total: ₹ {{ order.subtotal.toFixed(2) }}</p>
               <span
                 class="rateText text-blue-800 font-bold capitalize cursor-pointer"
-                @click="toggleReviewForm(order.id)"
+                @click="toggleReviewForm(order.order_id)"
               >
-                {{ activeOrderId === order.id ? "close form" : "Rate & Review" }}
+                {{ activeOrderId === order.order_id ? "close form" : "Rate & Review" }}
               </span>
             </div>
           </div>
           <div
-            v-if="activeOrderId === order.id"
+            v-if="activeOrderId === order.order_id"
             class="rate-review px-4 py-3 border-t border-gray-400"
           >
             <div class="starRate">

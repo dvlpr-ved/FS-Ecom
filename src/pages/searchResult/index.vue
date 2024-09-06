@@ -1,11 +1,14 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
-import { useRoute, useRuntimeConfig } from "nuxt/app"; // Make sure you are importing from 'nuxt/app' if using Nuxt
+import { useRoute, useRuntimeConfig } from "nuxt/app";
 
 const products = ref([]);
+const allProducts = ref([]); // To keep a copy of all products for filtering
 const loading = ref(true);
 const isMobileNavVisible = ref("");
 const route = useRoute();
+const selectedFilters = ref(["allCategories"]); // To hold selected filters
+
 const suffix = ref('');
 const categoryFilter = ref([]);
 const getDataFunc = async () => {
@@ -30,13 +33,78 @@ const getDataFunc = async () => {
     );
     const data = await res.json();
     if (data.success) {
+      allProducts.value = data.data.data; // Store all products
       products.value = data.data.data;
       categoryFilter.value = data.data_category;
+      applyFilters();
       loading.value = false;
     }
   } catch (error) {
     console.error("Error fetching products:", error);
   }
+};
+
+const applyFilters = () => {
+  let sortedData = [...allProducts.value];
+
+  // Filter by selected categories
+  if (!selectedFilters.value.includes("allCategories")) {
+    sortedData = sortedData.filter((product) =>
+      selectedFilters.value.includes(product.category.toString())
+    );
+  }
+
+  // Sorting logic
+  if (selectedFilters.value.includes("latest")) {
+    sortedData = sortedData.sort(
+      (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    );
+  } else if (selectedFilters.value.includes("lowToHigh")) {
+    sortedData = sortedData.sort((a, b) => a.mrp - b.mrp);
+  } else if (selectedFilters.value.includes("highToLow")) {
+    sortedData = sortedData.sort((a, b) => b.mrp - a.mrp);
+  }
+
+  products.value = sortedData;
+};
+
+const handleSortChange = (event) => {
+  const value = event.target.value;
+
+  if (value !== "allCategories") {
+    selectedFilters.value = [value];
+  } else {
+    selectedFilters.value = ["allCategories"];
+  }
+  applyFilters();
+  closeFilter();
+};
+
+const handleCategoryChange = (event, categoryId) => {
+  if (event.target.checked) {
+    // Add the category to selected filters
+    selectedFilters.value.push(categoryId.toString());
+  } else {
+    // Remove the category from selected filters
+    selectedFilters.value = selectedFilters.value.filter(
+      (filter) => filter !== categoryId.toString()
+    );
+  }
+
+  applyFilters();
+  closeFilter();
+};
+
+const handleAllCategoriesChange = (event) => {
+  if (event.target.checked) {
+    selectedFilters.value = ["allCategories"];
+  } else {
+    selectedFilters.value = selectedFilters.value.filter(
+      (filter) => filter !== "allCategories"
+    );
+  }
+  applyFilters();
+  closeFilter();
 };
 
 const openFilter = () => {
@@ -47,14 +115,12 @@ const closeFilter = () => {
   isMobileNavVisible.value = "";
 };
 
-
 watch(
   () => route.query,
   () => {
     getDataFunc();
   }
 );
-
 onMounted(async () => {
   getDataFunc();
 });
@@ -64,12 +130,12 @@ onMounted(async () => {
   <div class="SearchResultPage py-4">
     <div class="container flex flex-wrap justify-between">
       <aside
-        class="LeftFilters lg:w-[20%] w-[100%] bg-gray-100 lg:sticky py-2 h-[fit-content] top-2"
+        class="LeftFilters lg:w-[20%] w-[100%] bg-gray-100 sticky z-[12] py-2 h-[fit-content] lg:top-2 top-0"
       >
         <div
           class="flexdiv fixinMb lg:block flex justify-between lg:border-b px-4 py-2 lg:mb-3"
         >
-          <h1 class="text-3xl">Filters</h1>
+          <h1 class="text-2xl">Filters</h1>
           <button class="lg:hidden filterBtn" @click="openFilter">
             <i class="pi pi-filter text-3xl"></i>
           </button>
@@ -79,21 +145,66 @@ onMounted(async () => {
           <div class="checkbox mb-3">
             <input
               class="styled-checkbox"
-              id="checkboxes"
+              id="allCategories"
               type="checkbox"
-              value="value"
-              checked
+              value="allCategories"
+              v-model="selectedFilters"
+              @change="handleAllCategoriesChange"
             />
-            <label for="checkboxes" class="text-xl title">All Catagories</label>
+            <label for="allCategories" class="text-xl title capitalize"
+              >All Categories</label
+            >
           </div>
-          <div v-for="c in categoryFilter" class="checkbox mb-3">
+          <div v-for="c in categoryFilter" class="checkbox mb-3" :key="c.id">
             <input
               class="styled-checkbox"
-              :id="'checkboxes'+c.id"
+              :id="'category_checkbox'+c.id"
               type="checkbox"
-              value="value"
+              :value="c.id"
+              @change="(event) => handleCategoryChange(event, c.id)"
             />
-            <label :for="'checkboxes'+c.id" class="text-xl title">{{c.name}}</label>
+            <label :for="'category_checkbox'+c.id" class="text-xl title capitalize"
+              >{{ c.name }}</label
+            >
+          </div>          
+          <div class="checkbox mb-3">
+            <input
+              class="styled-checkbox"
+              id="sortLatest"
+              type="checkbox"
+              value="latest"
+              v-model="selectedFilters"
+              @change="handleSortChange"
+            />
+            <label for="sortLatest" class="text-xl title capitalize"
+              >Sort by Latest</label
+            >
+          </div>
+          <div class="checkbox mb-3">
+            <input
+              class="styled-checkbox"
+              id="sortLowToHigh"
+              type="checkbox"
+              value="lowToHigh"
+              v-model="selectedFilters"
+              @change="handleSortChange"
+            />
+            <label for="sortLowToHigh" class="text-xl title capitalize"
+              >Low to High</label
+            >
+          </div>
+          <div class="checkbox mb-3">
+            <input
+              class="styled-checkbox"
+              id="sortHighToLow"
+              type="checkbox"
+              value="highToLow"
+              v-model="selectedFilters"
+              @change="handleSortChange"
+            />
+            <label for="sortHighToLow" class="text-xl title capitalize"
+              >High to Low</label
+            >
           </div>
         </div>
       </aside>
@@ -118,6 +229,7 @@ onMounted(async () => {
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .p-paginator .p-paginator-current {

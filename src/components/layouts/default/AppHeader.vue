@@ -115,7 +115,7 @@ const closeAutoomplete = () => {
           </span>
         </li>
         <li class="block">
-          <NuxtLink class="subscribe commonbtn text-xl" to="subscriptionplans"
+          <NuxtLink class="subscribe commonbtn text-xl" to="/subscriptionplans"
             >subscribe</NuxtLink
           >
         </li>

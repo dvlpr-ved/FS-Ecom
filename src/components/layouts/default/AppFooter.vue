@@ -21,7 +21,7 @@ watch(route, checkRoute, { immediate: true });
       <div class="footerFlex">
         <ul class="flex justify-between fwrap lg:pl-5 pl-0">
           <li
-            class="lg:w-[20%] w-[50%] footerLi lg:py-5 px-3 py-3 lg:mb-0 mb-3 lg:border-0 border-b"
+            class="lg:w-[20%] w-[100%] footerLi lg:py-5 px-3 py-3 lg:mb-0 mb-0 lg:border-0 border-b"
           >
             <div class="title font-bold text-2xl capitalize mb-2">information</div>
             <NuxtLink to="/about">About Us</NuxtLink>
@@ -31,7 +31,7 @@ watch(route, checkRoute, { immediate: true });
             <NuxtLink to="/shippingpolicy">shipping policy</NuxtLink>
           </li>
           <li
-            class="lg:w-[20%] w-[50%] footerLi lg:py-5 px-3 py-3 lg:mb-0 mb-3 lg:border-0 border-b"
+            class="lg:w-[20%] w-[100%] footerLi lg:py-5 px-3 py-3 lg:mb-0 mb-0 lg:border-0 border-b"
           >
             <div class="title font-bold text-2xl capitalize mb-2">Help</div>
             <NuxtLink to="../myorder">my orders</NuxtLink>
