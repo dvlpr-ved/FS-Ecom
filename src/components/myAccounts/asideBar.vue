@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 const authStore = useAuthStore();
 
-console.log(authStore);
-
 const logOut = () => {
   authStore.getUser.name = "";
   authStore.isLoggedin = false;

@@ -31,7 +31,7 @@ const formError = {
   confirmPassword: "",
   otp: "",
 };
-const btnlabel = ref('Sign Up');
+const btnlabel = ref("Sign Up");
 const handleSubmit = async (event) => {
   event.preventDefault();
 
@@ -111,7 +111,7 @@ const handleSubmit = async (event) => {
         }
       } else {
         if (!isOtpFeildVisible.value) {
-          btnlabel.value = 'Verify';
+          btnlabel.value = "Verify";
           isOtpFeildVisible.value = true;
         } else {
           authStore.Login(responseData);
@@ -136,15 +136,15 @@ const toggleFieldType = () => {
 <template>
   <Toast />
 
-  <div class="signupmaindiv lg:w-[50%] w-[100%] lg:p-5 p-2">
+  <div class="signupmaindiv lg:w-[50%] w-[100%] lg:p-5 p-3">
     <div class="formSide">
-      <h5 class="heading lg:text-3xl text-2xl text-center lg:mb-4 mb-3">
+      <h5 class="heading lg:text-3xl text-2xl text-center mb-4">
         Create an Account!
       </h5>
 
       <form class="inputFields lg:px-5 px-4 border-bottom">
         <div v-if="!isOtpFeildVisible">
-          <div class="inputbox lg:mb-3 mb-2">
+          <div class="inputbox mb-3">
             <input
               type="text"
               class="py-2 px-3 text-xl border w-full border-gray-400 rounded"
@@ -153,7 +153,7 @@ const toggleFieldType = () => {
             />
             <p class="text-[red]">{{ formError.name }}</p>
           </div>
-          <div class="inputbox lg:mb-3 mb-2">
+          <div class="inputbox mb-3">
             <input
               type="email"
               class="py-2 px-3 text-xl border w-full border-gray-400 rounded"
@@ -162,7 +162,7 @@ const toggleFieldType = () => {
             />
             <p class="text-[red]">{{ formError.email }}</p>
           </div>
-          <div class="inputbox lg:mb-3 mb-2 relative">
+          <div class="inputbox mb-3 relative">
             <input
               :type="inputType"
               class="py-2 px-3 text-xl border w-full border-gray-400 rounded"
@@ -175,7 +175,7 @@ const toggleFieldType = () => {
               <span v-else class="pi pi-eye-slash"></span>
             </button> -->
           </div>
-          <div class="inputbox lg:mb-3 mb-2 relative">
+          <div class="inputbox mb-3 relative">
             <input
               :type="inputType"
               class="py-2 px-3 text-xl border w-full border-gray-400 rounded"
@@ -209,11 +209,11 @@ const toggleFieldType = () => {
         </button>
       </form>
 
-      <span class="text-center block text-2xl lg:py-2 py-1">OR</span>
+      <span class="text-center lg:block hidden text-2xl lg:py-2 py-1">OR</span>
 
       <a
         href="#"
-        class="py-2 px-5 text-xl rounded text-white commonbtn block m-auto text-center lg:mb-4 mb-2 max-w-[220px] w-full"
+        class="py-2 px-5 text-xl rounded text-white commonbtn lg:block hidden m-auto text-center lg:mb-4 mb-2 max-w-[220px] w-full"
         style="background: #204887"
         @click="toggleForm"
         >Login</a

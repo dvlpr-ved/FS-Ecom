@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import { emit } from 'process';
+import { emit } from "process";
 
 const props = defineProps<{
   visible: boolean;
   close: () => void;
 }>();
-const emits = defineEmits(['closemodal']);
+const emits = defineEmits(["closemodal"]);
 const value = ref(null);
 const ChangePosition = ref("inactive");
 const showMessage = ref("");
+const formToggelInMb = ref("loginFormMain");
+
 const closemodal = () => {
-  emits('closemodal');
-}
+  emits("closemodal");
+};
 const formData = {
   email: "",
   password: "",
@@ -58,10 +60,15 @@ const handleSubmit = async (e: Event) => {
 const toggleForm = () => {
   ChangePosition.value = ChangePosition.value === "active" ? "inactive" : "active";
 };
+
+const handleToggelMb = () => {
+  formToggelInMb.value =
+    formToggelInMb.value === "loginFormMain" ? "notloginFormMain" : "loginFormMain";
+};
 </script>
 
 <template>
-  <Dialog :visible="props.visible" modal class="p-0" :style="{ width: '1024px' }">
+  <Dialog :visible="props.visible" modal class="p-0" :style="{ width: '950px' }">
     <div class="flexDialog flex flex-wrap justify-between relative overflow-hidden">
       <div
         :class="[
@@ -69,6 +76,8 @@ const toggleForm = () => {
           'absolute',
           'lg:w-[50%]',
           'w-[100%]',
+          'lg:block',
+          'hidden',
           'bgblue800',
           'z-10',
           ChangePosition,
@@ -88,10 +97,12 @@ const toggleForm = () => {
       </div>
 
       <!-- Signup Form -->
-      <signUp :toggleForm="toggleForm" />
+      <signUp :toggleForm="toggleForm" :visible="visible" />
 
-      <div class="rightCol lg:w-[50%] w-[100%] lg:p-6 p-3">
-        <div class="heading text-center lg:text-3xl text-2xl lg:mb-4 mb-2 headingsFont">
+      <div
+        :class="`rightCol loginFormMain lg:w-[50%] w-[100%] lg:p-6 p-3 ${formToggelInMb}`"
+      >
+        <div class="heading text-center lg:text-3xl text-2xl mb-4 headingsFont">
           Login
         </div>
 
@@ -101,7 +112,7 @@ const toggleForm = () => {
           <div class="flex items-center gap-4 mb-4">
             <input
               type="email"
-              class="lg:py-3 py-2 text-xl px-2 rounded border-gray-400 border w-[100%]"
+              class="lg:py-[16px] py-2 text-xl lg:px-3 px-2 rounded border-gray-400 border w-[100%]"
               autocomplete="off"
               placeholder="Enter Email"
               v-model="formData.email"
@@ -109,7 +120,7 @@ const toggleForm = () => {
           </div>
           <div class="flex items-center gap-4 mb-4">
             <input
-              class="lg:py-3 py-2 text-xl px-2 rounded border-gray-400 border w-[100%]"
+              class="lg:py-[16px] py-2 text-xl lg:px-3 px-2 rounded border-gray-400 border w-[100%]"
               autocomplete="off"
               type="password"
               placeholder="Enter Password"
@@ -120,22 +131,29 @@ const toggleForm = () => {
           <button
             type="submit"
             :disabled="isSubmitting"
-            class="loginbtn bgorange py-2 px-5 rounded text-white text-2xl flex justify-center max-w-[220px] w-full m-auto"
+            class="loginbtn bgorange lg:py-[20px] py-2 px-5 rounded text-white lg:text-2xl text-xl commonbtn flex justify-center max-w-[220px] w-full m-auto"
           >
             Login
           </button>
         </form>
 
-        <span class="text-center block text-4xl lg:py-3 py-1">OR</span>
+        <span class="text-center lg:block hidden text-4xl lg:py-3 py-1">OR</span>
 
-        <span
-          href="#"
-          class="py-2 px-3 rounded text-white text-2xl commonbtn block max-w-[220px] w-full text-center m-auto mb-4 cursor-pointer"
+        <button
+          class="loginbtn bgorange lg:py-[20px] py-2 px-5 rounded text-white lg:text-2xl text-xl commonbtn lg:flex hidden justify-center max-w-[220px] w-full m-auto"
           style="background: #204887"
           @click="toggleForm"
         >
           Register
-        </span>
+        </button>
+      </div>
+
+      <div
+        class="loginSignInBtnsMb py-2 px-2 bgblue80 lg:hidden flex justify-center fixed bottom-0 left-0 right-0"
+      >
+        <button class="text-2xl text-white" @click="handleToggelMb">
+          {{ formToggelInMb === "loginFormMain" ? "SignUp" : "Login" }}
+        </button>
       </div>
 
       <Button
@@ -195,7 +213,10 @@ const toggleForm = () => {
     display: none;
   }
 }
-@media (max-width: 576px) {
+#closebtn {
+  z-index: 33;
+}
+@media (max-width: 768px) {
   .p-component-overlay-enter {
     overflow-y: scroll;
     padding: 0;
@@ -206,7 +227,7 @@ const toggleForm = () => {
     }
   }
   .flexDialog {
-    .fixedBanner {
+    /*.fixedBanner {
       height: 50%;
       &.active {
         left: 0;
@@ -218,10 +239,18 @@ const toggleForm = () => {
         height: 100%;
         object-fit: cover;
       }
+    }*/
+    .loginFormMain {
+      visibility: visible;
+      position: absolute;
+      z-index: 2;
+      background: #fff;
+      height: 70vh;
+    }
+    .notloginFormMain {
+      z-index: -1;
+      visibility: visible;
     }
   }
-}
-#closebtn{
-  z-index: 33;
 }
 </style>

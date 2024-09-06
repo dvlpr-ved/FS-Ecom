@@ -9,6 +9,10 @@ const toogleModal = () => {
   // if (!authStore.userData) {
   // }
 };
+const closeModal = () => {
+  visible.value = false;
+};
+
 const toggelSearchVisible = () => {
   SearchVisible.value = true;
 };
@@ -53,8 +57,14 @@ const closeSearchVisible = () => {
       </NuxtLink>
     </div>
   </footer>
-  <LoginModal :visible="visible" />
+  <!-- <LoginModal :visible="visible" /> -->
+  <LoginModal :visible="visible" @closemodal="closeModal" :close="closeModal" />
+
   <template v-if="SearchVisible">
-    <SearchFieldMobile :isSearchForMb="SearchVisible" :closeBtn="closeSearchVisible" @close="closeSearchVisible" />
+    <SearchFieldMobile
+      :isSearchForMb="SearchVisible"
+      :closeBtn="closeSearchVisible"
+      @close="closeSearchVisible"
+    />
   </template>
 </template>
