@@ -45,22 +45,22 @@ watch(route, checkRoute, { immediate: true });
             <div class="flex socLinks gap-3 mb-3">
               <NuxtLink to="#" class="hover:text-blue-100">
                 <i
-                  class="pi primeIcons pi-instagram lg:text-3xl text-2xl bg-black p-2 rounded-full"
+                  class="pi primeIcons pi-instagram lg:text-3xl text-2xl lg:bg-black bg-gray-500 p-2 rounded-full"
                 ></i>
               </NuxtLink>
               <NuxtLink to="#" class="hover:text-blue-100">
                 <i
-                  class="pi primeIcons pi-facebook lg:text-3xl text-2xl bg-blue-800 p-2 rounded-full"
+                  class="pi primeIcons pi-facebook lg:text-3xl text-2xl lg:bg-blue-800 bg-gray-500 p-2 rounded-full"
                 ></i>
               </NuxtLink>
               <NuxtLink to="#" class="hover:text-blue-100">
                 <i
-                  class="pi primeIcons pi-whatsapp lg:text-3xl text-2xl bg-green-600 p-2 rounded-full"
+                  class="pi primeIcons pi-whatsapp lg:text-3xl text-2xl lg:bg-green-600 bg-gray-500 p-2 rounded-full"
                 ></i>
               </NuxtLink>
               <NuxtLink to="#" class="hover:text-blue-100">
                 <i
-                  class="pi primeIcons pi-youtube lg:text-3xl text-2xl bg-[#b91c1c] p-2 rounded-full"
+                  class="pi primeIcons pi-youtube lg:text-3xl text-2xl lg:bg-[#b91c1c] bg-gray-500 p-2 rounded-full"
                 ></i>
               </NuxtLink>
             </div>
@@ -74,7 +74,7 @@ watch(route, checkRoute, { immediate: true });
             </ul>
           </li>
           <li
-            class="lg:w-[36%] w-[100%] footerLi flex place-items-center place-content-center text-center lg:p-0 p-3"
+            class="lg:w-[36%] w-[100%] footerLi hidden lg:flex place-items-center place-content-center text-center lg:p-0 p-3"
             style="background: var(--primary)"
           >
             <div class="wrapper">

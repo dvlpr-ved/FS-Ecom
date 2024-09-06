@@ -61,7 +61,7 @@ const closeModal = () => {
         close
       </button>
     </div>
-    <CateGories />
+    <CateGories :closeModal="closeModal" />
     <SearchAutoComplete
       @close="closeModal"
       v-if="showAutoComplete"

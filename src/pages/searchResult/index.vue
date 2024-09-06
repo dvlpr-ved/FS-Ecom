@@ -130,7 +130,7 @@ onMounted(async () => {
         <div
           class="flexdiv fixinMb lg:block flex justify-between lg:border-b px-4 py-2 lg:mb-3"
         >
-          <h1 class="text-2xl">Filters</h1>
+          <h1 class="text-xl">Filters</h1>
           <button class="lg:hidden filterBtn" @click="openFilter">
             <i class="pi pi-filter text-3xl"></i>
           </button>
