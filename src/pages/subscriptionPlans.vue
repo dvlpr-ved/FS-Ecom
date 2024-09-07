@@ -7,6 +7,8 @@ const message = ref("");
 const isLoading = ref(true);
 const disabled = ref(false);
 const visible = ref(false);
+const visibleLogin = ref(false);
+const authStore = useAuthStore();
 
 const selectedPlan = ref({
   plan_name: "",
@@ -62,10 +64,18 @@ onMounted(() => {
 });
 
 const ChoosePlan = (plan_name, order_id) => {
-  selectedPlan.value.plan_name = plan_name;
-  selectedPlan.value.order_id_selectd = order_id;
-  visible.value = true;
-  console.log(selectedPlan);
+  if (!authStore.isUserLoggedin) {
+    visibleLogin.value = true;
+  } else {
+    selectedPlan.value.plan_name = plan_name;
+    selectedPlan.value.order_id_selectd = order_id;
+    visible.value = true;
+    // console.log(selectedPlan);
+  }
+};
+
+const closeModal = () => {
+  visibleLogin.value = false;
 };
 
 const validateForm = () => {
@@ -388,6 +398,8 @@ const getPaymentData = async () => {
       </div>
     </Dialog>
   </div>
+
+  <LoginModal :visible="visibleLogin" @closemodal="closeModal" :close="closeModal" />
 </template>
 
 <style lang="scss">
@@ -446,7 +458,7 @@ const getPaymentData = async () => {
     justify-content: start !important;
     align-items: center;
     overflow-x: scroll;
-    gap:0 8px;
+    gap: 0 8px;
   }
   .PlansflexingDiv .offers {
     min-width: 38%;
