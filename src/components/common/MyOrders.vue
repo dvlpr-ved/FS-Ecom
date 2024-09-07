@@ -54,12 +54,15 @@ const submitReview = (orderId) => {
 setTimeout(() => {
   isLoading.value = false;
 }, 500);
+const order_data = ref([]);
 const getData =async () => {
   const data  = await fetchFromSanctum({
     url : 'https://fashtsaly.com/API/public/api/getOrders',
     method : 'GET'
   });
-  console.log(data);
+  if(data.success){
+    order_data.value = data.data;
+  }
 }
 onMounted(() => {
   getData();
