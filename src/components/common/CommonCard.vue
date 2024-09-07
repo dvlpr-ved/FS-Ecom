@@ -8,6 +8,7 @@ const props = defineProps<{
 }>();
 import { useToast } from "primevue/usetoast";
 
+const visible = ref(false);
 const wishlistStore = useWishlistStore();
 const fetchWishlistData = async () => {
   await wishlistStore.fetchWishlistItems();
@@ -27,6 +28,10 @@ const isItemInWishlist = computed(() =>
 );
 
 const message = ref<string | null>(null);
+
+const closeModal = () => {
+  visible.value = false;
+};
 
 const addToCart = async (product_id: number) => {
   if (props.id === undefined) {
@@ -57,7 +62,8 @@ const addToCart = async (product_id: number) => {
     if (message.value) {
       // alert(message.value);
       // navigateTo("/wishlist");
-      show(message.value);
+      // show(message.value);
+      visible.value = true;
     }
   } catch (error) {
     console.error("Error adding/removing product from wishlist:", error);
@@ -123,6 +129,7 @@ onMounted(async () => {
       </div>
     </NuxtLink>
   </div>
+  <LoginModal :visible="visible" @closemodal="closeModal" :close="closeModal" />
 </template>
 
 <style lang="scss" scoped>

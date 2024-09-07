@@ -1,4 +1,7 @@
 <script setup>
+const props = defineProps({
+  closeModal: Function,
+});
 const itemsToShow = ref(4);
 // const isLoading = ref(true);
 
@@ -90,7 +93,7 @@ onBeforeUnmount(() => {
       >
         <carousel :items-to-show="itemsToShow">
           <slide v-for="(item, index) in cards" :key="index" class="categories-card">
-            <div class="avt-wrap">
+            <div class="avt-wrap" @click="closeModal">
               <NuxtLink :to="'searchResult?category=' + item.id">
                 <img class="avatar" :src="item.image" :alt="item.name" loading="lazy" />
                 <span class="categories-title ellipsisText">{{ item.name }}</span>
@@ -126,7 +129,7 @@ onBeforeUnmount(() => {
 
 @media (max-width: 576px) {
   .categories-main-div {
-    display:none;
+    display: none;
     .avatar {
       height: 80px;
       width: 80px;
