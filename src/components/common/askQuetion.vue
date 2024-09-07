@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
 const route = useRoute();
-
 const questions = ref([
   { id: 1, text: "What's its fabric?", replyText: "", isReplying: false },
   { id: 2, text: "How should I wash it?", replyText: "", isReplying: false },
@@ -41,6 +40,24 @@ const getQuestionAnswers =async () => {
   });
   questions.value = data;
 }
+const asked_question = ref('');
+const is_submitting_question = ref(false);
+const submitQuestion =async () => {
+  is_submitting_question.value = true;
+  const submit = await fetchFromSanctum({
+    url : `https://fashtsaly.com/API/public/api/submitQuestion`,
+    method : 'POST',
+    body : {
+      question : asked_question.value,
+      product_id : route.params.id
+    }
+  });
+  if(submit.success){
+    asked_question.value = '';
+    questions.value = submit.data;
+  }
+  is_submitting_question.value = false;
+}
 onMounted(() => {
   getQuestionAnswers();
 })
@@ -54,9 +71,12 @@ onMounted(() => {
           type="text"
           class="p-2 rounded w-[100%] lg:w-[70%]"
           placeholder="Ask a question"
+          v-model="asked_question"
         />
         <button
+        :disabled="is_submitting_question ? true : false"
           class="py-2 lg:w-[31%] w-[48%] text-xl bgorange transition text-white capitalize rounded flex items-center gap-2 justify-center"
+          @click="submitQuestion"
         >
           Submit
         </button>

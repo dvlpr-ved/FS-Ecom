@@ -169,9 +169,11 @@ const proceedPayment = async (planid) => {
         redirectTarget: "_modal",
         components: {
           order: {
-            upi: true, // Enable UPI
-            card: true, // Enable Card
-            netbanking: true, // Enable Netbanking
+            upi: true,        
+            card: true,       
+            netbanking: true, 
+            wallet: false,    
+            paylater: false,  
           },
         },
       };

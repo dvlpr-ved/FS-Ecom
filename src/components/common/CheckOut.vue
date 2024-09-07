@@ -273,6 +273,7 @@
           <button
             class="mt-4 hover:opacity-90 text-white px-4 py-2 w-full text-2xl"
             style="background: var(--primary)"
+            :disabled="total > 0 ? false : true"
             @click="processPayment"
           >
             Proceed to Payment
@@ -483,6 +484,15 @@ const processPayment = async () => {
       let checkoutOptions = {
         paymentSessionId: data.payment_session_id,
         redirectTarget: "_modal",
+        components: {
+          order: {
+            upi: true,        
+            card: true,       
+            netbanking: true, 
+            wallet: false,    
+            paylater: false,  
+          }
+        }
       };
       const result = await cashfree.checkout(checkoutOptions);
       if (result.error) {

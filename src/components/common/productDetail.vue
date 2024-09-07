@@ -292,7 +292,7 @@ watch([colorSelected, sizeSelected], async () => {
             </div>
           </div>
           <div class="que-and-review border bg-gray-100 p-3 pr-5 lg:w-[97%]">
-            <askQuetion />
+            <askQuetion :product_id="product.id" />
             <div class="border mt-2 bg-gray-200 p-2 rounded">
               <div class="text-2xl mb-2 headingsFontt">Ratings & Reviews</div>
               <reviewRating />
