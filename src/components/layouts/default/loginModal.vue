@@ -65,6 +65,59 @@ const handleToggelMb = () => {
   formToggelInMb.value =
     formToggelInMb.value === "loginFormMain" ? "notloginFormMain" : "loginFormMain";
 };
+const showPasswordReset = ref(false);
+const processForgetPassword =async () => {
+  if(formData.email){
+    forget_pass_data.email = formData.email;
+    const resendOtp = await publicApi({
+      url : `api/resend-otp`,
+      method : 'POST',
+      body : {
+        email : forget_pass_data.email,
+        type : 'FORGOT'
+      }
+    });
+    if(resendOtp.success){
+      showPasswordReset.value = true;
+    }
+    else{
+      alert('Email is not registered with us');
+    }
+  }
+  else{
+    alert("Pelase enter E-mail");
+  }
+}
+const forget_pass_data = reactive(
+  {
+    'otp' : '',
+    'email' : '', 
+    'new_password' : ''
+  }
+);
+const resetError = ref('');
+const resetSuccess = ref('');
+const handlePasswordForget =async () => {
+  const resetPass = await publicApi({
+    url : 'api/forgetPassword',
+    method : 'POST',
+    body : {
+      email : forget_pass_data.email,
+      otp : forget_pass_data.otp,
+      pass : forget_pass_data.new_password
+    }
+  });
+  if(resetPass.success){
+    resetSuccess.value = 'Password changed successfully! please log in';
+    showPasswordReset.value = false;
+  }
+  else{
+    resetError.value = resetPass.msg;
+  }
+}
+const handleForgetPasswordBack = () => {
+  showPasswordReset.value = false;
+}
 </script>
 
 <template>
@@ -103,12 +156,11 @@ const handleToggelMb = () => {
         :class="`rightCol loginFormMain lg:w-[50%] w-[100%] lg:p-6 p-3 ${formToggelInMb}`"
       >
         <div class="heading text-center lg:text-3xl text-2xl mb-4 headingsFont">
-          Login
+          {{!showPasswordReset ?  'Login' : 'Reset password'}}
         </div>
 
         <p class="text-[red] text-center">{{ showMessage }}</p>
-
-        <form @submit="handleSubmit">
+        <form v-if="!showPasswordReset" @submit="handleSubmit">
           <div class="flex items-center gap-4 mb-4">
             <input
               type="email"
@@ -118,7 +170,7 @@ const handleToggelMb = () => {
               v-model="formData.email"
             />
           </div>
-          <div class="flex items-center gap-4 mb-4">
+          <div class="flex items-center gap-4 ">
             <input
               class="lg:py-[16px] py-2 text-xl lg:px-3 px-2 rounded border-gray-400 border w-[100%]"
               autocomplete="off"
@@ -127,7 +179,10 @@ const handleToggelMb = () => {
               v-model="formData.password"
             />
           </div>
-
+          <div class="text-success text-center mt-2 text-green-500">{{ resetSuccess }}</div>
+          <div class="text-right mb-4 hover:text-primary cursor-pointer">
+            <span @click="processForgetPassword">Forgot password</span>
+          </div>
           <button
             type="submit"
             :disabled="isSubmitting"
@@ -136,6 +191,38 @@ const handleToggelMb = () => {
             Login
           </button>
         </form>
+        <form v-else>
+          <div class="flex items-center gap-4 mb-4">
+            <input
+              type="text"
+              name="reset otp"
+              class="lg:py-[16px] py-2 text-xl lg:px-3 px-2 rounded border-gray-400 border w-[100%]"
+              placeholder="Enter OTP"
+              v-model="forget_pass_data.otp"
+            />
+          </div>
+          <div class="flex items-center gap-4 ">
+            <input
+              class="lg:py-[16px] py-2 text-xl lg:px-3 px-2 rounded border-gray-400 border w-[100%]"
+              type="password"
+              name="new password"
+              placeholder="Enter New Password"
+              v-model="forget_pass_data.new_password"
+            />
+          </div>
+          <div class="text-center text-danger">{{resetError}}</div>
+          <div class="text-right mb-4 hover:text-primary cursor-pointer">
+            <span @click="handleForgetPasswordBack">Back</span>
+          </div>
+          <button
+            type="submit"
+            @click.prevent="handlePasswordForget"
+            :disabled="isSubmitting"
+            class="loginbtn bgorange lg:py-[20px] py-2 px-5 rounded text-white lg:text-2xl text-xl commonbtn flex justify-center max-w-[220px] w-full m-auto"
+          >
+            Reset password
+          </button>
+        </form>        
 
         <span class="text-center lg:block hidden text-4xl lg:py-3 py-1">OR</span>
 
