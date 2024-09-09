@@ -89,7 +89,7 @@ onBeforeUnmount(() => {
 
       <div
         v-else
-        class="slidesWraper flex justify-center gap-3 w-full relative max-w-[85%] m-auto"
+        class="slidesWraper flex justify-center gap-3 w-full relative max-w-[98vw] m-auto"
       >
         <carousel :items-to-show="itemsToShow">
           <slide v-for="(item, index) in cards" :key="index" class="categories-card">
@@ -114,15 +114,15 @@ onBeforeUnmount(() => {
   text-align: center;
   background-color: var(--gray);
   .avatar {
-    height: 120px;
-    width: 120px;
+    height: 174px;
+    width: 174px;
     object-fit: cover;
     border-radius: 50%;
     margin: 0 auto;
     transition: all 0.4s ease;
 
     &:hover {
-      transform: scale(1.1);
+      transform: scale(1.03);
     }
   }
 }

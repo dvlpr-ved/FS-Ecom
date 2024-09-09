@@ -28,7 +28,7 @@ const removeMoreProduct = () => {
 };
 
 const handleAddToCart = async (action) => {
-  if(!authStore.isUserLoggedin){
+  if (!authStore.isUserLoggedin) {
     visible.value = true;
   }
   if (isOutOfStock.value) {
@@ -46,7 +46,7 @@ const handleAddToCart = async (action) => {
     if (action == "buy") {
       navigateTo("/mycart");
     } else {
-      show("Item added to cart");
+      // show("Item added to cart");
       // alert("Item added to cart");
     }
   } else {
@@ -137,6 +137,20 @@ watch([colorSelected, sizeSelected], async () => {
     isOutOfStock.value = true;
   }
 });
+
+const addToWishlist = async (product_id) => {
+  if (!authStore.isUserLoggedin) {
+    visible.value = true;
+  }
+  const save = wishlistStore.saveWishlistItems(product_id);
+};
+const removeFromWishList = async (product_id) => {
+  const remove = wishlistStore.fetchRemoveWishlist(product_id);
+  // show("Item Removed ");
+};
+const wishlistStore = useWishlistStore();
+const getWishlistIds = computed(() => wishlistStore.getWishlisterIds);
+
 </script>
 <template>
   <Toast />
@@ -158,6 +172,20 @@ watch([colorSelected, sizeSelected], async () => {
                 class="w-[80px] h-[80px] cursor-pointer"
               />
             </div>
+          </div>
+          <div class="heartsdiv absolute top-[25px] right-[25px]">
+            <i
+              v-if="getWishlistIds.indexOf(product.id) == -1"
+              class="lg:text-5xl text-3xl cursor-pointer pi pi-heart"
+              style="color: rgb(239 68 68)"
+              @click="addToWishlist(product.id)"
+            ></i>
+            <i
+              v-else
+              @click="removeFromWishList(product.id)"
+              class="lg:text-5xl text-3xl cursor-pointer pi pi-heart-fill"
+              style="color: rgb(239 68 68)"
+            ></i>
           </div>
         </div>
         <div class="productcontent lg:w-[50%] w-[100%] pt-4">
@@ -237,7 +265,9 @@ watch([colorSelected, sizeSelected], async () => {
             <span>{{ productCount }}</span>
             <button @click="addMoreProduct"><i class="pi pi-plus"></i></button>
           </div>
-          <div class="btnsdiv flex flex-wrap lg:gap-3 lg:justify-start justify-between gap-1 mb-5">
+          <div
+            class="btnsdiv flex flex-wrap lg:gap-3 lg:justify-start justify-between gap-1 mb-5"
+          >
             <button
               @click="handleAddToCart('cart')"
               :danger="true"

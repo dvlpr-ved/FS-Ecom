@@ -51,7 +51,7 @@ const logOut = () => {
       >
         <div class="headingLg lg:mb-3 mb-2 text-xl">Account Detail</div>
         <NuxtLink
-          to="#editprofile"
+          to="/myaccounts/editaddress"
           class="text-[15px] block capitalize mb-2 hover:text-orange-400"
           ><i class="pi pi-arrow-right"></i> Edit Profile
         </NuxtLink>

@@ -25,7 +25,7 @@ const props = defineProps<{
           loading="lazy"
         />
       </div>
-      <p class="ellipsisText lg:text-xl text-xl text-center pt-3">
+      <p class="ellipsisText lg:text-xl text-center pt-3">
         {{ props.title }}
         <!-- {{ props.title.slice(0, 28) }} -->
       </p>

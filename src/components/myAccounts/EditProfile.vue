@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import { ref } from "vue";
+const authStore = useAuthStore();
 
 const formData = ref({
-  name: "User Name",
-  lname: "Last Name",
-  email: "user@gmail.com",
+  name: authStore.getUser.name,
+  lname: "",
+  email: authStore.getUser.email,
   gender: "male",
 });
 
@@ -15,9 +16,9 @@ function toggleEdit() {
 
   if (!editing.value) {
     formData.value = {
-      name: "User Name",
-      lname: "Last Name",
-      email: "user@gmail.com",
+      name: authStore.getUser.name,
+      lname: "",
+      email: authStore.getUser.email,
       gender: "male",
     };
   }
@@ -26,6 +27,10 @@ function toggleEdit() {
 function saveChanges() {
   editing.value = false;
 }
+
+onMounted(() => {
+  formData.value.name = authStore.getUser.name;
+});
 </script>
 
 <template>

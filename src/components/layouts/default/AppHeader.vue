@@ -52,7 +52,7 @@ const handleBlur = () => {
 const fetchSearchResult = async () => {
   const data = await fetchFromSanctum({
     method: "POST",
-    url: `${config.API_BASE_URL || "https://fashtsaly.com/API/public/"}api/fetchSearchResult`,
+    url: `${config.API_BASE_URL || "https://Fashtsaly.com/API/public/"}api/fetchSearchResult`,
     body: { query: searchQuery.value },
   });
 
@@ -96,7 +96,7 @@ const toogleModal = () => {
     <!-- Desktop Header -->
     <div class="headerDesk container lg:flex hidden justify-between">
       <div class="headerLeft flex justify-between items-center">
-        <NuxtLink to="/" class="logo text text-5xl">fashtsaly</NuxtLink>
+        <NuxtLink to="/" class="logo text text-5xl">Fashtsaly</NuxtLink>
       </div>
       <!-- Search Bar -->
       <div class="searchField lg:flex hidden relative">
@@ -161,7 +161,7 @@ const toogleModal = () => {
 
     <!-- Mobile Header -->
     <div class="container mx-auto flex items-center justify-between py-1 lg:hidden">
-      <NuxtLink to="/" class="logo text text-5xl">fashtsaly</NuxtLink>
+      <NuxtLink to="/" class="logo text text-3xl">Fashtsaly</NuxtLink>
 
       <ul class="navList flex items-center justify-center space-x-4">
         <li class="icons text-center cart">

@@ -15,6 +15,8 @@ const selectedPlan = ref({
   order_id_selectd: "",
 });
 
+console.log(authStore.getUser);
+
 const formData = ref({
   customerName: "",
   brandName: "",
@@ -61,7 +63,9 @@ const getPlanData = async () => {
 
 onMounted(() => {
   getPlanData();
+  formData.value.customerName = authStore.getUser.name;
 });
+
 
 const ChoosePlan = (plan_name, order_id) => {
   if (!authStore.isUserLoggedin) {
@@ -135,6 +139,9 @@ const proceedPayment = async (planid) => {
     return;
   }
 
+  console.log(formData);
+  
+
   disabled.value = true;
   const config = useRuntimeConfig();
   const url = `${
@@ -169,11 +176,11 @@ const proceedPayment = async (planid) => {
         redirectTarget: "_modal",
         components: {
           order: {
-            upi: true,        
-            card: true,       
-            netbanking: true, 
-            wallet: false,    
-            paylater: false,  
+            upi: true,
+            card: true,
+            netbanking: true,
+            wallet: false,
+            paylater: false,
           },
         },
       };
@@ -235,7 +242,10 @@ const getPaymentData = async () => {
         <h3 class="text-dark py-3 text-xl">Free</h3>
         <div class="price lg:text-5xl text-3xl py-3 bg-gray-100">₹ 0.00</div>
         <div class="bg-gray-200">
-          <button class="rounded-xl" @click="navigateTo('/')">Continue</button>
+          <!-- <button class="rounded-xl" @click="navigateTo('/')">Continue</button> -->
+          <button @click="ChoosePlan('free plan', 0)" class="rounded-xl">
+            Choose plan
+          </button>
         </div>
         <ul>
           <li class="py-2 text-[15px] border-b border-gray-300 bg-gray-50 capitalize">
@@ -300,15 +310,35 @@ const getPaymentData = async () => {
       <div class="innerdiv lg:p-5 p-2">
         <h3 class="text-xl mb-3 text-center capitalize">quickly provide your details</h3>
         <div class="in_box w-[100%] relative lg:mb-3 mb-2">
+          <p class="capitalize text-xl text-center">
+            You Choosed
+            <span class="inline bgblue80 text-white px-2 py- rounded-full text-xl">{{
+              selectedPlan.plan_name
+            }}</span>
+            Plan
+          </p>
+        </div>
+        <div class="in_box w-[100%] relative lg:mb-3 mb-2">
           <input
             type="text"
             placeholder="Your Name*"
             class="w-full py-2 px-3 text-[15px] border rounded border-gray-500 text-gray-700 uppercase"
             v-model="formData.customerName"
+            readOnly
           />
-          <p v-if="errors.customerName" class="text-orange-600 text-sm">
+          <!-- v-model="formData.customerName" -->
+          <!-- <p v-if="errors.customerName" class="text-orange-600 text-sm">
             {{ errors.customerName }}
-          </p>
+          </p> -->
+        </div>
+        <div class="in_box w-[100%] relative lg:mb-3 mb-2">
+          <input
+            type="text"
+            placeholder="Your Name*"
+            class="w-full py-2 px-3 text-[15px] border rounded border-gray-500 text-gray-700 uppercase"
+            v-model="authStore.getUser.email"
+            readOnly
+          />
         </div>
         <div class="in_box w-[100%] relative lg:mb-3 mb-2">
           <input
