@@ -79,9 +79,9 @@ onMounted(() => {
       <div v-if="recently_viewed" class="wishlistedOnHome border border-gray-300 my-3 rounded p-2 lg:w-[49.6%] w-[100%]">
         <div class="flexHeading flex justify-between items-center mb-2">
           <h6 class="text-xl">Recently Viewed</h6>
-          <NuxtLink to="#" class="block">
+          <!-- <NuxtLink to="#" class="block">
             <i class="pi pi-chevron-circle-right text-orange-500 text-3xl"></i>
-          </NuxtLink>
+          </NuxtLink> -->
         </div>
     
         <div class="gridViews flex flex-wrap gap-y-2 lg:gap-x-3 gap-x-1">

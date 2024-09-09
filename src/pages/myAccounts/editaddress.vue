@@ -3,18 +3,18 @@ definePageMeta({
   layout: "myaccounts",
 });
 
+
 const authStore = useAuthStore();
 onMounted(() => {
   if (!authStore.isUserLoggedin) {
     navigateTo("/");
   }
 });
+
 </script>
 
 <template>
-  <div class="lg:block hidden">
-    <EditProfile />
-  </div>
+  <EditProfile />
 </template>
 
 <style lang="scss">

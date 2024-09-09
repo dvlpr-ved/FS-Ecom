@@ -63,7 +63,7 @@ const addToCart = async (product_id: number) => {
       // alert(message.value);
       // navigateTo("/wishlist");
       // show(message.value);
-      visible.value = true;
+      // visible.value = true;
     }
   } catch (error) {
     console.error("Error adding/removing product from wishlist:", error);
@@ -104,7 +104,7 @@ onMounted(async () => {
         />
       </figure>
       <div class="cardContent p-2 pb-0">
-        <p class="cardtitle ellipsisText text-gray-600 text-xl title">
+        <p class="cardtitle ellipsisText text-gray-600 lg:text-xl title">
           {{ props.title || "Title" }}
         </p>
         <p class="cardtitle rmvPriceFromHome text-gray-700 text-2xl font-bold">
@@ -122,7 +122,7 @@ onMounted(async () => {
         </p> -->
 
         <span
-          class="tooltip absolute left-0 right-0 bottom-10 w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
+          class="tooltip absolute left-0 right-0 bottom-[22%] w-fit m-auto bgorange text-white p-1 rounded whitespace-no-wrap transition-opacity duration-300 z-10"
         >
           {{ props.title }}
         </span>

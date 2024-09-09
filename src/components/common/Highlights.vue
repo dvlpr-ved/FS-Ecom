@@ -39,10 +39,10 @@ onBeforeUnmount(() => {
     <div class="container bg-gray-100">
       <div class="flexHeading flex justify-between items-center lg:py-1 py-1">
         <h3 class="text-xl lg:text-xl">{{ data.name }}</h3>
-        <NuxtLink :href="'searchresult?listing_id='+listing_id" class="commonbtn lg:block hidden"
+        <NuxtLink :to="'searchresult?listing_id='+listing_id" class="commonbtn lg:block hidden"
           >View All</NuxtLink
         >
-        <NuxtLink href="searchresult" class="lg:hidden block">
+        <NuxtLink :to="'searchresult?listing_id='+listing_id" class="lg:hidden block">
           <i class="pi pi-chevron-circle-right text-orange-500 text-4xl"></i>
         </NuxtLink>
       </div>

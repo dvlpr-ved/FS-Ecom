@@ -383,6 +383,10 @@ const validateForm = () => {
     errors.value.city = "city is required.";
     isValid = false;
   }
+  if (!formData.value.selectedState.trim()) {
+    errors.value.selectedState = "state is required.";
+    isValid = false;
+  }
   if (!formData.value.landmark.trim()) {
     errors.value.landmark = "landmark is required.";
     isValid = false;

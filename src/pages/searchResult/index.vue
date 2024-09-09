@@ -3,12 +3,12 @@ import { ref, onMounted, watch } from "vue";
 import { useRoute, useRuntimeConfig } from "nuxt/app";
 
 const products = ref([]);
-const allProducts = ref([]); // To keep a copy of all products for filtering
+const allProducts = ref([]);
 const loading = ref(true);
 const isMobileNavVisible = ref("");
 const route = useRoute();
-const selectedCategories = ref(["allCategories"]); // To hold selected categories
-const selectedSort = ref(""); // To hold the selected sorting option
+const selectedCategories = ref(["allCategories"]);
+const selectedSort = ref(""); 
 
 const suffix = ref('');
 const categoryFilter = ref([]);

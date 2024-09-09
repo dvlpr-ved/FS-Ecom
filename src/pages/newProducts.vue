@@ -47,8 +47,8 @@ const addToWishlist = async (product_id) => {
   const save = wishlistStore.saveWishlistItems(product_id);
 };
 const removeFromWishList = async (product_id) => {
-  show("Item Removed ");
   const remove = wishlistStore.fetchRemoveWishlist(product_id);
+  // show("Item Removed ");
 };
 const wishlistStore = useWishlistStore();
 const getWishlistIds = computed(() => wishlistStore.getWishlisterIds);
@@ -59,7 +59,7 @@ onMounted(() => {
 </script>
 <template>
   <Toast />
-  <div class="newProductsWrapper bg-gray-200">
+  <div class="newProductsWrapper">
     <!-- we will loop this card -->
     <div
       v-if="updates"
@@ -68,8 +68,8 @@ onMounted(() => {
     >
       <div class="carouselNewProduct">
         <carousel :items-to-show="itemsToShow">
-          <slide v-for="(img, index) in update.images" :key="index">
-            <img
+          <slide v-for="(img, index) in update.images" :key="index" class="mx-1">
+            <img 
               class="slideImg max-h-[350px] h-full object-cover"
               :src="img.source"
               :alt="img.name"
@@ -77,13 +77,13 @@ onMounted(() => {
           </slide>
         </carousel>
       </div>
-      <div class="content bg-white">
+      <div class="content bg-gray-100">
         <div class="topConten px-[15px] py-1">
           <p class="p_name text-xl mb-1">
             {{ update.name }}
           </p>
           <p class="cardtitle text-gray-700 text-2xl font-bold">
-            <span class="line-through text-2xl">₹1000</span> ₹{{ update.mrp }}
+            <span class="line-through text-2xl">₹1000</span> ₹ {{ update.mrp }}
           </p>
           <span
             v-if="update.discount"
@@ -92,28 +92,28 @@ onMounted(() => {
           >
         </div>
         <div
-          class="iconsDiv flex items-center gap-5 border-t border-gray-300 mt-2 py-1 px-3"
+          class="iconsDiv flex items-center gap-5 border-t border-gray-300 mt-2 py-2 px-3"
         >
           <div class="heartsdiv">
             <i
               v-if="getWishlistIds.indexOf(update.id) == -1"
-              class="text-4xl pi pi-heart"
+              class="text-2xl pi pi-heart"
               style="color: rgb(239 68 68)"
               @click="addToWishlist(update.id)"
             ></i>
             <i
               v-else
               @click="removeFromWishList(update.id)"
-              class="text-4xl pi pi-heart-fill"
+              class="text-2xl pi pi-heart-fill"
               style="color: rgb(239 68 68)"
             ></i>
           </div>
           <div class="sharedivsoc" @click="toggelShareIcons">
-            <i class="pi pi-send text-4xl"></i>
+            <i class="pi pi-send text-2xl"></i>
           </div>
           <!-- only for subscriber -->
           <div class="download">
-            <i class="pi pi-download text-4xl"></i>
+            <i class="pi pi-download text-2xl"></i>
           </div>
         </div>
       </div>
