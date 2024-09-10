@@ -131,6 +131,10 @@ const closeModal = () => {
 const toggleFieldType = () => {
   inputType.value = inputType.value === "password" ? "text" : "password";
 };
+const handleGoBack = () => {
+  isOtpFeildVisible.value = false;
+  btnlabel.value = "Verify";
+};
 </script>
 
 <template>
@@ -200,6 +204,9 @@ const toggleFieldType = () => {
             v-model="formData.otp"
           />
           <p class="text-[red]">{{ formError.otp }}</p>
+        </div>
+        <div class="text-right mb-4 hover:text-primary cursor-pointer">
+            <span v-if="isOtpFeildVisible" @click="handleGoBack">Go Back</span>
         </div>
         <button
           class="commonbtn py-2 px-5 text-xl block rounded m-auto max-w-[220px] w-full"
