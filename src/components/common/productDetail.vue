@@ -151,6 +151,14 @@ const removeFromWishList = async (product_id) => {
 const wishlistStore = useWishlistStore();
 const getWishlistIds = computed(() => wishlistStore.getWishlisterIds);
 
+function downloadImage(url) {
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = url.substring(url.lastIndexOf("/") + 1);
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
 </script>
 <template>
   <Toast />
@@ -161,16 +169,22 @@ const getWishlistIds = computed(() => wishlistStore.getWishlisterIds);
         class="flexdiv flex flex-wrap lg:justify-between justify-center border-b border-gray-300 pb-5"
       >
         <div
-          class="detailGallery lg:w-[48%] w-[100%] static lg:pt-5 pt-2 lg:pr-4 lg:sticky h-fit top-0"
+          class="detailGallery lg:w-[48%] w-[100%] relative lg:pt-5 pt-2 lg:pr-4 lg:sticky h-fit top-0"
         >
           <ProductZoomImages :data="imageShown ? imageShown : ''" />
           <div class="flex overflow-x-auto lg:w-[42%] w-[100%]">
-            <div v-for="image in sku.image">
+            <div v-for="(image, index) in sku.image" :key="index">
               <img
                 @click="imageShown = image.source"
                 :src="image.source"
                 class="w-[80px] h-[80px] cursor-pointer"
               />
+              <button
+                @click="downloadImage(image.source)"
+                class="absolute bottom-[120px] py-[5px] px-2 bgblue80 text-white rounded cursor-pointer"
+              >
+                <i class="pi pi-arrow-down"></i> Get Update
+              </button>
             </div>
           </div>
           <div class="heartsdiv absolute top-[25px] right-[25px]">
@@ -198,14 +212,14 @@ const getWishlistIds = computed(() => wishlistStore.getWishlisterIds);
               ₹{{ sku.price ? sku.price : "" }}
             </p>
 
-            <span v-else-if="skuIsLoading || isOutOfStock" class="text-3xl block mb-3"
-              >Contact Seller</span
-            >
             <span
-              v-else
+              v-else-if="skuIsLoading || isOutOfStock"
               class="block shimmer py-4 mb-1 w-[25%] rounded-sm bg-gray-50"
             ></span>
           </div>
+          <span class="bgblue80 py-1 px-2 block w-fit capitalize mb-3 text-white"
+            >save 20%</span
+          >
           <div class="sizesBox flex items-center mb-3">
             <span class="text-gray-700">Sizes :</span>
             <div
@@ -252,6 +266,38 @@ const getWishlistIds = computed(() => wishlistStore.getWishlisterIds);
               all prepaid orders
             </p>
           </div>
+          <div class="flexTextBoxes flex flex-wrap justify-between my-3 lg:max-w-[55%]">
+            <div class="text-center">
+              <span
+                class="bg-gray-200 rounded-full h-[50px] w-[50px] m-auto flex items-center justify-center"
+                ><i class="text-3xl pi pi-shopping-cart"></i>
+              </span>
+              <span class="block">
+                Free <br />
+                Shipping
+              </span>
+            </div>
+            <div class="text-center">
+              <span
+                class="bg-gray-200 rounded-full h-[50px] w-[50px] m-auto flex items-center justify-center"
+                ><i class="text-3xl pi pi-shield"></i>
+              </span>
+              <span class="block">
+                Secure <br />
+                Transaction
+              </span>
+            </div>
+            <div class="text-center">
+              <span
+                class="bg-gray-200 rounded-full h-[50px] w-[50px] m-auto flex items-center justify-center"
+                ><i class="text-3xl pi pi-map-marker"></i>
+              </span>
+              <span class="block">
+                Easy order <br />
+                Tracking
+              </span>
+            </div>
+          </div>
           <div class="text-2xl py-2">Description :</div>
           <article class="productdesc mb-3">
             {{ product.description ? product.description : "" }}
@@ -265,9 +311,7 @@ const getWishlistIds = computed(() => wishlistStore.getWishlisterIds);
             <span>{{ productCount }}</span>
             <button @click="addMoreProduct"><i class="pi pi-plus"></i></button>
           </div>
-          <div
-            class="btnsdiv flex flex-wrap lg:gap-3 lg:justify-start justify-between gap-1 mb-5"
-          >
+          <div class="btnsdiv flex flex-wrap lg:gap-3 lg:justify-start justify-between gap-1 mb-5">
             <button
               @click="handleAddToCart('cart')"
               :danger="true"
@@ -284,8 +328,7 @@ const getWishlistIds = computed(() => wishlistStore.getWishlisterIds);
               class="lg:py-3 py-[10px] lg:w-[31%] w-[48%] lg:text-xl bgorange transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
             >
               <i class="pi pi-tag lg:text-3xl text-2xl"></i>
-              Buy Now
-              <!-- {{ isOutOfStock ? "Ask Query for stock" : "Buy Now" }} -->
+              Buy Now 
             </button>
             <button class="lg:w-[31%] w-[100%]">
               <NuxtLink
@@ -297,6 +340,7 @@ const getWishlistIds = computed(() => wishlistStore.getWishlisterIds);
               >
             </button>
           </div>
+
           <!-- <div class="sharediv py-5 flex flex-wrap lg:gap-x-5 items-end">
             <span class="lg:text-xl mb-1 w-full capitalize">Share on social media: </span>
             <NuxtLink to="JavaScript:void(0)">
