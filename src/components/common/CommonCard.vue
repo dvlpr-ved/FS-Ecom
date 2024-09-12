@@ -4,9 +4,13 @@ const props = defineProps<{
   title?: string;
   id?: number;
   price?: number;
+  price_subscribed?: number;
+  mrp?: number;
   description?: string;
 }>();
+console.log(props);
 import { useToast } from "primevue/usetoast";
+import { getPrice , getActualPrice } from '../modifyPrice.js';
 
 const visible = ref(false);
 const wishlistStore = useWishlistStore();
@@ -109,8 +113,8 @@ onMounted(async () => {
         </p>
         <p class="cardtitle rmvPriceFromHome text-gray-700 text-2xl font-bold">
           <!-- <span class="line-through" v-if="props.price && props.price < 700">₹700</span> -->
-          ₹ {{ props.price || "Price" }}
-          <span class="line-through text-2xl">₹700</span>
+          ₹ {{ getPrice(props.price  , props.price_subscribed) || "Price" }}
+          <span class="line-through text-2xl">₹{{ getActualPrice(props.mrp , props.price , props.price_subscribed) }}</span>
         </p>
 
         <span class="bgblue80 py-1 px-2 block w-fit capitalize mt-1 text-white"

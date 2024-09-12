@@ -221,7 +221,9 @@ onMounted(async () => {
               :id="item.id"
               :title="item.name"
               :images="item.images[0].source"
-              :price="item.mrp"
+              :price="item.price"
+              :mrp="item.mrp"
+              :price_subscribed="item.price_subscribed"
               :description="item.description"
             />
           </template>

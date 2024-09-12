@@ -37,6 +37,8 @@ onMounted(async () => {
               :images="item.images"
               :price="item.price"
               :description="item.description"
+              :price_subscribed="item.price_subscribed"
+              :mrp="item.mrp"
             />
           </template>
         </div>

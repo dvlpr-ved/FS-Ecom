@@ -1,8 +1,12 @@
 <script setup lang="ts">
+import { getPrice , getActualPrice } from '../modifyPrice.js';
 const props = defineProps<{
   thumbnail?: string;
   title?: string;
   id: Number;
+  price?: number;
+  price_subscribed?: number;
+  mrp?: number;  
   hidePrice: {
     type: Boolean;
     default: false;
@@ -36,7 +40,7 @@ const props = defineProps<{
       </span>
 
       <p v-if="!hidePrice" class="cardtitle text-gray-700 text-2xl font-bold">
-        <span class="line-through">₹1000</span> ₹999
+        <span class="line-through">₹{{ getActualPrice(props.mrp , props.price , props.price_subscribed) }}</span> ₹{{ getPrice(props.price , props.price_subscribed) }}
       </p>
     </NuxtLink>
   </div>

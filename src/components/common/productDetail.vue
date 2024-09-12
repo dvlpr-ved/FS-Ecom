@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { publicApi } from "/utils/publicApi.js";
 import { useToast } from "primevue/usetoast";
+import { getPrice , getActualPrice } from '../modifyPrice.js';
+
 const authStore = useAuthStore();
 
 const toast = useToast();
@@ -247,7 +249,7 @@ function copyToClipboard() {
           <div class="price">
             <p v-if="!skuIsLoading" class="cardtitle text-3xl font-[500] text-black mb-3">
               <!-- <span class="line-through text-2xl text-gray-700">₹800</span> -->
-              ₹{{ sku.price ? sku.price : "" }}
+              ₹{{ getPrice(sku.price , sku.price_subscribed)  }}
             </p>
             <span
               v-else-if="skuIsLoading || isOutOfStock"
