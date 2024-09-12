@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { publicApi } from "/utils/publicApi.js";
 import { useToast } from "primevue/usetoast";
-import { getPrice , getActualPrice } from '../modifyPrice.js';
 
 const authStore = useAuthStore();
 

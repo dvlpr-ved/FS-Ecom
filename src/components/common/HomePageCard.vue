@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { getPrice , getActualPrice } from '../modifyPrice.js';
 const props = defineProps<{
   thumbnail?: string;
   title?: string;

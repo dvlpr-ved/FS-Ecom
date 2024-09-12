@@ -10,7 +10,6 @@ const props = defineProps<{
 }>();
 console.log(props);
 import { useToast } from "primevue/usetoast";
-import { getPrice , getActualPrice } from '../modifyPrice.js';
 
 const visible = ref(false);
 const wishlistStore = useWishlistStore();
