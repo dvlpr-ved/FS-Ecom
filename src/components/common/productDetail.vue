@@ -150,15 +150,32 @@ const removeFromWishList = async (product_id) => {
 };
 const wishlistStore = useWishlistStore();
 const getWishlistIds = computed(() => wishlistStore.getWishlisterIds);
+const isDownloadingImage = ref(false);
+async function downloadImage(url) {
+  isDownloadingImage.value = true;
+  try {
+    const response = await fetch(`/api/download?url=${encodeURIComponent(url)}`);
+    if (!response.ok) {
+      alert("Please refresh and try again");
+    }
 
-function downloadImage(url) {
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = url.substring(url.lastIndexOf("/") + 1);
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+    const blob = await response.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = blobUrl;
+    a.download = url.substring(url.lastIndexOf("/") + 1);
+    document.body.appendChild(a);
+    a.click();
+
+    document.body.removeChild(a);
+    isDownloadingImage.value = false;
+    window.URL.revokeObjectURL(blobUrl);
+  } catch (error) {
+    alert("Please refresh and try again");
+  }
 }
+
 </script>
 <template>
   <Toast />
@@ -180,10 +197,13 @@ function downloadImage(url) {
                 class="w-[80px] h-[80px] cursor-pointer"
               />
               <button
+              :disabled="isDownloadingImage"
                 @click="downloadImage(image.source)"
                 class="absolute bottom-[120px] py-[5px] px-2 bgblue80 text-white rounded cursor-pointer"
               >
-                <i class="pi pi-arrow-down"></i> Get Update
+                <i v-if="!isDownloadingImage" class="pi pi-arrow-down"></i>
+                <i v-else class="pi pi-spinner"></i>
+                 Get Update
               </button>
             </div>
           </div>

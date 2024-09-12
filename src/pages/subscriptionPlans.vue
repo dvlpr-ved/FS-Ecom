@@ -130,10 +130,10 @@ const proceedPayment = async (planid) => {
     return;
   }
 
-  if (!selectedPlan.value.order_id_selectd) {
-    show("we are facing network isuue Please Try Again");
-    return;
-  }
+  // if (!selectedPlan.value.order_id_selectd) {
+  //   show("we are facing network isuue Please Try Again");
+  //   return;
+  // }
   if (!selectedPlan.value.plan_name) {
     show("No plan selected.");
     return;

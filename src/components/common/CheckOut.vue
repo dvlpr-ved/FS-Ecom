@@ -278,6 +278,14 @@
           >
             Proceed to Payment
           </button>
+          <button
+            class="mt-0 border-top-1 hover:opacity-90 text-white px-4 py-2 w-full text-2xl"
+            style="background: var(--primary)"
+            :disabled="total > 0 ? false : true"
+            @click="processCOD"
+          >
+            Proceed with COD
+          </button>
         </div>
       </div>
     </div>
@@ -525,6 +533,40 @@ const processPayment = async () => {
     // alert("Failed to initiate checkout");
   }
 };
+const processCOD =async () => {
+  if (!validateForm()) {
+    return;
+  }
+
+  processing.value = true;
+  const config = useRuntimeConfig();
+  const url = `${
+    config.API_BASE_URL ? config.API_BASE_URL : "https://fashtsaly.com/API/public/"
+  }api/initiate-cod`;
+
+  const response = await fetchFromSanctum({
+    url: url,
+    method: "POST",
+    body: {
+      shippingDetails: formData.value,
+      items: items.value,
+      productQuantity: quantities.value,
+      selectedAddress: selectedAddress.value,
+      sellerName: reSellerData.value.name,
+      sellerPhone: reSellerData.value.phone,
+    },
+  });
+  if (response.res) {
+    show("Payment Successfull");
+    navigateTo(`/orderConfirmed/${response.order_id}`);
+  } else if (response.msg) {
+    show("response.msg");
+    // alert(response.msg);
+  } else {
+    show("Failed to initiate checkout");
+    // alert("Failed to initiate checkout");
+  }  
+}
 const getPaymentData = async () => {
   disabled.value = true;
   const config = useRuntimeConfig();
