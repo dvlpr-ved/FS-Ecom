@@ -32,7 +32,7 @@ export default defineComponent({
     </div>
   </section>
   <AppFooter />
-  <CopyRightLine />
+  <!-- <CopyRightLine /> -->
   <FixedFooter />
 </template>
 

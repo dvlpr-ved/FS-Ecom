@@ -45,22 +45,22 @@ watch(route, checkRoute, { immediate: true });
             <div class="flex socLinks gap-3 mb-3">
               <NuxtLink to="#" class="hover:text-blue-100">
                 <i
-                  class="pi primeIcons pi-instagram lg:text-3xl text-2xl lg:bg-black bg-gray-500 p-2 rounded-full"
+                  class="pi primeIcons pi-instagram lg:text-3xl text-2xl lg:bg-black bg-[#ccc] p-2 rounded-full"
                 ></i>
               </NuxtLink>
               <NuxtLink to="#" class="hover:text-blue-100">
                 <i
-                  class="pi primeIcons pi-facebook lg:text-3xl text-2xl lg:bg-blue-800 bg-gray-500 p-2 rounded-full"
+                  class="pi primeIcons pi-facebook lg:text-3xl text-2xl lg:bg-blue-800 bg-[#ccc] p-2 rounded-full"
                 ></i>
               </NuxtLink>
               <NuxtLink to="#" class="hover:text-blue-100">
                 <i
-                  class="pi primeIcons pi-whatsapp lg:text-3xl text-2xl lg:bg-green-600 bg-gray-500 p-2 rounded-full"
+                  class="pi primeIcons pi-whatsapp lg:text-3xl text-2xl lg:bg-green-600 bg-[#ccc] p-2 rounded-full"
                 ></i>
               </NuxtLink>
               <NuxtLink to="#" class="hover:text-blue-100">
                 <i
-                  class="pi primeIcons pi-youtube lg:text-3xl text-2xl lg:bg-[#b91c1c] bg-gray-500 p-2 rounded-full"
+                  class="pi primeIcons pi-youtube lg:text-3xl text-2xl lg:bg-[#b91c1c] bg-[#ccc] p-2 rounded-full"
                 ></i>
               </NuxtLink>
             </div>
@@ -91,6 +91,7 @@ watch(route, checkRoute, { immediate: true });
         </ul>
       </div>
     </div>
+    <CopyRightLine />
   </footer>
 </template>
 
