@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { publicApi } from "/utils/publicApi.js";
 import { useToast } from "primevue/usetoast";
-import { getPrice , getActualPrice } from '../modifyPrice.js';
+import { getPrice, getActualPrice } from "../modifyPrice.js";
 
 const authStore = useAuthStore();
 
@@ -217,9 +217,10 @@ function copyToClipboard() {
                 class="lg:h-[90px] h-[70px] cursor-pointer"
               />
               <button
+                v-if="!authStore.userData.is_subscribed_user"
                 :disabled="isDownloadingImage"
                 @click="downloadImage(image.source, product.description)"
-                class="absolute lg:bottom-[120px] bottom-[80px] left-0 py-[5px] px-3 text-white border border-gray-600 bgblue80 rounded cursor-pointer"
+                class="absolute lg:bottom-[120px] bottom-[80px] left-0 py-[10px] px-3 text-blue-800 border border-blue-600 bgblue80 bg-white rounded cursor-pointer"
               >
                 <i v-if="!isDownloadingImage" class="pi pi-arrow-down"></i>
                 <i v-else class="pi pi-spinner"></i>
@@ -249,7 +250,7 @@ function copyToClipboard() {
           <div class="price">
             <p v-if="!skuIsLoading" class="cardtitle text-3xl font-[500] text-black mb-3">
               <!-- <span class="line-through text-2xl text-gray-700">₹800</span> -->
-              ₹{{ getPrice(sku.price , sku.price_subscribed)  }}
+              ₹{{ getPrice(sku.price, sku.price_subscribed) }}
             </p>
             <span
               v-else-if="skuIsLoading || isOutOfStock"
