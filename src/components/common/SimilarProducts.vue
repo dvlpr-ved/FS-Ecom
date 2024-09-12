@@ -78,13 +78,13 @@ onBeforeUnmount(() => {
               v-for="card in suggestions"
               :key="card.id"
             >
-              <HomePageCard :thumbnail="card.images" :title="card.name" :id="card.id" />
+              <HomePageCard :thumbnail="card.images" :title="card.name" :id="card.id" :price="card.price" :price_subscribed="card.price_subscribed" :mrp="card.mrp"/>
             </div>
           </template>
           <template v-else>
             <carousel :items-to-show="itemsToShow">
               <slide v-for="card in suggestions" :key="card.id">
-                <HomePageCard :thumbnail="card.images" :title="card.name" :id="card.id" />
+                <HomePageCard :thumbnail="card.images" :title="card.name" :id="card.id" :price="card.price" :price_subscribed="card.price_subscribed" :mrp="card.mrp" />
               </slide>
               <template #addons>
                 <navigation />
@@ -106,13 +106,13 @@ onBeforeUnmount(() => {
               v-for="card in vendorsProducts"
               :key="card.id"
             >
-              <HomePageCard :thumbnail="card.images" :title="card.name" :id="card.id" />
+              <HomePageCard :thumbnail="card.images" :title="card.name" :id="card.id" :price="card.price" :price_subscribed="card.price_subscribed" :mrp="card.mrp"/>
             </div>
           </template>
           <template v-else>
             <carousel :items-to-show="itemsToShow">
               <slide v-for="card in vendorsProducts" :key="card.id">
-                <HomePageCard :thumbnail="card.images" :title="card.name" :id="card.id" />
+                <HomePageCard :thumbnail="card.images" :title="card.name" :id="card.id" :price="card.price" :price_subscribed="card.price_subscribed" :mrp="card.mrp"/>
               </slide>
               <template #addons>
                 <navigation />
