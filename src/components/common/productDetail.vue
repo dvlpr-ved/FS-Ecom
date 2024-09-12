@@ -4,8 +4,8 @@ import { useToast } from "primevue/usetoast";
 const authStore = useAuthStore();
 
 const toast = useToast();
-const show = (message) => {
-  toast.add({ severity: "success", detail: message, life: 4000 });
+const show = (message, DieLife = 4000) => {
+  toast.add({ severity: "success", detail: message, life: DieLife });
 };
 const visible = ref(false);
 const closeModal = () => {
@@ -151,14 +151,16 @@ const removeFromWishList = async (product_id) => {
 const wishlistStore = useWishlistStore();
 const getWishlistIds = computed(() => wishlistStore.getWishlisterIds);
 const isDownloadingImage = ref(false);
-async function downloadImage(url) {
+
+async function downloadImage(url, Product_desc) {
+  // Product_desc
+
   isDownloadingImage.value = true;
   try {
     const response = await fetch(`/api/download?url=${encodeURIComponent(url)}`);
     if (!response.ok) {
       alert("Please refresh and try again");
     }
-
     const blob = await response.blob();
     const blobUrl = window.URL.createObjectURL(blob);
 
@@ -167,8 +169,8 @@ async function downloadImage(url) {
     a.download = url.substring(url.lastIndexOf("/") + 1);
     document.body.appendChild(a);
     a.click();
-
     document.body.removeChild(a);
+    copyToClipboard();
     isDownloadingImage.value = false;
     window.URL.revokeObjectURL(blobUrl);
   } catch (error) {
@@ -176,11 +178,27 @@ async function downloadImage(url) {
   }
 }
 
+function copyToClipboard() {
+  const productDescElement = document.getElementById("productDesc");
+  const text = productDescElement ? productDescElement.innerText : "";
+  if (navigator.clipboard) {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        show("product Detail copied to your clipboard", 15000);
+      })
+      .catch((err) => {
+        alert("Failed to copy text. Please try again.");
+        console.error(err);
+      });
+  } else {
+    alert("Copied to clipboard!");
+  }
+}
 </script>
 <template>
-  <Toast />
-
   <div class="productdetail_man_div bg-gray-200">
+    <Toast />
     <div v-if="product" class="container bg-gray-100">
       <div
         class="flexdiv flex flex-wrap lg:justify-between justify-center border-b border-gray-300 pb-5"
@@ -194,16 +212,16 @@ async function downloadImage(url) {
               <img
                 @click="imageShown = image.source"
                 :src="image.source"
-                class="w-[80px] h-[80px] cursor-pointer"
+                class="lg:h-[90px] h-[70px] cursor-pointer"
               />
               <button
-              :disabled="isDownloadingImage"
-                @click="downloadImage(image.source)"
-                class="absolute bottom-[120px] py-[5px] px-2 bgblue80 text-white rounded cursor-pointer"
+                :disabled="isDownloadingImage"
+                @click="downloadImage(image.source, product.description)"
+                class="absolute lg:bottom-[120px] bottom-[80px] left-0 py-[5px] px-3 text-white border border-gray-600 bgblue80 rounded cursor-pointer"
               >
                 <i v-if="!isDownloadingImage" class="pi pi-arrow-down"></i>
                 <i v-else class="pi pi-spinner"></i>
-                 Get Update
+                <!-- Get <br/> Updates -->
               </button>
             </div>
           </div>
@@ -231,11 +249,11 @@ async function downloadImage(url) {
               <!-- <span class="line-through text-2xl text-gray-700">₹800</span> -->
               ₹{{ sku.price ? sku.price : "" }}
             </p>
-
             <span
               v-else-if="skuIsLoading || isOutOfStock"
-              class="block shimmer py-4 mb-1 w-[25%] rounded-sm bg-gray-50"
-            ></span>
+              class="block text-2xl shimmer pl-5 w-[25%] text-gray-300 bg-gray-50 mb-3"
+              >₹</span
+            >
           </div>
           <span class="bgblue80 py-1 px-2 block w-fit capitalize mb-3 text-white"
             >save 20%</span
@@ -276,12 +294,15 @@ async function downloadImage(url) {
           </div>
           <div class="msgBox">
             <!-- for normal user -->
-            <p class="capitalize flex items-center gap-2">
+            <p
+              class="capitalize flex items-center gap-2"
+              v-if="!authStore.userData.is_paid_subscription"
+            >
               <i class="pi pi-tag text-xl text-orange-500"></i> Additional 10% off on all
               prepaid orders
             </p>
             <!-- for subscribers -->
-            <p class="capitalize hidden">
+            <p class="capitalize hidden" v-else>
               <i class="pi pi-tag text-xl text-orange-500"></i> Additional 50/- rs off on
               all prepaid orders
             </p>
@@ -319,24 +340,32 @@ async function downloadImage(url) {
             </div>
           </div>
           <div class="text-2xl py-2">Description :</div>
-          <article class="productdesc mb-3">
+          <article class="productdesc mb-3" id="productDesc">
             {{ product.description ? product.description : "" }}
           </article>
           <div
             class="productCounter mb-3 flex gap-4 border border-gray-400 p-2 px-3 w-[fit-content]"
           >
-            <button @click="removeMoreProduct">
+            <button
+              @click="removeMoreProduct"
+              :disabled="skuIsLoading || isOutOfStock ? true : false"
+            >
               <i class="pi pi-minus"></i>
             </button>
             <span>{{ productCount }}</span>
-            <button @click="addMoreProduct"><i class="pi pi-plus"></i></button>
+            <button
+              @click="addMoreProduct"
+              :disabled="skuIsLoading || isOutOfStock ? true : false"
+            >
+              <i class="pi pi-plus"></i>
+            </button>
           </div>
-          <div class="btnsdiv flex flex-wrap lg:gap-3 lg:justify-start justify-between gap-1 mb-5">
+          <div class="btnsdiv flex flex-wrap lg:gap-5 gap-1 mb-5">
             <button
               @click="handleAddToCart('cart')"
               :danger="true"
               :disabled="skuIsLoading || isOutOfStock ? true : false"
-              class="lg:py-3 py-[10px] lg:w-[31%] w-[48%] lg:text-xl bg-black transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
+              class="lg:py-3 py-[10px] lg:w-[38%] w-[48%] lg:text-xl bg-black transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
             >
               <i class="pi pi-cart-plus lg:text-3xl text-2xl"></i>
               {{ isOutOfStock ? "Out of stock" : "Add to cart" }}
@@ -345,18 +374,18 @@ async function downloadImage(url) {
               @click="handleAddToCart('buy')"
               :danger="true"
               :disabled="skuIsLoading || isOutOfStock ? true : false"
-              class="lg:py-3 py-[10px] lg:w-[31%] w-[48%] lg:text-xl bgorange transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
+              v-if="!isOutOfStock"
+              class="lg:py-3 py-[10px] lg:w-[38%] w-[48%] lg:text-xl bgorange transition text-white capitalize rounded flex items-center gap-2 justify-center hover:bg-[white] hover:border hover:border-black hover:text-gray-900"
             >
               <i class="pi pi-tag lg:text-3xl text-2xl"></i>
-              Buy Now 
+              Buy Now
             </button>
-            <button class="lg:w-[31%] w-[100%]">
+            <button v-else class="lg:w-[38%] w-[100%]">
               <NuxtLink
                 :to="`https://api.whatsapp.com/send?phone=+910123456789&text=Hello, I want to buy ${product.name}. My name is`"
                 class="Booknowbtn lg:py-3 py-[10px] bg-green-600 text-white capitalize rounded text-2xl text-center flex items-center gap-2 justify-center"
                 target="_blank"
-                ><i class="pi pi-whatsapp lg:text-3xl text-2xl"></i
-                >{{ skuIsLoading || isOutOfStock ? "Inquire Now" : "Book Now" }}</NuxtLink
+                ><i class="pi pi-whatsapp lg:text-3xl text-2xl"></i>Inquire Now</NuxtLink
               >
             </button>
           </div>
@@ -376,7 +405,11 @@ async function downloadImage(url) {
               <i class="pi pi-twitter text-2xl transition"></i>
             </NuxtLink>
           </div> -->
-          <div class="vendrsDetail" v-if="vendor">
+
+          <div
+            class="vendrsDetail"
+            v-if="vendor && authStore.userData.is_paid_subscription"
+          >
             <div class="flex flex-wrap pb-2 gap-2 items-center lg:text-[18px] text-1xl">
               <p class="w-full text-xl capitalize">Manufacturer details:</p>
               <span class="text-gray-600" style="font-size: 16px"
@@ -432,6 +465,12 @@ async function downloadImage(url) {
 <style lang="scss">
 .productdetail_man_div .container {
   max-width: 1400px;
+}
+.p-toast-message-content {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  text-transform: capitalize;
 }
 .sharediv {
   i {

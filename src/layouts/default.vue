@@ -74,7 +74,7 @@ export default defineComponent({
     <slot />
   </div>
   <AppFooter />
-  <CopyRightLine />
+  <!-- <CopyRightLine /> -->
   <FixedFooter />
 </template>
 
