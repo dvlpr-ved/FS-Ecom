@@ -69,7 +69,7 @@ onBeforeUnmount(() => {
       </template>
       <div v-else class="relative pb-5">
         <div class="similarProducts flex flex-wrap lg:gap-3 gap-1 w-full pt-2">
-          <div class="heading w-full lg:text-3xl text-3xl py-1 headingsFont">
+          <div class="heading w-full lg:text-3xl text-xl py-1 headingsFont">
             Similar Products
           </div>
           <template v-if="suggestions.length < 5">
@@ -97,7 +97,7 @@ onBeforeUnmount(() => {
           v-if="vendorsProducts.length >= 1"
           class="vendorsProducts flex flex-wrap lg:gap-3 gap-1 w-full pt-3"
         >
-          <div class="heading w-full lg:text-3xl text-3xl py-1 headingsFont">
+          <div class="heading w-full lg:text-3xl text-xl py-1 headingsFont">
             Seller Products
           </div>
           <template v-if="vendorsProducts.length < 5">

@@ -40,8 +40,7 @@ const checkRoute = () => {
   }
 };
 
-// Watch for route changes and trigger the route check
-watch(route, checkRoute, { immediate: true });
+watch(route, checkRoute(), { immediate: true });
 
 // Handle search input blur
 const handleBlur = () => {

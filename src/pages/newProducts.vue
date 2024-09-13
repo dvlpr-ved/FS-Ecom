@@ -6,10 +6,12 @@ const authStore = useAuthStore();
 const itemsToShow = ref(2);
 const visible = ref(false);
 const socIconsVisible = ref("notActive");
+const isDownloadingImage = ref(false);
+
 const toast = useToast();
 
-const show = (message) => {
-  toast.add({ severity: "info", detail: message, life: 3000 });
+const show = (message, DieLife = 4000) => {
+  toast.add({ severity: "info", detail: message, life: DieLife });
 };
 
 const closeModal = () => {
@@ -46,6 +48,46 @@ const removeFromWishList = async (product_id) => {
 const wishlistStore = useWishlistStore();
 const getWishlistIds = computed(() => wishlistStore.getWishlisterIds);
 
+async function downloadImage(url, Product_desc) {
+  // Product_desc
+
+  isDownloadingImage.value = true;
+  try {
+    const response = await fetch(`/api/download?url=${encodeURIComponent(url)}`);
+    if (!response.ok) {
+      alert("Please refresh and try again");
+    }
+    const blob = await response.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = blobUrl;
+    a.download = url.substring(url.lastIndexOf("/") + 1);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    
+    // copy pro desc
+    if (navigator.clipboard) {
+      navigator.clipboard
+        .writeText(Product_desc)
+        .then(() => {
+          show("product Detail copied to your clipboard", 15000);
+        })
+        .catch((err) => {
+          show("Failed to copy text. Please try again", 15000);
+          console.error(err);
+        });
+    } else {
+      alert("Copied to clipboard!");
+    }
+    isDownloadingImage.value = false;
+    window.URL.revokeObjectURL(blobUrl);
+  } catch (error) {
+    alert("Please refresh and try again");
+  }
+}
+
 onMounted(() => {
   getData();
 });
@@ -69,10 +111,12 @@ onMounted(() => {
                 :alt="img.name"
               />
               <div
-                v-if="authStore.userData.is_paid_subscription"
+                v-if="!authStore.userData.is_paid_subscription"
                 class="downloadBtn bg-white p-[10px] absolute z-10 bottom-0 right-[-1px]"
+                @click="downloadImage(img.source, update.description)"
               >
-                <i class="pi pi-download text-2xl"></i>
+                <i v-if="!isDownloadingImage" class="pi pi-download text-2xl"></i>
+                <i v-else class="pi pi-spinner text-2xl"></i>
               </div>
             </div>
           </slide>
