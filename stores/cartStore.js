@@ -12,10 +12,14 @@ export const useCartStore = defineStore('cart', {
         getCartLength(){
             return this.cartItems.length
         },
-        getCartTotal(){
-            return this.cartItems.reduce((sum, item) => sum + parseInt(item.price)*parseInt(item.quantity), 0);
-        }
-    },
+        getCartTotal() {
+            return this.cartItems.reduce((sum, item) => {
+              const finalPrice = getPrice(item.price, item.price_subscribed);
+              console.log(finalPrice , price , price_subscribed);
+              return sum + finalPrice * parseInt(item.quantity);
+            }, 0);
+          }
+        },
     actions : {
         async getCartItems(){
             try {

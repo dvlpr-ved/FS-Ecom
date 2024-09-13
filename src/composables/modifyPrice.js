@@ -9,8 +9,8 @@ export function getPrice(price = 0 , price_subscribed = 0) {
 
         if(user){
             if(user.id){
-                const is_subscribed = user.is_subscribed;
-                const is_paid = user.is_paid;
+                const is_subscribed = user.is_subscribed_user;
+                const is_paid = user.is_paid_subscription;
                 if(!is_subscribed){
                     return price;
                 }
@@ -28,7 +28,6 @@ export function getPrice(price = 0 , price_subscribed = 0) {
     }
 }
 export function getActualPrice(mrp = 0 , price = 0 , price_subscribed = 0) {
-    console.log(mrp , price , price_subscribed);
     if(process.client){
         if(!price || price <= 0){
             return 0;
@@ -39,8 +38,8 @@ export function getActualPrice(mrp = 0 , price = 0 , price_subscribed = 0) {
 
         if(user){
             if(user.id){
-                const is_subscribed = user.is_subscribed;
-                const is_paid = user.is_paid;
+                const is_subscribed = user.is_subscribed_user;
+                const is_paid = user.is_paid_subscription;
                 if(!is_subscribed){
                     return mrp;
                 }

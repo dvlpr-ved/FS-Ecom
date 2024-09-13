@@ -8,7 +8,8 @@ const loading = ref(false);
 const totalComputed = computed(() => {
   return cards.value.reduce((sum, item) => {
     const quantity = quantities.value[item.id] || item.quantity;
-    return sum + item.price * quantity;
+    const finalPrice = getPrice(item.price , item.price_subscribed);
+    return sum + finalPrice * quantity;
   }, 0);
 });
 
@@ -174,7 +175,7 @@ const proceedCheckoutSingle = async (item) => {
                   <div class="topconten">
                     <div class="text-lg font-semibold mb-2">{{ items.product_name }}</div>
                     <p class="text-gray-600 mb-1">{{ items.created_at }}</p>
-                    <p class="text-gray-600 mb-1">Price: ₹{{ items.price }}/PCS</p>
+                    <p class="text-gray-600 mb-1">Price: ₹{{ getPrice(items.price , items.price_subscribed) }}/PCS</p>
                   </div>
                   <div
                     class="productCounter mb-3 flex gap-4 border border-gray-400 p-2 px-3 w-[fit-content]"

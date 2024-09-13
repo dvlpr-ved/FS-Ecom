@@ -113,7 +113,7 @@ onMounted(() => {
                 <div class="topconten">
                   <div class="text-lg font-semibold mb-2">{{ items.name }}</div>
                   <p class="text-gray-600 mb-1">{{ items.created_at }}</p>
-                  <p class="text-gray-600 mb-1">Price: ₹{{ items.mrp }}</p>
+                  <p class="text-gray-600 mb-1">Price: ₹{{ getPrice(items.price , items.price_subscribed) }}</p>
                 </div>
                 <button
                   class="absolute top-0 right-0 text-gray-600"
