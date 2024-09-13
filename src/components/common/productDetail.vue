@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { publicApi } from "/utils/publicApi.js";
 import { useToast } from "primevue/usetoast";
-import { getPrice , getActualPrice } from '../modifyPrice.js';
+import { getPrice, getActualPrice } from "../modifyPrice.js";
 
 const authStore = useAuthStore();
 
@@ -155,8 +155,6 @@ const getWishlistIds = computed(() => wishlistStore.getWishlisterIds);
 const isDownloadingImage = ref(false);
 
 async function downloadImage(url, Product_desc) {
-  // Product_desc
-
   isDownloadingImage.value = true;
   try {
     const response = await fetch(`/api/download?url=${encodeURIComponent(url)}`);
@@ -172,29 +170,25 @@ async function downloadImage(url, Product_desc) {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    copyToClipboard();
+
+    // copy pro desc
+    if (navigator.clipboard) {
+      navigator.clipboard
+        .writeText(Product_desc)
+        .then(() => {
+          show("product Detail copied to your clipboard", 15000);
+        })
+        .catch((err) => {
+          alert("Failed to copy text. Please try again.");
+          console.error(err);
+        });
+    } else {
+      alert("Copied to clipboard!");
+    }
     isDownloadingImage.value = false;
     window.URL.revokeObjectURL(blobUrl);
   } catch (error) {
     alert("Please refresh and try again");
-  }
-}
-
-function copyToClipboard() {
-  const productDescElement = document.getElementById("productDesc");
-  const text = productDescElement ? productDescElement.innerText : "";
-  if (navigator.clipboard) {
-    navigator.clipboard
-      .writeText(text)
-      .then(() => {
-        show("product Detail copied to your clipboard", 15000);
-      })
-      .catch((err) => {
-        alert("Failed to copy text. Please try again.");
-        console.error(err);
-      });
-  } else {
-    alert("Copied to clipboard!");
   }
 }
 </script>
@@ -217,9 +211,10 @@ function copyToClipboard() {
                 class="lg:h-[90px] h-[70px] cursor-pointer"
               />
               <button
+                v-if="authStore.userData.is_subscribed_user"
                 :disabled="isDownloadingImage"
                 @click="downloadImage(image.source, product.description)"
-                class="absolute lg:bottom-[120px] bottom-[80px] left-0 py-[5px] px-3 text-white border border-gray-600 bgblue80 rounded cursor-pointer"
+                class="absolute lg:bottom-[120px] bottom-[80px] left-0 py-[10px] px-3 text-blue-800 border border-blue-600 bgblue80 bg-white rounded cursor-pointer"
               >
                 <i v-if="!isDownloadingImage" class="pi pi-arrow-down"></i>
                 <i v-else class="pi pi-spinner"></i>
@@ -249,7 +244,7 @@ function copyToClipboard() {
           <div class="price">
             <p v-if="!skuIsLoading" class="cardtitle text-3xl font-[500] text-black mb-3">
               <!-- <span class="line-through text-2xl text-gray-700">₹800</span> -->
-              ₹{{ getPrice(sku.price , sku.price_subscribed)  }}
+              ₹{{ getPrice(sku.price, sku.price_subscribed) }}
             </p>
             <span
               v-else-if="skuIsLoading || isOutOfStock"
@@ -342,7 +337,7 @@ function copyToClipboard() {
             </div>
           </div>
           <div class="text-2xl py-2">Description :</div>
-          <article class="productdesc mb-3" id="productDesc">
+          <article class="productdesc mb-3">
             {{ product.description ? product.description : "" }}
           </article>
           <div

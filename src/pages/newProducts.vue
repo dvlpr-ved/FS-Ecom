@@ -1,22 +1,17 @@
 <script setup>
 import { useToast } from "primevue/usetoast";
 
-// const images = [
-//   "https://fashtsaly.com/wp-content/uploads/2023/03/44002511001-2-600x901.jpeg",
-//   "https://fashtsaly.com/wp-content/uploads/2023/03/1100251105C-3-600x750.jpeg",
-//   "https://fashtsaly.com/wp-content/uploads/2023/03/11002511006-1-600x772.jpeg",
-//   "https://fashtsaly.com/wp-content/uploads/2023/03/11002511007A-2.jpeg",
-// ];
-
 const authStore = useAuthStore();
 
 const itemsToShow = ref(2);
 const visible = ref(false);
 const socIconsVisible = ref("notActive");
+const isDownloadingImage = ref(false);
+
 const toast = useToast();
 
-const show = (message) => {
-  toast.add({ severity: "info", detail: message, life: 3000 });
+const show = (message, DieLife = 4000) => {
+  toast.add({ severity: "info", detail: message, life: DieLife });
 };
 
 const closeModal = () => {
@@ -53,6 +48,46 @@ const removeFromWishList = async (product_id) => {
 const wishlistStore = useWishlistStore();
 const getWishlistIds = computed(() => wishlistStore.getWishlisterIds);
 
+async function downloadImage(url, Product_desc) {
+  // Product_desc
+
+  isDownloadingImage.value = true;
+  try {
+    const response = await fetch(`/api/download?url=${encodeURIComponent(url)}`);
+    if (!response.ok) {
+      alert("Please refresh and try again");
+    }
+    const blob = await response.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = blobUrl;
+    a.download = url.substring(url.lastIndexOf("/") + 1);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    
+    // copy pro desc
+    if (navigator.clipboard) {
+      navigator.clipboard
+        .writeText(Product_desc)
+        .then(() => {
+          show("product Detail copied to your clipboard", 15000);
+        })
+        .catch((err) => {
+          show("Failed to copy text. Please try again", 15000);
+          console.error(err);
+        });
+    } else {
+      alert("Copied to clipboard!");
+    }
+    isDownloadingImage.value = false;
+    window.URL.revokeObjectURL(blobUrl);
+  } catch (error) {
+    alert("Please refresh and try again");
+  }
+}
+
 onMounted(() => {
   getData();
 });
@@ -69,11 +104,21 @@ onMounted(() => {
       <div class="carouselNewProduct">
         <carousel :items-to-show="itemsToShow">
           <slide v-for="(img, index) in update.images" :key="index" class="mx-1">
-            <img 
-              class="slideImg max-h-[350px] h-full object-cover"
-              :src="img.source"
-              :alt="img.name"
-            />
+            <div class="imgdiv relative">
+              <img
+                class="slideImg h-[255px] w-full object-cover"
+                :src="img.source"
+                :alt="img.name"
+              />
+              <div
+                v-if="!authStore.userData.is_paid_subscription"
+                class="downloadBtn bg-white p-[10px] absolute z-10 bottom-0 right-[-1px]"
+                @click="downloadImage(img.source, update.description)"
+              >
+                <i v-if="!isDownloadingImage" class="pi pi-download text-2xl"></i>
+                <i v-else class="pi pi-spinner text-2xl"></i>
+              </div>
+            </div>
           </slide>
         </carousel>
       </div>
@@ -92,33 +137,41 @@ onMounted(() => {
           >
         </div>
         <div
-          class="iconsDiv flex items-center gap-5 border-t border-gray-300 mt-2 py-2 px-3"
+          class="iconsDiv flex items-center gap-5 justify-between border-t border-gray-300 mt-2 py-2 px-3"
         >
-          <div class="heartsdiv">
-            <i
-              v-if="getWishlistIds.indexOf(update.id) == -1"
-              class="text-2xl pi pi-heart"
-              style="color: rgb(239 68 68)"
-              @click="addToWishlist(update.id)"
-            ></i>
-            <i
-              v-else
-              @click="removeFromWishList(update.id)"
-              class="text-2xl pi pi-heart-fill"
-              style="color: rgb(239 68 68)"
-            ></i>
+          <div class="lefticons flex items-center gap-5">
+            <div class="heartsdiv">
+              <i
+                v-if="getWishlistIds.indexOf(update.id) == -1"
+                class="text-2xl pi pi-heart"
+                style="color: rgb(239 68 68)"
+                @click="addToWishlist(update.id)"
+              ></i>
+              <i
+                v-else
+                @click="removeFromWishList(update.id)"
+                class="text-2xl pi pi-heart-fill"
+                style="color: rgb(239 68 68)"
+              ></i>
+            </div>
+            <div class="sharedivsoc" @click="toggelShareIcons">
+              <i class="pi pi-send text-2xl"></i>
+            </div>
           </div>
-          <div class="sharedivsoc" @click="toggelShareIcons">
-            <i class="pi pi-send text-2xl"></i>
-          </div>
-          <!-- only for subscriber -->
-          <div class="download">
-            <i class="pi pi-download text-2xl"></i>
+
+          <div class="sharedivsoc text-xl flex items-center gap-2">
+            <i class="pi pi-eye text-2xl"></i>
+            {{ update.visited }}
           </div>
         </div>
       </div>
-      <div :class="`socIconsForShare transition-all ${socIconsVisible} left-0 right-0 bottom-0 z-20`">
-        <div :class="`overlay transition-all ${socIconsVisible}`" @click="closeSocDiv"></div>
+      <div
+        :class="`socIconsForShare transition-all ${socIconsVisible} left-0 right-0 bottom-0 z-20`"
+      >
+        <div
+          :class="`overlay transition-all ${socIconsVisible}`"
+          @click="closeSocDiv"
+        ></div>
         <div
           class="wrapIcons flex justify-center gap-2 bg-white p-4 relative z-10 min-h-[105px]"
         >
@@ -149,6 +202,10 @@ onMounted(() => {
   max-width: 576px;
   margin: 0 auto;
   margin-bottom: 15px;
+
+  .downloadBtn {
+    border-radius: 23px 0 0 0;
+  }
 
   .slideImg {
   }
