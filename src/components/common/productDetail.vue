@@ -387,9 +387,17 @@ async function downloadImage(url, Product_desc) {
             </button>
           </div>
 
-          <!-- <div class="sharediv py-5 flex flex-wrap lg:gap-x-5 items-end">
+          <div class="sharediv py-5 flex flex-wrap lg:gap-x-5 items-end gap-2">
             <span class="lg:text-xl mb-1 w-full capitalize">Share on social media: </span>
-            <NuxtLink to="JavaScript:void(0)">
+            <SocialShare
+              v-for="network in ['facebook', 'twitter', 'whatsapp']"
+              :key="network"
+              :network="network"
+            >
+              <template #label>{{ network }}</template>
+            </SocialShare>
+            <!-- <SocialShare network="instagram" /> -->
+            <!-- <NuxtLink to="JavaScript:void(0)">
               <i class="pi pi-instagram text-2xl transition"></i>
             </NuxtLink>
             <NuxtLink to="JavaScript:void(0)">
@@ -400,8 +408,8 @@ async function downloadImage(url, Product_desc) {
             </NuxtLink>
             <NuxtLink to="JavaScript:void(0)">
               <i class="pi pi-twitter text-2xl transition"></i>
-            </NuxtLink>
-          </div> -->
+            </NuxtLink> -->
+          </div>
 
           <div
             class="vendrsDetail"
@@ -462,24 +470,27 @@ async function downloadImage(url, Product_desc) {
 <style lang="scss">
 .productdetail_man_div .container {
   max-width: 1400px;
+  .sharediv {
+    i {
+      border: 1px solid var(--primary);
+      padding: 8px;
+      background-color: var(--primary);
+      color: var(--white);
+      border-radius: 50px;
+      &:hover {
+        color: var(--primary);
+        background: transparent;
+      }
+    }
+    /*.social-share-button__label {
+      display: none;
+    }*/
+  }
 }
 .p-toast-message-content {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   text-transform: capitalize;
-}
-.sharediv {
-  i {
-    border: 1px solid var(--primary);
-    padding: 8px;
-    background-color: var(--primary);
-    color: var(--white);
-    border-radius: 50px;
-    &:hover {
-      color: var(--primary);
-      background: transparent;
-    }
-  }
 }
 </style>

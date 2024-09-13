@@ -81,6 +81,7 @@ export default defineNuxtConfig({
     '~/modules/primevue',
     '@nuxtjs/tailwindcss',
     'vue3-carousel-nuxt',
+    '@stefanobartoletti/nuxt-social-share'
   ],
   nitro: {
     experimental: {
@@ -98,6 +99,23 @@ export default defineNuxtConfig({
     plugins: {
       autoprefixer: {}
     }
+  },
+  socialShare: {
+    // baseUrl: 'https://www.yoursite.com',
+    networks: {
+      twitter: true,
+      facebook: true,
+      linkedin: true,
+      pinterest: true,
+      whatsapp: true,
+      // instagram: true,
+    },
+    // facebook: {
+    //   appId: 'your-facebook-app-id'
+    // },
+    // twitter: {
+    //   via: 'your-twitter-handle'
+    // },
   },
 
   srcDir: 'src/',
