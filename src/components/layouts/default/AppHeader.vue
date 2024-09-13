@@ -40,8 +40,7 @@ const checkRoute = () => {
   }
 };
 
-// Watch for route changes and trigger the route check
-watch(route, checkRoute, { immediate: true });
+watch(route, checkRoute(), { immediate: true });
 
 // Handle search input blur
 const handleBlur = () => {
@@ -52,7 +51,9 @@ const handleBlur = () => {
 const fetchSearchResult = async () => {
   const data = await fetchFromSanctum({
     method: "POST",
-    url: `${config.API_BASE_URL || "https://Fashtsaly.com/API/public/"}api/fetchSearchResult`,
+    url: `${
+      config.API_BASE_URL || "https://Fashtsaly.com/API/public/"
+    }api/fetchSearchResult`,
     body: { query: searchQuery.value },
   });
 
@@ -86,6 +87,10 @@ const toogleModal = () => {
     visible.value = true;
   }
 };
+
+onMounted(() => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
 </script>
 
 <template>
@@ -121,7 +126,9 @@ const toogleModal = () => {
             class="border border-gray-300 rounded-[100%] flex items-center justify-center"
           >
             <i class="pi pi-shopping-cart text-2xl"></i>
-            <span class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl">
+            <span
+              class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
+            >
               {{ CartItems ? CartItems : "" }}
             </span>
           </NuxtLink>
@@ -134,16 +141,23 @@ const toogleModal = () => {
           >
             <i class="pi pi-heart text-2xl"></i>
           </NuxtLink>
-          <span class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl">
+          <span
+            class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
+          >
             {{ wishlistd ? wishlistd : "" }}
           </span>
         </li>
 
         <li class="block">
-          <NuxtLink class="subscribe commonbtn text-xl" to="/subscriptionplans">subscribe</NuxtLink>
+          <NuxtLink class="subscribe commonbtn text-xl" to="/subscriptionplans"
+            >subscribe</NuxtLink
+          >
         </li>
 
-        <li class="icons relative user flex items-center gap-2 cursor-pointer" @click="toogleModal">
+        <li
+          class="icons relative user flex items-center gap-2 cursor-pointer"
+          @click="toogleModal"
+        >
           <template v-if="!authStore.isUserLoggedin">
             <i class="pi pi-user text-4xl"></i>
             <span class="text inline">LOGIN / REGISTER</span>
@@ -179,7 +193,9 @@ const toogleModal = () => {
           >
             <i class="pi pi-heart text-2xl"></i>
           </NuxtLink>
-          <span class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl">
+          <span
+            class="counter absolute top-[-5px] right-[-2px] text-orange-700 bg-white text-xl"
+          >
             {{ wishlistd ? wishlistd : "" }}
           </span>
         </li>
@@ -190,7 +206,6 @@ const toogleModal = () => {
   <!-- Modal for Login/Signup -->
   <LoginModal :visible="visible" @closemodal="closeModal" :close="closeModal" />
 </template>
-
 
 <style lang="scss" scoped>
 .p-progressbar {

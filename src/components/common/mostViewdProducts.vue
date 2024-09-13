@@ -3,6 +3,17 @@ const products = ref([]);
 const itemsToShow = ref(5);
 const isLoading = ref(true);
 
+const updateItemsToShow = () => {
+  const screenWidth = window.innerWidth;
+  if (screenWidth < 576) {
+    itemsToShow.value = 2;
+  } else if (screenWidth < 768) {
+    itemsToShow.value = 3;
+  } else if (screenWidth < 1024) {
+    itemsToShow.value = 5;
+  }
+};
+
 async function getMostViewProducts() {
   try {
     const response = await fetch(
@@ -37,6 +48,7 @@ function getImageUrl(imagesJson) {
 
 onMounted(() => {
   getMostViewProducts();
+  updateItemsToShow();
 });
 </script>
 
@@ -45,7 +57,9 @@ onMounted(() => {
     {{ cards.images }}
   </div> -->
   <div class="mostViewedProducts py-3 bg-gray-100">
-    <div class="lg:text-2xl text-xl mb-3 pl-2 capitalize" v-if="isLoading">loading...</div>
+    <div class="lg:text-2xl text-xl mb-3 pl-2 capitalize" v-if="isLoading">
+      loading...
+    </div>
     <h4 class="lg:text-2xl text-xl mb-3 pl-2 capitalize">Most Viewd products</h4>
 
     <div v-if="products.length > 4" class="caroselMostViewd">
