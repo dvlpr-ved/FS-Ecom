@@ -19,6 +19,7 @@
   "devDependencies": {
     "@nuxtjs/google-fonts": "^3.0.1",
     "@pinia/nuxt": "^0.5.1",
+    "@stefanobartoletti/nuxt-social-share": "^1.1.0",
     "@types/node": "^20.10.0",
     "@types/serialize-javascript": "^5.0.2",
     "@vite-pwa/nuxt": "^0.3.0",
