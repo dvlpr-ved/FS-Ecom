@@ -117,7 +117,7 @@ onMounted(async () => {
         </p>
 
         <span class="bgblue80 py-1 px-2 block w-fit capitalize mt-1 text-white"
-          >save 20%</span
+          >save {{ getPercentSaving(props.mrp , props.price , props.price_subscribed)}}%</span
         >
 
         <!-- <p class="card_desc" v-if="props.description">

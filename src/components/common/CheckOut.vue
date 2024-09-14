@@ -418,13 +418,13 @@ const removeProduct = (productId) => {
 
 const updateTotalPrice = (product) => {
   const quantity = quantities.value[product.id];
-  product.totalPrice = product.price * quantity;
+  product.totalPrice = getPrice(product.price , product.price_subscribed) * quantity;
   updateSubtotal();
 };
 
 const updateSubtotal = () => {
   subtotal.value = items.value.reduce((acc, item) => {
-    return acc + item.price * (quantities.value[item.id] || 0);
+    return acc + getPrice(item.price , item.price_subscribed) * (quantities.value[item.id] || 0);
   }, 0);
   total.value = subtotal.value + shipping.value;
 };
@@ -438,7 +438,7 @@ const getCheckoutProduct = async () => {
     items.value = res.data;
     items.value.forEach((item) => {
       quantities.value[item.id] = item.quantity;
-      item.totalPrice = item.price * item.quantity;
+      item.totalPrice = getPrice(item.price , item.price_subscribed) * item.quantity;
     });
     updateSubtotal();
     notItems.value = false;

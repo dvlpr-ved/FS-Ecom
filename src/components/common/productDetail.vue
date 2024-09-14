@@ -87,8 +87,22 @@ const getProduct = async () => {
     sizeSelected.value = sku.value.size ? sku.value.size : "";
     imageShown.value = sku.value.image[0] ? sku.value.image[0].source : "";
     saveProductToVisited(data.product);
+    getRatingReviews();
   }
 };
+const ratings = ref(null); 
+const getRatingReviews =async () => {
+  const ratings_data = await publicApi({
+    url : 'api/getproduct_reviews',
+    method : 'POST',
+    body : {
+      product_id : route.params.id
+    }
+  });
+  if(ratings_data.success){
+    ratings.value = ratings_data.data;
+  }
+}
 function saveProductToVisited(product) {
   const visitedProducts = JSON.parse(localStorage.getItem("visitedProducts")) || [];
   const updatedProducts = visitedProducts.filter((p) => p.id !== product.id);
@@ -252,7 +266,7 @@ async function downloadImage(url, Product_desc) {
             >
           </div>
           <span class="bgblue80 py-1 px-2 block w-fit capitalize mb-3 text-white"
-            >save 20%</span
+            >save {{getPercentSaving(sku.mrp , sku.price , sku.price_subscribed) }}%</span
           >
           <div class="sizesBox flex items-center mb-3">
             <span class="text-gray-700">Sizes :</span>
@@ -418,7 +432,7 @@ async function downloadImage(url, Product_desc) {
             <askQuetion :product_id="product.id" />
             <div class="border mt-2 bg-gray-200 p-2 rounded">
               <div class="text-2xl mb-2 headingsFontt">Ratings & Reviews</div>
-              <reviewRating />
+              <reviewRating v-if="ratings" :data="ratings" />
             </div>
           </div>
         </div>

@@ -27,7 +27,10 @@ export function getPrice(price = 0 , price_subscribed = 0) {
         }
     }
 }
-export function getActualPrice(mrp = 0 , price = 0 , price_subscribed = 0) {
+export function getActualPrice(mrp_in = 0 , price_in = 0 , price_subscribed_in = 0) {
+    const price_subscribed = parseInt(price_subscribed_in);
+    const price = parseInt(price_in);
+    const mrp = parseInt(mrp_in); 
     if(process.client){
         if(!price || price <= 0){
             return 0;
@@ -44,7 +47,7 @@ export function getActualPrice(mrp = 0 , price = 0 , price_subscribed = 0) {
                     return mrp;
                 }
                 else if(is_subscribed && is_paid){
-                    return price_subscribed - price;
+                    return price;
                 }
                 else if(is_subscribed && !is_paid){
                     return mrp;
@@ -55,5 +58,26 @@ export function getActualPrice(mrp = 0 , price = 0 , price_subscribed = 0) {
             }
         }
     }      
+}
+export function getPercentSaving(mrp = 0 , price = 0 , price_subscribed = 0){
+    if(process.client){
+        if(!price || price <= 0){
+            return 0;
+        }
+
+        const authStore = useAuthStore();
+        const user = authStore.getUser;
+
+        if(user){
+            if(user.id){
+                const price_actual = getPrice(price , price_subscribed);
+                const price_fake = getActualPrice(mrp , price , price_subscribed);
+
+                const savings = price_fake - price_actual;
+                const savingsPercentage = (savings / price_fake) * 100;
+                return savingsPercentage.toFixed(2); 
+            }
+        }
+    }  
 }
   
