@@ -114,8 +114,12 @@ function saveProductToVisited(product) {
 
   localStorage.setItem("visitedProducts", JSON.stringify(updatedProducts));
 }
+const pageurl = ref('');
 onMounted(() => {
   getProduct();
+  if(process.client){
+    pageurl.value = window.location.href;
+  }
 });
 const handleSizeChange = (val) => {
   sizeSelected.value = val;
@@ -399,30 +403,20 @@ async function downloadImage(url, Product_desc) {
               >
             </button>
           </div>
-
+        
+        <ClientOnly>
           <div class="sharediv py-5 flex flex-wrap lg:gap-x-5 items-end gap-2">
             <span class="lg:text-xl mb-1 w-full capitalize">Share on social media: </span>
             <SocialShare
               v-for="network in ['facebook', 'twitter', 'whatsapp']"
               :key="network"
+              :url="pageurl"
               :network="network"
             >
               <template #label>{{ network }}</template>
             </SocialShare>
-            <!-- <SocialShare network="instagram" /> -->
-            <!-- <NuxtLink to="JavaScript:void(0)">
-              <i class="pi pi-instagram text-2xl transition"></i>
-            </NuxtLink>
-            <NuxtLink to="JavaScript:void(0)">
-              <i class="pi pi-whatsapp text-2xl transition"></i>
-            </NuxtLink>
-            <NuxtLink to="JavaScript:void(0)">
-              <i class="pi pi-facebook text-2xl transition"></i>
-            </NuxtLink>
-            <NuxtLink to="JavaScript:void(0)">
-              <i class="pi pi-twitter text-2xl transition"></i>
-            </NuxtLink> -->
           </div>
+        </ClientOnly>
 
           <div
             class="vendrsDetail"
