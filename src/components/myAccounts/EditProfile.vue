@@ -5,6 +5,7 @@ const authStore = useAuthStore();
 const formData = ref({
   name: authStore.getUser.name,
   lname: "",
+  phone: "",
   email: authStore.getUser.email,
   gender: "male",
 });
@@ -93,6 +94,15 @@ onMounted(() => {
           placeholder="Email"
           class="w-full py-3 px-3 text-[15px] border rounded text-gray-700 uppercase"
           v-model="formData.email"
+          :disabled="!editing"
+          readOnly
+        />
+      </div>
+      <div class="in_box lg:w-[45%] w-[100%]">
+        <input
+          placeholder="phone*"
+          class="w-full py-3 px-3 text-[15px] border rounded text-gray-700 uppercase"
+          v-model="formData.phone"
           :disabled="!editing"
         />
       </div>

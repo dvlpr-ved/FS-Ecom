@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
+const show = (message, DieLife = 4000) => {
+  toast.add({ severity: "success", detail: message, life: DieLife });
+};
 const route = useRoute();
 const questions = ref([
   { id: 1, text: "What's its fabric?", replyText: "", isReplying: false },
@@ -13,57 +18,69 @@ const startReplying = (id) => {
   }
 };
 
-const submitReply =async (id) => {
+const submitReply = async (id) => {
   const question = questions.value.find((q) => q.id === id);
-  if (question && question.replyText.trim()) {
-    question.isReplying = false;
+  // if (question && question.replyText.trim()) {
+  if (!question.replyText) {
+    show("Please Enter Your Reply");
     question.answer = question.replyText;
+    // question.isReplying = false;
     // question.replyText = "";
+    return;
   }
   const update = await publicApi({
-    'url' : 'api/updateQuestionAnswers',
-    method : 'POST',
-    body : {
-      id : question.id,
-      answer : question.replyText
-    }
-  })
+    url: "api/updateQuestionAnswers",
+    method: "POST",
+    body: {
+      id: question.id,
+      answer: question.replyText,
+    },
+  });
+  question.isReplying = false;
+  getQuestionAnswers();
 };
 const questionAnswers = ref([]);
-const getQuestionAnswers =async () => {
-  const data =await publicApi({
-    url : `api/getQuestionAnswers`,
-    method : 'POST',
-    body : {
-      product_id : route.params.id
-    }
+const getQuestionAnswers = async () => {
+  const data = await publicApi({
+    url: `api/getQuestionAnswers`,
+    method: "POST",
+    body: {
+      product_id: route.params.id,
+    },
   });
   questions.value = data;
-}
-const asked_question = ref('');
+};
+const asked_question = ref("");
+console.log("asked_question.value here", asked_question.value);
+
 const is_submitting_question = ref(false);
-const submitQuestion =async () => {
+const submitQuestion = async () => {
+  if (!asked_question.value.trim()) {
+    show("Please Type Your Question");
+    return;
+  }
   is_submitting_question.value = true;
   const submit = await fetchFromSanctum({
-    url : `https://fashtsaly.com/API/public/api/submitQuestion`,
-    method : 'POST',
-    body : {
-      question : asked_question.value,
-      product_id : route.params.id
-    }
+    url: `https://fashtsaly.com/API/public/api/submitQuestion`,
+    method: "POST",
+    body: {
+      question: asked_question.value,
+      product_id: route.params.id,
+    },
   });
-  if(submit.success){
-    asked_question.value = '';
+  if (submit.success) {
+    asked_question.value = "";
     questions.value = submit.data;
   }
   is_submitting_question.value = false;
-}
+};
 onMounted(() => {
   getQuestionAnswers();
-})
+});
 </script>
 
 <template>
+  <Toast />
   <div class="askQuetionmain">
     <div class="askQuetion_inner">
       <div class="flexinput flex gap-3">
@@ -74,7 +91,7 @@ onMounted(() => {
           v-model="asked_question"
         />
         <button
-        :disabled="is_submitting_question ? true : false"
+          :disabled="is_submitting_question ? true : false"
           class="py-2 lg:w-[31%] w-[48%] text-xl bgorange transition text-white capitalize rounded flex items-center gap-2 justify-center"
           @click="submitQuestion"
         >
@@ -93,7 +110,7 @@ onMounted(() => {
             class="text-blue-600 pl-1 cursor-pointer"
             @click="startReplying(question.id)"
           >
-            Reply
+            {{ question.answer ? "Edit Reply" : "Reply" }}
           </p>
           <div v-if="question.isReplying">
             <input

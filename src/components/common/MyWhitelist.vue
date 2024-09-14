@@ -93,36 +93,40 @@ onMounted(() => {
             :key="items.id"
             class="bcards py-2 border-b border-b-300 lg:p-3 p-2"
           >
-            <NuxtLink
-              :to="`searchresult/${items.id}`"
-              class="bcards_inner flex lg:gap-4 gap-3 relative"
-            >
-              <div class="flex-shrink-0">
-                <img
-                  :src="
-                    items.images && items.images.length > 0
-                      ? items.images[0].source
-                      : 'https://via.placeholder.com/96'
-                  "
-                  alt="Product Image"
-                  class="w-24 h-24 object-cover rounded-lg"
-                  loading="lazy"
-                />
-              </div>
-              <div class="contentdiv">
-                <div class="topconten">
-                  <div class="text-lg font-semibold mb-2">{{ items.name }}</div>
-                  <p class="text-gray-600 mb-1">{{ items.created_at }}</p>
-                  <p class="text-gray-600 mb-1">Price: ₹{{ getPrice(items.price , items.price_subscribed) }}</p>
+            <div class="cardwishlist relative">
+              <NuxtLink
+                :to="`searchresult/${items.id}`"
+                class="bcards_inner flex lg:gap-4 gap-3"
+              >
+                <div class="flex-shrink-0">
+                  <img
+                    :src="
+                      items.images && items.images.length > 0
+                        ? items.images[0].source
+                        : 'https://via.placeholder.com/96'
+                    "
+                    alt="Product Image"
+                    class="w-24 h-24 object-cover rounded-lg"
+                    loading="lazy"
+                  />
                 </div>
-                <button
-                  class="absolute top-0 right-0 text-gray-600"
-                  @click="RemoveItemFromCart(items.id)"
-                >
-                  <i class="pi pi-trash text-xl"></i>
-                </button>
-              </div>
-            </NuxtLink>
+                <div class="contentdiv">
+                  <div class="topconten">
+                    <div class="text-lg font-semibold mb-2">{{ items.name }}</div>
+                    <p class="text-gray-600 mb-1">{{ items.created_at }}</p>
+                    <p class="text-gray-600 mb-1">
+                      Price: ₹{{ getPrice(items.price, items.price_subscribed) }}
+                    </p>
+                  </div>
+                </div>
+              </NuxtLink>
+              <button
+                class="absolute top-0 right-0 text-gray-600 z-1"
+                @click="RemoveItemFromCart(items.id)"
+              >
+                <i class="pi pi-trash text-xl"></i>
+              </button>
+            </div>
           </div>
         </div>
       </template>

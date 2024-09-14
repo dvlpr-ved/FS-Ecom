@@ -90,19 +90,19 @@ const getProduct = async () => {
     getRatingReviews();
   }
 };
-const ratings = ref(null); 
-const getRatingReviews =async () => {
+const ratings = ref(null);
+const getRatingReviews = async () => {
   const ratings_data = await publicApi({
-    url : 'api/getproduct_reviews',
-    method : 'POST',
-    body : {
-      product_id : route.params.id
-    }
+    url: "api/getproduct_reviews",
+    method: "POST",
+    body: {
+      product_id: route.params.id,
+    },
   });
-  if(ratings_data.success){
+  if (ratings_data.success) {
     ratings.value = ratings_data.data;
   }
-}
+};
 function saveProductToVisited(product) {
   const visitedProducts = JSON.parse(localStorage.getItem("visitedProducts")) || [];
   const updatedProducts = visitedProducts.filter((p) => p.id !== product.id);
@@ -114,10 +114,10 @@ function saveProductToVisited(product) {
 
   localStorage.setItem("visitedProducts", JSON.stringify(updatedProducts));
 }
-const pageurl = ref('');
+const pageurl = ref("");
 onMounted(() => {
   getProduct();
-  if(process.client){
+  if (process.client) {
     pageurl.value = window.location.href;
   }
 });
@@ -270,7 +270,7 @@ async function downloadImage(url, Product_desc) {
             >
           </div>
           <span class="bgblue80 py-1 px-2 block w-fit capitalize mb-3 text-white"
-            >save {{getPercentSaving(sku.mrp , sku.price , sku.price_subscribed) }}%</span
+            >save {{ getPercentSaving(sku.mrp, sku.price, sku.price_subscribed) }}%</span
           >
           <div class="sizesBox flex items-center mb-3">
             <span class="text-gray-700">Sizes :</span>
@@ -403,20 +403,22 @@ async function downloadImage(url, Product_desc) {
               >
             </button>
           </div>
-        
-        <ClientOnly>
-          <div class="sharediv py-5 flex flex-wrap lg:gap-x-5 items-end gap-2">
-            <span class="lg:text-xl mb-1 w-full capitalize">Share on social media: </span>
-            <SocialShare
-              v-for="network in ['facebook', 'twitter', 'whatsapp']"
-              :key="network"
-              :url="pageurl"
-              :network="network"
-            >
-              <template #label>{{ network }}</template>
-            </SocialShare>
-          </div>
-        </ClientOnly>
+
+          <ClientOnly>
+            <div class="sharediv py-5 flex flex-wrap lg:gap-x-5 items-end lg:gap-5 gap-2">
+              <span class="lg:text-xl mb-1 w-full capitalize"
+                >Share on social media:
+              </span>
+              <SocialShare
+                v-for="network in ['facebook', 'twitter', 'whatsapp']"
+                :key="network"
+                :url="pageurl"
+                :network="network"
+              >
+                <template #label>{{ network }}</template>
+              </SocialShare>
+            </div>
+          </ClientOnly>
 
           <div
             class="vendrsDetail"
@@ -432,7 +434,7 @@ async function downloadImage(url, Product_desc) {
           </div>
           <div class="que-and-review border bg-gray-100 p-3 pr-5 lg:w-[97%]">
             <askQuetion :product_id="product.id" />
-            <div class="border mt-2 bg-gray-200 p-2 rounded">
+            <div class="border mt-2 bg-gray-200 p-2 rounded" v-if="!ratings === 0">
               <div class="text-2xl mb-2 headingsFontt">Ratings & Reviews</div>
               <reviewRating v-if="ratings" :data="ratings" />
             </div>
@@ -489,10 +491,13 @@ async function downloadImage(url, Product_desc) {
         background: transparent;
       }
     }
-    /*.social-share-button__label {
+    .social-share-button__label {
       display: none;
-    }*/
+    }
   }
+}
+.social-share-button__icon {
+  font-size: 30px;
 }
 .p-toast-message-content {
   display: flex;

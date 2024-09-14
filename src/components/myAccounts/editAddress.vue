@@ -2,12 +2,16 @@
 const props = defineProps<{
   editing: boolean;
   toggleEdit: () => void;
-  data : Object;
+  data: Object;
 }>();
+
+const stateStore = useGetStateStore();
+const allStates = ref([]);
+
 const editAddress = useAddressStore();
 const useGetAddressStore = useAddressStore();
 const formData = ref({
-  id : 0,
+  id: 0,
   name: "User Name",
   email: "test@gmail.com",
   phone: "0123123123",
@@ -16,48 +20,54 @@ const formData = ref({
   locality: "1 26M, DDA Flats Pocket 1, New Kondli",
   address: "1 26M, DDA Flats Pocket 1, New Kondli",
   city: "New Delhi",
-  states: ["Rajasthan", "Delhi", "Mp", "Up"],
-  selectedState: "Delhi",
+  // states: ["Rajasthan", "Delhi", "Mp", "Up"],
+  states: allStates,
+  selectedState: "",
   landmark: "hanuman mandir",
   addresstype: "addtype",
 });
-watch(props.data , () => {
-  const dataPrev = props.data;
-  formData.value.entry_id = dataPrev.id;
-  formData.value.name = dataPrev.name;
-  formData.value.email = dataPrev.email;
-  formData.value.phone = dataPrev.phone;
-  formData.value.pincode = dataPrev.pincode;
-  formData.value.locality = dataPrev.locality;
-  formData.value.address = dataPrev.address;
-  formData.value.city = dataPrev.city;
-  formData.value.selectedState = dataPrev.state;
-  formData.value.landmark = dataPrev.landmark;
-  formData.value.id = dataPrev.id;
-
-} , { immediate: true });
-const saveChanges =async () => {
-  const res =await editAddress.fetchUpdateAddAddress(
-    {
-      entry_id : formData.value.id,
-      name: formData.value.name,
-      email: formData.value.email,
-      phone: formData.value.phone,
-      pincode: formData.value.pincode,
-      locality: formData.value.locality,
-      address: formData.value.address,
-      city: formData.value.city,
-      states: formData.value.selectedState,
-      landmark: formData.value.landmark,
-    }
-  );
-  if(res){
+watch(
+  props.data,
+  () => {
+    const dataPrev = props.data;
+    formData.value.entry_id = dataPrev.id;
+    formData.value.name = dataPrev.name;
+    formData.value.email = dataPrev.email;
+    formData.value.phone = dataPrev.phone;
+    formData.value.pincode = dataPrev.pincode;
+    formData.value.locality = dataPrev.locality;
+    formData.value.address = dataPrev.address;
+    formData.value.city = dataPrev.city;
+    formData.value.selectedState = dataPrev.state;
+    formData.value.landmark = dataPrev.landmark;
+    formData.value.id = dataPrev.id;
+  },
+  { immediate: true }
+);
+const saveChanges = async () => {
+  const res = await editAddress.fetchUpdateAddAddress({
+    entry_id: formData.value.id,
+    name: formData.value.name,
+    email: formData.value.email,
+    phone: formData.value.phone,
+    pincode: formData.value.pincode,
+    locality: formData.value.locality,
+    address: formData.value.address,
+    city: formData.value.city,
+    states: formData.value.selectedState,
+    landmark: formData.value.landmark,
+  });
+  if (res) {
     useGetAddressStore.fetchUserAddress();
     props.toggleEdit();
-  }else{
-
+  } else {
   }
-}
+};
+
+onMounted(async () => {
+  await stateStore.fetchAllStates();
+  allStates.value = stateStore.stateList;
+});
 </script>
 
 <template>
@@ -137,6 +147,7 @@ const saveChanges =async () => {
         id="state"
         v-model="formData.selectedState"
       >
+        <option value="">Select State</option>
         <option v-for="state in formData.states" :key="state" :value="state">
           {{ state }}
         </option>

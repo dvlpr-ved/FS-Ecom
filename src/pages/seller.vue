@@ -127,7 +127,10 @@ const handleSubmit = async (e) => {
     });
     if (res.success === true) {
       console.log("Registration Successfully");
-      show("Registration Successfully");
+      show("Your information has been caprured we will contact you soon");
+      setTimeout(() => {
+        navigateTo("/");
+      }, 5000);
     } else {
       console.error("Registration failed:", res);
       show("Registration failed. Please try again.");
@@ -150,7 +153,9 @@ const handleSubmit = async (e) => {
     <div class="wrapper relative z-1 max-w-[900px] m-auto">
       <div class="flexdiv flex justify-end">
         <div class="flexdiv bg-white lg:w-1/2 w-[100%]">
-          <h2 class="lg:text-2xl text-xl lg:p-4 p-1 bgblue80 text-white text-center">Fill Out Now</h2>
+          <h2 class="lg:text-2xl text-xl lg:p-4 p-1 bgblue80 text-white text-center">
+            Fill Out Now
+          </h2>
           <form>
             <!-- @submit="handleSubmit" -->
             <div class="inbox">
@@ -199,7 +204,7 @@ const handleSubmit = async (e) => {
             </div>
             <div class="inbox">
               <input
-                placeholder="GST No."
+                placeholder="GST No.*"
                 type="text"
                 class="w-full py-2 px-3 text-xl border-b border-gray-300"
                 v-model="formData.gst_no"
@@ -210,7 +215,7 @@ const handleSubmit = async (e) => {
             </div>
             <div class="inbox">
               <input
-                placeholder="city"
+                placeholder="city*"
                 type="text"
                 class="w-full py-2 px-3 text-xl border-b border-gray-300"
                 v-model="formData.city"
@@ -221,7 +226,7 @@ const handleSubmit = async (e) => {
             </div>
             <div class="inbox">
               <input
-                placeholder="Pincode"
+                placeholder="Pincode*"
                 type="text"
                 class="w-full py-2 px-3 text-xl border-b border-gray-300"
                 v-model="formData.pincode"

@@ -5,8 +5,8 @@ const logOut = () => {
   authStore.getUser.name = "";
   authStore.isLoggedin = false;
   localStorage.clear();
+  window.location.reload();
   navigateTo(`/`);
-  // console.log("logged out");
 };
 </script>
 
@@ -38,7 +38,9 @@ const logOut = () => {
         class="commonbox userAvtarInfo lg:p-3 p-2 bg-white shadow-sm rounded-sm lg:mb-3 lg:border-0 border-b border-gray-300"
       >
         <div class="headingLg lg:mb-3 mb-2 text-xl">My Activity</div>
-        <NuxtLink to="/myorder" class="text-[15px] block capitalize mb-2 hover:text-orange-400"
+        <NuxtLink
+          to="/myorder"
+          class="text-[15px] block capitalize mb-2 hover:text-orange-400"
           ><i class="pi pi-arrow-right"></i> My Orders
         </NuxtLink>
 
@@ -61,7 +63,9 @@ const logOut = () => {
           ><i class="pi pi-arrow-right"></i> Manage Address
         </NuxtLink>
       </div>
-      <div class="commonbox userAvtarInfo p-3 bg-white shadow-sm rounded-sm lg:border-0 border-b border-gray-300">
+      <div
+        class="commonbox userAvtarInfo p-3 bg-white shadow-sm rounded-sm lg:border-0 border-b border-gray-300"
+      >
         <div class="headingLg text-xl cursor-pointer lg:text-center" @click="logOut">
           <i class="pi pi-sign-out text-xl"></i> Log Out
         </div>

@@ -2,6 +2,7 @@
 import { useToast } from "primevue/usetoast";
 
 const authStore = useAuthStore();
+const pageurl = ref("");
 
 const itemsToShow = ref(2);
 const visible = ref(false);
@@ -66,7 +67,7 @@ async function downloadImage(url, Product_desc) {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    
+
     // copy pro desc
     if (navigator.clipboard) {
       navigator.clipboard
@@ -90,6 +91,9 @@ async function downloadImage(url, Product_desc) {
 
 onMounted(() => {
   getData();
+  if (process.client) {
+    pageurl.value = window.location.href;
+  }
 });
 </script>
 <template>
@@ -113,10 +117,9 @@ onMounted(() => {
               <div
                 v-if="!authStore.userData.is_paid_subscription"
                 class="downloadBtn bg-white p-[10px] absolute z-10 bottom-0 right-[-1px]"
-                @click="downloadImage(img.source, update.description)"
+                @click="downloadImage(img.source, update.name)"
               >
-                <i v-if="!isDownloadingImage" class="pi pi-download text-2xl"></i>
-                <i v-else class="pi pi-spinner text-2xl"></i>
+                <i class="pi pi-download text-2xl"></i>
               </div>
             </div>
           </slide>
@@ -172,22 +175,21 @@ onMounted(() => {
           :class="`overlay transition-all ${socIconsVisible}`"
           @click="closeSocDiv"
         ></div>
-        <div
-          class="wrapIcons flex justify-center gap-2 bg-white p-4 relative z-10 min-h-[105px]"
-        >
-          <NuxtLink :to="`/newproducts/${update.name}`" class="hover:text-blue-100">
-            <i class="pi primeIcons pi-instagram text-3xl p-2 rounded-full"></i>
-          </NuxtLink>
-          <NuxtLink :to="`/newproducts/${update.name}`" class="hover:text-blue-100">
-            <i class="pi primeIcons pi-facebook text-3xl p-2 rounded-full"></i>
-          </NuxtLink>
-          <NuxtLink :to="`/newproducts/${update.name}`" class="hover:text-blue-100">
-            <i class="pi primeIcons pi-whatsapp text-3xl p-2 rounded-full"></i>
-          </NuxtLink>
-          <NuxtLink :to="`/newproducts/${update.name}`" class="hover:text-blue-100">
-            <i class="pi primeIcons pi-youtube text-3xl p-2 rounded-full"></i>
-          </NuxtLink>
-        </div>
+
+        <ClientOnly>
+          <div
+            class="wrapIcons flex justify-center gap-2 bg-white p-4 relative z-10 min-h-[105px]"
+          >
+            <SocialShare
+              v-for="network in ['facebook', 'twitter', 'whatsapp']"
+              :key="network"
+              :url="pageurl"
+              :network="network"
+            >
+              <template #label>{{ network }}</template>
+            </SocialShare>
+          </div>
+        </ClientOnly>
       </div>
     </div>
     <div v-else class="min-h-[65vh] flex justify-center items-center">
@@ -202,6 +204,10 @@ onMounted(() => {
   max-width: 576px;
   margin: 0 auto;
   margin-bottom: 15px;
+
+  .social-share-button__label {
+    display: none;
+  }
 
   .downloadBtn {
     border-radius: 23px 0 0 0;
