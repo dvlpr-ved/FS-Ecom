@@ -5,6 +5,8 @@ const props = defineProps<{
 }>();
 
 const useGetAddressStore = useAddressStore();
+const stateStore = useGetStateStore();
+const allStates = ref([]);
 
 const formData = ref({
   name: "",
@@ -14,7 +16,8 @@ const formData = ref({
   locality: "",
   address: "",
   city: "",
-  states: ["Rajasthan", "Delhi", "MP", "UP"],
+  // states: ["Rajasthan", "Delhi", "MP", "UP"],
+  states: allStates,
   selectedState: "",
   landmark: "",
 });
@@ -112,6 +115,11 @@ const saveChanges = async () => {
     console.error("Unexpected error:", error);
   }
 };
+
+onMounted(async () => {
+  await stateStore.fetchAllStates();
+  allStates.value = stateStore.stateList;
+});
 </script>
 
 <template>

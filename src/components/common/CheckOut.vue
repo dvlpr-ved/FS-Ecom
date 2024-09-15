@@ -209,7 +209,10 @@
             </div>
           </div>
 
-          <div class="shippingForm bg-white">
+          <div
+            v-if="authStore.userData.is_paid_subscription"
+            class="shippingForm bg-white"
+          >
             <template v-if="isLoading">
               <div class="py-12 shimmer"></div>
             </template>
@@ -305,6 +308,9 @@ const subtotal = ref(0);
 const shipping = ref(0);
 const total = ref(0);
 const selectedAddress = ref(null);
+const authStore = useAuthStore();
+const stateStore = useGetStateStore();
+const allStates = ref([]);
 
 const toast = useToast();
 const show = (message) => {
@@ -336,7 +342,8 @@ const formData = ref({
   locality: "",
   address: "",
   city: "",
-  states: ["Rajasthan", "Delhi", "MP", "UP"],
+  // states: ["Rajasthan", "Delhi", "MP", "UP"],
+  states: allStates,
   selectedState: "",
   landmark: "",
 });
@@ -399,13 +406,19 @@ const validateForm = () => {
     errors.value.landmark = "landmark is required.";
     isValid = false;
   }
-  if (!reSellerData.value.name.trim()) {
-    errors.value.resellerName = "Name is required.";
-    isValid = false;
+
+  function valResellerData(params: type) {
+    if (!reSellerData.value.name.trim()) {
+      errors.value.resellerName = "Name is required.";
+      isValid = false;
+    }
+    if (!/^\d{10}$/.test(reSellerData.value.phone)) {
+      errors.value.resellerPhone = "Phone Number must be 10 digits.";
+      isValid = false;
+    }
   }
-  if (!/^\d{10}$/.test(reSellerData.value.phone)) {
-    errors.value.resellerPhone = "Phone Number must be 10 digits.";
-    isValid = false;
+  if (authStore.userData.is_paid_subscription) {
+    valResellerData();
   }
   return isValid;
 };
@@ -418,13 +431,15 @@ const removeProduct = (productId) => {
 
 const updateTotalPrice = (product) => {
   const quantity = quantities.value[product.id];
-  product.totalPrice = getPrice(product.price , product.price_subscribed) * quantity;
+  product.totalPrice = getPrice(product.price, product.price_subscribed) * quantity;
   updateSubtotal();
 };
 
 const updateSubtotal = () => {
   subtotal.value = items.value.reduce((acc, item) => {
-    return acc + getPrice(item.price , item.price_subscribed) * (quantities.value[item.id] || 0);
+    return (
+      acc + getPrice(item.price, item.price_subscribed) * (quantities.value[item.id] || 0)
+    );
   }, 0);
   total.value = subtotal.value + shipping.value;
 };
@@ -438,7 +453,7 @@ const getCheckoutProduct = async () => {
     items.value = res.data;
     items.value.forEach((item) => {
       quantities.value[item.id] = item.quantity;
-      item.totalPrice = getPrice(item.price , item.price_subscribed) * item.quantity;
+      item.totalPrice = getPrice(item.price, item.price_subscribed) * item.quantity;
     });
     updateSubtotal();
     notItems.value = false;
@@ -448,6 +463,8 @@ const getCheckoutProduct = async () => {
 onMounted(async () => {
   await getCheckoutProduct();
   useGetAddressStore.fetchUserAddress();
+  await stateStore.fetchAllStates();
+  allStates.value = stateStore.stateList;
 });
 const order_id = ref("");
 const disabled = ref(false);
@@ -464,8 +481,6 @@ const processPayment = async () => {
   if (!validateForm()) {
     return;
   }
-
-  console.log('here ===================', reSellerData.value.name, reSellerData.value.phone);
 
   processing.value = true;
   const config = useRuntimeConfig();
@@ -498,13 +513,13 @@ const processPayment = async () => {
         redirectTarget: "_modal",
         components: {
           order: {
-            upi: true,        
-            card: true,       
-            netbanking: true, 
-            wallet: false,    
-            paylater: false,  
-          }
-        }
+            upi: true,
+            card: true,
+            netbanking: true,
+            wallet: false,
+            paylater: false,
+          },
+        },
       };
       const result = await cashfree.checkout(checkoutOptions);
       if (result.error) {
@@ -533,7 +548,7 @@ const processPayment = async () => {
     // alert("Failed to initiate checkout");
   }
 };
-const processCOD =async () => {
+const processCOD = async () => {
   if (!validateForm()) {
     return;
   }
@@ -565,8 +580,8 @@ const processCOD =async () => {
   } else {
     show("Failed to initiate checkout");
     // alert("Failed to initiate checkout");
-  }  
-}
+  }
+};
 const getPaymentData = async () => {
   disabled.value = true;
   const config = useRuntimeConfig();

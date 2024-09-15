@@ -68,8 +68,9 @@ watch(route, checkRoute, { immediate: true });
               <li class="footerLi">
                 <div class="title font-bold text-2xl capitalize mb-2">Our Servies</div>
                 <NuxtLink to="/subscriptionplans">Subscription Plans</NuxtLink>
-                <NuxtLink to="#">Our Servies</NuxtLink>
-                <NuxtLink to="#">Advertise</NuxtLink>
+                <NuxtLink to="/seller">Become seller</NuxtLink>
+                <!-- <NuxtLink to="#">Our Servies</NuxtLink> -->
+                <!-- <NuxtLink to="#">Advertise</NuxtLink> -->
               </li>
             </ul>
           </li>
