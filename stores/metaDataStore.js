@@ -21,7 +21,7 @@ export const useMetadataStore = defineStore('metadata', {
         getPageMeta(url) {
             switch (url) {
                 case '/':
-                case 'about':
+                case '/about':
                 case '/contactus':
                 case '/privacypolicy':
                     return this.metaData[url] || {}

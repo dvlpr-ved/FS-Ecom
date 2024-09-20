@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { ref, onMounted, watch, watchEffect } from 'vue';
+
 const route = useRoute();
 const metadataStore = useMetadataStore();
 const pageMeta = ref({ title: "", description: "", meta_tags: [] });
@@ -7,14 +9,33 @@ onMounted(async () => {
   await metadataStore.fetchMetaData();
   pageMeta.value = metadataStore.getPageMeta(route.path);
 });
-console.log("metaTitle", pageMeta);
 
-useSeoMeta({
-  title: pageMeta.title,
-  description: pageMeta.description || "Online Shopping Site for Reselling Products",
-  // keywords: pageMeta.meta_tags || "Online Shopping Site for Reselling Products",
+watch(
+  () => route.path,
+  async () => {
+    await metadataStore.fetchMetaData();
+    pageMeta.value = metadataStore.getPageMeta(route.path);
+  },
+  { immediate: true } 
+);
+
+watchEffect(() => {
+  useHead({
+    title: pageMeta.value.title || 'Default Title',
+    meta: [
+      {
+        name: 'description',
+        content: pageMeta.value.description || 'Online Shopping Site for Reselling Products',
+      },
+      {
+        name: 'keywords',
+        content: pageMeta.value.meta_tags?.join(', ') || 'Online Shopping Site for Reselling Products',
+      },
+    ],
+  });
 });
 </script>
+
 
 <template>
   <section class="staticPages afterBefore">
