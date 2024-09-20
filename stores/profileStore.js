@@ -16,7 +16,7 @@ export const useProfileStore = defineStore('useProfileStore', {
                     url: 'https://fashtsaly.com/API/public/api/updateUserProfile',
                     body,
                 });
-                if (!response.success) {
+                if (!response) {
                     this.error = 'Error Updating Profile'
                     throw new Error('Error Updating Profile');
                 }
