@@ -8,7 +8,7 @@ const toast = useToast();
 const show = (message, DieLife = 4000) => {
   toast.add({ severity: "success", detail: message, life: DieLife });
 };
-
+const allStates = ref([]);
 const formData = ref({
   name: "",
   email: "",
@@ -18,7 +18,7 @@ const formData = ref({
   pincode: "",
   locality: "",
   city: "",
-  state: ["Rajasthan", "Mp", "Up"],
+  state: "",
   selectedState: "",
   landmark: "",
 });
@@ -145,6 +145,12 @@ const handleSubmit = async (e) => {
     is_submitting.value = false;
   }
 };
+const stateStore = useGetStateStore();
+
+onMounted(async () => {
+  await stateStore.fetchAllStates();
+  allStates.value = stateStore.stateList;
+});
 </script>
 
 <template>
@@ -248,19 +254,14 @@ const handleSubmit = async (e) => {
             </div>
             <div class="inbox">
               <select
-                class="w-full py-2 px-3 text-xl border-b border-gray-300"
-                v-model="formData.selectedState"
-              >
-                <option value="" class="text-gray-700">Select State*</option>
-                <option
-                  v-for="seller_state in formData.state"
-                  :key="seller_state"
-                  :value="seller_state"
-                  class="text-gray-700"
-                >
-                  {{ seller_state }}
-                </option>
-              </select>
+              class="w-full py-3 px-3 text-[15px] border rounded text-gray-700 uppercase cursor-pointer border-gray-400"
+              v-model="formData.selectedState"
+            >
+              <option value="">Select State</option>
+              <option v-for="state in allStates" :key="state" :value="state">
+                {{ state }}
+              </option>
+            </select>
               <p v-if="errors.selectedState" class="pl-3 text-orange-600 text-sm">
                 {{ errors.selectedState }}
               </p>

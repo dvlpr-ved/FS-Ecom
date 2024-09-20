@@ -6,7 +6,6 @@ export function getPrice(price = 0 , price_subscribed = 0) {
 
         const authStore = useAuthStore();
         const user = authStore.getUser;   
-
         if(user){
             if(user.id){
                 const is_subscribed = user.is_subscribed_user;
@@ -23,6 +22,9 @@ export function getPrice(price = 0 , price_subscribed = 0) {
                 else{
                     return price;
                 }
+            }
+            else{
+                return price;
             }
         }
     }
@@ -56,6 +58,9 @@ export function getActualPrice(mrp_in = 0 , price_in = 0 , price_subscribed_in =
                     return mrp;
                 }
             }
+            else{
+                return mrp;
+            }
         }
     }      
 }
@@ -69,14 +74,12 @@ export function getPercentSaving(mrp = 0 , price = 0 , price_subscribed = 0){
         const user = authStore.getUser;
 
         if(user){
-            if(user.id){
                 const price_actual = getPrice(price , price_subscribed);
                 const price_fake = getActualPrice(mrp , price , price_subscribed);
 
                 const savings = price_fake - price_actual;
                 const savingsPercentage = (savings / price_fake) * 100;
                 return savingsPercentage.toFixed(2); 
-            }
         }
     }  
 }

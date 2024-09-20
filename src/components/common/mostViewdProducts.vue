@@ -87,8 +87,8 @@ onMounted(() => {
                 {{ cards.name || "Title" }}
               </p>
               <p class="cardtitle rmvPriceFromHome text-gray-700 text-2xl font-bold">
-                <span class="line-through text-2xl">₹700</span>
-                ₹ {{ cards.mrp || "Price" }}
+                <span class="line-through text-2xl">₹{{getActualPrice(cards.mrp , cards.price , cards.price_subscribed)}}</span>
+                ₹ {{ getPrice(cards.price , cards.price_subscribed) || "Price" }}
               </p>
 
               <!-- <span class="bgblue80 py-1 px-2 block w-fit capitalize mt-1 text-white"
