@@ -14,7 +14,7 @@ const formData = ref({
   lname: "",
   phone: "",
   email: authStore.getUser.email,
-  gender: authStore.userData.gender || "",
+  gender: authStore.getUser.gender || "",
   // gender: "m",
   image: null,
   image_name: null,
@@ -42,13 +42,13 @@ function toggleEdit() {
 }
 
 const saveChanges = async () => {
-  const genderValue = formData.value.gender === "male" ? "m" : "f";
+  // const genderValue = formData.value.gender === "male" ? "m" : "f";
   is_saving.value = true;
 
   try {
     const res = await editProfile.fetchEditProfile({
       name: formData.value.name,
-      gender: genderValue,
+      gender: formData.value.gender,
       phone: formData.value.phone,
       image: null,
       image_name: null,
@@ -57,10 +57,14 @@ const saveChanges = async () => {
       editing.value = false;
       is_saving.value = false;
       show("Profile Updated");
+      editing.value = false;
+      is_saving.value = false;
     }
-    editing.value = false;
-    is_saving.value = false;
-    show("we are facing Network issue Please Try Again");
+    else{
+      editing.value = false;
+      is_saving.value = false;
+      show("we are facing Network issue Please Try Again");
+    }
   } catch (error) {
     console.error("Failed to save changes:", error);
     show("we are facing Network issue Please Try Again");
@@ -104,7 +108,7 @@ const saveChanges = async () => {
             name="gender"
             class="h-[18px] w-[18px]"
             v-model="formData.gender"
-            value="male"
+            value="M"
             id="male"
             :disabled="!editing"
           />
@@ -117,7 +121,7 @@ const saveChanges = async () => {
             name="gender"
             class="h-[18px] w-[18px]"
             v-model="formData.gender"
-            value="female"
+            value="F"
             :disabled="!editing"
           />
           <label class="text-[15px] cursor-pointer" for="female">Female</label>
