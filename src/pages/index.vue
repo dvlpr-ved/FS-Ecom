@@ -1,12 +1,16 @@
 <script setup>
-useSeoMeta({
-  title: "Online Shopping Site for Reselling Products",
-  keywords:
-    "Online Shopping in India, online Shopping store, Online Shopping Site, Buy Online, Shop Online, Online.",
-  description: "Online Shopping Site for Reselling Products",
-});
+// useSeoMeta({
+//   title: "Online Shopping Site for Reselling Products",
+//   keywords:
+//     "Online Shopping in India, online Shopping store, Online Shopping Site, Buy Online, Shop Online, Online.",
+//   description: "Online Shopping Site for Reselling Products",
+// });
 
 import { fetchFromSanctum } from "../utils/sanctumApi.js";
+
+const route = useRoute();
+const metadataStore = useMetadataStore();
+const pageMeta = ref({ title: "", description: "", meta_tags: [] });
 
 const isLoading = ref(true);
 
@@ -29,12 +33,21 @@ const ApiGetWhishlistItems = useWishlistStore();
 const wishlistItems = computed(() => ApiGetWhishlistItems.getWishlist || []);
 onMounted(() => {
   getHomePageData();
-  if(localStorage.getItem("visitedProducts"))
-  {
+  if (localStorage.getItem("visitedProducts")) {
     recently_viewed.value = JSON.parse(localStorage.getItem("visitedProducts"));
   }
 });
 
+onMounted(async () => {
+  await metadataStore.fetchMetaData();
+  pageMeta.value = metadataStore.getPageMeta(route.path);
+});
+
+useSeoMeta({
+  title: pageMeta.title || "Online Shopping Site for Reselling Products",
+  // keywords: pageMeta.meta_tags.join(", ") || "Online Shopping Site for Reselling Products",
+  description: pageMeta.description || "Online Shopping Site for Reselling Products",
+});
 </script>
 
 <template>
@@ -66,26 +79,42 @@ onMounted(() => {
   <div v-for="block in blocks.length">
     <div v-if="block != 2">
       <AppBanner :data="blocks[block - 1]" v-if="blocks[block - 1].type == 'Banner'" />
-      <Highlights :data="blocks[block - 1]" :listing_id="blocks[block - 1].listing_id" v-else />
+      <Highlights
+        :data="blocks[block - 1]"
+        :listing_id="blocks[block - 1].listing_id"
+        v-else
+      />
     </div>
     <div v-else>
       <CateGories></CateGories>
       <AppBanner :data="blocks[block - 1]" v-if="blocks[block - 1].type == 'Banner'" />
-      <Highlights :data="blocks[block - 1]" :listing_id="blocks[block - 1].listing_id" v-else />
+      <Highlights
+        :data="blocks[block - 1]"
+        :listing_id="blocks[block - 1].listing_id"
+        v-else
+      />
     </div>
   </div>
   <div class="fixedSectiopn py-2 bg-gray-200">
-    <div class="deviderFixedSection container bg-gray-100 flex flex-wrap justify-between gap-y-4">
-      <div v-if="recently_viewed" class="wishlistedOnHome border border-gray-300 my-3 rounded p-2 lg:w-[49.6%] w-[100%]">
+    <div
+      class="deviderFixedSection container bg-gray-100 flex flex-wrap justify-between gap-y-4"
+    >
+      <div
+        v-if="recently_viewed"
+        class="wishlistedOnHome border border-gray-300 my-3 rounded p-2 lg:w-[49.6%] w-[100%]"
+      >
         <div class="flexHeading flex justify-between items-center mb-2">
           <h6 class="text-xl">Recently Viewed</h6>
           <!-- <NuxtLink to="#" class="block">
             <i class="pi pi-chevron-circle-right text-orange-500 text-3xl"></i>
           </NuxtLink> -->
         </div>
-    
+
         <div class="gridViews flex flex-wrap gap-y-2 lg:gap-x-3 gap-x-1">
-          <div v-for="recent_prod in recently_viewed" class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
+          <div
+            v-for="recent_prod in recently_viewed"
+            class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative"
+          >
             <NuxtLink :to="`/searchresult/${recent_prod.id}`">
               <div class="imgsdiv">
                 <img
@@ -107,8 +136,11 @@ onMounted(() => {
             </NuxtLink>
           </div>
         </div>
-      </div>      
-      <div v-if="wishlistItems.length > 0" class="recentViewd border border-gray-300 my-3 rounded p-2 lg:w-[49.6%] w-[100%]">
+      </div>
+      <div
+        v-if="wishlistItems.length > 0"
+        class="recentViewd border border-gray-300 my-3 rounded p-2 lg:w-[49.6%] w-[100%]"
+      >
         <div class="flexHeading flex justify-between items-center mb-2">
           <h6 class="text-xl">Wishlist</h6>
           <NuxtLink to="/wishlist" class="block">
@@ -116,7 +148,11 @@ onMounted(() => {
           </NuxtLink>
         </div>
         <div class="gridViews flex flex-wrap gap-y-2 lg:gap-x-3 gap-x-1">
-          <div v-for="product in wishlistItems" :key="product.id" class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative">
+          <div
+            v-for="product in wishlistItems"
+            :key="product.id"
+            class="commonCard border lg:w-[32%] w-[49%] tooltipGroup relative"
+          >
             <NuxtLink :to="`/searchresult/${product.id}`">
               <div class="imgsdiv">
                 <img
@@ -127,7 +163,7 @@ onMounted(() => {
                 />
               </div>
               <p class="ellipsisText lg:text-xl text-xl text-center pt-3 capitalize">
-                {{product.name}}
+                {{ product.name }}
                 <!-- {{ props.title.slice(0, 28) }} -->
               </p>
               <span
