@@ -24,9 +24,26 @@ export const useMetadataStore = defineStore('metadata', {
                 case '/about':
                 case '/contactus':
                 case '/privacypolicy':
+                case '/legalpolicy':
+                case '/shippingpolicy':
+                case '/myorder':
+                case '/payment':
+                case '/cancellation':
+                case '/faq':
+                case '/sitemap':
+                case '/subscriptionplans':
+                case '/seller':
+                case '/searchResult':
+                case '/mycart':
+                case '/wishlist':
+                case '/myaccounts':
                     return this.metaData[url] || {}
                 default:
-                    return { title: 'Default Title', description: 'Default description', meta_tags: [] }
+                    return {
+                        title: 'Online Shopping Site for Reselling Products',
+                        description: 'Online Shopping Site for Reselling Products',
+                        meta_tags: ['Online Shopping in India, online Shopping store, Online Shopping Site, Buy Online, Shop Online, Online']
+                    }
             }
         }
     }

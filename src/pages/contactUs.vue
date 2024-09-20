@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { ref } from "vue";
+const route = useRoute();
+const metadataStore = useMetadataStore();
+const pageMeta = ref({ title: "", description: "", meta_tags: [] });
 
 const formData = ref({
   name: "",
@@ -11,10 +13,35 @@ const formData = ref({
 const submitForm = () => {
   console.log(formData.value);
 };
-</script>
 
-<!-- use this page design -->
-<!-- https://www.ticketsfiesta.com/contactus -->
+watch(
+  () => route.path,
+  async () => {
+    await metadataStore.fetchMetaData();
+    pageMeta.value = metadataStore.getPageMeta(route.path);
+  },
+  { immediate: true }
+);
+
+watchEffect(() => {
+  useHead({
+    title: pageMeta.value.title || "Contact Us",
+    meta: [
+      {
+        name: "description",
+        content:
+          pageMeta.value.description || "Online Shopping Site for Reselling Products",
+      },
+      {
+        name: "keywords",
+        content:
+          pageMeta.value.meta_tags?.join(", ") ||
+          "Online Shopping in India, online Shopping store, Online Shopping Site, Buy Online, Shop Online, Online",
+      },
+    ],
+  });
+});
+</script>
 
 <template>
   <section class="staticPages contactpage afterBefore">

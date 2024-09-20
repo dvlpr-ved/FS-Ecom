@@ -1,14 +1,9 @@
 <script lang="ts" setup>
-import { ref, onMounted, watch, watchEffect } from 'vue';
+import { ref, onMounted, watch, watchEffect } from "vue";
 
 const route = useRoute();
 const metadataStore = useMetadataStore();
 const pageMeta = ref({ title: "", description: "", meta_tags: [] });
-
-onMounted(async () => {
-  await metadataStore.fetchMetaData();
-  pageMeta.value = metadataStore.getPageMeta(route.path);
-});
 
 watch(
   () => route.path,
@@ -16,26 +11,28 @@ watch(
     await metadataStore.fetchMetaData();
     pageMeta.value = metadataStore.getPageMeta(route.path);
   },
-  { immediate: true } 
+  { immediate: true }
 );
 
 watchEffect(() => {
   useHead({
-    title: pageMeta.value.title || 'Default Title',
+    title: pageMeta.value.title || "About Us",
     meta: [
       {
-        name: 'description',
-        content: pageMeta.value.description || 'Online Shopping Site for Reselling Products',
+        name: "description",
+        content:
+          pageMeta.value.description || "Online Shopping Site for Reselling Products",
       },
       {
-        name: 'keywords',
-        content: pageMeta.value.meta_tags?.join(', ') || 'Online Shopping Site for Reselling Products',
+        name: "keywords",
+        content:
+          pageMeta.value.meta_tags?.join(", ") ||
+          "Online Shopping in India, online Shopping store, Online Shopping Site, Buy Online, Shop Online, Online",
       },
     ],
   });
 });
 </script>
-
 
 <template>
   <section class="staticPages afterBefore">
@@ -44,10 +41,6 @@ watchEffect(() => {
         About Us
       </h2>
     </div>
-
-    {{ pageMeta.title }}
-    <br />
-    {{ pageMeta.description }}
 
     <div class="container lg:py-5 py-4">
       <!-- <div class="text-4xl font-bold mb-3 mt-2">How we are different from others?</div> -->

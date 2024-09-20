@@ -1,4 +1,36 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const route = useRoute();
+const metadataStore = useMetadataStore();
+const pageMeta = ref({ title: "", description: "", meta_tags: [] });
+
+watch(
+  () => route.path,
+  async () => {
+    await metadataStore.fetchMetaData();
+    pageMeta.value = metadataStore.getPageMeta(route.path);
+  },
+  { immediate: true }
+);
+
+watchEffect(() => {
+  useHead({
+    title: pageMeta.value.title || "Legal Policy",
+    meta: [
+      {
+        name: "description",
+        content:
+          pageMeta.value.description || "Online Shopping Site for Reselling Products",
+      },
+      {
+        name: "keywords",
+        content:
+          pageMeta.value.meta_tags?.join(", ") ||
+          "Online Shopping in India, online Shopping store, Online Shopping Site, Buy Online, Shop Online, Online",
+      },
+    ],
+  });
+});
+</script>
 
 <template>
   <section class="staticPages afterBefore">
@@ -9,9 +41,7 @@
     </div> -->
     <div class="container lg:py-5 py-4">
       <div class="wrapContent">
-      <h1 class="text-5xl font-semibold text-center pagesHeading">
-        Legal & Policies
-      </h1>
+        <h1 class="text-5xl font-semibold text-center pagesHeading">Legal & Policies</h1>
         <div class="text-4xl font-bold my-4">Shipping Policy</div>
         <div class="leading-7">
           <p class="lg:text-justify lg:text-[16px] mb-4">

@@ -2,6 +2,10 @@
 import { load } from "@cashfreepayments/cashfree-js";
 import { useToast } from "primevue/usetoast";
 
+const route = useRoute();
+const metadataStore = useMetadataStore();
+const pageMeta = ref({ title: "", description: "", meta_tags: [] });
+
 const plansData = ref([]);
 const message = ref("");
 const isLoading = ref(true);
@@ -65,7 +69,6 @@ onMounted(() => {
   getPlanData();
   formData.value.customerName = authStore.getUser.name;
 });
-
 
 const ChoosePlan = (plan_name, order_id) => {
   if (!authStore.isUserLoggedin) {
@@ -138,9 +141,6 @@ const proceedPayment = async (planid) => {
     show("No plan selected.");
     return;
   }
-
-  console.log(formData);
-  
 
   disabled.value = true;
   const config = useRuntimeConfig();
@@ -228,6 +228,34 @@ const getPaymentData = async () => {
     alert(data.msg);
   }
 };
+
+watch(
+  () => route.path,
+  async () => {
+    await metadataStore.fetchMetaData();
+    pageMeta.value = metadataStore.getPageMeta(route.path);
+  },
+  { immediate: true }
+);
+
+watchEffect(() => {
+  useHead({
+    title: pageMeta.value.title || "Online Shopping Site for Reselling Products",
+    meta: [
+      {
+        name: "description",
+        content:
+          pageMeta.value.description || "Online Shopping Site for Reselling Products",
+      },
+      {
+        name: "keywords",
+        content:
+          pageMeta.value.meta_tags?.join(", ") ||
+          "Online Shopping in India, online Shopping store, Online Shopping Site, Buy Online, Shop Online, Online",
+      },
+    ],
+  });
+});
 </script>
 
 <template>

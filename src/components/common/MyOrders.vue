@@ -1,28 +1,32 @@
 <script setup>
 import { ref, onMounted } from "vue";
 
-const orders = ref([
-  {
-    id: 1,
-    date: "2024-06-30",
-    total: 150.0,
-    product: {
-      image: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_05.jpg",
-    },
-    rating: 0,
-    review: null,
-  },
-  {
-    id: 2,
-    date: "2024-06-28",
-    total: 210.0,
-    product: {
-      image: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_05.jpg",
-    },
-    rating: 0,
-    review: null,
-  },
-]);
+// const orders = ref([
+//   {
+//     id: 1,
+//     date: "2024-06-30",
+//     total: 150.0,
+//     product: {
+//       image: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_05.jpg",
+//     },
+//     rating: 0,
+//     review: null,
+//   },
+//   {
+//     id: 2,
+//     date: "2024-06-28",
+//     total: 210.0,
+//     product: {
+//       image: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_05.jpg",
+//     },
+//     rating: 0,
+//     review: null,
+//   },
+// ]);
+
+const route = useRoute();
+const metadataStore = useMetadataStore();
+const pageMeta = ref({ title: "", description: "", meta_tags: [] });
 
 const isLoading = ref(true);
 const activeOrderId = ref(null);
@@ -42,19 +46,18 @@ const setRating = (orderIndex, productId, rating) => {
   }
 };
 
-const submitReview =async (order_detail) => {
+const submitReview = async (order_detail) => {
   const submit = await fetchFromSanctum({
-    url : 'https://fashtsaly.com/API/public/api/submitReview',
-    method : 'POST',
-    body : { 
-      details : order_detail
-    }
+    url: "https://fashtsaly.com/API/public/api/submitReview",
+    method: "POST",
+    body: {
+      details: order_detail,
+    },
   });
-  if(submit.success){
-    alert('Review submitted successfully');
-  }
-  else{
-    alert('Failed to submit');
+  if (submit.success) {
+    alert("Review submitted successfully");
+  } else {
+    alert("Failed to submit");
   }
   activeOrderId.value = null;
 };
@@ -62,8 +65,8 @@ const submitReview =async (order_detail) => {
 const order_data = ref([]);
 const getData = async () => {
   const data = await fetchFromSanctum({
-    url: 'https://fashtsaly.com/API/public/api/getOrders',
-    method: 'GET'
+    url: "https://fashtsaly.com/API/public/api/getOrders",
+    method: "GET",
   });
   if (data.success) {
     isLoading.value = false;
@@ -76,8 +79,35 @@ const getData = async () => {
 onMounted(() => {
   getData();
 });
-</script>
 
+watch(
+  () => route.path,
+  async () => {
+    await metadataStore.fetchMetaData();
+    pageMeta.value = metadataStore.getPageMeta(route.path);
+  },
+  { immediate: true }
+);
+
+watchEffect(() => {
+  useHead({
+    title: pageMeta.value.title || "Online Shopping Site for Reselling Products",
+    meta: [
+      {
+        name: "description",
+        content:
+          pageMeta.value.description || "Online Shopping Site for Reselling Products",
+      },
+      {
+        name: "keywords",
+        content:
+          pageMeta.value.meta_tags?.join(", ") ||
+          "Online Shopping in India, online Shopping store, Online Shopping Site, Buy Online, Shop Online, Online",
+      },
+    ],
+  });
+});
+</script>
 
 <template>
   <div class="myordersmain py-5 bg-gray-100">
@@ -90,9 +120,15 @@ onMounted(() => {
           <div v-for="n in 3" :key="n" class="flex justify-between">
             <div class="p-9 w-[20%] animate-pulse rounded bg-gray-200"></div>
             <div class="w-[78%]">
-              <span class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"></span>
-              <span class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"></span>
-              <span class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"></span>
+              <span
+                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
+              ></span>
+              <span
+                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
+              ></span>
+              <span
+                class="p-3 block mb-1 w-full animate-pulse rounded bg-gray-200"
+              ></span>
             </div>
           </div>
         </div>
@@ -134,7 +170,7 @@ onMounted(() => {
             class="rate-review px-4 py-3 border-t border-gray-400"
           >
             <div class="starRate">
-              <p class="text-black text-xl mb-2"> {{ product.name }}</p>
+              <p class="text-black text-xl mb-2">{{ product.name }}</p>
               <div class="starsdiv flex gap-3">
                 <span
                   v-for="num in 5"
@@ -173,7 +209,6 @@ onMounted(() => {
     </div>
   </div>
 </template>
-
 
 <style scoped>
 .myorder_inner {

@@ -1,11 +1,4 @@
 <script setup>
-// useSeoMeta({
-//   title: "Online Shopping Site for Reselling Products",
-//   keywords:
-//     "Online Shopping in India, online Shopping store, Online Shopping Site, Buy Online, Shop Online, Online.",
-//   description: "Online Shopping Site for Reselling Products",
-// });
-
 import { fetchFromSanctum } from "../utils/sanctumApi.js";
 
 const route = useRoute();
@@ -38,15 +31,32 @@ onMounted(() => {
   }
 });
 
-onMounted(async () => {
-  await metadataStore.fetchMetaData();
-  pageMeta.value = metadataStore.getPageMeta(route.path);
-});
+watch(
+  () => route.path,
+  async () => {
+    await metadataStore.fetchMetaData();
+    pageMeta.value = metadataStore.getPageMeta(route.path);
+  },
+  { immediate: true }
+);
 
-useSeoMeta({
-  title: pageMeta.title || "Online Shopping Site for Reselling Products",
-  // keywords: pageMeta.meta_tags.join(", ") || "Online Shopping Site for Reselling Products",
-  description: pageMeta.description || "Online Shopping Site for Reselling Products",
+watchEffect(() => {
+  useHead({
+    title: pageMeta.value.title || "Online Shopping Site for Reselling Products",
+    meta: [
+      {
+        name: "description",
+        content:
+          pageMeta.value.description || "Online Shopping Site for Reselling Products",
+      },
+      {
+        name: "keywords",
+        content:
+          pageMeta.value.meta_tags?.join(", ") ||
+          "Online Shopping in India, online Shopping store, Online Shopping Site, Buy Online, Shop Online, Online",
+      },
+    ],
+  });
 });
 </script>
 
