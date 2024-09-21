@@ -12,9 +12,9 @@ const show = (message) => {
 const formData = ref({
   name: authStore.getUser.name,
   lname: "",
-  phone: "",
+  phone: authStore.getUser.phone,
   email: authStore.getUser.email,
-  gender: authStore.getUser.gender || "",
+  gender: authStore.getUser.gender,
   // gender: "m",
   image: null,
   image_name: null,
@@ -32,9 +32,9 @@ function toggleEdit() {
       name: authStore.getUser.name,
       lname: "",
       email: authStore.getUser.email,
-      gender: authStore.userData.gender || "",
+      gender: authStore.userData.gender,
       // gender: "m",
-      phone: "",
+      phone: authStore.getUser.phone,
       image: "",
       image_name: "",
     };
@@ -56,11 +56,10 @@ const saveChanges = async () => {
     if (res) {
       editing.value = false;
       is_saving.value = false;
-      show("Profile Updated");
+      show("Profile Updated successfully");
       editing.value = false;
       is_saving.value = false;
-    }
-    else{
+    } else {
       editing.value = false;
       is_saving.value = false;
       show("we are facing Network issue Please Try Again");

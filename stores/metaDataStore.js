@@ -2,11 +2,13 @@ import { defineStore } from 'pinia'
 
 export const useMetadataStore = defineStore('metadata', {
     state: () => ({
-        metaData: {}
+        metaData: {},
+        isFetched: false
     }),
 
     actions: {
         async fetchMetaData() {
+            if (this.isFetched) return;
             const response = await fetch('https://fashtsaly.com/API/public/api/getMetaTags')
             const data = await response.json()
             data.forEach(item => {
@@ -16,6 +18,7 @@ export const useMetadataStore = defineStore('metadata', {
                     meta_tags: item.meta_tags
                 }
             })
+            this.isFetched = true;
         },
 
         getPageMeta(url) {
