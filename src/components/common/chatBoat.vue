@@ -30,14 +30,13 @@ const getChatAnswer = async (page: number = 1) => {
 
     if (response && response.success) {
       totalPages.value = response.data.last_page;
-      // messages.value = [...messages.value, ...response.data.data];
-      messages.value = response.data.data.reverse();
-      // console.log("que and ans:", response.data.data);
+      // console.log(response.data.data);
+      messages.value = [...response.data.data.reverse(), ...messages.value];
     } else {
-      console.error("API responded with a non-ok status:", response);
+      alert('Failed to load chat');
     }
   } catch (error) {
-    console.error("Error fetching chat answers:", error);
+    alert('Failed to load chat');
   }
 };
 
@@ -56,8 +55,11 @@ const submitForm = async (e: Event) => {
       method: "POST",
       body: { ques: question.value },
     });
+
     question.value = "";
-    await getChatAnswer();
+    currentPage.value = 1;
+    messages.value = []; 
+    await getChatAnswer(); 
   } catch (error) {
     show("We're facing some network issues, please try again later.");
   } finally {
@@ -65,17 +67,17 @@ const submitForm = async (e: Event) => {
   }
 };
 
-const handleScroll = () => {
-
-  
+const handleScroll = async () => {
   const messagesBox = document.querySelector(".messagesbox");
-  if (messagesBox.scrollTop + messagesBox.clientHeight >= messagesBox.scrollHeight) {
-    if (currentPage.value < totalPages.value) {
-      currentPage.value++;
-      getChatAnswer(currentPage.value);
-    }
+
+  if (messagesBox && messagesBox.scrollTop === 0 && currentPage.value < totalPages.value) {
+    const previousHeight = messagesBox.scrollHeight;  
+    currentPage.value++;
+    await getChatAnswer(currentPage.value);
+    messagesBox.scrollTop = messagesBox.scrollHeight - previousHeight;
   }
 };
+
 
 // console.log("unreadMsgs", unreadMsgs);
 
