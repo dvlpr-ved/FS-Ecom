@@ -220,12 +220,12 @@ async function downloadImage(url, Product_desc) {
           class="detailGallery lg:w-[48%] w-[100%] relative lg:pt-5 pt-2 lg:pr-4 lg:sticky h-fit top-0"
         >
           <ProductZoomImages :data="imageShown ? imageShown : ''" />
-          <div class="flex overflow-x-auto lg:w-[42%] w-[100%]">
+          <div class="flex justify-center overflow-x-auto  mt-2 w-[100%] gap-2">
             <div v-for="(image, index) in sku.image" :key="index">
               <img
                 @click="imageShown = image.source"
                 :src="image.source"
-                class="lg:h-[90px] h-[70px] cursor-pointer"
+                class="lg:h-[70px] h-[60px] cursor-pointer"
               />
               <button
                 v-if="authStore.userData.is_subscribed_user"
@@ -394,10 +394,10 @@ async function downloadImage(url, Product_desc) {
               <i class="pi pi-tag lg:text-3xl text-2xl"></i>
               Buy Now
             </button>
-            <button v-else class="lg:w-[38%] w-[100%]">
+            <button v-else class="lg:w-[38%] w-[48%]">
               <NuxtLink
                 :to="`https://api.whatsapp.com/send?phone=+910123456789&text=Hello, I want to buy ${product.name}. My name is`"
-                class="Booknowbtn lg:py-3 py-[10px] bg-green-600 text-white capitalize rounded text-2xl text-center flex items-center gap-2 justify-center"
+                class="Booknowbtn lg:py-3 py-[10px] bg-green-600 text-white capitalize rounded text-xl text-center flex items-center gap-2 justify-center"
                 target="_blank"
                 ><i class="pi pi-whatsapp lg:text-3xl text-2xl"></i>Inquire Now</NuxtLink
               >

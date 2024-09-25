@@ -26,6 +26,7 @@ const route = useRoute();
 
 // Modal visibility
 const visible = ref(false);
+const chatBoatVisible = ref(false);
 
 // Function to check route and redirect if the user is not logged in
 const checkRoute = () => {
@@ -82,6 +83,14 @@ const closeAutoomplete = () => {
 const closeModal = () => {
   visible.value = false;
 };
+
+const closeBoat = () => {
+  chatBoatVisible.value = false;
+};
+const OpenBoat = () => {
+  chatBoatVisible.value = !chatBoatVisible.value;
+};
+
 const toogleModal = () => {
   if (!authStore.isUserLoggedin) {
     visible.value = true;
@@ -95,7 +104,6 @@ onMounted(() => {
 
 <template>
   <OfferLine />
-
   <!-- Header -->
   <header class="AppHeader border-bottom">
     <!-- Desktop Header -->
@@ -179,12 +187,22 @@ onMounted(() => {
 
       <ul class="navList flex items-center justify-center space-x-4">
         <li class="icons text-center cart">
-          <NuxtLink
-            to="../wishlist"
-            class="border border-gray-300 rounded-[100%] flex items-center justify-center"
-          >
-            <img src="~assets/images/common/messenger.png" />
-          </NuxtLink>
+          <template v-if="!authStore.getUser.name">
+            <NuxtLink
+              class="border border-gray-300 rounded-[100%] flex items-center justify-center"
+              @click="toogleModal"
+            >
+              <img class="w-6" src="~assets/images/common/messenger.png" />
+            </NuxtLink>
+          </template>
+          <template v-else>
+            <NuxtLink
+              class="border border-gray-300 rounded-[100%] flex items-center justify-center"
+              @click="OpenBoat"
+            >
+              <img class="w-6" src="~assets/images/common/messenger.png" />
+            </NuxtLink>
+          </template>
         </li>
         <li class="icons relative cart">
           <NuxtLink
@@ -205,6 +223,7 @@ onMounted(() => {
 
   <!-- Modal for Login/Signup -->
   <LoginModal :visible="visible" @closemodal="closeModal" :close="closeModal" />
+  <chatBoat :chatBoatVisible="chatBoatVisible" @closeBoat="closeBoat" />
 </template>
 
 <style lang="scss" scoped>

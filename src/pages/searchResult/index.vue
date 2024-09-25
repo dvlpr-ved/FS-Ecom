@@ -2,27 +2,29 @@
 import { ref, onMounted, watch } from "vue";
 import { useRoute, useRuntimeConfig } from "nuxt/app";
 
+// const route = useRoute();
+const metadataStore = useMetadataStore();
+const pageMeta = ref({ title: "", description: "", meta_tags: [] });
+
 const products = ref([]);
 const allProducts = ref([]);
 const loading = ref(true);
 const isMobileNavVisible = ref("");
 const route = useRoute();
 const selectedCategories = ref(["allCategories"]);
-const selectedSort = ref(""); 
+const selectedSort = ref("");
 
-const suffix = ref('');
+const suffix = ref("");
 const categoryFilter = ref([]);
 const getDataFunc = async () => {
   try {
     const config = useRuntimeConfig();
     const query = route.query;
-    if(query.category){
-        suffix.value = `api/fetchSearchItems?category=${query.category}`;
-    }
-    else if(query.listing_id){
+    if (query.category) {
+      suffix.value = `api/fetchSearchItems?category=${query.category}`;
+    } else if (query.listing_id) {
       suffix.value = `api/fetchSearchItems?listing=${query.listing_id}`;
-    }
-    else{
+    } else {
       suffix.value = `api/fetchSearchItems?product=${query.product}`;
     }
 
@@ -119,6 +121,34 @@ watch(
 onMounted(async () => {
   getDataFunc();
 });
+
+watch(
+  () => route.path,
+  async () => {
+    await metadataStore.fetchMetaData();
+    pageMeta.value = metadataStore.getPageMeta(route.path);
+  },
+  { immediate: true }
+);
+
+watchEffect(() => {
+  useHead({
+    title: pageMeta.value.title || "Online Shopping Site for Reselling Products",
+    meta: [
+      {
+        name: "description",
+        content:
+          pageMeta.value.description || "Online Shopping Site for Reselling Products",
+      },
+      {
+        name: "keywords",
+        content:
+          pageMeta.value.meta_tags?.join(", ") ||
+          "Online Shopping in India, online Shopping store, Online Shopping Site, Buy Online, Shop Online, Online",
+      },
+    ],
+  });
+});
 </script>
 
 <template>
@@ -154,17 +184,17 @@ onMounted(async () => {
           <div v-for="c in categoryFilter" class="checkbox mb-3" :key="c.id">
             <input
               class="styled-checkbox"
-              :id="'category_checkbox'+c.id"
+              :id="'category_checkbox' + c.id"
               type="checkbox"
               name="checkboxcategory"
-              :value="'category'+c.id"
+              :value="'category' + c.id"
               :checked="selectedCategories.includes(c.id.toString())"
               @change="(event) => handleCategoryChange(event, c.id)"
             />
-            <label :for="'category_checkbox'+c.id" class="text-xl title capitalize"
-              >{{ c.name }}</label
-            >
-          </div>          
+            <label :for="'category_checkbox' + c.id" class="text-xl title capitalize">{{
+              c.name
+            }}</label>
+          </div>
           <div class="checkbox mb-3">
             <input
               class="styled-checkbox"
@@ -232,7 +262,6 @@ onMounted(async () => {
     </div>
   </div>
 </template>
-
 
 <style scoped>
 .p-paginator .p-paginator-current {

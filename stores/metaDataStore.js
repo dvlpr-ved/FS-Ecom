@@ -2,11 +2,13 @@ import { defineStore } from 'pinia'
 
 export const useMetadataStore = defineStore('metadata', {
     state: () => ({
-        metaData: {}
+        metaData: {},
+        isFetched: false
     }),
 
     actions: {
         async fetchMetaData() {
+            if (this.isFetched) return;
             const response = await fetch('https://fashtsaly.com/API/public/api/getMetaTags')
             const data = await response.json()
             data.forEach(item => {
@@ -16,6 +18,7 @@ export const useMetadataStore = defineStore('metadata', {
                     meta_tags: item.meta_tags
                 }
             })
+            this.isFetched = true;
         },
 
         getPageMeta(url) {
@@ -24,9 +27,26 @@ export const useMetadataStore = defineStore('metadata', {
                 case '/about':
                 case '/contactus':
                 case '/privacypolicy':
+                case '/legalpolicy':
+                case '/shippingpolicy':
+                case '/myorder':
+                case '/payment':
+                case '/cancellation':
+                case '/faq':
+                case '/sitemap':
+                case '/subscriptionplans':
+                case '/seller':
+                case '/searchResult':
+                case '/mycart':
+                case '/wishlist':
+                case '/myaccounts':
                     return this.metaData[url] || {}
                 default:
-                    return { title: 'Default Title', description: 'Default description', meta_tags: [] }
+                    return {
+                        title: 'Online Shopping Site for Reselling Products',
+                        description: 'Online Shopping Site for Reselling Products',
+                        meta_tags: ['Online Shopping in India, online Shopping store, Online Shopping Site, Buy Online, Shop Online, Online']
+                    }
             }
         }
     }
