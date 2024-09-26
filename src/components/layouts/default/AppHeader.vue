@@ -119,6 +119,15 @@ onMounted(() => {
           v-model="searchQuery"
           @blur="handleBlur"
         />
+        <div
+          v-if="
+            authStore.userData.is_paid_subscription ||
+            authStore.userData.is_subscribed_user
+          "
+          class="UploadImageFromGallery w-[50px] absolute right-1 top-[6px] flex justify-center"
+        >
+          <searchByImage />
+        </div>
         <SearchAutoComplete
           @close="closeAutoomplete"
           v-if="showAutoComplete"

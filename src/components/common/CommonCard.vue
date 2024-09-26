@@ -8,9 +8,9 @@ const props = defineProps<{
   mrp?: number;
   description?: string;
 }>();
-console.log(props);
 import { useToast } from "primevue/usetoast";
 
+const authStore = useAuthStore();
 const visible = ref(false);
 const wishlistStore = useWishlistStore();
 const fetchWishlistData = async () => {
@@ -37,9 +37,12 @@ const closeModal = () => {
 };
 
 const addToCart = async (product_id: number) => {
+  if (!authStore.isUserLoggedin) {
+    visible.value = true;
+  }
   if (props.id === undefined) {
     message.value = "Product ID is undefined";
-    alert(message.value);
+    show(message.value);
     return;
   }
 
@@ -112,12 +115,15 @@ onMounted(async () => {
         </p>
         <p class="cardtitle rmvPriceFromHome text-gray-700 text-2xl font-bold">
           <!-- <span class="line-through" v-if="props.price && props.price < 700">₹700</span> -->
-          ₹ {{ getPrice(props.price  , props.price_subscribed) || "Price" }}
-          <span class="line-through text-2xl">₹{{ getActualPrice(props.mrp , props.price , props.price_subscribed) }}</span>
+          ₹ {{ getPrice(props.price, props.price_subscribed) || "Price" }}
+          <span class="line-through text-2xl"
+            >₹{{ getActualPrice(props.mrp, props.price, props.price_subscribed) }}</span
+          >
         </p>
 
         <span class="bgblue80 py-1 px-2 block w-fit capitalize mt-1 text-white"
-          >save {{ getPercentSaving(props.mrp , props.price , props.price_subscribed)}}%</span
+          >save
+          {{ getPercentSaving(props.mrp, props.price, props.price_subscribed) }}%</span
         >
 
         <!-- <p class="card_desc" v-if="props.description">

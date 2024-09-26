@@ -3,6 +3,7 @@ const props = defineProps<{
   isSearchForMb: boolean;
   closeBtn: () => void;
 }>();
+const authStore = useAuthStore();
 const handleChange = () => {};
 const emit = defineEmits(["close"]);
 const config = useRuntimeConfig();
@@ -50,14 +51,22 @@ const closeModal = () => {
     :isSearchForMb="isSearchForMb"
     class="SearchFieldMobile fixed bg-gray-100 top-0 left-0 right-0 bottom-0 h-[100%] w-full z-[12]"
   >
-    <div class="flexdiv flex items-center bg-gray-100">
+    <div class="flexdiv flex items-center bg-gray-100 relative">
       <input
         class="py-2 px-3 w-full border border-gray-300 rounded text-xl bg-gray-100"
         placeholder="Search Here..."
         v-model="searchQuery"
         @blur="handleBlur"
       />
-      <button class="cancelBtn text-blue-700 px-2 text-xl" @click="closeBtn">
+      <div
+        v-if="
+          authStore.userData.is_paid_subscription || authStore.userData.is_subscribed_user
+        "
+        class="UploadImageFromGallery w-[50px] absolute right-1 top-[6px] flex justify-center"
+      >
+        <searchByImage />
+      </div>
+      <button class="cancelBtn text-blue-700 px-2 text-xl hidden" @click="closeBtn">
         close
       </button>
     </div>
@@ -82,6 +91,11 @@ const closeModal = () => {
     }
     .heading {
       display: none;
+    }
+  }
+  .UploadImageFromGallery {
+    .pi-camera {
+      font-size: 25px !important;
     }
   }
 }
