@@ -61,7 +61,7 @@ const submitForm = async (e: Event) => {
     });
 
     question.value = "";
-    // currentPage.value = 1;
+    currentPage.value = 1;
     messages.value = [];
     await getChatAnswer();
   } catch (error) {
