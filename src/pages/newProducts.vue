@@ -115,7 +115,7 @@ onMounted(() => {
                 :alt="img.name"
               />
               <div
-                v-if="!authStore.userData.is_paid_subscription"
+                v-if="authStore.userData.is_paid_subscription"
                 class="downloadBtn bg-white p-[10px] absolute z-10 bottom-0 right-[-1px]"
                 @click="downloadImage(img.source, update.name)"
               >

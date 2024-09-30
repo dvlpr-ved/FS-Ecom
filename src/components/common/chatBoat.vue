@@ -18,12 +18,14 @@ function closeBoat() {
 }
 
 const isSubmitting = ref(false);
+const isLoading = ref(false);
 const question = ref("");
 const messages = ref([]);
 const currentPage = ref(1);
 const totalPages = ref(1);
 
 const getChatAnswer = async (page: number = 1) => {
+  isLoading.value = true;
   try {
     const url = `https://fashtsaly.com/API/public/api/getchat?page=${page}`;
     const response = await fetchFromSanctum({ url, method: "GET" });
@@ -33,10 +35,12 @@ const getChatAnswer = async (page: number = 1) => {
       // console.log(response.data.data);
       messages.value = [...response.data.data.reverse(), ...messages.value];
     } else {
-      alert('Failed to load chat');
+      show("Failed to load chat");
     }
   } catch (error) {
-    alert('Failed to load chat');
+    show("Failed to load chat");
+  } finally {
+    isLoading.value = false;
   }
 };
 
@@ -58,8 +62,8 @@ const submitForm = async (e: Event) => {
 
     question.value = "";
     currentPage.value = 1;
-    messages.value = []; 
-    await getChatAnswer(); 
+    messages.value = [];
+    await getChatAnswer();
   } catch (error) {
     show("We're facing some network issues, please try again later.");
   } finally {
@@ -69,15 +73,17 @@ const submitForm = async (e: Event) => {
 
 const handleScroll = async () => {
   const messagesBox = document.querySelector(".messagesbox");
-
-  if (messagesBox && messagesBox.scrollTop === 0 && currentPage.value < totalPages.value) {
-    const previousHeight = messagesBox.scrollHeight;  
+  if (
+    messagesBox &&
+    messagesBox.scrollTop === 0 &&
+    currentPage.value < totalPages.value
+  ) {
+    const previousHeight = messagesBox.scrollHeight;
     currentPage.value++;
     await getChatAnswer(currentPage.value);
     messagesBox.scrollTop = messagesBox.scrollHeight - previousHeight;
   }
 };
-
 
 // console.log("unreadMsgs", unreadMsgs);
 
@@ -88,8 +94,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- v-if="props.chatBoatVisible" -->
   <div
+    v-if="props.chatBoatVisible"
     class="chatboat z-10 shadow max-w-[400px] min-h-[85vh] bg-white w-full fixed right-0 bottom-0"
   >
     <div class="flex justify-between bg-blue-800 p-3">
@@ -106,6 +112,9 @@ onMounted(() => {
         class="messagesbox p-3 min-h-[59vh] max-h-[59vh] w-full overflow-auto"
         @scroll="handleScroll"
       >
+        <span v-if="isLoading" class="ladingmore text-center block">
+          <i class="pi pi-spin pi-spinner text-5xl text-blue-700"></i>
+        </span>
         <div v-for="(msg, index) in messages" :key="index">
           <p class="capitalize text-[13px] bg-gray-200 w-fit p-2 rounded mb-3 questions">
             {{ msg.ques }}
@@ -129,9 +138,8 @@ onMounted(() => {
           class="w-[90%] border-0"
           v-model="question"
           placeholder="Send a message"
-          :disabled="isSubmitting"
         />
-        <button type="submit" :disabled="isSubmitting">
+        <button type="submit" :disabled="isSubmitting ? true : false">
           <i class="pi pi-send text-2xl"></i>
         </button>
       </form>
