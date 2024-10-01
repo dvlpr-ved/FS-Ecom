@@ -236,10 +236,15 @@ onMounted(() => {
 
   <!-- Modal for Login/Signup -->
   <LoginModal :visible="visible" @closemodal="closeModal" :close="closeModal" />
-  <chatBoat :chatBoatVisible="chatBoatVisible" @closeBoat="closeBoat" />
+  <chatBoat
+    :chatBoatVisible="chatBoatVisible"
+    @closeBoat="closeBoat"
+    :closeBoat="closeBoat"
+  />
   <searchbyImageResult
     :searchByImageVisible="searchByImageVisible"
     @closeSearchByImage="closeSearchByImage"
+    :closeSearchByImage="closeSearchByImage"
   />
 </template>
 

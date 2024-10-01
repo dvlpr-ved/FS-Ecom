@@ -22,6 +22,7 @@ const callSearchByImage = async (event) => {
 onMounted(() => {
   console.log("111111", 111111);
 });
+
 </script>
 <template>
   <div class="searchByImage w-fit relative flex items-center">
