@@ -183,7 +183,7 @@ onMounted(() => {
             <SocialShare
               v-for="network in ['facebook', 'twitter', 'whatsapp']"
               :key="network"
-              :url="pageurl"
+              :url="'https://shop.fashtsaly.com/searchresult/' + update.id"
               :network="network"
             >
               <template #label>{{ network }}</template>
