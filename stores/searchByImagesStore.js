@@ -13,7 +13,6 @@ export const useSearchByImageStore = defineStore('searchImages', {
                     url: 'https://fashtsaly.com/API/public/api/fetchSearchResultByImage',
                     body:body
                 });
-
                 if (!response) {
                     this.error = 'Error in fetching images';
                     throw new Error('Network response was not ok');

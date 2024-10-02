@@ -1,33 +1,27 @@
-<script scoped>
+<script setup>
 const searchByImageStore = useSearchByImageStore();
 const image = ref(null);
-const imageRef = ref(null);
-const callSearchByImage = async (event) => {
-  console.log("here");
-  const image = image.value;
-  const name = ref("");
-  searchByImageStore.fetchSearchByImage();
-  const file = event.files[0];
+const name = ref('');
+const callSearchByImage = async (event) => {  
+  const file = event.target.files[0];
   const reader = new FileReader();
-  const blob = await fetch(file.objectURL).then((r) => r.blob()); // blob:url
-  console.log(event.files);
-  reader.readAsDataURL(blob);
-  reader.onloadend(() => {
+
+  const objectURL = URL.createObjectURL(file);
+  
+  const blob = await fetch(objectURL).then((r) => r.blob()); 
+
+  reader.readAsDataURL(blob); 
+  reader.onload = () => {  
     image.value = reader.result;
     name.value = file.name;
-  });
-  searchByImageStore.fetchSearchByImage({ image: image.value, name: name.value });
+    searchByImageStore.fetchSearchByImage({ image: image.value, name: name.value });
+  };
 };
-
-onMounted(() => {
-  console.log("111111", 111111);
-});
-
 </script>
 <template>
   <div class="searchByImage w-fit relative flex items-center">
     <input
-      onChange="callSearchByImage()"
+      @change="callSearchByImage"
       type="file"
       class="absolute w-[40px] h-[40px] opacity-0 cursor-pointer"
     />
