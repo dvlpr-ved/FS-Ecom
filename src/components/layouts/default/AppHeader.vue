@@ -27,6 +27,7 @@ const route = useRoute();
 // Modal visibility
 const visible = ref(false);
 const chatBoatVisible = ref(false);
+const searchByImageVisible = ref(false);
 
 // Function to check route and redirect if the user is not logged in
 const checkRoute = () => {
@@ -82,6 +83,9 @@ const closeAutoomplete = () => {
 // Modal toggle functions
 const closeModal = () => {
   visible.value = false;
+};
+const closeSearchByImage = () => {
+  searchByImageVisible.value = false;
 };
 
 const closeBoat = () => {
@@ -232,7 +236,16 @@ onMounted(() => {
 
   <!-- Modal for Login/Signup -->
   <LoginModal :visible="visible" @closemodal="closeModal" :close="closeModal" />
-  <chatBoat :chatBoatVisible="chatBoatVisible" @closeBoat="closeBoat" />
+  <chatBoat
+    :chatBoatVisible="chatBoatVisible"
+    @closeBoat="closeBoat"
+    :closeBoat="closeBoat"
+  />
+  <searchbyImageResult
+    :searchByImageVisible="searchByImageVisible"
+    @closeSearchByImage="closeSearchByImage"
+    :closeSearchByImage="closeSearchByImage"
+  />
 </template>
 
 <style lang="scss" scoped>

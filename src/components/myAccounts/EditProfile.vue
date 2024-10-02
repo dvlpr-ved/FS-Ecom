@@ -1,11 +1,10 @@
 <script lang="ts" setup>
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
-
 const authStore = useAuthStore();
 const editProfile = useProfileStore();
 
-const show = (message) => {
+const show = (message: string) => {
   toast.add({ severity: "info", detail: message, life: 3000 });
 };
 
@@ -15,16 +14,15 @@ const formData = ref({
   phone: authStore.getUser.phone,
   email: authStore.getUser.email,
   gender: authStore.getUser.gender,
-  // gender: "m",
   image: null,
   image_name: null,
 });
 
 const editing = ref(false);
 const is_saving = ref(false);
-const successMessage = editProfile.successMessage;
+const previewImage = ref(null);
 
-function toggleEdit() {
+const toggleEdit = () => {
   editing.value = !editing.value;
 
   if (!editing.value) {
@@ -32,17 +30,30 @@ function toggleEdit() {
       name: authStore.getUser.name,
       lname: "",
       email: authStore.getUser.email,
-      gender: authStore.userData.gender,
-      // gender: "m",
+      gender: authStore.getUser.gender,
       phone: authStore.getUser.phone,
-      image: "",
-      image_name: "",
+      image: null,
+      image_name: null,
     };
+    previewImage.value = null;
   }
-}
+};
+
+const onFileChange = (event: Event) => {
+  const file = (event.target as HTMLInputElement).files[0];
+  if (file && file.type.startsWith("image/")) {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      previewImage.value = reader.result;
+      formData.value.image = reader.result;
+    };
+    reader.readAsDataURL(file);
+  } else {
+    show("Please select a valid image file.");
+  }
+};
 
 const saveChanges = async () => {
-  // const genderValue = formData.value.gender === "male" ? "m" : "f";
   is_saving.value = true;
 
   try {
@@ -50,33 +61,23 @@ const saveChanges = async () => {
       name: formData.value.name,
       gender: formData.value.gender,
       phone: formData.value.phone,
-      image: null,
+      image: formData.value.image,
       image_name: null,
     });
+
     if (res) {
-      editing.value = false;
-      is_saving.value = false;
       show("Profile Updated successfully");
       editing.value = false;
-      is_saving.value = false;
     } else {
-      editing.value = false;
-      is_saving.value = false;
-      show("we are facing Network issue Please Try Again");
+      show("We are facing a network issue. Please try again.");
     }
   } catch (error) {
     console.error("Failed to save changes:", error);
-    show("we are facing Network issue Please Try Again");
+    show("We are facing a network issue. Please try again.");
+  } finally {
     is_saving.value = false;
-    editing.value = false;
   }
 };
-
-// onMounted(() => {
-//   // formData.value.gender = authStore.userData.gender;
-//   // console.log(formData.value.gender);
-
-// });
 </script>
 
 <template>
@@ -97,6 +98,16 @@ const saveChanges = async () => {
           v-model="formData.name"
           :disabled="!editing"
         />
+      </div>
+      <div class="in_box lg:w-[45%] w-[100%] flex">
+        <input
+          type="file"
+          :disabled="!editing"
+          accept="image/*"
+          @change="onFileChange"
+          class="border border-gray-300 rounded-lg p-2 w-[80%]"
+        />
+        <img v-if="previewImage" :src="previewImage" class="h-14 pl-2" />
       </div>
 
       <div class="gender_div w-full flex flex-wrap gap-x-4">
@@ -149,9 +160,9 @@ const saveChanges = async () => {
       <button
         class="py-2 px-5 text-white text-[15px] bg-blue-600"
         @click="saveChanges"
-        :disabled="!editing"
+        :disabled="!editing || is_saving"
       >
-        {{ is_saving ? "saving" : "save" }}
+        {{ is_saving ? "Saving..." : "Save" }}
       </button>
     </div>
   </div>
