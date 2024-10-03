@@ -8,7 +8,7 @@ const loading = ref(false);
 const totalComputed = computed(() => {
   return cards.value.reduce((sum, item) => {
     const quantity = quantities.value[item.id] || item.quantity;
-    const finalPrice = getPrice(item.price , item.price_subscribed);
+    const finalPrice = getPrice(item.price, item.price_subscribed);
     return sum + finalPrice * quantity;
   }, 0);
 });
@@ -88,7 +88,7 @@ const proceedCheckoutSingle = async (item) => {
 
 <template>
   <div class="myordersmain bg-gray-200 py-5">
-    <div class="myorder_inner container">
+    <div class="myorder_cart container">
       <h1 class="text-3xl font-semibold mb-4 text-center">My Cart</h1>
       <template v-if="isLoading">
         <div class="shimmermain space-y-4">
@@ -152,73 +152,79 @@ const proceedCheckoutSingle = async (item) => {
           v-if="cards.length"
           class="cardsflex flex flex-wrap justify-between relative"
         >
-          <div class="cardsWrapper bg-white lg:w-[60%] w-[100%]">
+          <div class="cardsWrapper lg:w-[60%] w-[100%]">
             <div
               v-for="items in cards"
               :key="items.id"
-              class="bcards py-2 border-b border-b-300 lg:p-3 p-2"
+              class="bcards py-2 border-b border-b-300 bg-white lg:p-3 p-2 mb-2 flex items-center justify-between"
             >
-              <div class="bcards_inner flex lg:gap-4 gap-3">
-                <div class="flex-shrink-0">
-                  <img
-                    :src="
-                      items.image && items.image.length > 0
-                        ? items.image[0].source
-                        : 'https://via.placeholder.com/96'
-                    "
-                    alt="Product Image"
-                    class="w-24 h-24 object-cover rounded-lg"
-                    loading="lazy"
-                  />
-                </div>
-                <div class="contentdiv">
-                  <div class="topconten">
-                    <div class="text-lg font-semibold mb-2">{{ items.product_name }}</div>
-                    <p class="text-gray-600 mb-1">{{ items.created_at }}</p>
-                    <p class="text-gray-600 mb-1">Price: ₹{{ getPrice(items.price , items.price_subscribed) }}/PCS</p>
-                  </div>
-                  <div
-                    class="productCounter mb-3 flex gap-4 border border-gray-400 p-2 px-3 w-[fit-content]"
-                  >
-                    <button
-                      @click="
-                        removeMoreProduct(
-                          items.id,
-                          quantities[items.id] ? quantities[items.id] : items.quantity
-                        )
+              <NuxtLink :to="`searchresult/${items.product_id}`">
+                <div class="bcards_inner flex lg:gap-4 gap-3">
+                  <div class="flex-shrink-0">
+                    <img
+                      :src="
+                        items.image && items.image.length > 0
+                          ? items.image[0].source
+                          : 'https://via.placeholder.com/96'
                       "
-                    >
-                      <i class="pi pi-minus"></i>
-                    </button>
-                    <span>{{
-                      quantities[items.id] ? quantities[items.id] : items.quantity
-                    }}</span>
-                    <button
-                      @click="
-                        addMoreProduct(
-                          items.id,
-                          quantities[items.id] ? quantities[items.id] : items.quantity
-                        )
-                      "
-                    >
-                      <i class="pi pi-plus"></i>
-                    </button>
+                      alt="Product Image"
+                      class="w-24 h-24 object-cover rounded-lg"
+                      loading="lazy"
+                    />
                   </div>
-                  <div class="flexbtn flex gap-5 lg:mt-3 mt-2">
-                    <button
-                      class="bg-[#e53535] text-white py-1 px-3 rounded"
-                      @click="RemoveItemFromCart(items.id)"
+                  <div class="contentdiv">
+                    <div class="topconten">
+                      <div class="text-lg font-semibold mb-2">
+                        {{ items.product_name }}
+                      </div>
+                      <p class="text-gray-600 mb-1">{{ items.created_at }}</p>
+                      <p class="text-gray-600 mb-1">
+                        Price: ₹{{ getPrice(items.price, items.price_subscribed) }}/PCS
+                      </p>
+                    </div>
+                    <div
+                      class="productCounter mb-3 flex gap-4 border border-gray-400 p-2 px-3 w-[fit-content]"
                     >
-                      Remove
-                    </button>
-                    <button
-                      @click="proceedCheckoutSingle(items)"
-                      class="bgorange text-white py-1 px-3 rounded"
-                    >
-                      Buy This
-                    </button>
+                      <button
+                        @click="
+                          removeMoreProduct(
+                            items.id,
+                            quantities[items.id] ? quantities[items.id] : items.quantity
+                          )
+                        "
+                      >
+                        <i class="pi pi-minus"></i>
+                      </button>
+                      <span>{{
+                        quantities[items.id] ? quantities[items.id] : items.quantity
+                      }}</span>
+                      <button
+                        @click="
+                          addMoreProduct(
+                            items.id,
+                            quantities[items.id] ? quantities[items.id] : items.quantity
+                          )
+                        "
+                      >
+                        <i class="pi pi-plus"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
+              </NuxtLink>
+              <div class="flexbtn flex flex-col gap-5 lg:mt-3 mt-2">
+                <button
+                  class="bg-[#e53535] text-white py-1 px-3 rounded"
+                  @click="RemoveItemFromCart(items.id)"
+                >
+                  Remove
+                </button>
+                <button
+                  @click="proceedCheckoutSingle(items)"
+                  class="bgorange text-white py-1 px-3 rounded"
+                >
+                  Buy This
+                </button>
               </div>
             </div>
           </div>
@@ -262,7 +268,10 @@ const proceedCheckoutSingle = async (item) => {
 </template>
 
 <style scoped>
-.myorder_inner {
+.myorder_cart {
   max-width: 1024px;
+  /* .bcards {
+    border-bottom-width: 8px;
+  }*/
 }
 </style>
