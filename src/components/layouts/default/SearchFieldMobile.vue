@@ -44,6 +44,11 @@ const closeModal = () => {
   showAutoComplete.value = false;
   emit("close");
 };
+const fethingImages = ref(false);
+const imageSearchData = ref([]);
+const getResult = (val) => {
+  imageSearchData.value = val;
+}
 </script>
 
 <template>
@@ -64,13 +69,26 @@ const closeModal = () => {
         "
         class="UploadImageFromGallery w-[50px] absolute right-1 top-[6px] flex justify-center"
       >
-        <searchByImage />
+        <searchByImage @loading="fethingImages = true" @stoploading = "fethingImages = false" @result="getResult" />
       </div>
       <button class="cancelBtn text-blue-700 px-2 text-xl hidden" @click="closeBtn">
         close
       </button>
     </div>
     <CateGories :closeModal="closeModal" />
+    <div v-if="fethingImages">
+      <div class="w-full flex justify-center items-center">
+        <ShimmereCard></ShimmereCard>
+        <ShimmereCard></ShimmereCard>
+      </div>
+      <div class="w-full flex justify-center items-center">
+        <ShimmereCard></ShimmereCard>
+        <ShimmereCard></ShimmereCard>
+      </div>
+    </div>
+    <div v-if="imageSearchData">
+      
+    </div>
     <SearchAutoComplete
       @close="closeModal"
       v-if="showAutoComplete"

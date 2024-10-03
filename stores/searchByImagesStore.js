@@ -18,8 +18,12 @@ export const useSearchByImageStore = defineStore('searchImages', {
                     throw new Error('Network response was not ok');
                 }
                 // const data = await response.json();
-                this.messages = response;
-                return true;
+                if(response.success){
+                    return response.data
+                }
+                else{
+                    return false;
+                }
             } catch (error) {
                 console.error('Error fetching images:', error);
                 this.error = 'Error fetching images';

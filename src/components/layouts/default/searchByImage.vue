@@ -2,7 +2,11 @@
 const searchByImageStore = useSearchByImageStore();
 const image = ref(null);
 const name = ref('');
-const callSearchByImage = async (event) => {  
+const loading = ref(false);
+const emit = defineEmits(['loading' , 'stoploading' , 'result']);
+const callSearchByImage = async (event) => {
+  loading.value = true;
+  emit('loading');  
   const file = event.target.files[0];
   const reader = new FileReader();
 
@@ -11,10 +15,13 @@ const callSearchByImage = async (event) => {
   const blob = await fetch(objectURL).then((r) => r.blob()); 
 
   reader.readAsDataURL(blob); 
-  reader.onload = () => {  
+  reader.onload = async () => {  
     image.value = reader.result;
     name.value = file.name;
-    searchByImageStore.fetchSearchByImage({ image: image.value, name: name.value });
+    const result = await searchByImageStore.fetchSearchByImage({ image: image.value, name: name.value });
+    loading.value = false;
+    emit('stoploading');
+    emit('result' , result);
   };
 };
 </script>
