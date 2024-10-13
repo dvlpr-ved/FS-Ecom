@@ -1,29 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
 
-// const orders = ref([
-//   {
-//     id: 1,
-//     date: "2024-06-30",
-//     total: 150.0,
-//     product: {
-//       image: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_05.jpg",
-//     },
-//     rating: 0,
-//     review: null,
-//   },
-//   {
-//     id: 2,
-//     date: "2024-06-28",
-//     total: 210.0,
-//     product: {
-//       image: "https://miniture.b-cdn.net/wp-content/uploads/2023/10/m7_cat_05.jpg",
-//     },
-//     rating: 0,
-//     review: null,
-//   },
-// ]);
-
 const route = useRoute();
 const metadataStore = useMetadataStore();
 const pageMeta = ref({ title: "", description: "", meta_tags: [] });
@@ -110,6 +87,7 @@ watchEffect(() => {
 </script>
 
 <template>
+  <!-- {{ order_data }} -->
   <div class="myordersmain py-5 bg-gray-100">
     <div class="myorder_inner container">
       <h1 class="text-3xl font-semibold mb-4 text-center">My Orders</h1>
@@ -141,26 +119,62 @@ watchEffect(() => {
           :key="order.order_id"
           class="border rounded-lg mb-2 shadow-md bg-white"
         >
-          <div class="flexdiv flex p-4">
-            <div class="flex-shrink-0">
-              <img
-                :src="order.products[0].images[0].source"
-                alt="Product Image"
-                class="w-24 h-24 object-cover rounded-lg"
-              />
+          <!-- {{ order.products }} -->
+          <div class="flexdiv flex items-center justify-between p-4">
+            <div class="flexdiv_in flex">
+              <div class="flex-shrink-0">
+                <img
+                  :src="order.products[0].image[0].source"
+                  alt="Product Image"
+                  class="w-24 h-24 object-cover rounded-lg"
+                />
+              </div>
+              <div class="ml-4">
+                <!-- {{ order.name }} -->
+                <h2 class="text-lg font-semibold mb-2">Order #{{ order.id }}</h2>
+                <p class="text-gray-600 mb-1">Date: {{ order.date }}</p>
+                <p class="text-gray-600 mb-1">Total: ₹ {{ order.subtotal }}</p>
+                <span
+                  class="rateText text-blue-800 font-bold capitalize cursor-pointer"
+                  @click="toggleReviewForm(order.id)"
+                >
+                  {{ activeOrderId === order.id ? "Close Form" : "Rate & Review" }}
+                </span>
+              </div>
             </div>
-            <div class="ml-4">
-              <h2 class="text-lg font-semibold mb-2">Order #{{ order.id }}</h2>
-              <p class="text-gray-600 mb-1">Date: {{ order.date }}</p>
-              <p class="text-gray-600 mb-1">Total: ₹ {{ order.subtotal }}</p>
-              <span
-                class="rateText text-blue-800 font-bold capitalize cursor-pointer"
-                @click="toggleReviewForm(order.id)"
+            <div class="pdf_div text-xl bgblue80 text-white p-2 rounded cursor-pointer">
+              <NuxtLink :to="`/${order.pdf}`" download
+                ><i class="pi pi-arrow-down"></i> invoice</NuxtLink
               >
-                {{ activeOrderId === order.id ? "Close Form" : "Rate & Review" }}
-              </span>
             </div>
+            <!-- <a :href="`${order.pdf}`" download>
+              <i class="pi pi-arrow-down"></i> invoice
+            </a> -->
           </div>
+          
+          <!-- <div v-for="(producs_in_product, index) in order.products" :key="index">
+            <div class="flexdiv_in flex p-4">
+              <div class="flex-shrink-0">
+                <img
+                  :src="producs_in_product.image[0].source"
+                  alt="Product Image"
+                  class="w-24 h-24 object-cover rounded-lg"
+                />
+              </div>
+              <div class="ml-4">
+                <h2 class="text-lg font-semibold mb-2">
+                  Order #{{ producs_in_product.name }}
+                </h2>
+                <p class="text-gray-600 mb-1">Price: ₹ {{ producs_in_product.price }}</p>
+                <span
+                  class="rateText text-blue-800 font-bold capitalize cursor-pointer"
+                  @click="toggleReviewForm(order.id)"
+                >
+                  {{ activeOrderId === order.id ? "Close Form" : "Rate & Review" }}
+                </span>
+              </div>
+            </div>
+          </div> -->
 
           <!-- Review Form -->
           <div
