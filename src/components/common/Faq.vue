@@ -1,37 +1,29 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 const openIndex = ref(null);
-
-const faqs = [
-  {
-    question: "Which is the Best Platform for our eCommerce Startup?",
-    answer:
-      "There are many well-known e-commerce website development platforms like Shopify, Magento, Drupal, WooCommerce, and others. All of these will help you in building the perfect eCommerce portal. However, every platform has its pros and cons. If you have a large business with tremendous data, Magento is the best choice for you.",
-  },
-  {
-    question: "How will my eCommerce Website be Visible to others Around the World?",
-    answer:
-      "Once your website is developed by an eCommerce website designing company and is live, you will have to do the technical SEO, both on-page and off-page. This will give your eCommerce portal more visibility and growth. Also, remember SEO is going to be a constant process.",
-  },
-  {
-    question: "Which is the Best Platform for our eCommerce Startup?",
-    answer:
-      "There are many well-known e-commerce website development platforms like Shopify, Magento, Drupal, WooCommerce, and others. All of these will help you in building the perfect eCommerce portal. However, every platform has its pros and cons. If you have a large business with tremendous data, Magento is the best choice for you.",
-  },
-  {
-    question: "How will my eCommerce Website be Visible to others Around the World?",
-    answer:
-      "Once your website is developed by an eCommerce website designing company and is live, you will have to do the technical SEO, both on-page and off-page. This will give your eCommerce portal more visibility and growth. Also, remember SEO is going to be a constant process.",
-  },
-];
+const faqs = ref([]);
 
 const toggle = (index) => {
   openIndex.value = openIndex.value === index ? null : index;
 };
+
+onMounted(async () => {
+  try {
+    const response = await fetch("https://fashtsaly.com/API/public/api/WebsiteFaqs");
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await response.json();
+    faqs.value = data.data;
+  } catch (error) {
+    console.error("Failed to fetch FAQs:", error);
+  }
+});
 </script>
 
 <template>
+  {{ faqs.data }}
   <div class="faqMain">
     <h2 class="xl:text-3xl text-2xl font-semibold mb-6 text-center">
       Frequently Asked Questions
@@ -57,5 +49,6 @@ const toggle = (index) => {
 
 <style lang="scss">
 .faqMain {
+  // Add your styles here
 }
 </style>

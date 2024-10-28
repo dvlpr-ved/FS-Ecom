@@ -5,6 +5,7 @@ const toast = useToast();
 const show = (message, DieLife = 4000) => {
   toast.add({ severity: "success", detail: message, life: DieLife });
 };
+const authStore = useAuthStore();
 const route = useRoute();
 const questions = ref([
   { id: 1, text: "What's its fabric?", replyText: "", isReplying: false },
@@ -74,6 +75,7 @@ const submitQuestion = async () => {
   }
   is_submitting_question.value = false;
 };
+
 onMounted(() => {
   getQuestionAnswers();
 });
@@ -107,6 +109,7 @@ onMounted(() => {
         <div class="cont-side">
           <p class="text headingsFont">{{ question.question }}</p>
           <p
+            v-if="authStore.userData.is_admin"
             class="text-blue-600 pl-1 cursor-pointer"
             @click="startReplying(question.id)"
           >

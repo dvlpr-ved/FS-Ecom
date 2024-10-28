@@ -220,7 +220,7 @@ async function downloadImage(url, Product_desc) {
           class="detailGallery lg:w-[48%] w-[100%] relative lg:pt-5 pt-2 lg:pr-4 lg:sticky h-fit top-0"
         >
           <ProductZoomImages :data="imageShown ? imageShown : ''" />
-          <div class="flex justify-center overflow-x-auto  mt-2 w-[100%] gap-2">
+          <div class="flex justify-center overflow-x-auto mt-2 w-[100%] gap-2">
             <div v-for="(image, index) in sku.image" :key="index">
               <img
                 @click="imageShown = image.source"
@@ -259,15 +259,19 @@ async function downloadImage(url, Product_desc) {
             {{ product.name ? product.name : "" }}
           </div>
           <div class="price">
-            <p v-if="!skuIsLoading" class="cardtitle text-3xl font-[500] text-black mb-3">
-              <!-- <span class="line-through text-2xl text-gray-700">₹800</span> -->
+            <!-- v-if="!skuIsLoading" -->
+            <p class="cardtitle text-3xl font-[500] text-black mb-3">
+              <span class="line-through text-2xl text-gray-700"
+                >₹{{ getActualPrice(sku.mrp, sku.price, sku.price_subscribed) }}</span
+              >
               ₹{{ getPrice(sku.price, sku.price_subscribed) }}
             </p>
-            <span
+            <!-- <span
               v-else-if="skuIsLoading || isOutOfStock"
               class="block text-2xl shimmer pl-5 w-[25%] text-gray-300 bg-gray-50 mb-3"
-              >₹</span
             >
+              ₹{{ getActualPrice(sku.mrp, sku.price, sku.price_subscribed) }}
+            </span> -->
           </div>
           <span class="bgblue80 py-1 px-2 block w-fit capitalize mb-3 text-white"
             >save {{ getPercentSaving(sku.mrp, sku.price, sku.price_subscribed) }}%</span

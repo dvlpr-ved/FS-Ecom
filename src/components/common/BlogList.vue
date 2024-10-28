@@ -5,20 +5,12 @@ const error = ref(null);
 
 onMounted(async () => {
   try {
-    const response = await fetch("https://jsonplaceholder.typicode.com/photos");
+    const response = await fetch("https://fashtsaly.com/API/public/api/WebsiteBlogs");
     if (!response.ok) {
       throw new Error("Failed to fetch blog posts");
     }
     const data = await response.json();
-    blogPosts.value = data.slice(0, 10).map((post) => ({
-      id: post.id,
-      title: post.title,
-      imgUrl:
-        "https://rukminim2.flixcart.com/image/612/612/xif0q/sari/7/o/q/free-3671s2574-samah-unstitched-original-imahyhhchhk94gzk.jpeg?q=70",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus nobis quaerat eveniet, earum facilis, libero laborum, autem atque vero aut exercitationem accusantium? Consectetur quo earum commodi, iste voluptate eos incidunt!",
-      date: new Date().toISOString().split("T")[0],
-    }));
+    blogPosts.value = data;
   } catch (err) {
     error.value = err.message;
   } finally {
@@ -51,22 +43,26 @@ onMounted(async () => {
           >
             <NuxtLink :to="`/blogs/${post.id}`" class="lg:flex block">
               <img
-                :src="post.imgUrl"
+                :src="post.image[0].source"
                 alt="Blog Image"
                 class="lg:w-[30%] w-[100%] lg:h-[250px] object-cover rounded-t-lg"
               />
-              <div class="p-4">
-                <h2 class="lg:text-3xl text-2xl font-semibold mb-2 capitalize">
+              <div class="p-4 lg:w-[68%] w-[100%]">
+                <h2 class="lg:text-xl font-semibold mb-2 capitalize">
                   {{ post.title }}
                 </h2>
-                <p class="mb-2 capitalize text-[15px] lg:text-justify text-left">
-                  {{ post.description.slice(0, 300) }}...
-                </p>
+                <!-- <p class="mb-2 capitalize text-[15px] lg:text-justify text-left">
+                  {{ post.content.slice(0, 300) }}...
+                </p> -->
+                <div
+                  class="mb-2 capitalize text-[15px] lg:text-justify text-left"
+                  v-html="post.content.slice(0, 300)"
+                ></div>
                 <small
                   class="continuelink hover:pl-2 transition-all mb-2 flex items-end gap-2 text-orange-600"
                   >Continue Reading <i class="pi pi-arrow-right"></i
                 ></small>
-                <small class="text-gray-500">{{ post.date }}</small>
+                <small class="text-gray-500">{{ post.created_at }}</small>
               </div>
             </NuxtLink>
           </li>
@@ -74,7 +70,7 @@ onMounted(async () => {
         <div
           class="lg:w-[25%] w-[100%] rounded shadow sticky top-3 bgblue80 h-fit text-white p-3"
         >
-          <h1 class="heading lg:text-3xl text-2xl mb-2 uppercase">NEED any HELP?</h1>
+          <h1 class="heading lg:text-xl text-2xl mb-2 uppercase">NEED any HELP?</h1>
           <p class="text-gray-200 mb-3">
             Our dedicated support team is here for you 24/7. Reach out to us with any
             questions or concerns, and we'll provide prompt and friendly assistance.
@@ -86,10 +82,13 @@ onMounted(async () => {
           >
             <i class="pi pi-phone lg:text-2xl text-xl"></i> 9999-999-999
           </NuxtLink>
-          <BookNow
-            :bounceAni="'no-animate'"
-            bookingLink="https://api.whatsapp.com/send?phone=+910123456789&text=Hello, Looking for banarasee saree. Get in touch with me my name is"
-          />
+
+          <NuxtLink
+            to="https://api.whatsapp.com/send?phone=+910123456789&text=Hello, Looking for banarasee saree. Get in touch with me my name is"
+            :class="`Booknowbtn py-3 bg-green-400 text-white capitalize rounded text-2xl text-center flex items-center gap-2 justify-center`"
+            target="_blank"
+            ><i class="pi pi-whatsapp lg:text-3xl text-2xl"></i> Get in Touch</NuxtLink
+          >
         </div>
       </div>
     </div>

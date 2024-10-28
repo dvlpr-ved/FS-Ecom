@@ -96,7 +96,7 @@ onMounted(() => {
 <template>
   <div
     v-if="props.chatBoatVisible"
-    class="chatboat z-20 shadow max-w-[400px] min-h-[85vh] bg-white w-full fixed right-0 bottom-0"
+    class="chatboat z-20 shadow lg:max-w-[400px] max-w-[100%] lg:min-h-[85vh] min-h-[100vh] bg-white w-full fixed right-0 bottom-0"
   >
     <div class="flex justify-between bg-blue-800 p-3">
       <div class="leftside">
